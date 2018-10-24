@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="../../imgs/logo-l.png">    <!--title-icon-->
+    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../../lib/datatables/css/jquery.dataTables.min.css"/>
+    <link rel="stylesheet" href="../../css/cssReset.css"/>
+    <title>记录列表</title>
+    <style>
+        /*addPartner*/
+        body{background-color: #f2f2f1;width: 97%;margin: 0 auto;padding:20px 0;}
+        .main{background: #FFFFFF;box-shadow: 0 0 10px 0 rgba(0,0,0,0.02);border-radius: 8px;padding:20px 15px;}
+        /*统计数据*/
+        .Statistics{color: #000;display: flex;display: -webkit-flex; justify-content:space-between;}
+        .Statistics>div{width: 32%;height: 80px;background-color: #F2FAFF;border-radius: 6px;}
+        .Statistics>div>div{text-align: center;}
+        .Statistics>div>div:nth-child(1){font-size: 24px;line-height: 50px;color: #161616;}
+        .Statistics>div>div:nth-child(2){color: #8F9295;font-size: 12px;}
+
+        /*搜索*/
+        .row{margin: 0;}
+        .hr{width:30px;border-top:2px solid #9B9B9B;float:left;margin-top:12px;margin-right:5px;}
+        .searchBox{padding:20px 0;}
+        .hr{width:20px;border-top:2px solid #9B9B9B;float:left;margin-top:12px;margin-left:5px;margin-right:5px;}
+        .searchBox{width:100%;}
+        .searchBox{padding:18px 0 13px 0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;line-height:50px;}
+        .searchBox .form{display:flex;align-items:center;}
+        .searchBox .search1{display:flex;align-items:center;margin-right:20px;}
+        .searchBox .search1 .hTime{width:125px;height:26px;background: #F3F3F3;border-radius: 4px;border:none;text-align:center;outline:none;}
+        .hr{width:20px;border-top:2px solid #9B9B9B;margin:0 10px;}
+        .searchBox .search2{position:relative;margin-right:30px;}
+        .searchBox .search2 .icon1{position:absolute;width:16px;height:16px;top:17px;left:11px;}
+        .searchBox .search2 .phone{width:180px;height:26px;background: #F3F3F3;border-radius: 4px;border:none;padding-left:30px;outline:none;}
+        .searchBox .search{width:90px;height:26px;font-size: 14px;color: #0096FF;text-align: center;line-height: 14px;
+            background:#fff;border:1px solid #0096FF;border-radius: 4px;margin-right:20px;outline:none;}
+        .searchBox .export{width:120px;height:32px;font-family: PingFangSC-Medium;font-size: 14px;color: #fff;
+            text-align: center;line-height: 14px;background:#0096FF;border:1px solid #0096FF;border-radius: 4px;outline:none;}
+        .searchBox .select .input2{background: #F3F3F3;height:26px;border:none;width:137px;outline:none;border-radius: 4px;}
+        .searchBox .select{margin-right:20px;}
+        .tr1{opacity: 0.8;background: rgba(0,150,255,0.10);}
+
+    </style>
+</head>
+<body>
+<div class="main">
+    <!--4个统计数据-->
+    <section class="Statistics">
+        <!--总数-->
+        <div title="总数">
+            <div id="allCount">0</div>
+            <div>总数</div>
+        </div>
+        <!--今日待回访-->
+        <div title="今日待回访" id="recordToday" style="cursor:pointer;">
+            <div id="recordTodayCou">0</div>
+            <div>今日待回访</div>
+        </div>
+        <!--全部待回访-->
+        <div title="全部待回访">
+            <div id="recordAllCou">0</div>
+            <div>全部待回访</div>
+        </div>
+    </section>
+
+    <!--搜索条件-->
+    <div class="searchBox">
+        <div class='form'>
+            <div class='search1'>
+                <input type="date" class='hTime' id="startTime" value='2018-03-36'/>
+                <div class="hr"></div>
+                <input type="date" class='hTime' id='endTime' value='2018-03-36'/>
+            </div>
+            <div class='search2'>
+                <img src="../../imgs/search@2x.png" alt="" class='icon1'/><input type="text" class="phone" id="inputText" placeholder="手机号/姓名/设备号"/>
+            </div>
+            <div class="select">
+                <select name="" id="orderBySign" class="input2">
+                    <option value="2">全部</option>
+                    <option value="1">需要回访</option>
+                </select>
+            </div>
+            <button id="search" class="search" style='margin:0 10px;'>搜索</button>
+            <button id="all" class="search">全部</button>
+        </div>
+        <div>
+            <button class="export" id="getOut">导出excel</button>
+        </div>
+
+    </div>
+
+    <!--listTable-->
+    <table data-toggle="table" class="table table-bordered text-center table-hover" id="listTable">
+        <thead>
+        <tr class="tr1">
+            <th>序号</th>
+            <th>来访电话</th>
+            <th>反馈类型</th>
+            <th>城市</th>
+            <th>用户类型</th>
+            <th>佩戴人</th>
+            <th>是否需要反馈</th>
+            <th>记录时间</th>
+            <th>记录人</th>
+            <th>下次回访时间</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+</div>
+
+
+<!--js-->
+<script src="../../lib/jquery/jquery.min.js"></script>
+<script src="../../lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../lib/datatables/js/jquery.dataTables.min.js"></script>
+<script src="../../lib/layer/layer.js"></script>
+<script src="../../js/common.js"></script>
+<script src="../../js/framePages/custom_recordList.js"></script>
+</body>
+</html>

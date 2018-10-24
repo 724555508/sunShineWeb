@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../../lib/datatables/css/jquery.dataTables.min.css"/>
+    <link rel="stylesheet" href="../../css/cssReset.css"/>
+    <link rel="stylesheet" href="../../css/framePages/SosWarningList.css"/>
+    <link rel="shortcut icon" href="../../imgs/logo-l.png">    <!--title-icon-->
+    <title>SOS报警管理</title>
+    <style>
+        .dad{background: #FFFFFF;box-shadow: 0 0 10px 0 rgba(0,0,0,0.02);border-radius: 8px;padding:0 15px 20px 15px;}
+    </style>
+</head>
+<body>
+<div class='dad'>
+	<div class='header1'>
+		<h2>sos管理</h2>
+		<div class='header_right' id='changeBtn'>
+		   <div class='right1'>
+			  <span id='nowStatus1'>上班</span>
+			  <img src="" alt="" id='img1'/>
+		   </div>
+		   <div class='right2'>
+			  <span id='nowStatus2'>下班</span>
+			  <img src="" alt="" id='img2'/>
+		   </div>
+		</div>
+    </div>
+<!--四个统计数据-->
+<section class="Statistics">
+    <!--总数-->
+    <div title="总数">
+        <div id="AllSOSNum">0</div>
+        <div>总数</div>
+    </div>
+    <!--今日-->
+    <div title="今日">
+        <div id="TodaySOSNum">0</div>
+        <div>今日</div>
+    </div>
+    <!--误报-->
+    <div title="误报">
+        <div id="AllIsNotTrue">0</div>
+        <div>误报</div>
+    </div>
+    <!--待处理-->
+    <div title="待处理">
+        <div id="NoDispose">0</div>
+        <div>待处理</div>
+    </div>
+</section>
+<!--上下班切换-->
+<!--<div class="row changeStatus">
+    <div class="col-sm-2 text-left">当前状态：<span id="nowStatus">无状态</span></div>
+    <div class="col-sm-1 text-left"><button class="btn btn-skyBlue" id="changeBtn">切换状态</button></div>
+</div>
+<br>-->
+
+<!--搜索条件-->
+<div class="searchBox">
+    <div class='form'>
+         <div class='search1'>
+            <input type="date" class='hTime' id="startTime" value='2018-03-36'/>
+            <div class="hr"></div>
+            <input type="date" class='hTime' id='endTime' value='2018-03-36'/>
+        </div>
+        <div class='search2'>
+          <img src="../../imgs/search@2x.png" alt="" class='icon1'/><input type="text" class="phone" id="inputText" placeholder="手机号/姓名/设备号"/>
+        </div>
+        <button id="search" class="search" style='margin:0 10px;'>搜索</button>
+        <button id="all" class="search">全部</button>
+    </div>
+    <div style="text-align:right;">
+       <button class="export" id="getOut">导出excel</button>
+   </div>
+
+</div>
+
+<!--SOS列表-->
+<table data-toggle="table" class="table table-bordered text-center table-hover" id="SosTable">
+    <thead>
+    <tr class='tr1'>
+        <th>序号</th>
+        <th>设备号</th>
+        <th>报警时间</th>
+        <th>佩戴人</th>
+        <th>佩戴人手机</th>
+        <th>地址</th><!--地址/城市-->
+        <th>性别</th>
+        <th>年龄</th>
+        <!--<th>紧急联系人</th>-->
+        <!--<th>紧急联系电话</th>-->
+        <th>报警次数</th>
+        <th>处理状态</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+
+
+<!--模态框-->
+<div role="dialog" class="modal fade bs-example-modal-sm" id="layer">
+    <div class="modal-dialog">
+        <div class="modal-content" style="max-width: 500px;min-width: 400px;">
+            <!--header-->
+            <div class="modal-header text-center">
+                <button type="button" class="close"  id="close" data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
+                <h3>报警管理</h3>
+            </div>
+            <!--body-->
+            <div class="modal-body text-center">
+                <form role="SOSForm" class="SOSForm" id="SOSForm">
+                    <!--备注-->
+                    <div class="row">
+                        <input type="hidden" name="loginId" id="loginId"/>
+                        <input type="hidden" name="token" id="token"/>
+                        <input type="hidden" name="wearUserId" id="wearUserId"/>
+                        <input type="hidden" name="sosTime" id="sosTime"/>
+                        <div class="col-sm-3 text-right">备注：</div>
+                        <div class="col-sm-8"><textarea name="comment" id="" class="form-control" rows="5" placeholder="不超过300字"></textarea></div>
+                    </div>
+                    <!--类别-->
+                    <div class="row">
+                        <div class="col-sm-3 text-right">报警类别：</div>
+                        <div class="col-sm-8">
+                            <select name="istrue" id="SOSType" class="form-control">
+                                <option value="1">真实报警</option>
+                                <option value="2">用户误报</option>
+                                <option value="3">--其他--</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!--确定-->
+                    <div class="row">
+                        <div class="col-sm-3 text-right"></div>
+                        <div class="col-sm-3 text-right"><button type="button" id="dealSOS" class="btn btn-skyBlue">处理</button></div>
+                        <div class="col-sm-3 text-right"><button type="reset" class="btn btn-sm btn-skyBlue">重置</button></div>
+                        <div class="col-sm-3 text-right"></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
+
+
+
+<!--js-->
+<script src="../../lib/jquery/jquery.min.js"></script>
+<script src="../../lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../lib/datatables/js/jquery.dataTables.min.js"></script>
+<script src="../../lib/layer/layer.js"></script>
+<script src="../../lib/echarts/echarts.min.js"></script>
+<script src="../../js/common.js"></script>
+<script src="../../js/framePages/SosWarningList.js"></script>
+</body>
+</html>

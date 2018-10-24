@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="renderer" content="webkit">
+		<link rel="shortcut icon" href="../../imgs/logo-l.png">    <!--title-icon-->
+		<link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css"/>
+	    <link rel="stylesheet" href="../../lib/datatables/css/jquery.dataTables.min.css"/>
+		<link rel="stylesheet" href="../../lib/switch/honeySwitch.css">   <!--开关按钮插件css-->
+		<link rel="stylesheet" href="../../lib/layer/skin/default/layer.css">
+		<link rel="stylesheet" href="../../lib/layui/css/layui.css"> <!--引入layuicss  时间轴-->
+		<link rel="stylesheet" href="../../css/cssReset.css" />
+	    <link rel="stylesheet" href="../../css/framePages/deviceDetails.css"/>
+
+		<title>设备详情</title>
+		<style>
+			[v-cloak]{display: none;}  /*去掉vue渲染时{{}}的表达式*/
+			[class|=switch]{width:63px;}
+			.slider {
+				top: -1px;
+			}
+			.switch-on .slider {
+				left: 31px;
+			}
+			/*改变layer弹框的颜色*/
+			.layui-layer-dialog .layui-layer-content{color:#fff;}
+
+
+			/*点击查看弹框*/
+			/*水平垂直居中*/
+			.modal-dialog {
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				z-index: 3;
+				margin:0 auto;
+				-webkit-transform: translate(-50%, -50%) !important;
+				-moz-transform: translate(-50%, -50%) !important;
+				-ms-transform: translate(-50%, -50%) !important;
+				-o-transform: translate(-50%, -50%) !important;
+				transform: translate(-50%, -50%) !important;
+			}
+			.modal-header{border-bottom:none;}
+			#reapportion .modal-dialog{width:387px !important;}
+			#reapportion  .row{display:flex;justify-content:center;}
+			#reapportion  .box{width:300px;margin:0 auto;}
+			#reapportion  .box .donation1{font-family: PingFangSC-Medium;font-size: 13px;color: #767676;display:flex;align-items:center;}
+			#reapportion  .box .donation1>div{margin-left:10px;}
+			#reapportion  .box .donation1>div span{display:inline-block;margin-left:5px;}
+			#reapportion  .box .donation1 select{width:199px;margin-left:10px;}
+
+
+		</style>
+	</head>
+	<body>
+    <div id='app' v-cloak>
+    	<!--part1-->
+    	<div class='part1'>
+    		<div class='left'>
+    			<img src="../../imgs/iframeImgs/wearUser/tu_1.png" alt="" v-if='version == 1'/>
+    			<img src="../../imgs/iframeImgs/wearUser/tu_2.png" alt=""  v-else='version == 2'/>
+    		</div>
+    		<div class='right'>
+    			<div class='info1'>
+    				<div class="info1Left">
+						<div class='box1'>
+							<h2>安顿护心仪{{version}}代</h2>
+							<div class='div1' v-if='electricQuantity >80 &&  electricQuantity <= 100'><img src="../../imgs/iframeImgs/wearUser/cell1.png" alt="" />{{electricQuantity}}%</div>
+							<div class='div1' v-else-if='electricQuantity >20 &&  electricQuantity <= 80'><img src="../../imgs/iframeImgs/wearUser/cell2.png" alt="" />{{electricQuantity}}%</div>
+							<div class='div1' v-else-if='electricQuantity >0 &&  electricQuantity <= 20'><img src="../../imgs/iframeImgs/wearUser/cell3.png" alt="" />{{electricQuantity}}%</div>
+							<div class='div1' v-else><img src="../../imgs/iframeImgs/wearUser/cell4.png" alt="" />{{electricQuantity}}%</div>
+
+							<div class='div2' v-if='workStatus == 1'><img src="../../imgs/iframeImgs/wearUser/heart1.png" alt="" />工作中</div>
+							<div class='div2' v-else-if='workStatus == 2'><img src="../../imgs/iframeImgs/wearUser/heart2.png" alt="" />离手</div>
+							<div class='div2' v-else-if='workStatus == 3'><img src="../../imgs/iframeImgs/wearUser/heart2.png" alt="" />充电中</div>
+							<div class='div2' v-else-if='workStatus == 4'><img src="../../imgs/iframeImgs/wearUser/heart2.png" alt="" />失联</div>
+							<div class='div2' v-else-if='workStatus == 5'><img src="../../imgs/iframeImgs/wearUser/heart2.png" alt="" />关机</div>
+							<div class='div2' v-else='workStatus == 0'><img src="../../imgs/iframeImgs/wearUser/heart2.png" alt="" />未知</div>
+
+						</div>
+						<div class='box2'>
+							<div class='div3'>
+								<span v-if='useStatus == -1'>冻结</span>
+								<span v-else-if='useStatus == 0'>激活</span>
+								<span v-else-if="useStatus == 1">报废</span>
+
+							</div>
+
+						</div>
+					</div>
+					<div style="display:flex;align-items:center;">
+						<button class="btn btn-border activeButton" v-if='useStatus == 0' @click='active' style="margin-right:10px;">冻结</button>
+						<button class="btn btn-border activeButton" v-else='useStatus == -1' @click='active' style="margin-right:10px;">激活</button>
+						<div class="box3" @click="scrapManage"><button class="btn btn-border activeButton" style="width:100px;">报废管理</button></div>
+					</div>
+    			</div>
+				<div class="info4">
+					<div class="div1">
+						<span>激活日期</span>
+						<p>{{activationTime}}</p>
+					</div>
+					<div class='div2'>
+						<span>上次工作时间</span>
+						<p>{{nearestCommunicationTime}}</p>
+					</div>
+
+				</div>
+    			<div class='info2'>
+    				<div class='txt1'>
+    					<p>设备型号</p>
+    				    <span style="width:70px;">安顿{{version}}代</span>
+    				</div>
+    				<div class='txt1'>
+    					<p>设备号</p>
+    				    <span style="width:130px;">{{deviceId}}</span>
+    				</div>
+    				<div class='txt1'>
+    					<p>校验码</p>
+    				    <span style="width:70px;">{{checkCode}}</span>
+    				</div>
+    				<div class='txt1'>
+    					<p>产地</p>
+    				    <span style="width:100px;">{{origin}}</span>
+    				</div>
+    				<div class='txt1'>
+    					<p>生产日期</p>
+    				    <span style="width:160px;">{{productionDate}}</span>
+    				</div>
+    				<div class='txt1'>
+    					<p>入库日期</p>
+    				    <span style="width:160px;">{{ createTime }}</span>
+    				</div>
+    			</div>
+				<div class="info3">
+					<div class='txt1'>
+						<p>销售地区</p>
+						<span style="width:70px;">{{salesArea}}</span>
+					</div>
+					<div class='txt1'>
+						<p>版本号</p>
+						<span style="width:130px;">{{others}}</span>
+					</div>
+					<div class='txt1'>
+						<p>开机次数</p>
+						<span style="width:52px;">{{startCount}}次</span>
+					</div>
+					<div class='txt1'>
+						<p>充电次数</p>
+						<span style="width:80px;">{{cycleCount}}次</span>
+					</div>
+						<p>手机号</p>
+						<div class='txt1'>5
+							<span style="width:140px;">{{simNum}}</span>
+					</div>
+				</div>
+    		</div>
+    	</div>
+    	<!--part2-->
+    	<div class='part2'>
+    		<div class='left'>
+              <div class='info1'>
+				  <div class="div1 div3">
+					  <span>所属市场</span>
+				      <p v-if='deviceCirculateLogs.length == 1'>{{deviceCirculateLogs[0].areaName}}</p>
+				      <p v-else>{{deviceCirculateLogs[0].areaName}}>{{deviceCirculateLogs[1].areaName}}</p>
+				  </div>
+				  <div class="button" @click='allot'><button class="btn btn-border">重新分配</button></div>
+			  </div>
+				<div v-for='(i,index) in deviceCirculateLogs' class="belongToMarket">
+					<div class='info2'>
+						<div class="div1">
+							<img src="../../imgs/iframeImgs/icon33.png" alt="" style="width:16px;margin-right:5px;">
+							<span>所属区域</span>
+							<p>{{deviceCirculateLogs[index].areaName}}</p>
+							<span class="donation" v-show="deviceCirculateLogs[index].isDonate === 1">爱心捐助</span>
+						</div>
+				    </div>
+					<div class='info2 info3 divContent'>
+						<div class="div" style="margin-left:20px;">
+							<span>联系人</span>
+							<p>{{deviceCirculateLogs[index].agentName}}</p>
+						</div>
+						<div class="div">
+							<span>联系电话</span>
+							<p>{{deviceCirculateLogs[index].phoneNum}}</p>
+						</div>
+						<div class="div">
+							<span>入库日期</span>
+							<p>{{deviceCirculateLogs[index].addTime}}</p>
+						</div>
+					</div>
+				</div>
+				<!--<div>
+					<div class='info2'>
+						<div class="div1">
+							<span>联系区域</span>
+							<p>长安区</p>
+						</div>
+						<div class="div2">
+							<span>联系人</span>
+							<p>丽江新</p>
+						</div>
+					</div>
+					<div class='info2 info3'>
+						<div class="div1">
+							<span>联系电话</span>
+							<p>15295986977</p>
+						</div>
+						<div class="div2">
+							<span>入库日期</span>
+							<p>2018/01/18</p>
+						</div>
+					</div>
+				</div>-->
+
+    		</div>
+    		<div class='right'>
+    			<div class="info1">
+					<div class="div1">
+						<span>当前佩戴人</span>
+						<p @click='wearOne' style='color:#0096FF;cursor:pointer;'>{{ wearUserName }}</p>
+					</div>
+					<div class="button btn1" @click='history'>历史</div>
+				</div>
+				<div class="info2 p1">
+					<div class="div1">
+						<span>主账户</span>
+						<p>{{ ownAppUserId }}</p>
+					</div>
+					<div class="div2">
+						<span>关联账户</span>
+						<p>{{ accountLinking }}</p>
+					</div>
+					<div class="button" @click='check'>查看</div>
+				</div>
+				<div class="info3">
+					<div class="div1">
+						<span>服务形式</span>
+						<p>
+							<span @click='rent'>租赁/购买</span>
+						</p>
+					</div>
+					<div class="div2">
+						<span>服务期</span>
+						<p v-if="serviceStartTime != ''">{{serviceStartTime}} 至 {{serviceEndTime}}</p>
+					</div>
+			    </div>
+				<!--<div class="info3 p2">
+					<div class="div1">
+						<span>服务期</span>
+						<p v-if="serviceStartTime != ''">{{serviceStartTime}} 至 {{serviceEndTime}}</p>
+					</div>
+				</div>-->
+				<div class="info3 info4">
+					<div class="div1">
+						<span>最近开机</span>
+						<p>{{nearestStartTime}}</p>
+					</div>
+					<div class="button" style="margin-left:78px;">查看开机记录</div>
+				</div>
+				<div class="info3 info4">
+					<div class="div1">
+						<span>监控总时</span>
+						<p>{{monitoringTime}}</p>
+					</div>
+					<div class="div1">
+						<span>保修期</span>
+						<p>{{serviceEndTime}}</p>
+					</div>
+				</div>
+				<div class="info3 info4">
+					<div class="div1">
+						<span>校准状态</span>
+						<p v-if='calibrationState == 1'>校准成功</p>
+						<p v-else='calibrationState == 0'>未知</p>
+					</div>
+					<div class="div1">
+						<span>校准时间</span>
+						<p>{{maxCheckTime}}</p>
+						<!--<p v-else='calibrationState == 0'>未知</p>-->
+					</div>
+					<div class="button" @click="adjust">校准</div>
+				</div>
+				<!--<div class="info1"  style="margin-top:16px;">-->
+					<!--&lt;!&ndash;<div class="button" @click="adjust">校准</div>&ndash;&gt;-->
+				<!--</div>-->
+				<div class="info5">
+					 <span style="font-size: 13px;color: #767676;">测量模式</span>
+					<!--开关按钮-->
+					<div class="common-row" @click="meatureButton">
+						<div class="common-row"><span class="switch-on" id="wifi"></span></div>
+					</div>
+				</div>
+    		</div>
+    	</div>
+		<!--part3-->
+		<div class="part3">
+			 <div class="left" v-show="sign === '0' || sign === '1'">
+               <div class="title">
+				   <h2>工作日志</h2>
+				   <input type="date" class="form-control" v-model="sendDate" @change="dataTables1">
+			   </div>
+				 <table class="table table-hover table1" id="workTables">
+					 <thead>
+						 <!--<tr class="tr1">-->
+							 <!--<td>时间</td>-->
+							 <!--<td>操作员</td>-->
+							 <!--<td>流程</td>-->
+						 <!--</tr>-->
+					 </thead>
+					 <tbody>
+					 </tbody>
+				 </table>
+			 </div>
+			<div class="right">
+				<div class="right1">
+					<h2>位置统计</h2>
+					<div class="div1">
+						<img src="../../imgs/iframeImgs/icon34.png" alt="" style="width:16px;height:16px;margin-right:5px;">
+						<span>最近定位</span>
+					</div>
+					<p style="margin-top:15px;font-family: PingFangSC-Regular;font-size: 14px;color: #767676;line-height:20px;">{{nearestAddress}}</p>
+					<div class="div2">
+						<div style="display:flex;">
+							<img src="../../imgs/iframeImgs/icon35.png" alt="" style="width:16px;height:16px;margin-right:5px;">
+							<span>累计定位</span>
+							<p>{{locationCount}}次</p>
+						</div>
+						<div class="button">查看</div>
+					</div>
+				</div>
+				<div class="right2">
+					<h2>售后记录</h2>
+					<!--<div class="scroll" v-for="(item,index) in afterSaleLogs">-->
+						<!--<div class="customer1" >-->
+							<!--<div class="div1">-->
+								<!--<span>时间</span>-->
+								<!--<p>{{item.time}}</p>-->
+							<!--</div>-->
+							<!--<div class="div1">-->
+								<!--<span>售后原因</span>-->
+								<!--<p>{{item.reason}}</p>-->
+							<!--</div>-->
+						<!--</div>-->
+					<!--</div>-->
+					<ul class="layui-timeline"  style="margin-top:25px;">
+						<li class="layui-timeline-item" v-for="(item,index) in afterSaleLogs">
+							<i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+							<div class="layui-timeline-content layui-text">
+								<h3 class="layui-timeline-title">{{item.time}}</h3>
+								<p>
+									{{item.reason}}
+								</p>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<!--part4-->
+		<div class="part4">
+			<div class="left"  v-show="sign === '0' || sign === '1'">
+				<h2>流通日志</h2>
+				<table class="table table-hover table1" id="detailsTable">
+					<thead>
+					<tr class="tr1">
+						<td>时间</td>
+						<td>操作员</td>
+						<td>流程</td>
+					</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+		<!--弹框-->
+		<!--点击重新分配-->
+		<div role="dialog" class="modal fade bs-example-modal-sm" id="reapportion">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<!--header-->
+						<div class="modal-header text-center">
+							<button type="button" class="close" data-dismiss="modal">
+								<span>&times;</span>
+							</button>
+							<h4 class="h4 modal-title">重新分配市场</h4>
+						</div>
+						<!--body-->
+						<div class="modal-body text-center">
+							<div class="box">
+								<div class="donation1">
+									是否爱心捐赠
+									<div><input type="radio" name="radio" value="1"><span>是</span></div>
+									<div style="margin-left:20px;"><input type="radio" name="radio" value="0" checked><span>否</span></div>
+								</div>
+								<div class="donation1">
+									选择分配市场
+									<select name="" id="selectArea" class='select'>
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+						  <div><button class="btn btn-default btn-block" @click='closeModel' style="width:92px;margin-left:12px;">取消</button></div>
+						  <div><button class="btn btn-skyBlue btn-block" @click="subBtn" style="width:92px;margin-left:12px;"S>确定</button></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--点击租赁 /购买-->
+			<div role="dialog" class="modal fade bs-example-modal-sm" id="hire">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<!--header-->
+						<div class="modal-header text-center">
+							<button type="button" class="close" data-dismiss="modal">
+								<span>&times;</span>
+							</button>
+							<h4 class="h4 modal-title">服务形式</h4>
+						</div>
+						<!--body-->
+						<div class="modal-body text-center">
+						  	<div class='box'>
+						  		<input type="date" value='' id='serve1'/>
+						        <p class='maxDeadline'><span>*</span>最大服务期为年月日</p>
+						  	</div>
+						</div>
+						<div class="row">
+						  <div class="col-sm-3"><button class="btn btn-default btn-block" @click='closeModel'>取消</button></div>
+						  <div class="col-sm-3"><button class="btn btn-skyBlue btn-block" @click="subBtn2">确定</button></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--点击激活/冻结出现弹框-->
+			<div role="dialog" class="modal fade bs-example-modal-sm" id="freeze">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<!--header-->
+						<div class="modal-header text-center">
+							<button type="button" class="close" data-dismiss="modal">
+								<span>&times;</span>
+							</button>
+							<h4 class="h4 modal-title">冻结管理</h4>
+						</div>
+						<!--body-->
+						<div class="modal-body">
+						  <div class='div1'>
+						  	<p id="text">冻结设备则用户的服务将被终止，显示未过期，确定冻结该设备吗？</p>
+						  </div>
+						</div>
+						<div class="row">
+						  <div class="col-sm-3"><button class="btn btn-default btn-block" @click='closeModel'>取消</button></div>
+						  <div class="col-sm-3"><button class="btn btn-skyBlue btn-block" @click="subBtn1">确定</button></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<!--点击佩戴历史-->
+			<div role="dialog" class="modal fade bs-example-modal-sm" id="wearHistory">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<!--header-->
+						<div class="modal-header text-center">
+							<button type="button" class="close" data-dismiss="modal">
+								<span>&times;</span>
+							</button>
+							<h4 class="h4 modal-title">历史佩戴人</h4>
+						</div>
+						<!--body-->
+						<div class="modal-body text-center">
+						  <ul class='ul1' v-for='(item,index) in historyWear'>
+						  	<li class='li2'>佩戴人&ensp;&ensp;&ensp;&ensp;<span>{{historyWear[index].id}}</span></li>
+						  	<li class='li2 li3'>设备号&ensp;&ensp;&ensp;&ensp;<span @click='deviceId1'>{{historyWear[index].deviceId}}</span></li>
+						  	<li class='li2'>绑定时间&ensp;&ensp;<span>{{historyWear[index].bindingTime}}</span></li>
+						  	<li class='li2'>解绑时间&ensp;&ensp;<span>{{historyWear[index].removeBindingTime}}</span></li>
+						  </ul>
+						  <!--<ul class='ul1'>
+						  	<li class='li2'>佩戴人&ensp;&ensp;&ensp;&ensp;<span>吕一佳</span></li>
+						  	<li class='li2 li3'>设备号&ensp;&ensp;&ensp;&ensp;<span>902170160809777</span></li>
+						  	<li class='li2'>绑定时间&ensp;&ensp;<span>2018年03月24</span></li>
+						  	<li class='li2'>解绑时间&ensp;&ensp;<span>2018年03月24</span></li>
+						  </ul>-->
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--点击校准-->
+		<div role="dialog" class="modal fade bs-example-modal-sm" id="manualCalibration">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<!--header-->
+					<div class="modal-header text-center">
+						<button type="button" class="close" data-dismiss="modal">
+							<span>&times;</span>
+						</button>
+						<h4 class="h4 modal-title">手动校准</h4>
+					</div>
+					<!--body-->
+					<div class="modal-body text-center">
+						<div class="center">
+							<div class="txt">
+								<p>高压</p>
+								<input type="text" id="spStandard" value="">
+							</div>
+							<div class="txt">
+								<p>低压</p>
+								<input type="text" id="dpStandard" value="">
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-3"><button class="btn btn-default btn-block" @click='closeModel'>取消</button></div>
+						<div class="col-sm-3"><button class="btn btn-skyBlue btn-block" @click="subBtn4">确定</button></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--点击报废管理出现弹框-->
+		<div role="dialog" class="modal fade bs-example-modal-sm" id="scrapReason">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<!--header-->
+					<div class="modal-header text-center">
+						<button type="button" class="close" data-dismiss="modal">
+							<span>&times;</span>
+						</button>
+						<h4 class="h4 modal-title">选择报废原因</h4>
+					</div>
+					<!--body-->
+					<div class="modal-body text-center">
+						<select name="" id="reason" class='select'>
+							<option value="1">翻新:设备号报废</option>
+							<option value="2">物理:严重损坏</option>
+							<option value="3">电池:电池损坏 </option>
+							<option value="4">进水:设备报废</option>
+							<option value="5">遗失:设备遗失</option>
+							<option value="6">其他</option>
+						</select>
+					</div>
+					<div class="row">
+						<div class="col-sm-3"><button class="btn btn-default btn-block" @click='closeModel'>取消</button></div>
+						<div class="col-sm-3"><button class="btn btn-skyBlue btn-block" @click="scrapBtn">确定</button></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--点击测量模式开关出现弹框-->
+		<div role="dialog" class="modal fade bs-example-modal-sm" id="meatureModel">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<!--header-->
+					<div class="modal-header text-center">
+						<button type="button" class="close" @click="closeModel1" data-dismiss="modal">
+							<span>&times;</span>
+						</button>
+						<h4 class="h4 modal-title">测量模式开关</h4>
+					</div>
+					<!--body-->
+					<div class="modal-body text-center">
+						<p style="text-align:center;">开启可能会增加耗电，请告知用户！</p>
+					</div>
+					<div class="row">
+						<div class="col-sm-3"><button class="btn btn-default btn-block" @click='closeModel1'>取消</button></div>
+						<div class="col-sm-3"><button class="btn btn-skyBlue btn-block" @click="meatureModelBtn">确定</button></div>
+					</div>
+				</div>
+			</div>
+		</div>
+    </div>
+
+
+
+
+		<script src="../../lib/jquery/jquery.min.js"></script>
+		<script src="../../lib/bootstrap/js/bootstrap.min.js"></script>
+		<script src='../../js/vue.min.js'></script>
+		<script src="../../lib/layui/layui.js"></script>    <!--layui时间轴插件-->
+		<script src="../../lib/datatables/js/jquery.dataTables.min.js"></script>
+		<script src="../../lib/switch/honeySwitch.js"></script>   <!--开关按钮js插件-->
+		<script src="../../lib/layer/layer.js"></script>
+		<script src="../../lib/echarts/echarts.min.js"></script>
+		<script src="../../js/common.js"></script>
+		<script src="../../js/framePages/deviceDetails.js"></script>
+    </body>
+</html>

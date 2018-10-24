@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="../../imgs/logo-l.png">    <!--title-icon-->
+    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../../lib/datatables/css/jquery.dataTables.min.css"/>
+    <link rel="stylesheet" href="../../css/cssReset.css"/>
+    <title>APP用户反馈</title>
+    <style>
+        body{background-color: #f2f2f1;width: 97%;margin: 0 auto;padding:20px 0;}
+        .main{background: #FFFFFF;box-shadow: 0 0 10px 0 rgba(0,0,0,0.02);border-radius: 8px;padding:0 15px 20px 15px;}
+        .title{font-family: MicrosoftYaHei;font-size: 22px;color: rgba(0,0,0,0.5);line-height: 52px;border-bottom: 1px solid #E6E6E6;}
+        .list{/*margin: 15px 0;*/border-bottom: 1px dashed #ccc;padding-bottom: 15px;padding-top: 15px;}
+        .line1{display: flex;}
+        .list:hover{background-color: rgba(0,0,0,.1);}
+        .line1>div{margin: 0 10px;line-height: 30px;width: 8%;cursor: pointer;}
+        .line1>div:first-child{color: rgba(0,0,0,1);font-size: 16px;}
+        .line1>div:nth-child(2){color: rgba(0,0,0,0.6);font-size: 14px;}
+        .line1>div:nth-child(3) span{background-color: #0d9bff;padding: 2px 8px;border-radius: 15px;color: #fff;font-size: 12px;}
+        .line1>div:nth-child(4){width: 76%;text-align: right;color: rgba(0,0,0,0.6);font-size: 12px;}
+        .line2{color: #000;font-size: 14px;padding: 10px;display: none;}
+        .color{color: rgba(0,0,0,0.6);}
+    </style>
+</head>
+<body>
+<div class="main" id="app">
+    <!--app反馈-->
+    <div class="title">app反馈</div>
+    <div class="listBox" id="listBox">
+
+    </div>
+</div>
+
+
+
+
+<!--js-->
+<script src="../../lib/jquery/jquery.min.js"></script>
+<script src="../../js/vue.min.js"></script>
+<script src="../../lib/bootstrap/js/bootstrap.min.js"></script>
+
+<script src="../../lib/layer/layer.js"></script>
+<script src="../../js/common.js"></script>
+<script src="../../js/framePages/appTickling.js"></script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <title>实时地图</title>
+    <link rel="shortcut icon" href="../../imgs/logo-l.png">
+    <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0">
+    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../../lib/swiper/css/swiper.min.css"/>
+    <link rel="stylesheet" href="../../css/cssReset.css"/>
+    <link rel="stylesheet" href="https://cache.amap.com/lbs/static/main1119.css"/>   <!--自定义图标-->
+    <link rel="stylesheet" href="https://cache.amap.com/lbs/static/main.css?v=1.0?v=1.0"/><!--城市选择-->
+    <link rel="stylesheet" href="../../css/framePages/nowUserAddMap.css">
+</head>
+<body>
+
+<div  id="app" v-cloak>
+    <!--头部-->
+    <header class="header2">
+        <!--标题-->
+        <div class="title12">
+            <img src="../../imgs/newLogo.png" alt="andunLogo" width="" class="titleLogo"/>
+            <span>安顿心脑监测预警救护中心</span>
+            (<span class="addressName">{{ addressName }}</span>)
+        </div>
+        <!--<div class="title22">
+            <span>预警人次&#12288;</span><span class="helpPeopleCounts">0</span>
+        </div>-->
+        <!--时间-->
+        <div class="nowTime"></div>
+    </header>
+    <!--地图-->
+    <div id="normalMap"></div>
+    <!--图例-->
+    <div class="bottomImgEx2">
+        <!--健康-->
+        <div><img src="../../imgs/mapImages/circle101.png" width="18" alt="健康"/><span>健康</span><!--<span id="healthCounts2">{{ green }}</span>--></div>
+        <!--亚健康-->
+        <div><img src="../../imgs/mapImages/circle102.png" width="18" alt="亚健康"/><span>亚健康</span><!--<span id="subhealthyCounts2">{{ orange }}</span>--></div>
+        <!--疾病-->
+        <div><img src="../../imgs/mapImages/circle103.png" width="18" alt="疾病"/><span>疾病</span><!--<span id="diseaseCounts2">{{ brown }}</span>--></div>
+        <!--断网-->
+        <div><img src="../../imgs/mapImages/blue01.png" width="18" alt="断网"/><span>离线</span><span id="outLineCounts2">{{ isOffLine }}</span></div>
+        <!--正在救护-->
+        <!--<div><img src="../../imgs/mapImages/circle105.png" width="18" alt="正在救护"/><span>正在救护</span>&lt;!&ndash;<span id="nowHelpCounts2">{{ red }}</span>&ndash;&gt;</div>-->
+    </div>
+</div>
+
+
+
+
+
+<!--js-->
+<script src="../../lib/vue.min.js"></script>
+<script src="../../lib/jquery/jquery.min.js"></script>
+<script src="../../lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../lib/echarts/echarts.min.js"></script>
+<script src="../../lib/layer/layer.js"></script>
+<script src="../../lib/swiper/js/swiper.min.js"></script>
+<script src="https://cache.amap.com/lbs/static/es5.min.js"></script><!--默认地图-->
+<script src="https://webapi.amap.com/maps?v=1.3&key=1573aeddb3c9e953a05da7e8a90c0c5b&plugin=AMap.Geocoder,AMap.DistrictSearch"></script><!--key引入，多个plugin用“,”分割-->
+<!--<script type="text/javascript" src="http://cache.amap.com/lbs/static/addToolbar.js"></script>&lt;!&ndash;图标、多窗体、逆地理编码、删除多个markers&ndash;&gt;-->
+<script type="text/javascript" src="https://webapi.amap.com/demos/js/liteToolbar.js"></script>
+<script src="../../js/common.js"></script>
+<!--<script src="../../js/framePages/showCommon.js"></script>-->
+<script src="../../js/screenShow/s_user_map2.js"></script>
+</body>
+</html>

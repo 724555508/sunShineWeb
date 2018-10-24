@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="../../imgs/logo-l.png">    <!--title-icon-->
+    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../../lib/datatables/css/jquery.dataTables.min.css"/>
+    <link rel="stylesheet" href="../../css/cssReset.css"/>
+    <link rel="stylesheet" href="../../css/framePages/partnerIndex.css">
+    <title>主页[C]</title>
+    <style>
+        /*统计*/
+        .Statistics{color: #000;display: flex;display: -webkit-flex;margin:15px 0;justify-content:space-between;}
+        .Statistics>div{background:#fff;width:24%;height:102px;border-radius: 6px;box-shadow: 0 1px 6px 0 rgba(59,61,62,0.03);display:flex;align-items:center;}
+        .Statistics>div>div:first-child{padding:0 22px 0 42px;}
+        .Statistics>div>div:first-child img{width:50px;height:50px;}
+        .Statistics>div>div:last-child{text-align:left;}
+        .Statistics>div>div:last-child .num{font-family: Roboto-Medium;font-size: 30px;color: #4A4A4A;}
+        .Statistics>div>div:last-child .txt{font-family: PingFangSC-Medium;font-size: 14px;color: #767676;}
+    </style>
+
+</head>
+<body>
+<main class="bigBox main" id="adv" v-cloak>
+    <div class="part1">
+        <div class="top1">
+            <div class="left">
+                <div class="div1">{{bigNum}}</div>
+                <div class='div2'>
+                    <h2>{{ companyname }}</h2>
+                    <p class='p1' v-if="useSign == 0">冻结</p>
+                    <p class='p2' v-if="useSign == 2">正常</p>
+                </div>
+            </div>
+            <!--<div class="right btn1" >编辑</div>-->
+        </div>
+        <div class="top2">
+            <div>{{username}}</div>
+            <div>{{phoneNum}}</div>
+            <div>{{agencyCity}}</div>
+            <div style="margin-left:20px;"><span>渠道数量</span>{{channel}}</div>
+            <div style="margin-left:20px;"><span>有效期</span>{{bargainTime}}</div>
+        </div>
+        <div class="top3">
+
+        </div>
+        <div class="top4">
+            <div><span>保证金</span>0</div>
+            <div><span>分成收入</span>0</div>
+            <div><span>销售件数</span>{{sell}}</div>
+            <div><span>销售总额</span>0</div>
+        </div>
+        <div class="top5">
+            <div><span>联系人</span>{{linkName}}</div>
+            <div><span>联系电话</span>{{linkPhoneNum}}</div>
+            <div><span>合同编号</span>{{grantNum}}</div>
+        </div>
+    </div>
+    <section class="Statistics">
+        <!--总数-->
+        <div title="全部设备" class="div1">
+            <div>
+                <img src="../../imgs/iframeImgs/icon26.png" alt="">
+            </div>
+            <div>
+                <div id="all" class="num">{{all}}</div>
+                <div class="txt">全部设备</div>
+            </div>
+            <!--<p>500</p>-->
+        </div>
+        <!--库存设备 -->
+        <div title="库存设备">
+            <div>
+                <img src="../../imgs/iframeImgs/icon27.png" alt="">
+            </div>
+            <div>
+                <div id="repertory" class="num">{{repertory}}</div>
+                <div class="txt">库存设备</div>
+            </div>
+        </div>
+        <!--已售设备-->
+        <div title="已售设备">
+            <div>
+                <img src="../../imgs/iframeImgs/icon28.png" alt="">
+            </div>
+            <div>
+                <div class="num">{{sell}}</div>
+                <div class="txt">已售设备</div>
+            </div>
+        </div>
+        <!--线上订单-->
+        <div title="线上订单">
+            <div>
+                <img src="../../imgs/iframeImgs/icon29.png" alt="">
+            </div>
+            <div>
+                <div id="disableNum" class="num">0</div>
+                <div class="txt">线上订单</div>
+            </div>
+        </div>
+    </section>
+    <div style="background:#fff;padding:20px;">
+        <div class="part3">
+            <h2>展示与统计</h2>
+            <div class="box">
+                <div>
+                    <div class="div1">
+                        <a target="_blank" href="../screenShow/s_user_map_partner.html">
+                            <img src="../../imgs/iframeImgs/icon21.png" alt="">
+                        </a>
+                        <p>动态地图</p>
+                    </div>
+                    <div class="div1">
+                        <a target="_blank" href="../screenShow/s_user_risk_list.html">
+                            <img src="../../imgs/iframeImgs/icon22.png" alt="">
+                        </a>
+                        <p>用户预警</p>
+                    </div>
+                    <div class="div1">
+                        <a target="_blank" href="../framePages/dataAbortList.html">
+                            <img src="../../imgs/iframeImgs/icon04.png" alt="">
+                        </a>
+                        <p>数据异常</p>
+                    </div>
+                    <div class="div1">
+                        <a target="_blank" href="../framePages/lostRemindList.html">
+                            <img src="../../imgs/iframeImgs/icon05.png" alt="">
+                        </a>
+                        <p>失联提醒</p>
+                    </div>
+                    <div class="div1">
+                        <a target="_blank" href="../screenShow/s_manageWarning_terrace.html">
+                            <img src="../../imgs/iframeImgs/icon23.png" alt="">
+                        </a>
+                        <p>531预警</p>
+                    </div>
+                    <div class="div1">
+                        <a target="_blank" href="../screenShow/s_user_map2.html?by=Agent">
+                            <img src="../../imgs/iframeImgs/icon15.png" alt="">
+                        </a>
+                        <p>用户实时分布</p>
+                    </div>
+
+
+                </div>
+
+                <div>
+
+                    <!--实时预警监控-->
+                    <div class="div1">
+                        <a href="../screenShow/s_sosWarning_manage.html" target="_blank"><img src="../../imgs/iframeImgs/icon17.png" alt=""></a>
+                        <p>实时预警监控</p>
+                    </div>
+                    <!--用户健康特征统计-->
+                    <div class="div1">
+                        <a href="../screenShow/s_user_health_info.html" target="_blank"><img src="../../imgs/iframeImgs/icon16.png" alt=""></a>
+                        <p>用户健康特征统计</p>
+                    </div>
+
+                    <!--实时预警监控-->
+                    <div class="div1">
+                        <a href="../screenShow/s_sos_help.html" target="_blank"><img src="../../imgs/iframeImgs/icon18.png" alt=""></a>
+                        <p>SOS实时监控</p>
+                    </div>
+                    <!--实时预警监控-->
+                    <div class="div1">
+                        <a href="../screenShow/s_history_statistics.html" target="_blank"><img src="../../imgs/iframeImgs/icon19.png" alt=""></a>
+                        <p>用户基础病统计</p>
+                    </div>
+                </div>
+                <!--&lt;!&ndash;用户实时分布&ndash;&gt;-->
+                <!--<a href="../screenShow/s_user_map2.html" target="_blank">-->
+                <!--<div>-->
+                <!--<div class="iconBox">-->
+                <!--&lt;!&ndash;<span class="span">0</span>&ndash;&gt;-->
+                <!--<img src="../../imgs/iframeImgs/userPartIcon.png" alt="icon">-->
+                <!--</div>-->
+                <!--<div class="iconTitle">用户实时分布</div>-->
+                <!--</div>-->
+                <!--</a>-->
+            </div>
+        </div>
+        <div class="part3 part4" style="margin-top:40px;">
+            <h2>其他管理</h2>
+            <div class="box">
+               <div>
+                   <div class="div1"  style="margin-right:40px;">
+                       <a :href="partnerUrl"><img src="../../imgs/iframeImgs/icon24.png" alt=""></a>
+                       <p>发货地址管理</p>
+                   </div>
+                   <div class="div1">
+                       <a href="../framePages/filesManage.html"><img src="../../imgs/iframeImgs/icon25.png" alt=""></a>
+                       <p>文件管理</p>
+                   </div>
+                   <div class="div1">
+                       <a href="../screenShow/s_lostManageBpMonitor.html" target="_blank"><img src="../../imgs/iframeImgs/icon20.png" alt=""></a>
+                       <p>佩戴异常监控</p>
+                   </div>
+               </div>
+
+
+                <!--<div class="div1 div2">-->
+                <!--&lt;!&ndash;<img src="../../imgs/channel.png" alt="">&ndash;&gt;-->
+                <!--&lt;!&ndash;<p><a href="">渠道管理</a></p>&ndash;&gt;-->
+                <!--</div>-->
+                <div class="div1 div2">
+                    <!--<img src="../../imgs/goods.png" alt="">-->
+                    <!--<p>窜货管理</p>-->
+                </div>
+                <div class="div1 div2">
+
+                </div>
+                <div class="div1 div2">
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--<div class='part3'>-->
+        <!--<h2>其他管理</h2>-->
+        <!--<div class='add'>-->
+            <!--<div class='location'>-->
+                <!--<a target="_blank" :href="partnerUrl">地址管理</a>-->
+            <!--</div>-->
+            <!--<button class='code'>二维码</button>-->
+        <!--</div>-->
+    <!--</div>-->
+
+    <!--&lt;!&ndash;登陆日志&ndash;&gt;-->
+    <!--<div class="logBox" >-->
+        <!--<h2 class="h2">登录日志</h2>-->
+        <!--<table data-toggle="table" class="table table-bordered text-center table-hover" id="logTable">-->
+            <!--<thead>-->
+            <!--<tr class='tr1'>-->
+                <!--<th>序号</th>-->
+                <!--<th>上线时间</th>-->
+                <!--<th>登录地点</th>-->
+                <!--<th>设备</th>-->
+                <!--&lt;!&ndash;<th>操作</th>&ndash;&gt;-->
+            <!--</tr>-->
+            <!--</thead>-->
+            <!--<tbody>-->
+            <!--</tbody>-->
+        <!--</table>-->
+    <!--</div>-->
+</main>
+
+
+<!--js-->
+<script src="../../lib/jquery/jquery.min.js"></script>
+<script src="../../lib/vue.min.js"></script>
+<script src="../../lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../lib/datatables/js/jquery.dataTables.min.js"></script>
+<script src="../../lib/layer/layer.js"></script>
+<script src="../../lib/echarts/echarts.min.js"></script>
+<script src="../../js/common.js"></script>
+<script src="../../js/partner/partnerIndex.js"></script>
+</body>
+</html>

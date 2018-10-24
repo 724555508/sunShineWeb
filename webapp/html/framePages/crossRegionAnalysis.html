@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="../../imgs/logo-l.png">    <!--title-icon-->
+    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../../lib/datatables/css/jquery.dataTables.min.css"/>
+    <link rel="stylesheet" href="../../css/cssReset.css"/>
+    <link rel="stylesheet" href="../../css/framePages/crossRegionAnalysis.css"/>
+    <title>窜货分析</title>
+</head>
+<body>
+<div id="app" class="dad" v-cloak>
+    <!--面包屑导航-->
+    <ul class="breadcrumb">
+        <li v-if="sign === '0'|| sign === '1'"><a href="crossRedionManage.html" class="active">窜货管理</a></li>
+        <li v-else><a href="../partner/partnerCrossAegionManage.html" class="active">窜货管理</a></li>
+        <li><a href="javascript:;" class="inActive">窜货分析</a></li>
+    </ul>
+    <div class="part1">
+        <!--安顿护心仪1代-->
+        <div class="left">
+            <div class="title">
+                <h2>安顿护心仪1代</h2>
+                <button @click="checkDevice">查看设备</button>
+            </div>
+            <div class="txt">
+                <div class="left1">
+                    <p>设备ID&ensp;&ensp;{{deviceId}}</p>
+                    <p>所属市场&ensp;&ensp;{{areaName}}</p>
+                    <p>居住区&ensp;&ensp;{{addressCity}}</p>
+                    <p>激活时间&ensp;&ensp;{{activationTime}}</p>
+                </div>
+                <div class="right1">
+                    <p>校验码&ensp;&ensp;{{checkCode}}</p>
+                    <p>合伙人&ensp;&ensp;{{agentName}}</p>
+                    <p>佩戴人&ensp;&ensp;{{wearUserName}}</p>
+                    <p>判断时长&ensp;&ensp;30天</p>
+                </div>
+            </div>
+        </div>
+        <!--位置统计-->
+        <div class="center">
+            <!--<h2>位置统计</h2>-->
+            <div class="pieChart" id="pieChart">
+
+            </div>
+        </div>
+        <!--窜货处理-->
+        <div class="right">
+            <div class="title">
+                <h2>窜货处理</h2>
+                <div class="btn1" v-show="sign === '0'|| sign === '1'">
+                    <button @click="repealCrossRegion" id="crossSign1">撤销窜货</button>
+                    <button @click="rejectComplaint" id="crossSign2">驳回申诉</button>
+                </div>
+                <div class="btn1" v-show="isT === 1">
+                    <button @click="complaintSubmit" style="background: #E7F7FF;border-radius: 2px;border:none;color: #41A9FF;" v-show="status === 2">提交申诉</button>
+                    <button style="background: #E7F7FF;border-radius: 2px;border:none;color: #41A9FF;" v-show="status === 3">申诉中</button>
+                </div>
+                <div class="btn1"  v-show="isT === 2">
+                    <button @click="receiveCompensation">收到赔偿</button>      <!--@click="receiveCompensation"-->
+                    <button @click="agreePeace">同意和解</button>        <!--@click="agreePeace"-->
+                </div>
+            </div>
+            <div class="txt">
+                <div v-if="status === 0" style="color:#EA4A4A"><p>窜货认定</p>疑是窜货</div>
+                <div v-else-if="status === 1" style="color:#4DC600"><p>窜货认定</p>正常 </div>
+                <div v-else-if="status === 2" style="color:#EA4A4A"><p>窜货认定</p>窜货</div>
+                <div v-else-if="status === 3" style="color:#767676;"><p>窜货认定</p>申诉中</div>
+                <div><p>被窜货市场</p>{{beFleeGoodsAreaName}}</div>
+                <div><p>联系人</p>{{linkUserName}}</div>
+                <div><p>联系电话</p>{{linkPhoneNum}}</div>
+                <div style="font-size:16px;color:#EA4A4A;" v-if="dealResult === 1"><p style="font-family: PingFangSC-Medium;font-size: 16px;color: #767676;">处理结果</p>被窜货市场未处理</div>
+                <div style="font-size:16px;color:#52C41A;" v-else-if="dealResult === 2"><p style="font-family: PingFangSC-Medium;font-size: 16px;color: #767676;">处理结果</p>已赔偿</div>
+                <div style="font-size:16px;color:#52C41A;" v-else-if="dealResult === 3"><p style="font-family: PingFangSC-Medium;font-size: 16px;color: #767676;">处理结果</p>已和解</div>
+                <div style="font-size:16px;color:#52C41A;" v-else-if="dealResult === 4"><p style="font-family: PingFangSC-Medium;font-size: 16px;color: #767676;">处理结果</p>已撤销</div>
+            </div>
+        </div>
+    </div>
+    <div class="part2">
+        <!--定位统计-->
+        <div>
+            <h2>定位统计</h2>
+            <div  class="date">
+                <div>
+                    <ul class="ul2" id="list">
+                        <!--<li v-for="(item,index) in locationStatistical">-->
+                            <!--<p class="dw">{{item.data}}</p>-->
+                            <!--<div>{{item.res}}</div>-->
+                        <!--</li>-->
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!--弹框-->
+    <!--撤销窜货弹框-->
+    <div role="dialog" class="modal fade bs-example-modal-sm" id="repealCrossRegion">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!--header-->
+                <div class="modal-header text-center">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                    <h4 class="h4 modal-title">撤销窜货</h4>
+                </div>
+                <!--body-->
+                <div class="modal-body text-center">
+                    <p>确定撤销窜货吗？</p>
+                </div>
+                <div class="row">
+                    <div><button class="btn btn-default btn-block" @click='closeModel' style="width:92px;margin-left:12px;">取消</button></div>
+                    <div><button class="btn btn-skyBlue btn-block" style="width:92px;margin-left:12px;" @click="repealCrossSubmit">确定</button></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--驳回申诉-->
+    <div role="dialog" class="modal fade bs-example-modal-sm" id="rejectComplaint">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!--header-->
+                <div class="modal-header text-center">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                    <h4 class="h4 modal-title">驳回申诉</h4>
+                </div>
+                <!--body-->
+                <div class="modal-body text-center">
+                    <p>确定驳回申诉吗？</p>
+                </div>
+                <div class="row">
+                    <div><button class="btn btn-default btn-block" @click='closeModel' style="width:92px;margin-left:12px;">取消</button></div>
+                    <div><button class="btn btn-skyBlue btn-block" style="width:92px;margin-left:12px;"  @click="rejectComplaintSubmit">确定</button></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--提交申诉-->
+    <div role="dialog" class="modal fade bs-example-modal-sm" id="complaintSubmit">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!--header-->
+                <div class="modal-header text-center">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                    <h4 class="h4 modal-title">提交申诉</h4>
+                </div>
+                <!--body-->
+                <div class="modal-body text-center">
+                    <p>确定要提交申诉吗？</p>
+                </div>
+                <div class="row">
+                    <div><button class="btn btn-default btn-block" @click='closeModel' style="width:92px;margin-left:12px;">取消</button></div>
+                    <div><button class="btn btn-skyBlue btn-block" style="width:92px;margin-left:12px;"  @click="ComplaintSubmit">确定</button></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--收到赔偿-->
+    <div role="dialog" class="modal fade bs-example-modal-sm" id="receiveCompensation">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!--header-->
+                <div class="modal-header text-center">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                    <h4 class="h4 modal-title">确认收到赔偿</h4>
+                </div>
+                <!--body-->
+                <div class="modal-body text-center">
+                    <p>确定收到窜货赔偿，且会关闭窜货责任，该设备号市场归属地将改为{{beFleeGoodsAreaName}}市场。</p>
+                </div>
+                <div class="row">
+                    <div><button class="btn btn-default btn-block" @click='closeModel' style="width:92px;margin-left:12px;">取消</button></div>
+                    <div><button class="btn btn-skyBlue btn-block" style="width:92px;margin-left:12px;"  @click="compensationSubmit">确定</button></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--同意和解-->
+    <div role="dialog" class="modal fade bs-example-modal-sm" id="agreePeace">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!--header-->
+                <div class="modal-header text-center">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                    <h4 class="h4 modal-title">确认同意和解</h4>
+                </div>
+                <!--body-->
+                <div class="modal-body text-center">
+                    <p>同意和解对方将不在赔偿您窜货损失，且会关闭窜货责任；该设备号市场归属地将改为{{beFleeGoodsAreaName}}市场。</p>
+                </div>
+                <div class="row">
+                    <div><button class="btn btn-default btn-block" @click='closeModel' style="width:92px;margin-left:12px;">取消</button></div>
+                    <div><button class="btn btn-skyBlue btn-block" style="width:92px;margin-left:12px;"  @click="agreeSubmit">确定</button></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--js-->
+<script src="../../lib/jquery/jquery.min.js"></script>
+<script src="../../lib/vue.min.js"></script>
+<script src="../../lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../lib/datatables/js/jquery.dataTables.min.js"></script>
+<script src="../../lib/layer/layer.js"></script>
+<script src="../../lib/echarts/echarts.min.js"></script>
+<script src="../../js/common.js"></script>
+<script src="../../js/framePages/crossRegionAnalysis.js"></script>
+</body>
+</html>

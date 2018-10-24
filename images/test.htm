@@ -1,0 +1,695 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="expires" content="0">
+    <title></title>
+
+    <script language="javascript" type="text/javascript">
+    
+    //-------------------- zhihuiw add  begin ----------------------//
+    	var rootPath ="C:\\Users\\Administrator\\Desktop\\Files";
+		var batchId = "";//批量号
+		var basePath = "C:\\Users\\Administrator\\Desktop";//扫描路径
+		var monitorPath = "C:\\PanaScanMonitor\\";//监控路径
+		var fileObj = new ActiveXObject("Scripting.FileSystemObject");//文件操作对象
+		
+		//复制及上传影像
+		function doUpload() {
+			if (!fileObj.FolderExists(monitorPath)) {
+				fileObj.CreateFolder(monitorPath);
+			}
+			var DekeyScan=document.getElementById("DekeyScan");
+			if (!isImger()) {
+				alert("无扫描影像！");
+				return false;
+			}
+			//fileObj.GetFolder(basePath).Copy(monitorPath);//复制批量 
+
+			var DekeyScan=document.getElementById("DekeyScan");
+
+			DekeyScan.ExportTo(monitorPath);
+			fileObj.CreateTextFile(monitorPath + batchId + ".DAT");//生成一个批量同名的文件
+			Clear();
+			setScanPath(rootPath);//改变成原来设置的路径
+			basePath = "";
+			batchId = "";
+			setScanInfo();
+		}
+
+		function showClock(){
+			var curTime = new Date();
+			document.getElementById("clock").innerHTML = curTime.toLocaleString();
+			setTimeout("showClock()", 100);
+		}
+
+
+        function importDir(){
+
+            var DekeyScan=document.getElementById("DekeyScan");
+            var importRootDir = "C:\\PanaScanRoot";
+            var batchId = "201704260001";
+            DekeyScan.importDir(importRootDir, batchId);     
+        }
+		
+		//判断是否有影像
+		function isImger() {
+			var DekeyScan=document.getElementById("DekeyScan");
+			if (DekeyScan.LocationImage() < 1) {
+				return false;
+			}
+			return true;
+		}
+		//设置扫描信息
+		function setScanInfo() {
+		
+		  var retVal = "PanaScannerDemo:2017/04/26:ghi:1:2";
+          var strScannerModel=DekeyScan.SelectedScannerName();
+//		  alert(scannername.toString());
+          var curTime = new Date();
+			
+		  
+	           var values = retVal.split(":");
+	           dealOprId = values[0];
+	           dealDate = values[1];
+//	           scanDate = values[2];
+               scanDate=curTime.toLocaleString();
+	           pNum = values[3]*2;
+	           orgId = values[4];
+	           var dealDate = dealDate.substring(0,4) + "" + dealDate.substring(5,7) + "" + dealDate.substring(8);
+			   batchId = dealDate + dealOprId;
+	    	   basePath = rootPath +"\\"+ batchId;
+	    	   var batchInfo = "&nbsp;&nbsp;&nbsp;Panasonic Scanner Demo&nbsp;&nbsp;&nbsp;Scanner:"+strScannerModel.toString()+"&nbsp;&nbsp;&nbsp开始日期:"+scanDate;
+	    	   
+	    	   document.getElementById("batchInfo").innerHTML=batchInfo;
+	    	   setScanPath(basePath);
+	           return;
+
+		}
+	    
+	    //是否设置批量信息
+	    function isSetScanInfo() {
+	    	if (basePath == null || basePath.length < 1) {
+    			setScanPath(rootPath);
+	    		setScanInfo();
+	    		return false;
+	    	} else {
+		    	if (!fileObj.FolderExists(basePath)) {
+					fileObj.CreateFolder(basePath);
+				}
+	    		return true;
+	    	}
+	    }
+	    
+	    //获取扫描路径
+	    function getScanPath() {
+	    	var DekeyScan=document.getElementById("DekeyScan");
+			var path=DekeyScan.ScanPath;
+			return path.toString();
+		}
+		
+		//设置扫描路径
+		function setScanPath(path) {
+			var DekeyScan=document.getElementById("DekeyScan");
+			console.log(path);
+			DekeyScan.SetFilePath(path);
+		}
+		
+		//判断光标是否选中
+		function isChecked() {
+			var DekeyScan=document.getElementById("DekeyScan");
+			if (DekeyScan.LocationImage() < 1) {
+				alert("没有选中影像！");
+				return false;
+			} else {
+				return true;
+			}
+		}
+		
+		//初始化页面
+		function doInitPage() {
+			setScanPath(rootPath);
+			var DekeyScan=document.getElementById("DekeyScan");
+			DekeyScan.RowLine(2,2);
+			SetStatus();
+			showClock();
+		}
+		
+		//接收键盘信息 
+		function doKeyDown(keyCode)
+		{
+		 	    //F2 选择批次
+			    if(keyCode==113)
+			    {
+			        setScanInfo();
+			    	return;
+			    }
+		
+			    //F4 提交
+			    if(keyCode==115)
+			    {
+			        doUpload();
+			        event.keyCode=0;
+			    	return false;
+			    }
+		
+			    //F7 扫描
+			    if(keyCode==118)
+			    {
+			        scanimage();
+			    	return;
+			    }
+		
+		
+			    //PgUp 上一页
+			    if(keyCode==33)
+			    {
+					var DekeyScan=document.getElementById("DekeyScan");
+					var btnprev=document.getElementById("IMG2");
+					if(DekeyScan.Iprev()==0) {
+						IMG2_onclick();
+					} else {
+						return;
+					}
+			    }
+		 
+			    //PgDn 下一页
+			    if(keyCode==34)
+			    {
+					var DekeyScan=document.getElementById("DekeyScan");
+					var btnnext=document.getElementById("IMG3");
+					if(DekeyScan.Inext()==0) {
+						IMG3_onclick();
+					} else {
+						return;
+					}
+				}
+		} 
+    	
+    	//-------------------- zhihuiw add  end ----------------------//
+    	
+    	
+	//显示文件数量
+	function showImageNumber() {
+		var DekeyScan=document.getElementById("DekeyScan");
+		var DivShowPage=document.getElementById("DivShowPage");
+		DivShowPage.innerText="总共"+DekeyScan.PageNumber +"当前显示" +DekeyScan.ShowImageNumber;
+	}
+	
+	//状态标示
+	function SetStatus()
+	{
+		var DekeyScan=document.getElementById("DekeyScan");
+		var btnfirst=document.getElementById("IMG1");
+		var btnprev=document.getElementById("IMG2");
+		var btnnext=document.getElementById("IMG3");
+		var btnlast=document.getElementById("IMG4");
+		if(DekeyScan.Ifirst()==0) {
+			btnfirst.disabled=false;
+		} else {
+			btnfirst.disabled=true;
+		}
+		if(DekeyScan.Iprev()==0) {
+			btnprev.disabled=false;
+		} else {
+			btnprev.disabled=true;
+		}
+		if(DekeyScan.Inext()==0) {
+			btnnext.disabled=false;
+		} else {
+			btnnext.disabled=true;
+		}
+		if(DekeyScan.Ilast()==0) {
+			btnlast.disabled=false;
+		} else {
+			btnlast.disabled=true;
+		}
+	}
+     function Insert()//插入
+    {
+    	if (isSetScanInfo()) {
+	    	var DekeyScan=document.getElementById("DekeyScan");
+	    	if (isChecked()) {
+	    		var i = DekeyScan.LocationImage();
+	    		DekeyScan.Insert();
+	    		DekeyScan.JumpPage(i);
+	    	}
+    	}
+	 }
+
+        function scanimage()//扫描
+        {
+        	if (isSetScanInfo()) {
+        		var DekeyScan=document.getElementById("DekeyScan");
+	            DekeyScan.Scan();
+	            SetStatus();
+        	}
+        }
+        function ShowMinPage()//弹出自定义小窗体
+        {
+        	var DekeyScan=document.getElementById("DekeyScan");
+        	 DekeyScan.Set();
+        }  
+        function IMG1_onclick()//首页 
+        {
+
+          var DekeyScan=document.getElementById("DekeyScan");
+          DekeyScan.FirstPage();
+          SetStatus();
+        }
+       
+        function IMG4_onclick() //尾页
+        {
+
+           var DekeyScan=document.getElementById("DekeyScan");
+           DekeyScan.LastPage();
+          SetStatus();
+        }
+
+        function IMG2_onclick() {//上一页
+
+        	 var DekeyScan=document.getElementById("DekeyScan");
+           	 DekeyScan.PreviousPage();
+             SetStatus();
+        }
+
+        function IMG3_onclick() //下一页
+        {
+
+            var DekeyScan=document.getElementById("DekeyScan");
+            DekeyScan.NextPage();
+            SetStatus();
+        }
+
+        function IMG5_onclick() //放大
+        {
+           var DekeyScan=document.getElementById("DekeyScan");
+           if (isChecked()) {
+				DekeyScan.Enlarge();
+           }
+        }
+
+        function IMG6_onclick() //缩小
+        {
+        	var DekeyScan=document.getElementById("DekeyScan");
+          	if (isChecked()) {
+				DekeyScan.Narrow();
+            }
+        }
+
+        function IMG10_onclick() //向左九十度
+        {
+        	var DekeyScan=document.getElementById("DekeyScan");
+         	if (isChecked()) {
+				DekeyScan.LeftRotation()
+            }
+        }
+
+        function IMG11_onclick() //向右九十度
+        {
+        	var DekeyScan=document.getElementById("DekeyScan");
+			if (isChecked()) {
+				DekeyScan.RightRotation();
+            }
+        }
+         function checkNum()//只能输入数字
+        {
+            if(window.event.keyCode > '9'.charCodeAt(0) ||window.event.keyCode < '0'.charCodeAt(0))
+            {
+                window.event.returnValue=false;
+            }
+        }
+        function IMG12_onclick() {//跳转图片 
+        	var i=document.getElementById("TxTNumber").value;
+        	var DekeyScan=document.getElementById("DekeyScan");
+            DekeyScan.JumpPage(i);
+            SetStatus();
+        }
+
+        function IMG13_onclick() //删除
+        {
+        	var DekeyScan=document.getElementById("DekeyScan");
+          	if (isChecked()) {
+          		var i = DekeyScan.LocationImage();
+				DekeyScan.Remove();
+				DekeyScan.JumpPage(i>1?i-1:i);
+          		SetStatus();
+            }
+        }
+       
+        function replace_onclick(){//替换文件 
+        	if (isSetScanInfo()) {
+        		var DekeyScan=document.getElementById("DekeyScan");
+	        	if (isChecked()) {
+	        		var i = DekeyScan.LocationImage();
+					DekeyScan.Replace();
+					DekeyScan.JumpPage(i);
+	          		SetStatus();
+            	}
+        	}
+        }
+				function SetBrightness()//亮度设置
+				{
+					var i=prompt("请输入亮度值：","");   
+					var DekeyScan=document.getElementById("DekeyScan");
+					DekeyScan.SetBrightness(parseInt(i));
+				}
+				function SetDPI()//分辨率
+				{	var i=prompt("请输入分辨率：","200");   
+					
+					var DekeyScan=document.getElementById("DekeyScan");
+					DekeyScan.SetDPI(parseInt(i));
+					
+				}
+				function SetContrast()//对比度
+				{var i=prompt("请输入对比度：","");   
+					var DekeyScan=document.getElementById("DekeyScan");
+					DekeyScan.SetContrast(parseInt(i));
+					}
+					function SetPixelType()//颜色类型
+					{
+                        var i=prompt("请输入：0 黑白，1 灰度，2 24位彩色","0");   
+					    var DekeyScan=document.getElementById("DekeyScan");
+					    DekeyScan.SetImageCompressType(parseInt(i));
+						}
+						function SetDuplex()//单双页
+						{
+							var i=prompt("请输入：true 双面 ，false 单面",true);   
+					    var DekeyScan=document.getElementById("DekeyScan");
+					    DekeyScan.SetDuplex(i);
+					
+							}
+						
+						function SaveTempate()
+						{
+							var fileName=prompt("请输入：","c:\\tempate\\11.cfg");   
+							}
+							function RowLine(row,line)//行列设置
+							{	var i=prompt("请输入: 行，列","1,2"); 
+								 var arr=i.split(",");
+
+								var DekeyScan=document.getElementById("DekeyScan");
+								DekeyScan.RowLine(parseInt(arr[0]),parseInt(arr[1]));
+								SetStatus();
+								}
+								function Clear()//清空所有影像
+								{	var DekeyScan=document.getElementById("DekeyScan");
+									DekeyScan.AllClear();
+								}
+								function SetImageCompressType()//压缩方式
+								{
+									var DekeyScan=document.getElementById("DekeyScan");
+									DekeyScan.SetImageCompressType(2);
+									}
+									function Filelist()//获取文件列表
+									{
+										var DekeyScan=document.getElementById("DekeyScan");
+										var s=DekeyScan.StrFilelist();
+										alert(s);
+										}
+										function Scansource()//选择扫描源
+										{
+											
+											var DekeyScan=document.getElementById("DekeyScan");
+											DekeyScan.Scansource();
+											}
+										function ChangeList(index1,index2)//更换文件列表
+											{
+												var DekeyScan=document.getElementById("DekeyScan");
+												DekeyScan.ChangeList(index1,index2);
+												}
+										function LocationImage()//获取当前影像位置
+										{var DekeyScan=document.getElementById("DekeyScan");
+										var i=	DekeyScan.LocationImage();
+										alert(i);
+											}
+										function ImageCount()//获取扫描总数
+										{var DekeyScan=document.getElementById("DekeyScan");
+										var i=	DekeyScan.ImageCount();
+										alert(i);
+											}
+											function SetFilePath()//设置扫描路径
+											{
+												var path=prompt("请输入扫描路径:","C:\\pic"); 
+												var DekeyScan=document.getElementById("DekeyScan");
+												DekeyScan.SetFilePath(path);
+												}
+												
+										function GetPath()
+										{var DekeyScan=document.getElementById("DekeyScan");
+											var path=DekeyScan.ScanPath;
+											alert(path.toString());
+											}
+											
+									    function SelectedScannerName()
+										{var DekeyScan=document.getElementById("DekeyScan");
+											var scannername=DekeyScan.SelectedScannerName();
+											alert(scannername.toString());
+											}
+										
+												
+    </script>
+
+    <link href="UpdateImagesCSS.css" rel="stylesheet" type="text/css" />
+    <style type="text/css">
+        .style1
+        {
+            width: 91px;
+        }
+        #IMG47
+        {
+            width: 96px;
+        }
+        .style2
+        {
+            height: 620px;
+        }
+        .style3
+        {
+            width: 87px;
+        }
+        .style4
+        {
+            width: 80px;
+        }
+        #IMG49
+        {
+            width: 96px;
+        }
+        </style>
+</head>
+
+<script language="JavaScript" for="DekeyScan" type="text/javascript" event="pic_Click()"> 
+
+</script>
+
+<script language="JavaScript" for="DekeyScan" type="text/javascript" event="pic_DoubleClick()"> 
+	SetStatus();
+</script>
+
+<script language="JavaScript" for="DekeyScan" type="text/javascript" event="BatchStart()"> 
+	
+</script>
+
+<script language="JavaScript" for="DekeyScan" type="text/javascript" event="BatchEnd()"> 
+	
+</script>
+
+<script language="JavaScript" for="DekeyScan" type="text/javascript" event="PageFileStart()"> 
+
+</script>
+
+<script language="JavaScript" for="DekeyScan" type="text/javascript" event="PageFileEnd()"> 
+
+</script>
+
+<body onload="doInitPage()" onkeydown="doKeyDown(event.keyCode)" style="text-align: center;
+    width: 1264px; height: 650px; float: left; margin: 0px; padding: 0px; font-size: 12px;">
+    &nbsp;&nbsp;&nbsp;&nbsp;<div id="batchInfo" align="left">
+    </div>
+    <div style="margin: 0px; padding-top: 0px;">
+        <table style="margin: 0px; padding-top: 0px;">
+            <tr>
+                <td id="clock">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="22" align="center" class="style2">
+                    <object width="1400" height="630" id="DekeyScan" name="DekeyScan" classid="clsid:FC5FEFDB-C611-4216-A81C-12BF434BA696"
+                        codebase="PanaTwainCtrl.CAB">
+                    </object>
+                </td>
+            </tr>
+            <tr align="center" class="tabtr1">
+                <!-------------------- zhihuiw add  begin ---------------------->
+                <!--<td>
+                    <img src="images/sm_20.gif" class="img1" onclick="setScanInfo()" style="cursor: hand;" />
+                    <div>
+                        选择批次
+                    </div>
+                </td>-->
+                <!-------------------- zhihuiw add  end ------------------------>
+                <td>
+                    <img src="images/sm_01.gif" class="img1" onclick="Scansource()" style="cursor: hand;" />
+                    <div>
+                        选择扫描源</div>
+                </td>
+                <!--<td>
+                    <img src="images/shaomiao.jpg" class="img1" onclick="importDir()" style="cursor: hand;" />
+                    <div>
+                        导入批次</div>
+                </td>-->
+                <td>
+                    <img src="images/shaomiao.jpg" class="img1" onclick="scanimage()" style="cursor: hand;" />
+                    <div>
+                        扫描</div>
+                </td>
+                <td>
+                    <img src="images/sm_03.gif" class="img1" onclick="return ShowMinPage()" style="cursor: hand;" />
+                    <div>
+                        设置</div>
+                </td>
+                <td>
+                    <img src="images/replace.gif" class="img1" onclick="replace_onclick()" style="cursor: hand;" />
+                    <div>
+                        替换</div>
+                </td>
+                <td>
+                    <img src="images/insert.gif" class="img1" onclick="Insert()" style="cursor: hand;" />
+                    <div>
+                        插入</div>
+                </td>
+                 
+            <td class="style3">
+            	<img src="images/insert.gif" class="img1" onclick="return Filelist()" />
+            	<div>
+            		 文件列表</div> 
+            </td>
+            <td class="style4">
+                <img src="images/delete.jpg" class="img1" onclick="RowLine(3,3)" />
+                <div>
+                    页面布局</div>
+            </td>
+ <!--             <td>
+              <img src="images/delete.jpg" class="img1" onclick="RowLine(1,1)" />
+                <div>单页显示</div>
+            </td>
+ -->            
+                <td>
+                    <img src="images/delete.jpg" class="img1" id="IMG14" onclick="return IMG13_onclick()"
+                        style="cursor: hand;" />
+                    <div>
+                        删除本张</div>
+                </td>
+                <td>
+                    <img src="images/sm_06.gif" class="img1" id="IMG11" onclick="Clear()" style="cursor: hand;" />
+                    <div>
+                        清空</div>
+                </td>
+                <td>
+                    <img src="images/fada.jpg" class="img1" id="IMG5" onclick="return IMG5_onclick()"
+                        style="cursor: hand;" />
+                    <div>
+                        放大</div>
+                </td>
+                <td>
+                    <img src="images/shuoxiao.jpg" class="img1" id="IMG6" onclick="return IMG6_onclick()"
+                        style="cursor: hand;" />
+                    <div>
+                        缩小</div>
+                </td>
+                <td>
+                    <img src="images/zuo.jpg" class="img1" id="IMG10" onclick="return IMG10_onclick()"
+                        style="cursor: hand;" />
+                    <div>
+                        向左90度</div>
+                </td>
+                <td>
+                    <img src="images/you.jpg" class="img1" id="IMG11" onclick="return IMG11_onclick()"
+                        style="cursor: hand;" /></a>
+                    <div>
+                        向右90度</div>
+                </td>
+                <!-------------------- zhihuiw add  begin ---------------------->
+                <td>
+                    <img src="images/sm_16.gif" class="img1" id="IMG19" onclick="doUpload()" style="cursor: hand;" />
+                    <div>
+                        导出</div>
+                </td>
+                <!-------------------- zhihuiw add  end ------------------------>
+                <td>
+                    <img src="images/sm_09.gif" class="img1" id="IMG1" onclick="IMG1_onclick()" style="cursor: hand;" />
+                    <div>
+                        首页</div>
+                </td>
+                <td>
+                    <img src="images/sm_10.gif" class="img1" id="IMG2" onclick="IMG2_onclick()" style="cursor: hand;" />
+                    <div>
+                        上一屏</div>
+                </td>
+                <td>
+                    <img src="images/sm_11.gif" class="img1" id="IMG3" onclick="IMG3_onclick()" style="cursor: hand;" />
+                    <div>
+                        下一屏</div>
+                </td>
+                <td>
+                    <img src="images/sm_12.gif" class="img1" id="IMG4" onclick="IMG4_onclick()" style="cursor: hand;" />
+                    <div>
+                        尾页</div>
+                </td>
+                <td>
+                    至第<input id="TxTNumber" type="text" onkeyup="this.value=this.value.replace(/\D/g,'')"
+                        onafterpaste="this.value=this.value.replace(/\D/g,'')" style="width: 30px" />页                 </td>
+                <td>
+                    <img src="images/go.jpg" class="img1" id="IMG12" onclick="return IMG12_onclick()"
+                        style="cursor: hand;" />
+                    <div>
+                        跳转</div>
+                </td>
+                <td>
+                    &nbsp;
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="button" id="IMG47" value="当前页面序号" onclick="LocationImage()" />
+                </td>
+                <td>
+                    <input type="button" id="IMG48" value="总页面数" onclick="ImageCount()" />
+                </td>
+                <td>
+                    <input type="button" id="IMG47" value="扫描路径" onclick="SetFilePath()" />
+                </td>
+                <td>
+                    <input type="button" id="IMG47" value="单双面" onclick="SetDuplex()" />
+                </td>
+                <td>
+                    <input type="button" id="IMG47" value="分辨率" onclick="SetDPI()" />
+                </td>
+                <td>
+                    <input type="button" id="IMG49" value="当前扫描仪" onclick="SelectedScannerName()" /></td>
+<!--                <td>
+                    &nbsp;</td>-->
+                <td class="style1">
+                    <input type="button" id="IMG47" value="获取扫描路径" onclick="GetPath()" />
+                </td>
+                <td class="style3">
+                    <input type="button" id="IMG47" value="清空" onclick="Clear()" />
+                </td>
+<!--                <td class="style4">
+                    <input type="button" id="IMG47" value="更换位置" onclick="ChangeList(2,6)" />
+                </td>-->
+            </tr>
+        </table>
+    </div>
+    <!--选择文件夹新建路径 -->
+    <div id="DivReplace" style="display: none; float: left">
+    </div>
+    <div id="DivRow" style="display: none; float: left">
+    </div>
+    <div id="DivValue" style="display: none; float: left">
+    </div>
+</body>
+</html>

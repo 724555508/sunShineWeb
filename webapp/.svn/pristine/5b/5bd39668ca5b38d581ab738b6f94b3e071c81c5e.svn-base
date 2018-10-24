@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="../../imgs/logo-l.png">    <!--title-icon-->
+    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../../lib/datatables/css/jquery.dataTables.min.css"/>
+    <link rel="stylesheet" href="../../css/cssReset.css"/>
+    <title>CRM管理</title>
+    <style>
+        /*addPartner*/
+        .addPartner{width: 100%; padding: 20px;text-align: right;}
+        /*body{width: 96%;margin: 0 auto;}*/
+        body{background-color: #f0f5ff;width:100%;margin: 0 auto;}
+        .main{width: 97%;margin: 25px auto;background: #FFFFFF;box-shadow: 0 0 10px 0 rgba(0,0,0,0.02);border-radius: 8px;padding:20px 15px;}
+        /*统计数据*/
+        .Statistics{color: #000;display: flex;display: -webkit-flex; justify-content:space-between;}
+        .Statistics>div{width: 24%;height: 80px;background: rgba(0,150,255,0.05);border-radius: 6px;}
+        .Statistics>div>div{text-align: center;}
+        .Statistics>div>div:nth-child(1){font-size: 24px;line-height: 50px;color: #161616;}
+        .Statistics>div>div:nth-child(2){color: #8F9295;font-size: 12px;}
+
+        /*搜索*/
+        .hr{width:30px;border-top:2px solid #199ED8;float:left;margin-top:12px;margin-left:5px;margin-right:5px;}
+        /*.appBox{margin: 0px 0 0 25px;}*/
+        .searchBox{padding:18px 0 13px 0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;line-height:50px;}
+        .searchBox .form{display:flex;align-items:center;}
+        .searchBox .search2{position:relative;margin-right:30px;}
+        .searchBox .search2 .icon1{position:absolute;width:16px;height:16px;top:6px;left:11px;}
+        .searchBox .search2 .phone{width:180px;height:26px;background: #F3F3F3;border-radius: 4px;border:none;padding-left:30px;}
+        .search{width:90px;height:26px;font-size: 14px;color: #0096FF;text-align: center;line-height: 14px;
+        background:#fff;border:1px solid #0096FF;border-radius: 4px;margin-right:20px;}
+		.export{width:120px;height:32px;font-family: PingFangSC-Medium;font-size: 14px;color: #fff;
+		text-align: center;line-height: 32px;background:#0096FF;border:1px solid #0096FF;border-radius: 4px;}
+        .export a{color:#fff;}
+        .export a:link{text-decoration:none;color:#fff;}
+        .export a:visited{text-decoration:none;color:#fff;}
+        .export a:active{text-decoration:none;color:#fff;}
+        .export a:hover{text-decoration:none;color:#fff;}
+        .tr1 th{white-space:nowrap;}
+        .tr1{opacity: 0.8;background: rgba(0,150,255,0.10);}
+    </style>
+</head>
+<body>
+<div class="main">
+    <!--4个统计数据-->
+    <section class="Statistics">
+        <!--总数-->
+        <div title="总数">
+            <div id="allCount">0</div>
+            <div>总数</div>
+        </div>
+        <!--省级 -->
+        <div title="企业">
+            <div id="natureNum_1">0</div>
+            <div>企业</div>
+        </div>
+        <!--城市-->
+        <div title="个人">
+            <div id="natureNum_2">0</div>
+            <div>个人</div>
+        </div>
+        <!--冻结-->
+        <div title="冻结">
+            <div id="disableNum">0</div>
+            <div>冻结</div>
+        </div>
+    </section>
+
+    <!--搜索条件-->
+    <div class="searchBox">
+        <div class="form">
+            <div class="search2">
+                <img src="../../imgs/search@2x.png" alt="" class='icon1'/><input type="text" class="form-control phone" id="inputText" placeholder="手机号/姓名/公司"/>
+            </div>
+            <button id="search" class="search">搜索</button>
+            <button id="all" class="search">全部</button>
+        </div>
+        <!--<div></div>-->
+        <div>
+            <button id="getOut" class="export">导出excel</button>
+            <button  class="export"><a target="_blank" href="buildNewPartner.html">增加合伙人</a></button>
+        </div>
+
+
+        <!--<div class="col-sm-1"><button id="search" class="btn btn-skyBlue search">搜索</button></div>-->
+        <!--<div class="col-sm-1"><button id="all" class="btn btn-skyBlue search">全部</button></div>-->
+        <!--<div class="col-sm-3"><button id="getOut" class="btn btn-skyBlue export">导出excel</button></div>-->
+        <!--<div class="col-sm-3"></div>-->
+        <!--<div class="col-sm-2 col-sm-offset-2 text-right"><a target="_blank" href="buildNewPartner.html" class="btn btn-skyBlue export">增加合伙人</a></div>-->
+    </div>
+
+
+
+    <!--<div class="row searchBox">-->
+    <!--&lt;!&ndash;<div class="col-sm-2"><input type="date" class="form-control" id="startTime"/></div>-->
+    <!--<div class="hr"></div>-->
+    <!--<div class="col-sm-2"><input type="date" class="form-control" id="endTime"/></div>&ndash;&gt;-->
+    <!--<div class="col-sm-3 search2"><img src="../../imgs/search@2x.png" alt="" class='icon1'/><input type="text" class="form-control phone" id="inputText" placeholder="手机号/姓名/公司"/></div>-->
+    <!--<div class="col-sm-1"><button id="search" class="btn btn-skyBlue search">搜索</button></div>-->
+    <!--<div class="col-sm-1"><button id="all" class="btn btn-skyBlue search">全部</button></div>-->
+    <!--<div class="col-sm-3"><button id="getOut" class="btn btn-skyBlue export">导出excel</button></div>-->
+    <!--<div class="col-sm-3"></div>-->
+    <!--<div class="col-sm-2 col-sm-offset-2 text-right"><a target="_blank" href="buildNewPartner.html" class="btn btn-skyBlue export">增加合伙人</a></div>-->
+    <!--</div>-->
+
+    <!--CRMTable-->
+    <div class="appBox">
+        <table data-toggle="table" class="table table-bordered text-center table-hover" id="CRMTable">
+            <thead>
+            <tr class="tr1">
+                <th>序号</th>
+                <!--<th>省</th>-->
+                <th>城市</th>
+                <th>性质</th>
+                <th>公司名称</th>
+                <th>负责人</th>
+                <th>手机</th>
+                <th>状态</th>
+                <th>保证金</th>
+                <!--<th>渠道</th>-->
+                <th>库存</th>
+                <th>已售</th>
+                <th>日新</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+
+    <!--模态窗--添加合伙人-->
+    <div role="dialog" class="modal fade" id="addPartnerModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!--header-->
+                <div class="modal-header text-center">
+                    <button type="button" class="close"  id="close" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                    <h3 class="text-info">添加合伙人</h3>
+                </div>
+                <!--body-->
+                <div class="modal-body text-center">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--js-->
+<script src="../../lib/jquery/jquery.min.js"></script>
+<script src="../../lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../lib/datatables/js/jquery.dataTables.min.js"></script>
+<script src="../../lib/layer/layer.js"></script>
+<script src="../../lib/echarts/echarts.min.js"></script>
+<script src="../../js/common.js"></script>
+<script src="../../js/framePages/CRMManage.js"></script>
+</body>
+</html>

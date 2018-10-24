@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <link rel="shortcut icon" href="../../imgs/logo-l.png">
+    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../../css/cssReset.css"/>
+    <link rel="stylesheet" href="../../css/screenShow/s_manageWarning_terrace.css">
+    <title>531预警管理平台</title>
+</head>
+<body>
+<main id="main" v-cloak>
+    <!--标题-->
+    <header>
+        <div>
+            <img src="../../imgs/logo.png" alt="">
+        </div>
+        <h1>531心梗脑卒中预警管理平台({{ showAreaName }})</h1>
+    </header>
+    <div class="content">
+        <!--左边内容-->
+        <div class="left">
+            <!--总人数-->
+            <div class="total">
+                <div class="div1">
+                    <span>总人数</span>
+                    <p>{{ countMap.allNum }}</p>
+                </div>
+                <div class="div1 div2">
+                    <span>疾病人数</span>
+                    <p>{{ countMap.illnessNum }}</p>
+                </div>
+                <div class="div1 div2">
+                    <span>风险人数</span>
+                    <p>{{ countMap.riskNum }}</p>
+                </div>
+            </div>
+            <!--用户列表-->
+            <ul class="list">
+                <li class="user" v-for="(li, index) in dataList">
+                    <div class="headImg">
+                        <div v-if="li.gender === '1'"><img src="../../imgs/mapImages/man.png" alt="" width="75"></div>
+                        <div v-else><img src="../../imgs/mapImages/woman.png" alt="" width="75"></div>
+                    </div>
+                    <div class="info">
+                        <div class="div1">
+                            <div>
+                                <h3>{{ li.userName }}</h3>
+                                <span>{{ li.age }}</span>
+                            </div>
+                            <p>{{ li.time }}</p>
+                        </div>
+                        <div class="div2">
+                            <p v-if="li.info === ''" class="p1">未知</p>
+                            <p v-else-if="li.info === '健康'" class="p2">{{ li.info }}</p>
+                            <p v-else class="p3">{{ li.info }}</p>
+                        </div>
+                    </div>
+                </li>
+
+            </ul>
+        </div>
+        <!--右边内容-->
+        <div class="right">
+            <!--用户信息-->
+            <div class="leftTop">
+                <div class="headImg">
+                    <img v-if="infoBean.gender === '1'" src="../../imgs/mapImages/man.png" alt="" width="75">
+                    <img v-else src="../../imgs/mapImages/woman.png" alt="" width="75">
+                </div>
+                <div class="info">
+                    <div class="div1">
+                        <div>
+                            <h3>{{ infoBean.username }}</h3>
+                            <p class="resource resource1" v-if="dataList[mark].info === ''">未知</p>
+                            <p class="resource resource2" v-else-if="dataList[mark].info === '健康'">{{ dataList[mark].info }}</p>
+                            <p class="resource resource3" v-else>{{ dataList[mark].info }}</p>
+                        </div>
+                        <p class="miss" v-if="infoBean.deviceStatus === 0">未知</p>
+                        <p class="wear" v-if="infoBean.deviceStatus === 1">工作中</p>
+                        <p class="miss" v-if="infoBean.deviceStatus === 2">离手</p>
+                        <p class="wear" v-if="infoBean.deviceStatus === 3">充电中</p>
+                        <p class="miss" v-if="infoBean.deviceStatus === 4">失联</p>
+                        <p class="miss" v-if="infoBean.deviceStatus === 5">关机</p>
+                    </div>
+                    <div class="div2">
+                        <div>{{ infoBean.age }}岁</div>
+                        <div><span>病史</span>{{ infoBean.medicalHistory }}</div>
+                        <div><span>居住地址</span>{{ infoBean.province + infoBean.city  }}</div>
+                    </div>
+                </div>
+            </div>
+            <!--实时数据-->
+            <div class="realData">
+                <h2>实时数据</h2>
+                <div class="data">
+                    <div class="measure">
+                        <div style="width:28px;height:28px;"><img src="../../imgs/mapImages/heart.png" alt="" width="100%"></div>
+                        <div class="count">
+                            {{ actualData.nearestHeartRate }}
+                            <span class="min">次/分</span>
+                            <span class="time" v-if="actualData.nearestHeartRateTime !== '--:--'">{{ actualData.nearestHeartRateTime.substring(10,16) }}测量</span>
+                            <span class="time" v-else>{{ actualData.nearestHeartRateTime }}测量</span>
+                        </div>
+                    </div>
+                    <div class="measure">
+                        <div style="width:28px;height:28px;"><img src="../../imgs/mapImages/blood.png" alt="" width="100%"></div>
+                        <div class="count">
+                            {{ actualData.nearestBloodPressure.split(',').join('/') }}
+                            <span class="min">mmhg</span>
+                            <span class="time" v-if="actualData.nearestBloodPressureTime !== '--:--'">{{ actualData.nearestBloodPressureTime.substring(10,16) }}测量</span>
+                            <span class="time" v-else>{{ actualData.nearestBloodPressureTime }}测量</span>
+                        </div>
+                    </div>
+                    <div class="measure">
+                        <div style="width:28px;height:28px;"><img src="../../imgs/mapImages/blood%20oxygen.png" alt="" width="100%"></div>
+                        <div class="count">
+                            {{ actualData.nearestOxyhemoglobinSaturation }}
+                            <span class="min">%</span>
+                            <span class="time" v-if="actualData.nearestOxyhemoglobinSaturatioTime !== '--:--'">{{ actualData.nearestOxyhemoglobinSaturatioTime.substring(10,16) }}测量</span>
+                            <span class="time" v-else>{{ actualData.nearestOxyhemoglobinSaturatioTime }}测量</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--监控问题-->
+            <div class="monitor">
+                <!--心率监控-->
+                <div class="heart">
+                    <!--头部-->
+                    <div class="title">
+                        <h2>心率监控</h2>
+                        <div>
+                            <p>共{{ monitoringDetails.realHRMonitoring.hrCount }}次</p>
+                            <p>最高{{ monitoringDetails.realHRMonitoring.hrMax }}</p>
+                            <p>最低{{ monitoringDetails.realHRMonitoring.hrMin }}</p>
+                        </div>
+                    </div>
+                    <div class="lineCharts"><div id="heartCharts"></div></div>
+                    <p>{{ monitoringDetails.realHRMonitoring.conclusion }}</p>
+                </div>
+
+                <!--血压监控-->
+                <div class="heart">
+                    <!--头部-->
+                    <div class="title">
+                        <h2>血压监控</h2>
+                        <div>
+                            <p>共{{ monitoringDetails.realBPMonitoring.bpCount }}次</p>
+                            <p>最高{{ monitoringDetails.realBPMonitoring.bpMax }}</p>
+                            <p>最低{{ monitoringDetails.realBPMonitoring.bpMin}}</p>
+                        </div>
+                    </div>
+                    <div class="lineCharts"><div id="bloodCharts"></div></div>
+                    <p>{{ monitoringDetails.realBPMonitoring.conclusion }}</p>
+                </div>
+            </div>
+
+            <!--分析-->
+            <div class="analyze">
+                <div class="div1" v-if="monitoringDetails.healthFlag === 0"><img src="../../imgs/mapImages/unknown.png" alt=""></div>
+                <div class="div1" v-else-if="monitoringDetails.healthFlag === 1"><img src="../../imgs/mapImages/health.png" alt=""></div>
+                <div class="div1" v-else-if="monitoringDetails.healthFlag === 2"><img src="../../imgs/mapImages/yajiankang@2x.png" alt=""></div>
+                <div class="div1" v-else-if="monitoringDetails.healthFlag === 3"><img src="../../imgs/mapImages/jibing@1x.png" alt=""></div>
+                <div class="div2">
+                    <h2>综合诊断：</h2>
+                    <p>{{ monitoringDetails.comprehensiveDiagnosis }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+<script src="../../lib/vue.min.js"></script>
+<script src="../../lib/jquery/jquery.min.js"></script>
+<script src="../../lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../lib/echarts/echarts.min.js"></script>
+<script src="../../lib/layer/layer.js"></script>
+<!--<script type="text/javascript" src="https://cdn.goeasy.io/goeasy.js"></script>&lt;!&ndash;goEasy后台推送SOS预警&ndash;&gt;-->
+<script src="../../js/common.js"></script>
+<script src="../../js/screenShow/s_manageWarning_terrace.js"></script>
+</body>
+</html>

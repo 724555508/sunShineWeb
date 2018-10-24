@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="../../imgs/logo-l.png">    <!--title-icon-->
+    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../../lib/datatables/css/jquery.dataTables.min.css"/>
+    <link rel="stylesheet" href="../../css/cssReset.css"/>
+    <link rel="stylesheet" href="../../css/framePages/SosWarningList.css"/>
+    <title>数据异常用户管理</title>
+    <style>
+        [v-cloak]{display:none;}
+        /*面包屑导航*/
+        .breadcrumb{background-color:#fff;}
+        .breadcrumb > li + li:before {color: #0c0c0c;content: ">";padding: 0 5px;}
+        .breadcrumb{margin-bottom:0px;padding:10px 0 10px 23px;}
+        /*点击进行跳转a标签的样式*/
+        .active:link{text-decoration:none;color: #0096FF;}
+        .active:visited{text-decoration:none;color: #0096FF;}
+        .active:active{text-decoration:none;color: #0096FF;}
+        .active:hover{text-decoration:none;color: #0096FF;}
+        /*不跳转的a标签样式*/
+        .inActive:link{text-decoration:none;color: #0c0c0c;}
+        .inActive:visited{text-decoration:none;color: #0c0c0c;}
+        .inActive:active{text-decoration:none;color: #0c0c0c;}
+        .inActive:hover{text-decoration:none;color: #0c0c0c;}
+        .Statistics{color: #000;display: flex;display: -webkit-flex; justify-content:space-between;}
+        .Statistics>div{width: 18%;height: 80px;background-color: #f2faff;border-radius: 6px;}
+
+        .Statistics>div>div{text-align: center;}
+        .Statistics>div>div:nth-child(1){font-size: 24px;line-height: 50px;color: #161616;}
+        .Statistics>div>div:nth-child(2){color: #8F9295;font-size: 12px;}
+    </style>
+</head>
+<body>
+<div class="dad main" id="app" v-cloak>
+    <!--面包屑导航-->
+    <!--<ul class="breadcrumb">-->
+        <!--<li><a href="userCenter.html" class="active">用户管理</a></li>-->
+        <!--<li><a href="javascript:;" class="inActive">数据异常</a></li>-->
+    <!--</ul>-->
+    <!--3个统计数据-->
+    <section class="Statistics">
+        <!--总数-->
+        <div title="总数">
+            <div id="allCounts">{{all}}</div>
+            <div>总数</div>
+        </div>
+        <!--总数-->
+        <div title="心率问题">
+            <div id="heartProblem">{{hrAll}}</div>
+            <div>心率问题</div>
+        </div>
+        <!--总数-->
+        <div title="血压问题">
+            <div id="bloodProblems">{{boAll}}</div>
+            <div>血压问题</div>
+        </div>
+        <!--已提醒-->
+        <div title="已提醒">
+            <div id="haveRemind">{{remind}}</div>
+            <div>已提醒</div>
+        </div>
+        <!--未提醒-->
+        <div title="未提醒">
+            <div id="noRemind">{{notRemind}}</div>
+            <div>未提醒</div>
+        </div>
+    </section>
+    <!--搜索条件-->
+    <div class="searchBox">
+        <div class='form'>
+            <div class='search1'>
+                <input type="date" class='hTime' v-model="startTime" value='2018-03-36'/>
+                <div class="hr"></div>
+                <input type="date" class='hTime' v-model='endTime' value='2018-03-36'/>
+            </div>
+            <div class='search2'>
+                <img src="../../imgs/search@2x.png" alt="" class='icon1'/><input type="text" class="phone" v-model="inputText" placeholder="手机号/姓名/设备号"/>
+            </div>
+            <div class="select">
+                <select  v-model= "selectSign" class="input2">
+                    <option value="" selected>心率异常</option>
+                    <option value="2">血压异常</option>
+                    <option value="3">血氧异常</option>
+                </select>
+            </div>
+            <button class="search" style='margin:0 10px;' @click="search">搜索</button>
+            <button id="all" class="search" @click="all1">全部</button>
+        </div>
+        <div>
+            <button class="export" id="getOut" @click="exportList">导出excel</button>
+        </div>
+
+    </div>
+
+
+    <!--table  数据异常用户-->
+    <div class="appBox">
+        <table data-toggle="table" class="table table-bordered text-center table-hover" id="dataAbortTable">
+            <thead>
+            <tr class="tr1">
+                <th>序号</th>
+                <th>佩戴人</th>
+                <th>城市</th>
+                <th>性别</th>
+                <th>年龄</th>
+                <th>佩戴天数</th>
+                <th>问题</th>
+                <th>个数</th>
+                <th>最近上传数据</th>
+                <th>最近提醒</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+
+<script src="../../lib/jquery/jquery.min.js"></script>
+<script src="../../lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../lib/datatables/js/jquery.dataTables.min.js"></script>
+<script src="../../lib/layer/layer.js"></script>
+<script src="../../lib/echarts/echarts.min.js"></script>
+<script src="../../js/common.js"></script>
+<script src="../../js/vue.min.js"></script>
+<script src="../../js/framePages/dataAbortList.js"></script>
+</body>
+</html>

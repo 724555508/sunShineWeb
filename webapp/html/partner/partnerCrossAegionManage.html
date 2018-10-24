@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="../../imgs/logo-l.png">    <!--title-icon-->
+    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../../lib/datatables/css/jquery.dataTables.min.css"/>
+    <link rel="stylesheet" href="../../css/cssReset.css"/>
+    <link rel="stylesheet" href="../../css/framePages/SosWarningList.css"/>
+    <link rel="stylesheet" href="../../css/framePages/crossRedionManage.css"/>
+    <title>后台窜货管理</title>
+    <style>
+        .searchBox .form .search2{margin-right:0px;}
+        .searchBox .form .search2 .phone{}
+        .searchBox .form .select{margin-left:5px;margin-top:4px;margin-right:34px;}
+        .searchBox .form .select .input2{border: 1px solid #767676;}
+
+    </style>
+</head>
+<body>
+<div class="dad" id="app" v-cloak>
+    <!--7个统计数据-->
+    <section class="Statistics">
+        <!--佩戴用户-->
+        <a href="###">
+            <div title="佩戴用户">
+                <div>{{fleeGoodsCount}}</div>
+                <div>我窜其他市场</div>
+            </div>
+        </a>
+        <!--佩戴用户-->
+        <a href="###">
+            <div title="佩戴用户">
+                <div>{{beFleeGoodsCount}}</div>
+                <div>其他市场窜我</div>
+            </div>
+        </a>
+        <!--佩戴用户-->
+        <a href="###">
+            <div title="佩戴用户">
+                <div>{{onHandCount}}</div>
+                <div>待处理窜货</div>
+            </div>
+        </a>
+        <!--佩戴用户-->
+        <a href="###">
+            <div title="佩戴用户">
+                <div>{{makeUpCount}}</div>
+                <div>累计和解</div>
+            </div>
+        </a>
+        <!--佩戴用户-->
+        <a href="###">
+            <div title="佩戴用户">
+                <div>{{compensateCount}}</div>
+                <div>累计赔偿</div>
+            </div>
+        </a>
+        <!--佩戴用户-->
+        <a href="javascript:''">
+            <div title="佩戴用户">
+                <div>{{receiveCompensation}}</div>
+                <div>累计收到赔偿</div>
+            </div>
+        </a>
+    </section>
+    <!--窜货市场以及被窜货统计柱状图-->
+    <main class="main">
+        <!--窜货市场标题-->
+        <div class="title">
+            <h2>我窜别人</h2>
+            <!--<button @click="crossRegionMap">窜货地图</button>-->
+        </div>
+        <!-- -窜货市场柱状图-->
+        <div class="barCanvas" id="crossRegionBar">
+
+        </div>
+
+        <!--被窜货市场标题-->
+        <div class="title">
+            <h2>别人窜货</h2>
+            <!--<button>窜货地图</button>-->
+        </div>
+        <!-- 被窜货市场柱状图-->
+        <div class="barCanvas" id="byCrossRegionBar">
+
+        </div>
+        <!--搜索条件-->
+        <div class="searchBox">
+            <div class='form'>
+                <div class='search2'>
+                    <img src="../../imgs/search@2x.png" alt="" class='icon1'/><input type="text" class="phone" placeholder="设备号" v-model="inputText"/>
+                </div>
+                <div class="select">
+                    <select id = "selectVal2" class="input2">
+                        <option value ="" class="selected" selected>市场类型</option>
+                        <!--<option value=""></option>-->
+                    </select>
+                    <select id = "selectVal" class="input2">
+                        <option value ="" class="selected">窜货类型</option>
+                        <option value="1">我窜出的</option>
+                        <option value="2">其他市场窜我</option>
+                    </select>
+                </div>
+                <button @click="search" class="search" style='margin:0 10px;'>搜索</button>
+                <button @click="all" class="search">全部</button>
+                <!--<button @click="reset" class="search">重置</button>-->
+            </div>
+
+        </div>
+        <!--dataTables-->
+        <table data-toggle="table" class="table table-bordered text-center table-hover" id="crossRegionTable">
+            <thead>
+            <tr  style="opacity: 0.8;background: rgba(0,150,255,0.10);">
+                <th>序号</th>
+                <th>型号</th>
+                <th>设备号</th>
+                <th>窜货市场</th>
+                <th>被窜市场</th>
+                <th>统计截止日</th>
+                <th>佩戴人</th>
+                <th>状态</th>
+                <th>操作</th>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </main>
+</div>
+
+<!--js-->
+<script src="../../lib/jquery/jquery.min.js"></script>
+<script src="../../lib/vue.min.js"></script>
+<script src="../../lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../lib/datatables/js/jquery.dataTables.min.js"></script>
+<script src="../../lib/layer/layer.js"></script>
+<script src="../../lib/echarts/echarts.min.js"></script>
+<script src="../../js/common.js"></script>
+<script src="../../js/partner/partnerCrossAegionManage.js"></script>
+</body>
+</html>

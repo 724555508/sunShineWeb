@@ -1,0 +1,51 @@
+[v-cloak]{display: none;}
+*{box-sizing: border-box;}
+body{margin: 0;overflow: hidden;width: 100vw;height: 100vh;}
+.swiper-slide{width: 100vw;height: 100vh;position: relative;}
+/*----------第一屏---------------*/
+/*****header*****/
+.header{height: 70px;padding-top: 0;position: absolute;top: 0;left: 0;z-index: 888;width: 100%;
+    opacity: 0.85;background: #1F1F1F;}
+.twoBtn{position: absolute;top: 10px;z-index: 10;}
+.exit{right: 2%;}
+/*标题*/
+.title1{color: #fff;text-align: center;font-size: 20px;letter-spacing: 0;line-height: 30px;padding-top: 18px;}
+.title2{font-size: 13px;color: #0096FF;letter-spacing: 0;line-height: 30px;text-align: center;}
+.titleLogo{position: absolute;left: 30px;top: 18.5px;width: 82px;}
+.helpPeopleCounts{font-weight: bold;}
+/*时间*/
+.nowTime{rgba(255,255,255,0.6);font-size: 12px;position: absolute;top: 55%;right: 5%;z-index: 10;}
+/*选择合伙人*/
+.selectPartner{position: absolute;right: 200px;width: 100px;line-height: 30px;height: 30px;top: 20px;
+    background: #41403f;border: none;color: #fff;}
+/*实时数据*/
+.nowData{width: 200px;height: 120px;z-index: 10;color: #fff;position: absolute;font-size: 14px;
+    left: 2.1vw;top: 20vh;opacity: 0.8;background: #1F1F1F;border-radius: 8px;display: flex;padding-left: 40px;
+    display: -webkit-flex;flex-direction:column;justify-content: center;}
+.nowData>p{margin: 10px;}
+/*四张图*/
+.fourPics{position: relative;width: 25vw;height: 85vh;left: 74%;top: 85px;z-index: 10;}
+.fourPics>div{width: 98%;height: 33%;margin: 3% 1% 0;opacity: 0.8;background: #1F1F1F;border-radius: 8px;}
+.fourPics>div>div{width: 100%;height: 100%;}
+/*底部图例*/
+.bottomImgEx{position: absolute;bottom: 2%;left: 200px;z-index: 10;width: 400px;display: table;text-align: center;}
+.bottomImgEx>div{display: table-cell;text-align: center;color: #fff;font-size: 13px;}
+.bottomImgEx>div img{padding: 5px;}
+/*----------第二屏---------------*/
+/*****header*****/
+.header2{height: 70px;padding-top: 0;position: absolute;top: 0;left: 0;z-index: 888;width: 100%;
+    opacity: 0.85;background: #1F1F1F;}
+/*标题*/
+.title12{color: #fff;text-align: center;font-size: 20px;letter-spacing: 0;line-height: 20px;padding-top: 24px;}
+.title22{font-size: 13px;color: #0096FF;letter-spacing: 0;line-height: 30px;text-align: center;}
+/*时间*/
+.nowTime{color: #eee;font-size: 12px;position: absolute;top: 55%;right: 2%;z-index: 10;}
+/*地图*/
+#normalMap{width: 100vw;height: 100vh;position: absolute;top: 0;}
+/*底部图例*/
+.bottomImgEx2{position: absolute;bottom: 2%;right: 2%;z-index: 10;/*width: 150px;*/background-color: rgba(0,0,0,0.6);
+    padding: 1% 2%;border-radius: 10px;display: flex;
+    display: -webkit-flex;flex-direction:column;justify-content: flex-start;align-items:flex-start;}
+.bottomImgEx2>div{text-align: left;color: #fff;font-size: 13px;padding: 2% 0;}
+.bottomImgEx2>div img{padding: 5px;}
+.bottomImgEx2>div span{padding: 5px;}

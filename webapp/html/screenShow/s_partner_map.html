@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <link rel="shortcut icon" href="../../imgs/logo-l.png">
+    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../../css/cssReset.css"/>
+    <link rel="stylesheet" href="https://cache.amap.com/lbs/static/main1119.css"/>   <!--自定义图标-->
+    <link rel="stylesheet" href="https://cache.amap.com/lbs/static/main.css?v=1.0?v=1.0"/><!--城市选择-->
+    <link rel="stylesheet" href="../../css/screenShow/s_partner_map.css">
+    <title>安顿全国市场分布图</title>
+</head>
+<body>
+<div id="app" v-cloak>
+    <!--header-->
+    <header class="header">
+        <div></div>
+        <div>安顿全国市场分布图</div>
+        <div>{{ clock }}</div>
+    </header>
+    <!--map-->
+    <div id="container"></div>
+    <!--左侧图例-->
+    <!--<div class="explain">
+        <div>
+            <div> 全部</div>
+            <div>{{ AllAgent_1_Num + AllAgent_2_Num }}</div>
+        </div>
+        <div>
+            <div>&lt;!&ndash;<img src="../../imgs/mapImages/partnerExp.png" alt="">&ndash;&gt; 合伙人</div>
+            <div>{{ AllAgent_1_Num }}</div>
+        </div>
+        <div>
+            <div>&lt;!&ndash;<img src="../../imgs/mapImages/partnerSonExp.png" alt="">&ndash;&gt; 二级</div>
+            <div>{{ AllAgent_2_Num }}</div>
+        </div>
+    </div>-->
+    <!--右侧柱状图-->
+    <div class="barBox">
+        <div><div id="cityWearUserAdd"></div></div>
+        <div><div id="cityAppAdd"></div></div>
+        <div><div id="cityTotalUserAdd"></div></div>
+    </div>
+</div>
+
+
+
+<!--js-->
+<script src="../../lib/vue.min.js"></script>
+<script src="../../lib/jquery/jquery.min.js"></script>
+<script src="../../lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../lib/echarts/echarts.min.js"></script>
+<script src="../../lib/layer/layer.js"></script>
+<script src="https://cache.amap.com/lbs/static/es5.min.js"></script><!--默认地图-->
+<script src="https://webapi.amap.com/maps?v=1.3&key=1573aeddb3c9e953a05da7e8a90c0c5b&plugin=AMap.Geocoder,AMap.DistrictSearch"></script><!--key引入，多个plugin用“,”分割-->
+<!--<script type="text/javascript" src="http://cache.amap.com/lbs/static/addToolbar.js"></script>&lt;!&ndash;图标、多窗体、逆地理编码、删除多个markers&ndash;&gt;-->
+<script type="text/javascript" src="https://webapi.amap.com/demos/js/liteToolbar.js"></script>
+<script src="../../js/common.js"></script>
+<script src="../../js/screenShow/s_partner_map.js"></script>
+</body>
+</html>

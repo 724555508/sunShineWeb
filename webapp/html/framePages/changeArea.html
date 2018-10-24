@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../../lib/datatables/css/jquery.dataTables.min.css"/>
+    <link rel="stylesheet" href="../../css/cssReset.css"/>
+    <link rel="stylesheet" href="../../css/framePages/SosWarningList.css"/>
+    <link rel="shortcut icon" href="../../imgs/logo-l.png">
+    <title>归属地变更</title>
+    <style>
+        body{background-color: #f2f2f1;width:100%;margin: 0 auto;}
+        .main{width: 97%;margin: 25px auto;background: #FFFFFF;box-shadow: 0 0 10px 0 rgba(0,0,0,0.02);border-radius: 8px;padding:20px 15px;height: calc(100vh - 50px);}
+        .Statistics{color: #000;display: flex;display: -webkit-flex; justify-content:space-between;}
+        .Statistics>div{width: 30%;height: 80px;background-color: #f2faff;border-radius: 6px;border:none;}
+        .breadcrumb > li + li:before {
+            color: #CCCCCC;
+            content: ">";
+            padding: 0 5px;
+        }
+        .breadcrumb{
+            background:#fff;
+            margin-bottom:0px;
+        }
+        .btn1{text-align:right;margin-bottom:10px;}
+        .btn1 a:link{text-decoration:none;color:#0096ff;}
+        .btn1 a:visited{text-decoration:none;color:#0096ff;}
+        .btn1 a:active{text-decoration:none;color:#0096ff;}
+        .btn1 a:hover{text-decoration:none;color:#0096ff;}
+        .row{margin-top:30px;}
+    </style>
+</head>
+<body>
+<div class="main" id="app">
+    <!--面包屑导航-->
+    <!--<ul class="breadcrumb">-->
+        <!--<li><a href="javascript:history.back(-1);">设备管理</a></li>-->
+        <!--<li><a href="#" class="active">归属地变更</a></li>-->
+    <!--</ul>-->
+    <!--<div>批量交更</div>-->
+    <div class="btn1"><button class="btn btn-border"  @click="change">批量变更</button></div>
+    <!--<section class="Statistics">-->
+        <!--&lt;!&ndash;总数&ndash;&gt;-->
+        <!--<div title="退货">-->
+            <!--<div id="isUse">退货</div>-->
+            <!--<div>344444</div>-->
+        <!--</div>-->
+        <!--&lt;!&ndash;App &ndash;&gt;-->
+        <!--<div title='转入'>-->
+            <!--<div id="noUse">转入</div>-->
+            <!--<div>3444</div>-->
+        <!--</div>-->
+        <!--<div title='转出'>-->
+            <!--<div id="noUse1">转出</div>-->
+            <!--<div>344433</div>-->
+        <!--</div>-->
+    <!--</section>-->
+
+    <!--搜索条件-->
+    <div class="searchBox">
+        <div class='form'>
+            <div class='search2'>
+                <img src="../../imgs/search@2x.png" alt="" class='icon1'/><input type="text" class="phone" id="inputText" placeholder="设备号"/>
+            </div>
+            <div class="select">
+                <select id = "selectVal" class="input2">
+                    <option value="" class="selected">全部用户</option>
+                    <option value="1">失联优先</option>
+                </select>
+            </div>
+            <button @click="search" class="search" style='margin:0 10px;'>搜索</button>
+            <button id="all" class="search">全部</button>
+        </div>
+        <div>
+            <button class="export" @click="exportList">导出excel</button>
+        </div>
+
+    </div>
+
+    <!--<div class="row searchBox form">-->
+    <!--<div class="col-sm-3 search2"><img src="../../imgs/search@2x.png" alt="" class='icon1'/><input type="text" class="form-control phone" id="inputText" placeholder="设备号"/></div>-->
+    <!--<div class="col-sm-1" ><button id="search" class="btn btn-skyBlue search">搜索</button></div>-->
+    <!--<div class="col-sm-1"><button id="all" class="btn btn-skyBlue search">全部</button></div>-->
+    <!--<div class="col-sm-1"><button id="getOut" class="btn btn-skyBlue export1">导出excel</button></div>-->
+    <!--</div>-->
+
+
+
+    <!--table  激活用户-->
+    <div class="appBox">
+        <table data-toggle="table" class="table table-bordered text-center table-hover" id="changeTable">
+            <thead>
+            <tr  style="opacity: 0.8;background: rgba(0,150,255,0.10);">
+                <th>序号</th>
+                <th>型号</th>
+                <th>设备ID</th>
+                <th>原市场</th>
+                <th>变更时间</th>
+                <th>新市场</th>
+                <th>操作员</th>
+                <th>原因</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+
+
+
+    <!--点击批量变更出现弹框-->
+    <div role="dialog" class="modal fade bs-example-modal-sm" id="allActive">
+        <div class="modal-dialog">
+            <div class="modal-content" style="max-width: 500px;min-width: 300px;">
+                <!--header-->
+                <div class="modal-header text-center">
+                    <button type="button" class="close" id="closeActive" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                    <h4 class="h4 modal-title" >批量变更</h4>
+                </div>
+                <!--body-->
+                <div class="modal-body text-right">
+                    <form role="activeForm" id="activeForm" enctype="multipart/form-data">
+                        <input type="hidden" name="loginId" id="loginIdA" value=""/>
+                        <input type="hidden" name="token" id="tokenA" value=""/>
+                        <div class="row">
+                            <div class="col-sm-3 text-right">选择文件：</div>
+                            <div class="col-sm-6">
+                                <input type="file" id="activeFile" name="file" multiple class="form-control" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel">
+                            </div>
+                        </div>
+                        <!--<div class="row">-->
+                        <!--<div class="col-sm-3 text-right">选择租或售：</div>-->
+                        <!--<div class="col-sm-6">-->
+                        <!--<select name="waySign" class="form-control">-->
+                        <!--<option value="1">租赁</option>-->
+                        <!--<option value="2">购买</option>-->
+                        <!--</select>-->
+                        <!--</div>-->
+                        <!--</div>-->
+                        <br/>
+                        <hr/>
+                        <div class="row">
+                            <div class="col-sm-3"></div>
+                            <div class="col-sm-3 text-center"><button type="button" @click="conBtn" class="btn btn-skyBlue">确定</button></div>
+                            <div class="col-sm-3 text-center"><button type="reset" class="btn btn-skyBlue" @click="resetBtn">重置</button></div>
+                        </div>
+                        <br/>
+                        <hr/>
+                        <div class="row">
+                            <div class="col-sm-12 text-center" id="activeMsg"></div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="../../lib/jquery/jquery.min.js"></script>
+<script src="../../js/vue.min.js"></script>
+<script src="../../lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../lib/datatables/js/jquery.dataTables.min.js"></script>
+<script src="../../lib/layer/layer.js"></script>
+<script src="../../lib/template.js"></script>
+<script src="../../js/common.js"></script>
+<script src="../../js/framePages/changeArea.js"></script>
+</body>
+</html>

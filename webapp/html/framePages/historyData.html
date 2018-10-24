@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="../../imgs/logo-l.png">    <!--title-icon-->
+    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../../lib/datatables/css/jquery.dataTables.min.css"/>
+    <link rel="stylesheet" href="../../css/cssReset.css"/>
+    <title>心率血压血氧</title>
+    <style>
+        /*搜索*/
+        body{color: #fff;}
+        .header1{margin:20px 20px 5px 20px;display:flex;justify-content:space-between;}
+        .header1 input{width:140px;height:26px;background: #F3F3F3;border-radius: 4px;border:none;font-size: 14px;color: #4A4A4A;outline:none}
+        .header1 .btn1{width:90px;height:26px;background: #0096FF;box-shadow: 0 2px 4px 0 rgba(0,150,255,0.30);
+         border-radius: 4px;color:#fff;border:none;font-size: 14px;color: #FFFFFF;}
+         .header1 .right .btn2{width:60px;height:26px;border: 1px solid #0096FF;border-radius: 4px;font-size: 14px;
+          color: #0096FF;background:#fff;}
+        .hr{width:30px;border-top:2px solid #199ED8;float:left;margin-top:12px;margin-left:5px;margin-right:5px;}
+        .searchBox{margin: 20px;}
+        .box{border-radius: 8px;min-height: 200px;min-width: 200px;margin: 20px 20px;}
+        .smImg{width: 100%;height: 217px;background: #F7FCFF;border-radius: 8px;}
+        .smImg>div{width: 100%;height: 100%;}
+        .smTitle{font-size: 14px;color: #0B78E3;letter-spacing: 0;line-height: 30px;padding-left: 80%;
+            margin-top: 10px;}
+        .smTitle2{color: #E92C81;}
+        .smTitle3{color: #56B2BA;}
+        .part2{width: 100%;display: flex;justify-content: space-around;color: black;margin-bottom: 20px;}
+        .part2>div{width: 30%;}
+        .table .tr1{background:#F7FCFF;color:#4A4A4A;}
+        .table{padding:0 7.5px;}
+        .bot1{background: #FFFFFF;border: 1px solid #D3D3D3;border-radius: 8px;}
+        .bot1 p{font-size: 15px;color: #464646;margin:20px 0 20px 15px;}
+        .table .dataTables_info{margin:0 15px;}
+        /*!*滚动条*!*/
+        /*#hrTable_wrapper::-webkit-scrollbar {*/
+            /*width: 4px;*/
+            /*height:4px;*/
+        /*}*/
+		/*#hrTable_wrapper::-webkit-scrollbar-thumb {*/
+		    /*border-radius: 5px;*/
+		    /*-webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);*/
+		    /*background:lightblue;*/
+		/*}*/
+		/*#hrTable_wrapper::-webkit-scrollbar-track {*/
+		   /*-webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);*/
+		   /*border-radius: 0;*/
+		   /*background: rgba(0,0,0,0.1);*/
+		/*}*/
+		/*#bpTable_wrapper::-webkit-scrollbar {*/
+            /*width: 4px;*/
+            /*height:4px;*/
+        /*}*/
+		/*#bpTable_wrapper::-webkit-scrollbar-thumb {*/
+		    /*border-radius: 5px;*/
+		    /*-webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);*/
+		    /*background:lightblue;*/
+		/*}*/
+		/*#bpTable_wrapper::-webkit-scrollbar-track {*/
+		   /*-webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);*/
+		   /*border-radius: 0;*/
+		   /*background: rgba(0,0,0,0.1);*/
+		/*}*/
+		/*#boTable_wrapper::-webkit-scrollbar {*/
+            /*width: 4px;*/
+            /*height:4px;*/
+        /*}*/
+		/*#boTable_wrapper::-webkit-scrollbar-thumb {*/
+		    /*border-radius: 5px;*/
+		    /*-webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);*/
+		    /*background:lightblue;*/
+		/*}*/
+		/*#boTable_wrapper::-webkit-scrollbar-track {*/
+		   /*-webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);*/
+		   /*border-radius: 0;*/
+		   /*background: rgba(0,0,0,0.1);*/
+		/*}*/
+		#hrTable_wrapper,#bpTable_wrapper,#boTable_wrapper{max-height:600px;overflow:auto;}
+		.bot1 #hrTable_wrapper .dataTables_info{margin:0 0 10px 15px;}
+		.bot1 #bpTable_wrapper .dataTables_info{margin:0 0 10px 15px;}
+		.bot1 #boTable_wrapper .dataTables_info{margin:0 0 10px 15px;}
+		#app{width:1200px;margin:0 auto;}
+    </style>
+</head>
+<body>
+<div id="app">
+	<!--搜索条件-->
+	<div class='header1'>
+		<div class='left'>
+			<input type="date" class='hTime' id="time"/>
+			<button class='btn1' id="search">确定</button>
+		</div>
+		<div class='right'>
+			<button class='btn2' id='prevDay'>前一天</button>
+			<button class='btn2' id='nextDay'>后一天</button>
+		</div>
+	</div>
+
+	<div class="part1">
+		<!--&lt;!&ndash;房颤&ndash;&gt;-->
+		<!--<div class="box">-->
+		<!--&lt;!&ndash;折线图&ndash;&gt;-->
+		<!--<div class="smImg"><div id="housePropertyCanvas"></div></div>-->
+		<!--&lt;!&ndash;分析标题&ndash;&gt;-->
+		<!--&lt;!&ndash;<h3 class="smTitle smTitle1"><b>当日心率曲线</b></h3>&ndash;&gt;-->
+		<!--&lt;!&ndash;分析&ndash;&gt;-->
+		<!--<div class="smContent" id="housePropertyContent"></div>-->
+		<!--</div>-->
+		<!--心率-->
+		<div class="box">
+			<!--折线图-->
+			<div class="smImg"><div id="heartRateCanvas"></div></div>
+			<!--分析标题-->
+			<!--<h3 class="smTitle smTitle1"><b>当日心率曲线</b></h3>-->
+			<!--分析-->
+			<div class="smContent" id="heartRateContent"></div>
+		</div>
+		<!--血压-->
+		<div class="box">
+			<!--折线图-->
+			<div class="smImg"><div id="bloodPressCanvas"></div></div>
+			<!--分析标题-->
+			<!--<h3 class="smTitle smTitle2"><b>当日血压曲线</b></h3>-->
+			<!--分析-->
+			<div class="smContent" id="bloodPressContent"></div>
+		</div>
+		<!--血氧-->
+		<div class="box">
+			<!--折线图-->
+			<div class="smImg"><div id="bloodOxygenCanvas"></div></div>
+			<!--分析标题-->
+			<!--<h3 class="smTitle smTitle3"><b>当日血氧曲线</b></h3>-->
+			<!--分析-->
+			<div class="smContent" id="oxContent"></div>
+		</div>
+
+		<!--血糖-->
+		<!--<div class="box">-->
+			<!--&lt;!&ndash;折线图&ndash;&gt;-->
+			<!--<div class="smImg"><div id="bloodSugar"></div></div>-->
+			<!--&lt;!&ndash;分析标题&ndash;&gt;-->
+			<!--&lt;!&ndash;<h3 class="smTitle smTitle3"><b>当日血氧曲线</b></h3>&ndash;&gt;-->
+			<!--&lt;!&ndash;分析&ndash;&gt;-->
+			<!--<div class="smContent" id="bloodSugarContent"></div>-->
+		<!--</div>-->
+	</div>
+
+	<div class="part2">
+		<div class='bot1'>
+			<p>全部心率 <span id="hrLength">0</span>条</p>
+			<table data-toggle="table" class="table table-bordered text-center table-hover" id="hrTable">
+				<!--<caption id="deviceNumber" class="text-center">设备号</caption>-->
+				<thead>
+				<tr class='tr1'>
+					<th>序号</th>
+					<th>时间</th>
+					<th id="hr">心率</th>
+					<th>删除</th>
+				</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+		</div>
+		<div class='bot1'>
+			<p>全部血压 <span id="bpLength">0</span>条</p>
+			<table data-toggle="table" class="table table-bordered text-center table-hover" id="bpTable">
+				<!--<caption id="deviceNumber" class="text-center">设备号</caption>-->
+				<thead>
+				<tr class='tr1'>
+					<th>序号</th>
+					<th>时间</th>
+					<th id="bp">血压</th>
+					<th>删除</th>
+				</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+		</div>
+		<div class='bot1'>
+			<p>全部血氧 <span id="boLength">0</span>条</p>
+			<table data-toggle="table" class="table table-bordered text-center table-hover" id="boTable">
+				<!--<caption id="deviceNumber" class="text-center">设备号</caption>-->
+				<thead>
+				<tr class='tr1'>
+					<th>序号</th>
+					<th>时间</th>
+					<th id="bo">血氧</th>
+					<th>删除</th>
+				</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+</div>
+
+
+
+<!--js-->
+<script src="../../lib/jquery/jquery.min.js"></script>
+<script src="../../lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../lib/datatables/js/jquery.dataTables.min.js"></script>
+<script src="../../lib/layer/layer.js"></script>
+<script src="../../lib/echarts/echarts.min.js"></script>
+<script src="../../js/common.js"></script>
+<script src="../../js/framePages/historyData.js"></script>
+</body>
+</html>

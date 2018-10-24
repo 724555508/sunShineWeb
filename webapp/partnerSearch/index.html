@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <link rel="stylesheet" href="index.css">
+    <title>安顿经销权查询</title>
+</head>
+<body>
+<div class="box">
+    <!--headerArea-->
+    <header class="header">
+        <div class="logo"><img src="imgs/logo.png" alt="andunLogo" width="50"></div>
+        <div class="title">安顿经销权查询</div>
+        <div class="searchBox">
+            <i class="icon" id="search"></i>
+            <input type="text" placeholder="请输入城市／编号查询" id="input">
+        </div>
+    </header>
+    <!--查询结果-->
+    <section class="section">
+        <div class="conTitle">查询结果</div>
+        <!--结果列表-->
+        <div class="lists" id="lists">
+
+        </div>
+    </section>
+    <!--footer-->
+    <footer class="footer">
+        <div><img src="imgs/tip.png" width="10" alt="">如您要核实的信息与查询结果不一致，请务必再次核实防止上当受骗，查询电话：<a href="tel:4008010400">4008010400</a></div>
+    </footer>
+    <!--aside-->
+    <aside class="aside">
+        <hr>
+        <div class="official"><a href="http://www.iandun.com">了解更多请登陆官方网站 www.iandun.com</a></div>
+        <div class="wwwMsg">Copyright © 2018 Beijing Xueyang Technology Co.,Ltd. 保留所有权利。</div>
+    </aside>
+</div>
+
+
+
+<!--模板-->
+<script type="text/html" id="result">
+    {{each data.cmsAuthorizationBeans}}
+    <div class="list">
+        <div class="item">地区&ensp;<span>{{$value.areaName}}</span></div>
+        <div class="item">名称&ensp;<span>{{$value.companyname}}</span></div>
+        <div class="item">期限&ensp;<span>{{$value.bargainStartTimeString}}-{{$value.bargainEndTimeString}}</span></div>
+        <div class="item">编码&ensp;<span>{{$value.grantNum}}</span></div>
+        {{if $value.qrCodeUrl}}
+        <hr class="hr">
+        <div class="myMsg">
+            <div><img src="https://i.iandun.com:8085/{{$value.qrCodeUrl}}" alt="二维码名片" width="100px"></div>
+            <div class="msgBox">
+                <div><img src="imgs/user.png" width="16" alt="">&emsp;{{$value.agentName}}</div>
+                <div><a href="tel:{{$value.phoneNum}}"><img src="imgs/iphone.png" width="16" alt="">&emsp;{{$value.phoneNum}}</a></div>
+                <div><a href="tel:{{$value.phone}}"><img src="imgs/call.png" width="16" alt="">&emsp;{{$value.phone}}</a></div>
+                <div><a href="mailto:{{$value.email}}"><img src="imgs/mail.png" width="16" alt="">&emsp;{{$value.email}}</a></div>
+            </div>
+        </div>
+        {{/if}}
+    </div>
+    {{/each}}
+
+</script>
+
+<!--scripts-->
+<script src="jquery/jquery.min.js"></script>
+<script src="template.js"></script>
+<script src="layer/layer.js"></script>
+<script src="index.js"></script>
+
+</body>
+</html>

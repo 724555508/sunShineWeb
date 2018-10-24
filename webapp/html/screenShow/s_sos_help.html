@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <link rel="shortcut icon" href="../../imgs/logo-l.png">
+    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../../css/cssReset.css"/>
+    <link rel="stylesheet" href="../../css/screenShow/s_sos_help.css">
+    <title>SOS救助/健康汇总/肿瘤风险变化趋势</title>
+</head>
+<body>
+<main id="main" v-cloak>
+    <div id="app">
+        <!--left-->
+        <div class="left">
+            <!--title-->
+            <div class="title">全国SOS救助管理</div>
+            <!--count-->
+            <div class="count">
+                <!--累计-->
+                <div>
+                    <div>累计</div>
+                    <div>{{ map.AllSOSNum }}</div>
+                </div>
+                <!--今日-->
+                <div>
+                    <div>今日</div>
+                    <div>{{ map.TodaySOSNum }}</div>
+                </div>
+                <!--未处理-->
+                <div>
+                    <div>未处理</div>
+                    <div>{{ map.noDispose }}</div>
+                </div>
+            </div>
+            <!--userInfo-->
+            <div class="userInfo">
+                <!--list-->
+                <div v-for="(list, index) in sosList">
+                    <!--headImg-->
+                    <div v-if="list.gender === '1'"><img src="../../imgs/mapImages/man.png" width="64" alt=""></div>
+                    <div v-else=""><img src="../../imgs/mapImages/woman.png" width="64" alt=""></div>
+                    <!--userMsg-->
+                    <div class="userMsg">
+                        <div>
+                            <div><span v-if="list.username !== ''">{{ list.username.replace(list.username.split('')[1],'*') }}</span><span> {{ list.age }} </span></div>
+                            <div>
+                                <span v-if="list.medicalHistory.length === 0" class="noIllHistory">无病史</span>
+                                <span v-for="(item, itemIndex) in list.medicalHistory">{{ item }}</span>
+                            </div>
+                        </div>
+                        <!--time-->
+                        <div>求助时间：{{ list.sosTime.slice(0,4) }}/{{ list.sosTime.slice(4,6) }}/{{ list.sosTime.slice(6,8) }} {{ list.sosTime.slice(8,10) }}:{{ list.sosTime.slice(10,12) }}:{{ list.sosTime.slice(12,14) }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--right-->
+        <div class="right">
+            <!--r-top-->
+            <div><div id="pieImg"></div></div>
+            <!--r-bottom-->
+            <div><div id="lineImg"></div></div>
+        </div>
+    </div>
+</main>
+<!--js-->
+<script src="../../lib/vue.min.js"></script>
+<script src="../../lib/jquery/jquery.min.js"></script>
+<script src="../../lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../lib/echarts/echarts.min.js"></script>
+<script src="../../lib/layer/layer.js"></script>
+<script type="text/javascript" src="https://cdn.goeasy.io/goeasy.js"></script><!--goEasy后台推送SOS预警-->
+<script src="../../js/common.js"></script>
+<script src="../../js/screenShow/s_sos_help.js"></script>
+</body>
+</html>

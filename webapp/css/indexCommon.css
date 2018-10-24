@@ -1,0 +1,63 @@
+*{box-sizing: border-box;}
+body{margin: 0;padding: 0;}
+/*header*/
+.header{width: 100%;height: 60px;background-color: rgba(31,31,31,0.5);position: relative;}
+.header .logoImg{position: absolute;top: 16.5px;left: 30px;}
+.header .andunName{font-size: 26px;line-height: 26px;font-weight: 300;color: #fff;
+    height: 100%;display: flex;display: -webkit-flex;align-items:center;}
+.header .andunName div{margin: 0 0 0 155px;padding-left: 21px;border-left: 1px solid rgba(255,255,255,0.3);}
+.userName,.exit{position: absolute;top: 17px;right: 32px;cursor: pointer;}
+.userName{right: 87px;top: 22px;font-size: 14px;color: #32325D;}
+.changePwd{font-size: 14px;line-height: 14px;padding: 13.5px 15px;position: absolute;top: 65px;right: 66px;
+    background-color: rgba(0,150,255,0.7);border-radius: 5px;cursor: pointer;display: none;color: #fff;}
+.changePwd:after{content: '';border: 10px solid transparent;border-bottom: 10px solid rgba(0,150,255,0.7);
+    position: absolute;right: 34px;margin-top: -34px;}
+/*修改密码弹窗*/
+.modal-content{color: #000;line-height: 32px;}
+.close{color: #000;}
+.modal-title{color: rgba(0,150,255,1);}
+.changePwdAlert{color: #000;font-size: 12px;}
+.changePwdAlert .row{padding: 10px;}
+#enterBtn{display: none;}
+/*主体*/
+.main{width: 100%;height: calc(100vh - 60px);display: flex;display: -webkit-flex;flex-direction:row;}
+/*导航*/
+.main .navList{background-color: rgba(22,24,35,0.6);height: 100%;width: 220px;}
+.listBox{list-style: none;padding: 20px 0;}
+.listBox li{letter-spacing: 0;/*width: 100%;*//*line-height: 16px;*/cursor: pointer;margin: 15px;/*text-align: center;*/}
+.listBox li>a{font-size: 16px;color: #0096FF;}
+.listBox li>a:hover{color: #fff;text-decoration: none;}
+.listBox li>a:link{text-decoration: none;}
+.listBox li>a:visited{text-decoration: none;}
+.listBox li>a:active{text-decoration: none;}
+.listBox li .liActive{/*padding: 12px 43px;*/background-color: rgba(0,150,255,0.7);color: #fff;border-radius: 5px;background-color: #2aabd2;}
+/*内容*/
+.main .content{width: calc(100vw - 220px);min-width: 580px;overflow: hidden;}
+
+/*这是layer弹层设置的等级*/
+.layui-layer{z-index: 9999;}
+/*header1*/
+.header1{background: #fff;box-shadow: 0 2px 5px 0 rgba(0,0,0,0.10);}
+.header1 .andunName div{font-size: 24px;color: #0096FF;border-left:1px solid #D8D8E4;line-height: 28px;margin: 0 0 0 115px;padding-left: 14px;}
+/*导航*/
+.main .navList1{
+    background: #0096FF;
+    background: -webkit-linear-gradient(left top, #555aff, #0096FF); /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(bottom right, #555aff, #0096FF); /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(bottom right, #555aff, #0096FF); /* Firefox 3.6 - 15 */
+    background: linear-gradient(to bottom right, #555aff , #0096FF); /* 标准的语法（必须放在最后）*/}
+/*.listBox{margin: 0 10px;}*/
+/*.listBox li{margin: 15px 0;}*/
+.listBox li>a{color: #fff;height: 36px;line-height: 36px;display: inline-block;width: 100%;text-align: center;}
+.listBox li>a:hover{/*height: 36px;*/border-radius: 22px;color: #32325D;background:#fff;text-decoration: none;}
+.listBox li .liActive{color: #32325D;background:#fff;border-radius: 22px;/*width: 200px;height: 36px;display: block;*/}
+
+/*body*/
+body{background: #fff;}
+
+iframe{border: none;}
+/*合伙人消息图标*/
+.dadMessage{display:flex;justify-content:flex-end;position:absolute;right:275px;top:24px;}
+.message{position:relative;z-index:100;}
+.message span{position:absolute;top:-9px;left:7px;color:#fff;font-size:10px;background:red;width:20px;height:20px;border-radius:50%;text-align:center;line-height:20px;}
+

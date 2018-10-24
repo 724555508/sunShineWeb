@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="../../imgs/logo-l.png">    <!--title-icon-->
+    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../../lib/datatables/css/jquery.dataTables.min.css"/>
+    <link rel="stylesheet" href="../../css/cssReset.css"/>
+    <link rel="stylesheet" href="../../css/framePages/bindingManage.css"/>
+    <title>设备未更新列表</title>
+    <style>
+        .searchBox{padding:0;}
+    </style>
+</head>
+<body>
+<div id="app" v-cloak>
+    <!--搜索条件-->
+    <div class="row searchBox">
+        <div class="col-sm-1"><button  class="btn btn-skyBlue" @click="search">搜索</button></div>
+    </div>
+
+    <div class="appBox" >
+        <table data-toggle="table" class="table table-bordered text-center table-hover" id="advTable">
+            <thead>
+            <tr>
+                <th>序号</th>
+                <th>设备号</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+
+<script src="../../lib/jquery/jquery.min.js"></script>
+<script src="../../lib/vue.min.js"></script>
+<script src="../../lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../lib/datatables/js/jquery.dataTables.min.js"></script>
+<script src="../../lib/layer/layer.js"></script>
+<script src="../../lib/echarts/echarts.min.js"></script>
+<script src="../../js/common.js"></script>
+<script src="../../js/framePages/noUpdateDeviceList.js"></script>
+</body>
+</html>

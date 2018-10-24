@@ -1,0 +1,67 @@
+/*面包屑导航*/
+.breadcrumb > li + li:before {color: #0c0c0c;content: ">";padding: 0 5px;}
+.breadcrumb{margin-bottom:0px;padding:10px 0 10px 0px;background:#f0f5ff;}
+/*点击进行跳转a标签的样式*/
+.active:link{text-decoration:none;color: #0096FF;}
+.active:visited{text-decoration:none;color: #0096FF;}
+.active:active{text-decoration:none;color: #0096FF;}
+.active:hover{text-decoration:none;color: #0096FF;}
+/*不跳转的a标签样式*/
+.inActive:link{text-decoration:none;color: #4A4A4A;}
+.inActive:visited{text-decoration:none;color: #4A4A4A;}
+.inActive:active{text-decoration:none;color: #4A4A4A;}
+.inActive:hover{text-decoration:none;color: #4A4A4A;}
+
+main{margin-left: 15px;}
+main>div{font-size: 18px;color: #4a4a4a;font-weight: 600;margin-top: 15px;}
+
+.templateDiv>div{width: 100px;display: flex;margin-top: 25px;}
+.templateDiv>div>div{margin-left: 30px;}
+.templateDiv>div>div>img{border-radius: 50px;width: 100px;height: 100px;}
+.templateDiv>div>div>div{text-align: center;font-family: PingFangSC-Medium;
+    font-size: 14px;
+    color: #4A4A4A;
+    letter-spacing: 0;
+    margin-top: 10px;}
+.modal-header{border: none;padding: 0;}
+.modal-content{width: 405px;height:600px;padding: 20px 30px 35px 35px;overflow: auto;border-radius: 8px;}
+.modal-title{font-weight: 600;font-size: 16px;color: #000000;}
+.modal-body>div{margin-top: 8px;}
+.modelKey{font-weight: 600;font-size: 13px;color: #000000;}
+.modal-dialog{   /*水平垂直居中*/
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 3;
+    margin:0 auto;
+    -webkit-transform: translate(-50%, -50%) !important;
+    -moz-transform: translate(-50%, -50%) !important;
+    -ms-transform: translate(-50%, -50%) !important;
+    -o-transform: translate(-50%, -50%) !important;
+    transform: translate(-50%, -50%) !important;
+}
+
+/*LaboratorySheetModel*/
+#LaboratorySheetModel .modal-dialog .modal-content{width: 500px;}
+.modal-body div ul{display: flex;justify-content: space-between;}
+.modal-content .modal-body div:nth-child(5) {height: 200px;overflow: auto;}
+.modal-content .modal-body div:nth-child(5) ul{margin: 13px 0;}
+.modal-content .modal-body div:nth-child(5) ul li:nth-child(1){width: 120px;}
+.modal-content .modal-body div:nth-child(5) ul li:nth-child(2){width: 30px;}
+.modal-content .modal-body div:nth-child(5) ul li:nth-child(3){width: 50px;}
+.modal-content .modal-body div:nth-child(5) ul li:nth-child(4){width: 80px;}
+
+
+/*滚动条*/
+.modal-content .modal-body div:nth-child(5)::-webkit-scrollbar {/*滚动条整体样式*/
+    width: 6px; /*高宽分别对应横竖滚动条的尺寸*/
+    height:15px;
+}
+.modal-content .modal-body div:nth-child(5)::-webkit-scrollbar-thumb {/*滚动条里面小方块*/
+    background:rgba(11,120,227,0.2);
+    border-radius: 8px;
+}
+.modal-content .modal-body div:nth-child(5)::-webkit-scrollbar-track {/*滚动条里面轨道*/
+    border-radius: 0;
+    background:#fff;
+}

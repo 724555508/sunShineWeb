@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="http://no.1dkm.cn/lib/bootstrap/css/bootstrap.min.css"/>
+    <style>
+        body{
+            background-image: url("http://qzonestyle.gtimg.cn/qzone/qzactStatics/imgs/20160219153959_f2975b.jpg");
+        }
+        .main{
+            margin-top: 100px;
+            padding-left: 500px;
+        }
+        .main>div{
+            margin-top: 30px;
+            text-align: center;
+        }
+        .btn-skyBlue{background-color: #0096ff;border: none;
+            border-radius: 2px;height: 32px;padding: 0 16px;
+            color: #fff;line-height: 32px;font-size: 13px;}
+        #uploadImg{
+            margin-top: 50px;
+        }
+        .upload{
+            margin-top: 15px;
+        }
+        input{
+            border: 1px solid #ff4eda;
+        }
+        .sendMessage>input{margin: 10px;}
+    </style>
+    <title>爱萝莉真是太好了</title>
+</head>
+<body>
+    <div class="main">
+        <div>
+            <span>
+                <input id="url" size="25">&nbsp;&nbsp;
+                <b>请输入播放地址</b>
+            </span>
+        </div>
+        <div>
+            <span>
+                <input id="videoName" size="25">&nbsp;&nbsp;
+                <b>请输入资源名称</b>
+            </span>
+        </div>
+        <div>
+            <span>
+                <input id="openId" size="25">&nbsp;&nbsp;
+                <b>请输入OPENID</b>
+            </span>
+        </div>
+        <div>
+            <button  class="btn-skyBlue" id="submit">提交</button>
+        </div>
+
+        <div class="row uploadBox">
+            <div class="">
+                <input size="100" name="pics" id="imgs" placeholder="网络图片转化后的地址将在此处显示">
+                <!--<form id="uploadImg">-->
+                    <!--<label for="newImg">&lt;!&ndash;&ndash;&gt;-->
+                        <!--<input type="file" id="newImg" name="file"  multiple="multiple" class="form-control" onchange="uploadimg()"-->
+                               <!--accept="image/gif,image/jpeg,image/jpg,image/png,image/svg"/>-->
+                    <!--</label>-->
+                <!--</form>-->
+                <!--<div id="imgShowBox"></div>-->
+            </div>
+        </div>
+
+        <div>
+            <input size="100" id="input" placeholder="图片链接">
+            <div class="upload"><button type="button" id="uploadButton" class="btn btn-skyBlue">转化</button></div>
+        </div>
+        
+        
+        <div>
+        <select style="width: 150px;margin-left: 40%;margin-bottom: 20px;margin-top: 200px;" class="form-control" onchange="getUUID(this.value)">
+            <option value="">生成UUID</option>
+            <option value="1">16位小写</option>
+            <option value="2">16位大写</option>
+            <option value="3">32位小写</option>
+            <option value="4">32位大写</option>
+        </select>
+        <div>
+            <input size="100"  id="uuid" placeholder="生成的UUID将在此处显示">
+        </div>
+    </div>
+    
+    <div>
+        <div class="sendMessage">
+            <input size="60"  id="sendOpenId" placeholder="请输入用户openId,openId为空时发送全部用户">
+            <input size="60"  id="mvId" placeholder="请输入mvId">
+        </div>
+        <button  class="btn-skyBlue" id="groupSend">群发推送消息</button>
+    </div>
+    
+    </div>
+    
+<script src="http://no.1dkm.cn/lib/jquery/jquery.min.js"></script>
+<script src="http://no.1dkm.cn/lib/jquery.form.js"></script>
+<script src="http://no.1dkm.cn/lib/layer/layer.js"></script>
+<script>
+
+    var PIC_SIZE_5 = 5242880; // 5M *1024 *1024
+
+    function piccheck (filename){
+        reg = /([^\s]+(?=\.(bmp|jpg|png|jpeg|gif))\.\2)/gi;
+        if (reg.test(filename)) {
+            return 1; // true
+        } else {
+            return 2; // false
+        }
+    }
+
+    $('#submit').on('click',function () {
+        if($('#url').val() == '' || $('#videoName').val() == '' || $('#openId').val() == ''){
+            layer.msg("信息不完整",{
+                icon:5,
+                time:1000
+            });
+            return;
+        }
+        $.ajax({
+            url: 'http://www.vshidai.top/sunShine/message/sendDealMessage/ODAC8A4/'+$('#url').val()+'/'+ $('#openId').val(),
+            type:'post',
+            dataType:'json',
+            crossDomain: true,xhrFields: {withCredentials: true},success:function (result) {
+                if(result.code == 200){
+                    layer.msg(result.msg,{
+                        icon:6,
+                        time:1000
+                    });
+                }else {
+                    layer.msg(result.msg,{
+                        icon:5,
+                        time:1000
+                    });
+                }
+            }
+        });
+    })
+
+    $('#uploadButton').on('click',function () {
+        if($('#input').val() == ''){
+            layer.msg("信息不完整",{
+                icon:5,
+                time:1000
+            });
+            return;
+        }
+        $.ajax({
+            url: 'http://no.1dkm.cn/sunShine/live/upload',
+            type:'post',
+            data:{
+                "url":$('#input').val()
+            },
+            // dataType:'json',
+            crossDomain: true,xhrFields: {withCredentials: true},success:function (data) {
+                $('#imgs').val("http://no.1dkm.cn/img/"+data);
+                return data;
+            },
+            error:function(){
+                alert("上传失败");
+                return;
+            }
+        });
+    });
+    
+    $('#groupSend').on('click',function () {
+        if($('#mvId').val() == ''){
+            layer.msg("信息不完整",{
+                icon:5,
+                time:1000
+            });
+            return;
+        }
+        $.ajax({
+            url: 'http://www.vshidai.top/sunShine/message/groupSendNewMovieMessage/ODAC8A4/'+$('#mvId').val(),
+            type:'post',
+            data:{
+                "openId":$('#sendOpenId').val()
+            },
+            // dataType:'json',
+            crossDomain: true,xhrFields: {withCredentials: true},success:function (result) {
+                layer.msg(result.msg);
+            },
+            error:function(){
+                alert("发送失败");
+            }
+        });
+    });
+    
+    
+    //上传图片
+    function uploadimg(){
+        uploadImg('newImg','img_show','imgs');
+    }
+
+    function uploadImg(id,imgShow,imgs){
+        var imglen = $("#"+id)[0].files.length;
+        if(imglen > 5){
+            alert("图片不能超过5张");
+            return;
+        }
+
+        var pics = $("#" + id)[0].files;
+
+        for (var i=0; i<pics.length; i++) {
+            var filename = pics[i].name;//
+            if(pics[i].size >= PIC_SIZE_5){
+                alert("不能超过5M");
+                return;
+            }
+            var ispic=piccheck (filename); //
+            if(ispic == 2){
+                alert("文件格式不正确");
+                return;
+            }
+        }
+        //发送请求
+        var option = {
+            // url : "http://192.168.1.193/iandun/live/uploadFileHtml",
+            url : "http://no.1dkm.cn/sunShine/live/uploadFileHtml",
+            type : "post",
+            //dataType : "json",
+            success : function(data) {
+                $('#'+ imgs).val(data);         //将ajax调回成功返回值(一个img url)放入到隐藏域input的value中
+                $('#imgShowBox').html('<img src="'+data+'" width="200">');  //这里放预览图
+                return data;
+            },
+            error:function(){
+                alert("上传失败");
+                return;
+            }
+        };
+        $("#uploadImg").ajaxSubmit(option);     //ajaxSubmit交互
+    }
+    
+  //用于生成uuid
+    function S4() {
+        return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
+    }
+    function guid32() {
+        return (S4()+S4()+S4()+S4()+S4()+S4()+S4()+S4());
+    }
+    function guid16() {
+        return (S4()+S4()+S4()+S4());
+    }
+    function getUUID(that) {
+        if(that == 1){
+            $('#uuid').val(guid16().toLowerCase());
+        }else if(that == 2){
+            $('#uuid').val(guid16().toUpperCase());
+        }else if(that == 3){
+            $('#uuid').val(guid32().toLowerCase());
+        }else if(that == 4){
+            $('#uuid').val(guid32().toUpperCase());
+        }
+    }
+</script>
+</body>
+</html>

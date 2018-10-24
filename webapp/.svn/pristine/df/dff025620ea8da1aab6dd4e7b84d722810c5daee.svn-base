@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="../../imgs/logo-l.png">    <!--title-icon-->
+    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../../lib/datatables/css/jquery.dataTables.min.css"/>
+    <link rel="stylesheet" href="../../css/cssReset.css"/>
+    <link rel="stylesheet" href="../../css/framePages/bindingManage.css"/>
+    <title>佩戴人管理</title>
+    <style>
+    	.searchBox  div .input1{background:#fff;}
+    	.searchBox .search2 .input2{background:#fff;}
+    </style>
+</head>
+<body>
+<div class="dad">
+    <!--五个统计数据-->
+    <section class="Statistics">
+        <!--总数-->
+        <div title="总数">
+            <div id="AllCount">0</div>
+            <div>总数</div>
+        </div>
+        <!--App -->
+        <div title="App">
+            <div id="AllApp">0</div>
+            <div>App</div>
+        </div>
+        <!--佩戴-->
+        <div title="佩戴">
+            <div id="AllWearUser">0</div>
+            <div>佩戴</div>
+        </div>
+        <!--app月活-->
+        <div title="App月活">
+            <div id="ActivedAppThisMonth">0</div>
+            <div>App月活</div>
+        </div>
+        <!--佩戴日活-->
+        <div title="佩戴日活">
+            <div id="ActivedWearUserThisDay">0</div>
+            <div>佩戴日活</div>
+        </div>
+    </section>
+
+    <!--搜索条件-->
+    <div class="searchBox">
+        <div class='form'>
+            <div class='search1'>
+                <input type="date" class='hTime' id="startTime" value='2018-03-36'/>
+                <div class="hr"></div>
+                <input type="date" class='hTime' id='endTime' value='2018-03-36'/>
+            </div>
+            <div class='search2'>
+                <img src="../../imgs/search@2x.png" alt="" class='icon1'/><input type="text" class="phone" id="inputText" placeholder="手机号/姓名/设备号"/>
+            </div>
+            <button id="search" class="search" style='margin:0 10px;'>搜索</button>
+            <button id="all" class="search">全部</button>
+        </div>
+        <div>
+            <button class="export" id="getOut">导出excel</button>
+        </div>
+
+    </div>
+    <!--<div class="row searchBox">-->
+    <!--<div class="col-sm-2"><input type="date" class="form-control input1" id="startTime"/></div>-->
+    <!--<div class="hr"></div>-->
+    <!--<div class="col-sm-2"><input type="date" class="form-control input1" id="endTime"/></div>-->
+    <!--<div class="col-sm-3 search2"><img src="../../imgs/search@2x.png" alt="" class='icon1'/><input type="text" class="form-control input2" id="inputText" placeholder="手机号/姓名/设备号"/></div>-->
+    <!--<div class="col-sm-1"><button id="search" class="btn btn-skyBlue search">搜索</button></div>-->
+    <!--<div class="col-sm-1"><button id="all" class="btn btn-skyBlue search">全部</button></div>-->
+    <!--<div class="col-sm-1"><button id="getOut" class="btn btn-skyBlue export">导出excel</button></div>-->
+    <!--</div>-->
+
+    <!--nav 佩戴人/APP用户切换--->
+    <nav class="navChange">
+        <div class="bindUserBtn changeNav" id="bindUserBtn" status="1" data="1">佩戴人</div>
+        <div class="appUserBtn changeNav" id="appUserBtn" status="2">APP用户</div>
+    </nav>
+
+    <!--table佩戴人-->
+    <div class="bindBox">
+        <table data-toggle="table" class="table table-bordered text-center table-hover" id="bindTable">
+            <thead>
+            <tr>
+                <th>序号</th>
+                <th>手机</th>
+                <th>姓名</th>
+                <th>城市</th>
+                <th>性别</th>
+                <th>年龄</th>
+                <th>激活时间</th>
+                <th>剩余服务期</th>
+                <th>协议</th>
+                <th>关注</th>
+                <th>状态</th>
+                <th>最近佩戴</th>
+                <th>类型</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+
+
+    <!--table  App用户-->
+    <div class="appBox">
+        <table data-toggle="table" class="table table-bordered text-center table-hover" id="appTable">
+            <thead>
+            <tr>
+                <th>序号</th>
+                <th>手机</th>
+                <th>昵称</th>
+                <th>城市</th>
+                <th>性别</th>
+                <th>年龄</th>
+                <th>注册时间</th>
+                <th>关联设备</th>
+                <th>最近登录</th>
+                <!--<th>类型</th>-->
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+
+    <!--模态窗-->
+    <!--佩戴用户详情-->
+    <!--APP用户详情-->
+    <div role="dialog" class="modal fade" id="appModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!--header-->
+                <div class="modal-header text-center">
+                    <button type="button" class="close"  id="close" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                    <h3 class="text-info">app用户详情</h3>
+                </div>
+                <!--body-->
+                <div class="modal-body text-center">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+<!--js-->
+<script src="../../lib/jquery/jquery.min.js"></script>
+<script src="../../lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../lib/datatables/js/jquery.dataTables.min.js"></script>
+<script src="../../lib/layer/layer.js"></script>
+<script src="../../lib/echarts/echarts.min.js"></script>
+<script src="../../js/common.js"></script>
+<script src="../../js/framePages/bindingManage.js"></script>
+</body>
+</html>

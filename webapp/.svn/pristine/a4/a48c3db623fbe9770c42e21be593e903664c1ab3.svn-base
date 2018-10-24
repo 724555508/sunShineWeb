@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <link rel="shortcut icon" href="../../imgs/logo-l.png">
+    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../../css/cssReset.css"/>
+    <link rel="stylesheet" href="../../css/screenShow/s_user_health_info.css">
+    <title>当日用户信息汇总</title>
+</head>
+<body>
+<div id="app" v-cloak>
+    <!--左-->
+    <div class="left">
+        <!--左上-->
+        <div class="leftTop">
+            <div id="pieImg"></div>
+        </div>
+        <!--左下-->
+        <div class="leftBottom">
+            <div class="sexBox">
+                <!--男-->
+                <div>
+                    <div><img src="../../imgs/spuerScreenImgs/u11.png" alt="" width="66px"></div>
+                    <div>男</div>
+                    <div class="colorBox">
+                        <div id="fill1">
+                            <div>{{ sexNum.percent1 }}%</div>
+                        </div>
+                    </div>
+                </div>
+                <!--女-->
+                <div>
+                    <div><img src="../../imgs/spuerScreenImgs/u21.png" alt="" width="66px"></div>
+                    <div>女</div>
+                    <div class="colorBox">
+                        <div id="fill2">
+                            <div>{{ sexNum.percent2 }}%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--右-->
+    <div class="right">
+        <div class="genderImg" id="genderImg"></div>
+    </div>
+</div>
+
+<!--js-->
+<script src="../../lib/vue.min.js"></script>
+<script src="../../lib/jquery/jquery.min.js"></script>
+<script src="../../lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../lib/echarts/echarts.min.js"></script>
+<script src="../../lib/layer/layer.js"></script>
+<script src="../../js/common.js"></script>
+<script src="../../js/screenShow/s_user_health_info.js"></script>
+</body>
+</html>

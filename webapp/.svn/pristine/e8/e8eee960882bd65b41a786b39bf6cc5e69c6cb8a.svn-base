@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <link rel="shortcut icon" href="../../imgs/logo-l.png">
+    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../../css/cssReset.css"/>
+    <link rel="stylesheet" href="https://cache.amap.com/lbs/static/main1119.css"/>   <!--自定义图标-->
+    <link rel="stylesheet" href="https://cache.amap.com/lbs/static/main.css?v=1.0?v=1.0"/><!--城市选择-->
+    <link rel="stylesheet" href="../../css/screenShow/s_sosWarning_manage.css">
+    <title>531预警管理平台/预警类型/预警服务进度</title>
+</head>
+<body>
+<div id="app" v-cloak>
+    <div class="main">
+        <div class="left">
+            <h2>531预警管理平台</h2>
+            <div class="total">
+                <div class="div1">
+                    <span>累计预警人次</span>
+                    <p>{{count}}</p>
+                </div>
+                <div class="div1 div2">
+                    <span>预警人数</span>
+                    <p>{{allAlarmCount}}</p>
+                </div>
+                <div class="div1 div2">
+                    <span>今日预警人次</span>
+                    <p>{{todayAlarmCount}}</p>
+                </div>
+            </div>
+            <!--用户患病状态及时间-->
+            <div class="user" v-for="(item,index) in alarmList">
+                <div class="headImg">
+                    <div  v-if="item.gender === '1'" ><img src="../../imgs/mapImages/man.png" alt="" width="64"></div>
+                    <div v-else-if="item.gender === '2'"><img src="../../imgs/mapImages/woman.png" alt="" width="64"></div>
+                </div>
+               <div class="info">
+                   <div class="div1">
+                       <div>
+                           <h3>{{alarmList[index].username}}</h3>
+                           <span>{{alarmList[index].age}}</span>
+                       </div>
+                       <p>{{alarmList[index].createTime}}</p>
+                   </div>
+                   <div class="div2">
+                       <p v-if="alarmList[index].level == 0">心率血压预警</p>
+                       <p v-else-if="alarmList[index].level == 1">疾病预警</p>
+                       <p v-else-if="alarmList[index].level == 2">{{status}}</p>
+                   </div>
+               </div>
+            </div>
+        </div>
+        <!--右边部分-->
+        <div class="right">
+            <div class="rightTop">
+                <h3>{{date}}预警类型统计</h3>
+                <div class="barCanvas" id="barCanvas"></div>
+            </div>
+            <div class="rightBottom">
+                <h3>24小时预警处理进度</h3>
+                <div class="lineCanvas" id="lineCanvas"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="../../lib/vue.min.js"></script>
+<script src="../../lib/jquery/jquery.min.js"></script>
+<script src="../../lib/datatables/js/jquery.dataTables.min.js"></script>
+<script src="../../lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../lib/echarts/echarts.min.js"></script>
+<script src="../../lib/layer/layer.js"></script>
+<script src="../../js/common.js"></script>
+<script src="../../js/screenShow/s_sosWarning_manage.js"></script>
+</body>
+</html>

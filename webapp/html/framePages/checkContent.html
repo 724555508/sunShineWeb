@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="../../imgs/logo-l.png">    <!--title-icon-->
+    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../../lib/datatables/css/jquery.dataTables.min.css"/>
+    <link rel="stylesheet" href="../../css/cssReset.css" />
+    <link rel="stylesheet" href="../../css/framePages/checkContent.css"/>
+    <title>查看内容</title>
+</head>
+<body>
+<div class="app" id="app" v-cloak>
+    <!--面包屑导航-->
+    <ul class="breadcrumb">
+        <li><a href="CMSManage.html"  class="active">内容管理</a></li>
+        <li><a :href="backUrl" class="active">{{typeName}}</a></li>
+        <!--<li v-if="type === '1'"><a href="contentList.html?type=1" class="active">心梗频道</a></li>-->
+        <!--<li v-else-if="type === '2'"><a href="contentList.html?type=2" class="active">脑梗频道</a></li>-->
+        <!--<li v-else-if="type === '3'"><a href="contentList.html?type=3" class="active">安顿服务使用说明</a></li>-->
+        <!--<li v-else-if="type === '4'"><a href="contentList.html?type=4" class="active">安顿故事</a></li>-->
+        <li><a href="javascript:;" class="inActive">查看</a></li>
+    </ul>
+    <div class="main">
+        <h2 class="title">{{title}}</h2>
+        <div class="info1">
+            <div class="time">{{createTime}}</div>
+            <div class="div1">阅读量<span>{{readcount}}</span></div>
+            <div class="div1">赞<span>{{likecount}}</span></div>
+            <div class="div1">评论<span>{{commentCount}}</span></div>
+            <div class="div1">分享<span>0</span></div>
+            <!--<div class="div1">分析次数<span>2300</span></div>-->
+            <div class="div1">发布人<span>{{createId}}</span></div>
+        </div>
+        <div class="info2">
+            <p v-html="infoHtml"></p>
+            <!--<div class="img">-->
+                <!--<img :src="coverImg" alt="">-->
+            <!--</div>-->
+        </div>
+        <div class="info3">
+            <button :class="activeClass" @click="reCommend">{{isHot}}</button>
+            <button  :class="activeClass1" @click="isHidden">{{isValue}}</button>
+            <button class="btn" @click="edit">编辑</button>
+            <button class="btn btn2" @click="deleteContent">删除</button>
+        </div>
+        <!--评论-->
+        <div class="comment">
+            <h2>评论</h2>
+            <ul class="listBox">
+                <li class="list" v-for="(item,index) in list">
+                  <div class="left">
+                      <div class="img">
+                          <img :src="'https://i.iandun.com:8085/'+item.headImg" alt="" v-if="item.headImg !== ''">
+                          <!--<img src="../../imgs/iframeImgs/u11.png" alt="" v-if="item.headImg === '' && item.gender === '1'">-->
+                          <img src="../../imgs/iframeImgs/u21.png" alt=""  v-if="item.headImg === '' && item.gender === '2'">
+                          <img src="../../imgs/iframeImgs/u11.png" alt="" v-else-if="item.headImg === ''">
+                      </div>
+                      <div class="txt">
+                          <h3>{{item.userName}}</h3>
+                          <p>{{item.commentInfo}}</p>
+                          <span>{{item.createTime}}</span>
+                      </div>
+                  </div>
+                  <button class="deleteButton" @click="deleteComment(index,$event)">删除</button>
+                </li>
+            </ul>
+           <div class="loadBtn">
+               <button @click="loadMore" class="loadMore" v-show="list.length === 20 || list.length > 20">加载更多</button>
+           </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="../../lib/jquery/jquery.min.js"></script>
+<script src="../../lib/jquery.form.js"></script>
+<script src="../../lib/bootstrap/js/bootstrap.min.js"></script>
+<script src='../../js/vue.min.js'></script>
+<script src="../../lib/datatables/js/jquery.dataTables.min.js"></script>
+<script src="../../lib/layer/layer.js"></script>
+<script src="../../lib/echarts/echarts.min.js"></script>
+<script src="../../js/common.js"></script>
+<script src="../../js/framePages/checkContent.js"></script>
+</body>
+</html>

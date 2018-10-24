@@ -1,0 +1,92 @@
+body{background-image: url("../../imgs/bg.png");color: #fff}
+a{color: #31d1ff;}
+.bigBox{width: 96%;margin: 0 auto;position: relative;font-size: 14px;}
+/*header*/
+.header{width: 100%;display: flex;justify-content:space-between;}
+.userPart1,.userPart2{min-height: 150px;padding: 20px;color: #fff;background-color: rgba(22,24,35,0.6);border-radius: 8px;}
+.userPart1 .row,.userPart2 .row{margin: 0;}
+.userPart1{width: 60%;margin: 0;}
+.userPart2{width: 39%;}
+/*newAddress*/
+.newAddress{width: 100%;background-color: rgba(22,24,35,0.6);border-radius: 8px;padding: 20px;margin: 20px 0;}
+.newAddress>h2{text-align: center;line-height: 50px;font-size: 16px;}
+/*section*/
+.section{width: 100%;display: flex;justify-content:space-between;margin: 20px 0;}
+.section>div{width: 49%;min-height: 150px;background-color: rgba(22,24,35,0.6);border-radius: 8px;}
+.section .row{margin: 20px 0;}
+/*fixBtn*/
+.fixBtn{position: fixed;right: 50px;bottom: 100px;background-color: red;padding: 20px;
+    border-radius: 20px;font-size: 17px;color: #fff;}
+/*模态窗*/
+#layer{color: #0c0c0c;}
+#allUsers .row{margin: 20px;}
+#isAttention{color: #000;}
+.layui-layer{color: #0c0c0c;}
+/*parts*/
+.parts{width: 100%;min-height: 300px;display: flex;
+    justify-content: space-around;}
+.parts>div{width: 60%;background-color: rgba(22,24,35,0.6);border-radius: 8px;}
+.parts>div:last-child{width: 38.5%;}
+.testData{padding: 20px;}
+.testData .row{margin: 40px 0;}
+/*健康详情*/
+.healthMain{width: 100%;margin: 0 auto;display: none;}
+/*boxPart设置*/
+.boxPart{width: 100%;margin: 7.5px auto;background-color: rgba(22,24,35,0.6);border-radius: 8px;color: #fff;}
+/*boxHead*/
+.boxHead{width: 100%;line-height: 46px;height: 46px;padding: 0 4%;display: flex;display: -webkit-flex;justify-content:space-between;}
+.boxHead1{opacity: 0.6;font-size: 16px;color: #fff;letter-spacing: 0;}
+.boxHead2{opacity: 0.6;font-size: 12px;color: #fff;letter-spacing: 0;cursor: pointer;}
+/*boxContent*/
+.boxContent{width: 100%;padding: 0 4%;min-height: 100px;}
+/*boxFoot*/
+.boxFoot{width: 100%;padding: 17.5px 4%;font-size: 14px;color: #fff;letter-spacing: 0;line-height: 19px;}
+
+/*.boxPart1*/
+/*.boxPart1{background-color: rgba(255,255,255,0.5);}*/
+.pageTitle{width: 100%;padding: 0 4%;line-height: 45px;height: 45px;background-image: url(../../imgs/iframeImgs/healthDetails/titleBG-4.png);
+    background-size: 100% 100%;display: flex;display: -webkit-flex;justify-content:space-between;}
+.dataDay{font-size: 14px;color: #fff;}
+.dataHour{font-size: 11px;color: #fff;letter-spacing: 0;}
+.littleTitle{font-size: 12px;color: #fff;letter-spacing: 0;line-height: 30px;display: flex;
+    display: -webkit-flex;justify-content:space-between;padding: 0 20px;}
+.contentImg{width: 56%;margin: 0 auto;padding: 25px 0;max-width: 300px;}
+/*boxPart2*/
+.illContent{width: 100%;padding: 17.5px 12.5px;display: flex;display: -webkit-flex;flex-wrap: wrap;}
+.illContent>div{font-size: 14px;color: #fff;letter-spacing: 0;line-height: 14px;padding: 10.5px 22.5px;
+    border: 1px solid #fff;border-radius: 18px;margin: 3.75px 1px;cursor: pointer;}
+/*boxPart3*/
+.containerImg{position:relative;width:230px;height: 230px; margin: 25px auto 0px;}
+.boxImg{position:absolute;width:37.5px;height:37.5px;transform: translate(50%,50%);}
+.dot{position:absolute;width:80px;height:100px;line-height: 30px;text-align: center;}
+.illType{font-size: 25px;color: #EA4A4A;letter-spacing: 0;line-height: 30px;}
+.illExp{font-size: 12px;color: #EA4A4A;letter-spacing: 0;line-height: 12px;margin: 10px 0;}
+.circleExp{padding: 0 0 17.5px ;width: 86%;margin: 0 auto;max-width: 320px;}
+/*boxPart4*/
+.monthHealthDays{padding: 15px 0;width: 100%;max-width: 600px;margin: 0 auto;}
+.monthHealthDays>div{height: 200px;}
+/*boxPart5*/
+.heartRate{padding: 15px 0;width: 100%;max-width: 600px;margin: 0 auto;}
+.heartRate>div{height: 200px;}
+/*boxPart6*/
+.bloodPress{padding: 15px 0;width: 100%;max-width: 600px;margin: 0 auto;}
+.bloodPress>div{height: 200px;}
+/*boxPart7*/
+.bloodOxygen{padding: 15px 0;width: 100%;max-width: 600px;margin: 0 auto;}
+.bloodOxygen>div{height: 200px;}
+/*boxPart8*/
+.sleepWatch{padding: 15px 0;width: 100%;max-width: 600px;margin: 0 auto;}
+.sleepWatch>div{height: 150px;}
+/*.boxPart9*/
+.runState{width: 100%;display: flex;display: -webkit-flex;justify-content:space-around;
+    max-width: 400px;margin: 0 auto;padding: 18px 0 25px;}
+.runState>div>div{font-size: 14px;color: #fff;letter-spacing: 0;line-height: 14px;}
+.runState>div>div:last-child{font-size: 24px;color: #fff;letter-spacing: 1.5px;line-height: 35px;}
+.smBoxIcon{display: -webkit-flex;display: flex;align-items: flex-end;}
+
+
+
+.titleClass{opacity: 0.8;font-size: 16px;color: #FFFFFF;font-weight: 500;margin: 30px 0 20px;}
+.titles{display: flex;justify-content: space-between;}
+.titles>div{width: 60%;}
+.titles>div:last-child{width: 38%;}

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="../../imgs/logo-l.png">    <!--title-icon-->
+    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../../lib/datatables/css/jquery.dataTables.min.css"/>
+    <link rel="stylesheet" href="../../css/cssReset.css"/>
+    <title>权限分配</title>
+    <style>
+        #app{margin: 20px auto;width: 96%;}
+        [v-cloak]{display: none;}
+        .title{margin: 10px 0;}
+        .dis{display: flex;justify-content: left;flex-wrap:wrap;}
+        .dis>div{width: 12%;border: 1px solid #ccc;padding: 15px 20px;margin: 10px;cursor: pointer;text-align: center;border-radius: 10px;}
+        .item{margin: 20px 10px;border: 2px solid #ccc;border-radius: 15px;padding: 15px;background: #eee;}
+        .item-title{font-size: 18px;font-weight: 500;width: 120px;cursor: pointer;margin: 10px 0;padding: 10px 15px;}
+        .active{background: #0096ff;color: #fff;}
+        .active2{background: #0096ff;color: #fff;}
+        .unActive{background: #fff;color: #333;}
+        .unActive2{background: #fff;color: #333;}
+        .noData{padding: 15px 20px;margin: 10px}
+    </style>
+</head>
+<body>
+<div id="app" v-cloak>
+    <!--title-->
+    <div class="title"><a href="systemManage.html">系统配置</a>&gt;<a href="jurisdictionManage.html">角色管理</a>&gt;<a href="javascript:;">权限管理</a></div>
+    <div class="title text-primary">角色： {{ roleName }}</div>
+    <!--主题部分-->
+    <template v-if="data.length">
+        <div class="item" v-for="(item1 , index1) in data">
+            <div class="item-title text-primary"
+                 :class="[item1.has === true ? 'active' : 'unActive']"
+                 @click="handleClick0(item1.has,item1.resourceId,index1)">{{ item1.resourceName }}</div>
+            <div class="dis" v-if="item1.son.length">
+                <div v-for="(item2 , index2) in item1.son"
+                    :class="[item2.has === true ? 'active' : 'unActive']"
+                    @click="handleClick(item2.has,item2.resourceId,index1,index2)">{{ item2.resourceName }}</div>
+            </div>
+            <div v-else class="noData">暂无数据....</div>
+        </div>
+    </template>
+</div>
+
+
+
+
+<!--js-->
+<script src="../../lib/jquery/jquery.min.js"></script>
+<script src="../../lib/vue.min.js"></script>
+<script src="../../lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../lib/datatables/js/jquery.dataTables.min.js"></script>
+<script src="../../lib/layer/layer.js"></script>
+<script src="../../js/common.js"></script>
+<script src="../../js/framePages/jurAllot.js"></script>
+</body>
+</html>

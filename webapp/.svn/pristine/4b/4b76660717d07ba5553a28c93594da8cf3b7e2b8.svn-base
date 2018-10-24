@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>安顿合伙人分布</title>
+    <style>
+        body{background-image: url("../../imgs/iframeImgs/skyBG.jpg");margin: 0;}
+        #main{width: 100vw;height:100vh;}
+    </style>
+</head>
+<body>
+<div id="main"></div>
+</body>
+</html>
+<!--<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts-all-3.js"></script>-->
+<script type="text/javascript" src="../../lib/baiduEcharts1.js"></script>
+<!--<script type="text/javascript" src="../../lib/baiduEcharts2.js"></script>-->
+<!--<script type="text/javascript" src="https://echarts.baidu.com/gallery/vendors/echarts/extension/dataTool.min.js"></script>-->
+<!--<script type="text/javascript" src="http://echarts0.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>-->
+<script type="text/javascript" src="https://love.zhuxingmin.com/lib/china.js"></script>
+<!--<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/world.js"></script>-->
+<!--<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=ZUONbpqGBsYGXNIYHicvbAbM"></script>-->
+<!--<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>-->
+<script>
+    var dom = document.getElementById("main");
+    var myChart = echarts.init(dom);
+    option = null;
+    var geoCoordMap = {
+        '安顿': [116.531031,39.917494],
+        '烟台': [121.482867,37.248632],
+        '鞍山': [122.994222,41.108663],
+        '沧州': [117.146306,38.312165],
+        '常州/焦作': [116.912802,33.80837],
+        '济南': [117.528647,36.882507],
+        '临汾': [111.837795,36.387777],
+        '山东': [119.978941,36.655051],
+        '潍坊': [119.898854,36.59775],
+        '运城': [111.589026,35.326381],
+        '石家庄': [114.866284,38.065478],
+        '保定': [115.601135,39.064197],
+        '菏泽': [116.506324,35.230286],
+        '廊坊': [116.993351,39.437904],
+        '唐山': [118.817636,39.825621],
+        '北京': [117.003912,40.203936],
+        '江苏': [120.178787,33.280532],
+        '大连': [122.630374,39.523056],
+        '肥城': [119.898854,36.59775],
+        '连云港': [119.221765,34.596053],
+        '青岛': [120.682686,36.466871],
+        '邢台': [115.492294,37.3270248],
+        '河南': [116.225169,33.960175],
+        '雄安新区': [116.286926,39.0947764],
+        '苏州': [120.810348,31.330805]
+    };
+
+    var BJData = [
+        [{name:'安顿'}, {name:'安顿',value:100}],
+        [{name:'安顿'}, {name:'烟台',value:95}],
+        [{name:'安顿'}, {name:'鞍山',value:90}],
+        [{name:'安顿'}, {name:'沧州',value:85}],
+        [{name:'安顿'}, {name:'常州/焦作',value:80}],
+        [{name:'安顿'}, {name:'济南',value:75}],
+        [{name:'安顿'}, {name:'临汾',value:70}],
+        [{name:'安顿'}, {name:'山东',value:65}],
+        [{name:'安顿'}, {name:'潍坊',value:60}],
+        [{name:'安顿'}, {name:'运城',value:55}],
+        [{name:'安顿'}, {name:'石家庄',value:50}],
+        [{name:'安顿'}, {name:'菏泽',value:45}],
+        [{name:'安顿'}, {name:'廊坊',value:40}],
+        [{name:'安顿'}, {name:'唐山',value:35}],
+        [{name:'安顿'}, {name:'北京',value:30}],
+        [{name:'安顿'}, {name:'大连',value:25}],
+        [{name:'安顿'}, {name:'肥城',value:20}],
+        [{name:'安顿'}, {name:'连云港',value:15}],
+        [{name:'安顿'}, {name:'邢台',value:10}],
+        [{name:'安顿'}, {name:'河南',value:5}],
+        [{name:'安顿'}, {name:'雄安新区',value:4}],
+        [{name:'安顿'}, {name:'苏州',value:3}],
+        [{name:'安顿'}, {name:'保定',value:2}]
+    ];
+    var planePath = 'path://M1705.06,1318.313v-89.254l-319.9-221.799l0.073-208.063c0.521-84.' +
+        '662-26.629-121.796-63.961-121.491c-37.332-0.305-64.482,36.829-63.961,121.491l0.073,208.063l-319.9,' +
+        '221.799v89.254l330.343-157.288l12.238,241.308l-134.449,92.931l0.531,42.034l175.125-42.917l175.125,' +
+        '42.917l0.531-42.034l-134.449-92.931l12.238-241.308L1705.06,1318.313z';
+
+    var convertData = function (data) {
+        var res = [];
+        for (var i = 0; i < data.length; i++) {
+            var dataItem = data[i];
+            var fromCoord = geoCoordMap[dataItem[0].name];
+            var toCoord = geoCoordMap[dataItem[1].name];
+            if (fromCoord && toCoord) {
+                res.push({
+                    fromName: dataItem[0].name,
+                    toName: dataItem[1].name,
+                    coords: [fromCoord, toCoord]
+                });
+            }
+        }
+        return res;
+    };
+
+    var color = ['#a6c84c', '#ffa022', '#46bee9',];
+    var series = [];
+    [['安顿', BJData]].forEach(function (item, i) {
+        series.push(
+            {
+//                name: item[1][i][0] + '123',
+                type: 'lines',
+                zlevel: 1,
+                effect: {
+                    show: true,
+                    period: 6,
+                    trailLength: 0.7,
+                    color: '#fff',
+                    symbolSize: 3
+                },
+                lineStyle: {
+                    normal: {
+                        color: color[0],
+                        width: 0,
+                        curveness: 0.2
+                    }
+                },
+                data: convertData(item[1])
+            },
+            {
+//                name: item[0] + ' Top10',
+                type: 'lines',
+                zlevel: 2,
+                effect: {
+                    show: true,
+                    period: 6,
+                    trailLength: 0,
+                    symbol: planePath,
+                    symbolSize: 10
+                },
+                lineStyle: {
+                    normal: {
+                        color: color[1],
+                        width: 1,
+                        opacity: 0.4,
+                        curveness: 0.2
+                    }
+                },
+                data: convertData(item[1])
+            },
+            {
+//                  name: item[1][i][0] + ' Top10',
+                type: 'effectScatter',
+                coordinateSystem: 'geo',
+                zlevel: 2,
+                rippleEffect: {
+                    brushType: 'stroke'
+                },
+                label: {
+                    normal: {
+                        show: true,
+                        position: 'right',
+                        formatter: '{b}'
+                    }
+                },
+                symbolSize: function (val) {
+                    return val[2] / 8;
+                },
+                itemStyle: {
+                    normal: {
+                        color: color[2]
+                    }
+                },
+                data: item[1].map(function (dataItem) {
+                    return {
+                        name: dataItem[1].name,
+                        //  value: geoCoordMap[dataItem[1].name].concat([dataItem[1].value])
+                        value: geoCoordMap[dataItem[1].name].concat()
+                    };
+                })
+            });
+    });
+
+    option = {
+        backgroundColor: '',
+        title : {
+            text: '安顿合伙人分布',
+//            subtext: '合伙人分布',
+            left: 'center',
+            textStyle : {
+                color: '#fff'
+            }
+        },
+        tooltip : {
+            trigger: 'item'
+        },
+        //大小边距调整
+        grid:{
+            left: "8%",
+            right:"5%",
+            top:"20%",
+            bottom:"12%",
+            containLabel:false
+        },
+        legend: {
+            orient: 'vertical',
+            top: 'bottom',
+            left: 'right',
+            //data:['北京 Top10', '上海 Top10', '广州 Top10'],
+            textStyle: {
+                color: '#fff'
+            },
+            selectedMode: 'single'
+        },
+        geo: {
+            map: 'china',
+            label: {
+                emphasis: {
+                    show: false
+                }
+            },
+            //改false去掉地图伸缩
+            roam: true,
+            itemStyle: {
+                normal: {//选取前颜色
+                    areaColor: 'rgba(5,17,67,0.5)',
+                    borderColor: '#fff'
+                },
+                emphasis: {//选取后颜色
+                    areaColor: 'rgba(0,0,0,0.4)'
+                }
+            }
+        },
+        series: series
+    };
+    if (option && typeof option === "object") {
+        myChart.setOption(option, true);
+    }
+
+</script>

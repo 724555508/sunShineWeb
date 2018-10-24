@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="../../imgs/logo-l.png">    <!--title-icon-->
+    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../../lib/datatables/css/jquery.dataTables.min.css"/>
+    <link rel="stylesheet" href="../../css/framePages/SosWarningList.css"/>
+    <link rel="stylesheet" href="../../css/cssReset.css"/>
+    <link rel="stylesheet" href="../../css/framePages/systemMessage.css">
+    <title>系统消息下发</title>
+    <style>
+    </style>
+</head>
+<body>
+<div id="app" v-cloak>
+    <!--面包屑导航-->
+    <ul class="breadcrumb">
+        <li><a href="customCenter.html" class="active">客服中心</a></li>
+        <li><a href="javascript:;" class="inActive">系统消息下发</a></li>
+    </ul>
+    <!--content-->
+    <div class="mesContent">
+        <!--录入设备号与下发内容-->
+        <div class="intoBox">
+            <!--设备号-->
+            <div>
+                <div class="selectUser">
+                     <div>选择用户</div>
+                     <select name="" id="select" class="select" v-model="selectSign">
+                         <option value="">请选择下发用户</option>
+                         <option value="1">指定用户</option>
+                         <option value="5">佩戴人</option>
+                         <option value="2">指定合伙人的用户</option>
+                         <option value="3">全部合伙人</option>
+                         <option value="4">全部</option>
+                         <option value="6">用户端APP未升级用户</option>
+                     </select>
+                    <button class="btn btn-skyBlue btn1" @click="filterTerm" style="display:none;" id="shaixuan">筛选条件</button>
+                </div>
+
+                <div class="selectContent">
+                    <div class="div1" v-for="(item,index) in filterMap" :id="index" v-show="item !== ''">{{item}}<img src="../../imgs/iframeImgs/delete1.png" :id="index" alt=""   @click="deleteMe(index,event)"></div>
+                </div>
+                <div class="textarea"><textarea placeholder="请输入手机号并以回车分隔" class="txttera" v-model="phoneNum">{{phoneNum}}</textarea></div>
+            </div>
+            <!--录入下发内容-->
+            <div>
+                <div>录入下发内容</div>
+                <div class="textarea"><textarea placeholder="输入下发内容...（100字以内）" class="txttera" v-model="sendInfo" maxlength="100"></textarea></div>
+            </div>
+        </div>
+        <!--确定下发-->
+        <div class="intoBtn">
+            <button class="btn btn-skyBlue" @click="enterInto()">确定下发</button>
+        </div>
+        <!--下发历史-->
+        <div class="intoHistory">下发历史</div>
+        <!--搜索栏-->
+        <div class="searchBox">
+            <div class='search2'>
+                <img src="../../imgs/search@2x.png" alt="" class='icon1'/><input type="text" v-model="input" class="phone" placeholder="手机号"/>
+            </div>
+            <button id="search" class="search" style='margin:0 10px;' @click="tables()">搜索</button>
+            <button id="all" class="search" @click="resetTerm()" >重置</button>
+        </div>
+        <!--下发历史table-->
+        <div class="tableHistory" >
+            <table data-toggle="table" class="table table-bordered text-center table-hover" id="intoHistory">
+                <thead>
+                <tr class="tr1">
+                    <th>序号</th>
+                    <th>下发时间</th>
+                    <th>APP账号</th>
+                    <th>下发内容</th>
+                    <th>操作员</th>
+                    <th>查看时间</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!--确定下发弹框-->
+    <!--如果手机号未注册弹框-->
+    <div role="dialog" class="modal fade bs-example-modal-sm" id="errorPhone">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!--header-->
+                <div class="modal-header text-center">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                    <h4 class="h4 modal-title">提示</h4>
+                </div>
+                <!--body-->
+                <div class="modal-body">
+                    <div class='box'>
+                        <div>{{msg}}</div>
+                        <ul>
+                            <li v-for="(item,index) in errorPhone">{{item}}</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row">
+                    <!--<div class="col-sm-3"><button class="btn btn-default btn-block" @click='closeModel'>取消</button></div>-->
+                    <div class="col-sm-3"><button class="btn btn-skyBlue btn-block" @click="closeModel">确定</button></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--点击筛选条件进行弹框-->
+    <div role="dialog" class="modal fade bs-example-modal-sm" id="filterTerm">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!--header-->
+                <div class="modal-header text-center">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                    <h4 class="h4 modal-title">筛选条件</h4>
+                </div>
+                <!--body-->
+                <div class="modal-body">
+                    <div class='box'>
+                        <div>
+                            <span>性别</span>
+                            <div class="div1" id="radio1">
+                                <input type="radio" name="radio1" value="1" checked><span>男</span>
+                                <input type="radio" name="radio1" value="2"><span>女</span>
+                            </div>
+                        </div>
+                        <div>
+                            <span>年龄</span>
+                            <div class='search1 div1'>
+                                <input type="text" class='hTime' v-model="startAge" placeholder="请填写年龄" minlength="1" maxlength="2" onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^0-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
+                                       onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^0-9]/g,'0')}else{this.value=this.value.replace(/\D/g,'')}"/>
+                                <div class="hr"></div>
+                                <input type="text" class='hTime' v-model='endAge' placeholder="请填写年龄" minlength="1" maxlength="2" onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^0-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
+                                       onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^0-9]/g,'0')}else{this.value=this.value.replace(/\D/g,'')}"/>
+                            </div>
+                        </div>
+                        <div>
+                            <span style="margin-top:-50px;">病史</span>
+                            <div class="div1 div2" id="checkbox">
+                               <div> <input type="checkbox" value="1" style="margin-left:0px;" name="message" checked>无病史</div>
+                               <div> <input type="checkbox" value="2" style="margin-left:0px;" name="message">心梗</div>
+                               <div> <input type="checkbox" value="3" style="margin-left:0px;" name="message">脑卒中</div>
+                               <div> <input type="checkbox" value="4" style="margin-left:0px;" name="message">腔梗</div>
+                               <div> <input type="checkbox" value="5" style="margin-left:0px;" name="message">糖尿病</div>
+                               <div> <input type="checkbox" value="6" style="margin-left:0px;" name="message">冠心病</div>
+                               <div> <input type="checkbox" value="7" style="margin-left:0px;" name="message">高血压</div>
+                                <!--<input type="checkbox" value="2" name="message">心梗-->
+                                <!--<input type="checkbox" value="3" name="message">卒中-->
+                                <!--<input type="checkbox" value="3" name="message">卒中-->
+                                <!--<input type="checkbox" value="3" name="message">卒中-->
+                                <!--<input type="checkbox" value="3" name="message">卒中-->
+                                <!--<input type="checkbox" value="4" name="message"><span>腔梗</span>-->
+                                <!--<input type="checkbox" value="5" name="message"><span>糖尿病</span>-->
+                                <!--<input type="checkbox" value="6" name="message"><span>冠心病</span>-->
+                                <!--<input type="checkbox" value="7" name="message"><span>高血压</span>-->
+                            </div>
+                        </div>
+                        <!--<div>-->
+                            <!--<span>其他</span>-->
+                            <!--<div class="div1" id="radio2">-->
+                               <!--<div> <input type="radio" name="radio2" value="1">用户端APP未升级用户</div>-->
+                               <!--<div> <input type="radio" name="radio2" value="2">医生端APP未升级用户</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-3"><button class="btn btn-default btn-block" @click='closeModel'>取消</button></div>
+                    <div class="col-sm-3"><button class="btn btn-skyBlue btn-block" @click="filterTermSubmit">确定</button></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
+
+
+<!--js-->
+<script src="../../lib/jquery/jquery.min.js"></script>
+<script src="../../lib/vue.min.js"></script>
+<script src="../../lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../lib/datatables/js/jquery.dataTables.min.js"></script>
+<script src="../../lib/layer/layer.js"></script>
+<script src="../../js/common.js"></script>
+<script src="../../js/framePages/systemMessage.js"></script>
+</body>
+</html>

@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="../../imgs/logo-l.png">
+    <link rel="stylesheet" href="../../lib/jedate/skin/jedate.css"> <!--<!--时间插件-->-->
+    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../../lib/datatables/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" href="../../css/cssReset.css" />
+    <link rel="stylesheet" href="../../css/scanner/elecRecord.css">
+    <title>电子档案</title>
+    <style>
+        .layui-layer-content{color:#fff;}
+    </style>
+</head>
+<body>
+<div id="app" v-cloak>
+    <!--面包屑导航-->
+    <ul class="breadcrumb">
+        <li><a href="../framePages/userCenter.html" class="active">用户管理</a></li>
+        <li><a href="../framePages/wearUserList.html" class="active">佩戴用户详情</a></li>
+        <li><a href="javascript:;" class="inActive">房金祥电子档案</a></li>
+    </ul>
+    <main>
+        <div class="header">
+           <!-- 添加类别-->
+            <div @click="addClass">
+              <img src="../../imgs/doctorImgs/add.png" style='width:15px;height:15px;' alt="">
+              <p>添加类别</p>
+            </div>
+            <button @click="upload">上传电子档案</button>
+        </div>
+        <!--化验单  及影响报告-->
+        <div class="content1" v-for="(item,index) in list">
+            <h2>{{item.type.name}}</h2>
+            <div class="div1">
+                <div @click="addSubject(index)">
+                    <img src="../../imgs/doctorImgs/add.png" style='width:15px;height:15px;' alt="">
+                    <p>添加科目</p>
+                </div>
+                <div v-for="subject in item.subject">{{subject.subjectname}}</div>
+            </div>
+        </div>
+    </main>
+    <!--遮罩层-->
+    <div id="cover"></div>
+    <!--点击添加类别-->
+    <div role="dialog" class="modal fade bs-example-modal-sm" id="createClass">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!--header-->
+                <div class="modal-header text-center">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                    <h4 class="h4 modal-title">添加类别</h4>
+                </div>
+                <!--body-->
+                <div class="modal-body text-center">
+                    <div class='box'>
+                        <div>
+                            <input type="text" placeholder="请输入类别名称" class="txt1" v-model="typeName">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div><button class="btn btn-default btn-block"  @click='closeModel' style="width:92px;margin-left:0px;">取消</button></div>
+                    <div><button class="btn btn-skyBlue btn-block"  @click='addClassSubmit' style="width:92px;margin-left:12px;">确定</button></div>   <!--@click="addSubmit"-->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--点击添加科目-->
+    <div role="dialog" class="modal fade bs-example-modal-sm" id="createSubject">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!--header-->
+                <div class="modal-header text-center">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                    <h4 class="h4 modal-title">添加科目</h4>
+                </div>
+                <!--body-->
+                <div class="modal-body text-center">
+                    <div class='box'>
+                        <div>
+                            <input type="text" placeholder="请输入科目名称" class="txt1" v-model="subjectName">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div><button class="btn btn-default btn-block"  @click='closeModel' style="width:92px;margin-left:0px;">取消</button></div>
+                    <div><button class="btn btn-skyBlue btn-block"  @click='addSubjectSubmit' style="width:92px;margin-left:12px;">确定</button></div>   <!--@click="addSubmit"-->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--电击上传电子档案 出现弹框-->
+    <div role="dialog" class="modal fade bs-example-modal-sm" id="uploadElecRecord">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!--header-->
+                <div class="modal-header text-center">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                    <h4 class="h4 modal-title">电子档案</h4>
+                </div>
+                <!--body-->
+                <div class="modal-body">
+                    <div class='box'>
+                        <!--左边-->
+                        <div class="left">
+                            <div class="div1 mask-layer-imgbox auto-img-center">
+                                <p>
+                                    <img alt="" id="bgImg">
+                                </p>
+                                <div class="dw">
+                                    <div style="margin-bottom:10px;">
+                                        <img src="../../imgs/doctorImgs/big.png" alt="" class="mask-out" style="width:38px;height:38px;">
+                                    </div>
+                                    <div>
+                                        <img src="../../imgs/doctorImgs/small.png" alt="" class="mask-in" style="width:38px;height:38px;">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="div2">
+                                <!--<div><button class="btn btn-default btn-block"  style="width:92px;" id="upLoadBtn">上传照片</button></div>-->
+                                <form role="addTemperaturesForm" id="uploadImg" enctype="multipart/form-data">
+                                    <input type="hidden" name="pics" id="imgs">
+                                    <input type="hidden" name="loginId" v-model="loginId"/>
+                                    <input type="hidden" name="token" v-model="token"/>
+                                    <input type="file" class="fileImg form-control inputFile" id="newImg" name="file" @change="uploadImg" accept="image/gif,image/jpeg,image/jpg,image/png,image/svg">
+                                    <button class="btn btn-skyBlue btn-block btn-file" type="button" >
+                                        <img src="../../imgs/iframeImgs/upload.png" width="15" alt="">
+                                        上传图片
+                                    </button>
+                                </form>
+
+                                <div><button class="btn btn-skyBlue btn-block" @click="stratIdentify" style="width:92px;margin-left:15px;">开始识别</button></div>
+                            </div>
+                        </div>
+                        <!--右边-->
+                        <div class="right">
+                            <!--头部切换-->
+                            <div class="title">
+                                <button class="inActive1" @click="laboratory" id="laboratory">化验单</button>
+                                <button class="inActive1" @click="videoReport" id="videoReport">影像报告</button>
+                            </div>
+                            <select name="" id="selectVal" @change="getValue">
+                                <option value="">请选择科目</option>
+                                <option value="" v-for="(item,index) in selectList" :value="item.subjectid">{{item.subjectname}}</option>
+                            </select>
+                            <!--化验单内容-->
+                            <div style="padding:0 16px;" id="laboratoryContent">
+
+                                <div class="laboratory">
+                                    <input type="text" class="h2 inputVal hospital">
+                                    <div class="part1">
+                                        <input type="text" class="inputVal checkCategory" >
+                                        <div style="display:flex;align-items:center;">
+                                            <p>标本种类：</p>
+                                            <input type="text" class="inputVal specimenSpecies" style="width:150px;">
+                                        </div>
+                                    </div>
+                                    <div class="part2">
+                                        <table class="table1">
+                                            <tr class="ul1">
+                                                <th>项目名称</th>
+                                                <th>结果</th>
+                                                <th>单位</th>
+                                                <th>参考区间</th>
+                                                <th>操作</th>
+                                            </tr>
+                                            <tr class="ul2">
+                                                <td><input type="text" class="" value="2333"></td>
+                                                <td><input type="text" class="" value="2333"></td>
+                                                <td><input type="text" class="" value="2333"></td>
+                                                <td><input type="text" class="" value="2333"></td>
+                                                <td>
+                                                    <img src="../../imgs/doctorImgs/reduce.png" alt="">
+                                                    <img src="../../imgs/doctorImgs/reduce.png" alt="">
+                                                </td>
+                                            </tr>
+                                            <tr class="ul2">
+                                                <td><input type="text" class="" value="2333"></td>
+                                                <td><input type="text" class="" value="2333"></td>
+                                                <td><input type="text" class="" value="2333"></td>
+                                                <td><input type="text" class="" value="2333"></td>
+                                                <td>
+                                                    <img src="../../imgs/doctorImgs/reduce.png" alt="">
+                                                    <img src="../../imgs/doctorImgs/reduce.png" alt="">
+                                                </td>
+                                            </tr>
+                                            <tr class="ul2">
+                                                <td><input type="text" class="" value="2333"></td>
+                                                <td><input type="text" class="" value="2333"></td>
+                                                <td><input type="text" class="" value="2333"></td>
+                                                <td><input type="text" class="" value="2333"></td>
+                                                <td>
+                                                    <img src="../../imgs/doctorImgs/reduce.png" alt="">
+                                                    <img src="../../imgs/doctorImgs/reduce.png" alt="">
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <!--<ul class="ul1" style="display:flex;justify-content:space-between;">-->
+                                            <!--<li style="text-align:left;width:130px;">项目名称</li>-->
+                                            <!--<li style="width:70px;text-align:center;">结果</li>-->
+                                            <!--<li style="width:60px;text-align:center;">单位</li>-->
+                                            <!--<li style="width:102px;text-align:center;">参考区间</li>-->
+                                            <!--<li style="width:55px;text-align:center;">操作</li>-->
+                                        <!--</ul>-->
+                                      <!--<div>-->
+                                          <!--<ul class="ul2">-->
+                                          <!--</ul>-->
+                                          <!--<ul class="ul3">-->
+                                          <!--</ul>-->
+                                          <!--<ul class="ul4">-->
+                                          <!--</ul>-->
+                                          <!--<ul class="ul5">-->
+                                          <!--</ul>-->
+                                          <!--<ul class="ul6">-->
+                                          <!--</ul>-->
+                                      <!--</div>-->
+                                    </div>
+                                    <div class="part3">
+                                        <div>
+                                            <p>采样日期：</p>
+                                            <!--<input type="datetime-local" value="2017-06-30T13:30" class="inputVal samplingDate">-->
+                                            <input class="dateinput dateicon inputVal samplingDate" id="samplingDate" type="text" placeholder="年—月—日 时:分:秒" width="160px" readonly>
+                                        </div>
+                                        <div>
+                                            <p>接收日期：</p>
+                                            <!--<input type="datetimse-local" value="2018-07-22"  class="inputVal receivingDate">-->
+                                            <input class="dateinput dateicon inputVal receivingDate" id="receivingDate" type="text" placeholder="年—月—日 时:分:秒" width="160px" readonly>
+                                        </div>
+                                        <div>
+                                            <p>报告日期：</p>
+                                            <!--<input type="datetime-local" value="2018-07-22" class="inputVal reportDate">-->
+                                            <input class="dateinput dateicon inputVal reportDate" id="reportDate" type="text" placeholder="年—月—日 时:分:秒" width="160px" readonly>
+                                        </div>
+                                        <div>
+                                            <p style="width:76px;">备注：</p>
+                                            <textarea name="" id="" class="remark"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--影响报告内容-->
+                            <div style="padding:0 16px;margin-bottom:118px; display:none;" id="videoReportContent">
+                                <div class="videoReport">
+                                  <div class="part1">
+                                      <input type="text"  class="h2 inputVal hospital2" ref="input1">
+                                      <div class="div1">
+                                         <div>
+                                             <div>
+                                                 <input type="text" class="inputVal checkCategory2" style="width:83.5%;">
+                                             </div>
+                                             <div>
+                                                 <p style="width:65px;">超声号：</p>
+                                                 <input type="text" class="inputVal checkNum" style="width:60%;">
+                                             </div>
+                                         </div>
+                                          <div>
+                                              <div>
+                                                  <p style="width:65px;">检查类型：</p>
+                                                  <input type="text" class="inputVal checkType" style="width:49%;">
+                                              </div>
+                                              <div>
+                                                  <p style="width:65px;">检查设备：</p>
+                                                  <input type="text" class="inputVal checkDevice" style="width:60%;">
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                                   <div class="part2">
+                                       <p>超声所见：</p>
+                                       <textarea name="" class="checkInfo">
+
+                                       </textarea>
+                                       <p>超声提示：</p>
+                                       <textarea name="" class="checkHints">
+
+                                       </textarea>
+                                       <div>
+                                           <p>检查日期：</p>
+                                           <!--<input type="datetime-local" class="checkDate inputVal">-->
+                                           <input class="dateinput dateicon inputVal checkDate" id="checkDate" type="text" placeholder="年—月—日 时:分:秒" width="160px" readonly>
+                                       </div>
+
+                                   </div>
+                                </div>
+                            </div>
+                            <div style="display:flex;justify-content:center;margin-top:5px;">
+                                <button class="btn btn-skyBlue btn-block"  style="width:92px;" @click="saveSubmit">确定</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!--js-->
+<script src="../../lib/jquery/jquery.3.2.1.min.js"></script>
+<script src="../../lib/jedate/dist/jedate.min.js"></script>  <!--时间插件-->
+<script src="../../lib/jquery.form.js"></script>  <!--关于上传照片的-->
+<script src="../../lib/vue.min.js"></script>
+<script src="../../lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../lib/datatables/js/jquery.dataTables.min.js"></script>
+<script src="../../lib/layer/layer.js"></script>
+<script src="../../js/common.js"></script>
+<script src="../../lib/file_upload.js"></script>
+<script src="../../js/scanner/elecRecord.js"></script>
+</body>
+</html>

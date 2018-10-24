@@ -1,0 +1,21 @@
+body{background-color: #f0f5ff;width: 97%;margin: 0 auto;padding:20px 0;}
+.main{background: #FFFFFF;box-shadow: 0 0 10px 0 rgba(0,0,0,0.02);border-radius: 8px;padding:20px 15px;}
+.sec{width: 99%;margin: 0 auto 100px;}
+/*aside*/
+.aside{width: 100%;display: flex;justify-content: space-around;padding: 20px 0 0;}
+.aside>div{width: 49%;min-height: 200px;background: #FFFFFF;box-shadow: 0 0 5px 0 rgba(210,215,224,0.60);border-radius: 5px;}
+#chart1,#chart2{width: 100%;height: 100%;}
+/*lists*/
+.lists{/*margin: 20px 0 30px;*/display: flex;justify-content: flex-start;flex-wrap: wrap;}
+/*.lists>a{}*/
+.lists>a{width: 120px;text-align: center;margin: 25px 60px 0 0;/* box-shadow: 0 0 5px 0 rgba(210,215,224,0.60);background: rgba(255,255,255,0.50);border-radius: 8px;*/}
+.lists>a:first-child{margin-left:-5px;}
+.lists>a>div img{width:80px;height:80px;}
+.lists>a:link{text-decoration:none;}
+.lists>a:visited{text-decoration:none;}
+.lists>a:active{text-decoration:none;}
+.lists>a:hover{text-decoration:none;}
+.nav{font-family: PingFangSC-Semibold;font-size: 20px;color: #4A4A4A;margin: 40px 0 0px 0;}
+.iconBox{position: relative;cursor: pointer;}
+.span{position: absolute;background-color: red;padding: 2px 3px;color: #fff;border-radius: 97px;left:80px;top:7px;}
+.iconTitle{font-size: 14px;color: #000;letter-spacing: 0;/*line-height: 20px;margin: 20px 0 0;*/margin: 15px 0 0;}

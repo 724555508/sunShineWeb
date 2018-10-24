@@ -1,0 +1,538 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>${title}</title>
+    <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <style>
+        *{box-sizing: border-box;}
+        html,body{margin: 0;}
+        .cnzz-1>a{display: none;}
+        .line{width: 100%;
+            display: -webkit-box; /* Chrome 4+, Safari 3.1, iOS Safari 3.2+ */
+            display: -moz-box; /* Firefox 17- */
+            display: -webkit-flex; /* Chrome 21+, Safari 6.1+, iOS Safari 7+, Opera 15/16 */
+            display: -moz-flex; /* Firefox 18+ */
+            display: -ms-flexbox; /* IE 10 */
+            display: flex;justify-content: space-between;flex-direction: row;flex-wrap: wrap;}
+        .line>div{width: 32%;text-align: center;border: 1px #f1f1f1 solid;border-radius:5%;height: 26px;line-height: 26px;font-size: 13px;margin: 7.5px 0.66%;}
+        #player2{height :230px;width:90%;margin-top: 26px;border-radius:15px;}
+        .buttomDiv{color: #757575;padding-top: 50px;}
+        .active{background: #ffaf36 !important;}
+        #nowPlay{font-size: 15px;font-weight:600;margin-top: 10px;margin-left: 22px;height: 19px;}
+        a{font-size: 13px;color: #8c8c8c;}
+        .clickA{text-align: right;padding-right: 15px;}
+        .infoDiv{padding: 8px;border: 2px solid #f1f1f1;border-radius: 10px;margin: 12px;background-color: #ffffff;}
+        .infoDiv>div:first-child{display:flex;}
+        .seeUser{padding: 8px;border: 2px solid #f1f1f1;border-radius: 10px;margin: 12px;background-color: #ffffff;display: flex;height: 80px;line-height: 60px;display: flex;justify-content: space-between;}
+        .seeUser>div>img{border-radius: 100%;width: 30px;height: 30px;}
+        .seeUser>div:nth-child(2){margin-left: 5%;}
+        .seeUser>div:nth-child(3){margin-left: 8%;}
+        .seeUser>div>button{height: 40px;width: 80px;background-color: #5f72f6;border-radius: 50px;color: #f1f1f1;line-height: 40px;border:1px solid;}
+
+
+        .drama{padding: 8px 12px 8px 12px;border: 2px solid #f1f1f1;border-radius: 10px;margin: 12px;background-color: #ffffff;}
+        .drama>div:nth-child(1){border-left: 5px solid #ffaf36;padding-left: 12px;display: flex;justify-content: space-between;}
+        .drama>div:nth-child(2){display: flex;overflow-x: auto;height: 70px;}
+        .drama>div:nth-child(2)>div{min-width: 100px;border-radius:20px;margin: 12px;line-height: 46px;text-align: center;background-color: #f1f3f4;}
+        .drama>div:nth-child(3){margin-top:22px;width: 100%; display: flex;justify-content: space-between;flex-direction: row;flex-wrap: wrap;}
+        .drama>div:nth-child(3)>div{width: 100px;border-radius:20px;height: 46px;line-height: 46px;margin: 6px 0 6px 0;text-align: center;background-color: #f1f3f4;}
+        .show-none{display: none !important;}
+
+
+        @media screen and (min-width: 320px) and (max-width: 374px){
+            .seeUser>div>img{border-radius: 100%;width: 25px;height: 25px;}
+            .seeUser>div>button{width: 60px;}
+            .seeUser>div:nth-child(3){margin-left: 3%;}
+            .drama>div:nth-child(2)>div{min-width: 80px;}
+        }
+        .actor{color: #B2B5BD;font-size: 14px;display: flex;padding: 8px 8px;}
+        .actor>div:first-child{min-width: 50px;}
+        .actor>div:last-child{word-wrap:break-word;}
+        .movieArea{color:#B2B5BD;font-size:14px;display: flex;justify-content: space-between;}
+        .wxQR{display: none;}
+        .aboutInfo{color:#B2B5BD;font-size:14px;padding: 8px 8px;}
+        .comment{border-bottom: 1px solid #e6e6e6;font-size: 16px;height: 26px;line-height: 26px;margin-top: 20px;padding: 5px 0;-webkit-box-sizing:content-box;}
+        #cyReward{display: none;}
+        .list-wrapper-wap{display: none;}/*屏蔽搜狐畅言广告*/
+        .souhu{margin:12px;}
+        .posterUrl{width:135px;height:96%;padding: 3px 3px;border-radius:7%;border:1px solid #f1f1f1;}
+    </style>
+</head>
+<body style="background: url('https://s1.ax1x.com/2018/09/14/iEDMiF.png') no-repeat;background-size: 100% 100%;">
+
+<div style="text-align: center;height :230px;/*background-image: url(https://i.iandun.com:8085/group1/M00/02/E7/rBEM_ltIPxKAemQ9AAGGQ08VqoE150.png);*/background-size:cover;">
+    <!--<iframe src="${requestScope.MvInfo[0].url}" id='player2' allowtransparency='true' frameborder='0' scrolling='no'></iframe>-->
+    <!--<iframe src="parse/index.html?url=https://sohu.com-v-sohu.com/20180908/12507_b879c71c/index.m3u8&openId=oPeGT1a8Zi7WX4d0zsOrqYjGG-gw" id='player2' allowtransparency='true' frameborder='0' scrolling='no'></iframe>-->
+
+    <div class="huiv" style="height :230px;width:90%;margin: 0 auto;margin-top: 26px;border-radius:15px;"></div>
+    <script type="text/javascript">
+        //var huiid = "<?php echo $_GET['url'];?>";
+        var huiid = 'https://letv.com-v-letv.com/20180801/7091_cfcab91c/index.m3u8';
+        var movieId = '27479EC19E004B2AA42C96E4C85642F1';
+        var openId = 'oPeGT1a8Zi7WX4d0zsOrqYjGG-gw';
+        var cookieTimeSe = '';
+    </script>
+
+</div>
+<div class="cnzz-1">
+    <script src="https://s13.cnzz.com/z_stat.php?id=1273610474&web_id=1273610474" language="JavaScript"></script>
+</div>
+<div class="buttomDiv">
+    <!--<%&#45;&#45; <div class="clickA" id="phoneError">-->
+    <!--<div><a onclick='error("${mvId}")'>我要报错</a></div>-->
+<!--</div>-->
+    <!--<div id="nowPlay">-->
+        <!--${title }(${requestScope.MvInfo[0].vname})-->
+    <!--</div> &#45;&#45;%>-->
+    <%-- <div class="line">
+    <!--<c:forEach items="${requestScope.MvInfo}" var="mv">-->
+        <!--&lt;!&ndash; <div onclick='playMv("${mv.url}",this)'>${mv.vname }</div> &ndash;&gt;-->
+
+        <!--<div data="${mv.url}">-->
+            <!--<c:choose>-->
+                <!--<c:when test="${fn:length(mv.vname) >10}">-->
+                    <!--${fn:substring(mv.vname,0,8)}...-->
+                <!--</c:when>-->
+                <!--<c:otherwise>-->
+                    <!--${mv.vname}-->
+                <!--</c:otherwise>-->
+            <!--</c:choose>-->
+        <!--</div>-->
+    <!--</c:forEach>-->
+</div> --%>
+
+
+
+
+    <div class="seeUser">
+        <div>
+            <!--<c:forEach items="${requestScope.imglist}" var="imgUrl">-->
+                <!--<c:choose>-->
+                    <!--<c:when test="${empty imgUrl}">-->
+                        <!--<img>-->
+                    <!--</c:when>-->
+                    <!--<c:otherwise>-->
+                        <!--<img src="${imgUrl }">-->
+                    <!--</c:otherwise>-->
+                <!--</c:choose>-->
+            <!--</c:forEach>-->
+
+        </div>
+        <div>${count }</div>
+        <div id="share" style=" display: flex;justify-content:center;align-items:Center;"><button>分享</button></div>
+    </div>
+    <style>
+        .advertisement{padding: 8px;border: 2px solid #f1f1f1;border-radius: 10px;margin: 12px;
+                background-color: #ffffff;display: flex;height: 130px;line-height: 60px;
+                display: flex;justify-content: space-between;position: relative;}
+        .closeAd{position: absolute;top: -5px; right: -5px;}
+        .advertisement .tit{position: absolute;bottom: 0px; left: 4px;height: 14px;font-size: 12px;line-height: 12px;}
+        .advertisement .tit span:nth-child(1){border: 1px solid #a1a1a1;padding: 1px;}
+        .advertisement .tit span:nth-child(2){margin-left: 8px;}
+    </style>
+    <div class="advertisement">
+        <div class="tit">
+            <span>广告</span><span>小站发展不易，烦请各位大佬多多支持</span>
+        </div>
+        <div class="closeAd">
+            <img src="https://video.vshidai.top/image/2018/10/10/close.png" width="20px;" height="20px;">
+        </div>
+    </div>
+
+    <div class="drama">
+        <div>
+            <span>剧集</span>
+            <%= "<span id='drama'>"+"<span id='nowIndex'>1</span>"+"/"+mvInfo.size()+"<span  style='padding:0 8px 0 8px'><img id='upOrDown' src='../../../imgs/down.png' width='16px' height='20px' style='transform: rotate(-90deg)'></span></span>" %>
+        </div>
+        <div>
+            <!--<c:forEach items="${requestScope.MvInfo}" var="mv" varStatus="status">-->
+                <!--&lt;!&ndash; <div onclick='playMv("${mv.url}",this)'>${mv.vname }</div> &ndash;&gt;-->
+
+                <div data="https://hao.zuida-youku.com/20170702/J40pc8sC/index.m3u8" id="up1">
+                    <!--<c:choose>-->
+                        <!--<c:when test="${fn:length(mv.vname) >10}">-->
+                            <!--${fn:substring(mv.vname,0,8)}...-->
+                        <!--</c:when>-->
+                        <!--<c:otherwise>-->
+                            花魁
+                        <!--</c:otherwise>-->
+                    <!--</c:choose>-->
+                </div>
+                <div data="https://hao.zuida-youku.com/20170702/J40pc8sC/index.m3u8" id="up2">未来预想图</div>
+            <!--</c:forEach>-->
+        </div>
+        <div class="show-none">
+            <!--<c:forEach items="${requestScope.MvInfo}" var="mv" varStatus="status">-->
+                <!--&lt;!&ndash; <div onclick='playMv("${mv.url}",this)'>${mv.vname }</div> &ndash;&gt;-->
+
+                <!--<div data="${mv.url}" id="down${status.index+1 }">-->
+                    <!--<c:choose>-->
+                        <!--<c:when test="${fn:length(mv.vname) >10}">-->
+                            <!--${fn:substring(mv.vname,0,8)}...-->
+                        <!--</c:when>-->
+                        <!--<c:otherwise>-->
+                            <!--${mv.vname}-->
+                        <!--</c:otherwise>-->
+                    <!--</c:choose>-->
+                <!--</div>-->
+            <!--</c:forEach>-->
+        </div>
+    </div>
+
+
+
+    <div class="infoDiv">
+        <div>
+            <div>
+                <img src="${imgUrl}" class="posterUrl">
+            </div>
+            <div>
+                <div class='actor' style="padding:3px 8px 8px 8px;">
+                    <div>◎产地:</div><div>${area}</div>
+                </div>
+                <div class='actor'>
+                    <div>◎年代:</div><div>${year}</div>
+                </div>
+                <div class='actor'>
+                    <div>◎类型:</div><div>${listId}</div>
+                </div>
+                <div class='actor'>
+                    <div>◎导演:</div><div>${director}</div>
+                </div>
+                <div class='actor'>
+                    <div>◎主演:</div><div>${actor}</div>
+                </div>
+            </div>
+        </div>
+        <div class='actor'>
+            <div  class="about">◎简介</div>
+        </div>
+        <div class="aboutInfo">${intro}</div>
+
+
+    </div>
+</div>
+
+<div role="dialog" class="modal fade bs-example-modal-sm" id="edit" style="margin-top:40%;">
+    <div class="modal-dialog" style="width:270px;max-height:230px;margin: auto;">
+        <div class="modal-content" style="border-radius: 12px;">
+            <!--header-->
+            <div class="modal-header text-center" style="padding:55px;background-image: url(https://i.iandun.com:8085/group1/M00/02/E7/rBEM_ltIQ_OAMugUAACfFse8rpE571.png);
+            		border-bottom:1px solid #ffffff;background-size: 100%;">
+                <button type="button" class="close"  id="closeUpload" data-dismiss="modal" style="position: absolute;top: 16px;left: 88%;">
+                    <span>&times;</span>
+                </button>
+                <!--<h4 class="h4 modal-title">提示</h4>-->
+            </div>
+            <!--body-->
+            <div class="modal-body text-center" style="padding:5px;margin-top: 70px;font-size: 14px;color: #252525;">
+                <!--<c:choose>-->
+                    <!--<c:when test="${isFailure}">-->
+                        <!--<p>当前页面有误或已失效</p>-->
+                        <!--<p>请扫码进入公众号重新获取</p>-->
+                    <!--</c:when>-->
+                    <!--<c:otherwise>-->
+                        <!--<p>由于影片资源的特殊性</p>-->
+                        <!--<p>尚未关注公众号的用户将无法观看</p>-->
+                        <!--<p>已关注的用户请在公众号内观看</p>-->
+                        <!--<p>（扫码可快速进入）</p>-->
+                    <!--</c:otherwise>-->
+                <!--</c:choose>-->
+            </div>
+            <div class="modal-body text-center" style="padding:10px;position: absolute;top: 15px;bottom: 0;right: 0;left: 0;margin:30px auto;">
+                <img src="${QRCodeUrl }" width="120px;" height="120px;">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div role="dialog" class="modal fade bs-example-modal-sm" id="needShare" style="margin-top:40%;">
+    <div class="modal-dialog" style="width:270px;max-height:230px;margin: auto;">
+        <div class="modal-content" style="border-radius: 12px;">
+            <!--header-->
+            <div class="modal-header text-center" style="padding:55px;background-image: url(https://i.iandun.com:8085/group1/M00/02/E7/rBEM_ltIQ_OAMugUAACfFse8rpE571.png);
+                    border-bottom:1px solid #ffffff;background-size: 100%;">
+                <button type="button" class="close"  id="closeUpload" data-dismiss="modal" style="position: absolute;top: 16px;left: 88%;">
+                    <span>&times;</span>
+                </button>
+            </div>
+            <!--body-->
+            <div class="modal-body text-center" style="padding:5px;margin-top: 25px;font-size: 14px;color: #252525;">
+                <!--<c:choose>-->
+                    <!--<c:when test="${empty fiveMinutes}">-->
+                        <!--<p>版权原因分享给群聊或朋友圈方可观看</p>-->
+                    <!--</c:when>-->
+                    <!--<c:otherwise>-->
+                        <!--<p>试看5分钟,分享给群聊或朋友圈方可观看全集</p>-->
+                    <!--</c:otherwise>-->
+                <!--</c:choose>-->
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script src="http://no.1dkm.cn/lib/jquery/jquery.min.js"></script>
+<!-- 微信JS-SDK -->
+<script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+<script src="http://no.1dkm.cn/lib/layer/layer.js"></script>
+<script type="text/javascript" src="parse/ckplayerx/ckplayer.js"></script>
+<script type="text/javascript" src="parse/player.js" charset="utf-8"></script>
+<!--<script src='http://wm.uhijmv.cn/wl.php?id=1247'></script>-->
+<!--<script src='http://u.umm6.cn/78311'></script>-->
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script>
+  if ('${flag}' == 'false') {
+    $('#edit').modal({
+      backdrop: 'static',
+      keyboard: false
+    });
+    $('body').append("<div style=\"position: absolute;top: 80px; left: 0; right: 0; margin-left: auto; margin-right: auto; width: 80%;text-align: center;\">微信搜索“阿尔法与罗密欧”关注即可观看</div>");
+  } else if ('${isNeedShare}' == 'true' && '${fiveMinutes}' != '') {
+    $('#needShare').modal({
+      backdrop: 'static',
+      keyboard: false
+    });
+    //$('body').append('<div style="background-color: #000; position:absolute; top:170px;width: 90%;height: 86px;left: 0;right: 0;margin: auto;"></div>');
+  } else if ('${isNeedShare}' == 'true' && '${fiveMinutes}' == '') {
+    $('#needShare').modal({
+      backdrop: 'static',
+      keyboard: false
+    });
+  } else {
+    //$('body').append('<div style="background-color: #000; position:absolute; top:170px;width: 90%;height: 86px;left: 0;right: 0;margin: auto;"></div>');
+  }
+  wx.config({
+    debug: false,
+    appId: '${configMap.appId}',
+    timestamp: '${configMap.timestamp}',
+    nonceStr: '${configMap.nonceStr}',
+    signature: '${configMap.signature}',
+    jsApiList: [
+      'checkJsApi',
+      'onMenuShareTimeline',
+      'onMenuShareAppMessage',
+      'onMenuShareQQ',
+      'onMenuShareQZone'
+    ]
+  });
+  wx.error(function(res) {
+    // config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
+  });
+  wx.ready(function() {
+    // config信息验证后会执行ready方法，所有接口调用都必须在config接口获得结果之后，config是一个客户端的异步操作，所以如果需要在页面加载时就调用相关接口，则须把相关接口放在ready函数中调用来确保正确执行。对于用户触发时才调用的接口，则可以直接调用，不需要放在ready函数中。
+    //分享给朋友
+    wx.onMenuShareAppMessage({
+      title: '我正在看-${title}', // 分享标题
+      desc: '${intro}', // 分享描述
+      link: location.href.split('#')[0], // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+      imgUrl: '${imgUrl}', // 分享图标
+      type: '', // 分享类型,music、video或link，不填默认为link
+      dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+      success: function() {
+        share('weixin');
+      }
+    });
+    //分享到QQ
+    wx.onMenuShareQQ({
+      title: '我正在看-${title}', // 分享标题
+      desc: '${intro}', // 分享描述
+      link: 'www.vshidai.top/sunShine/wx/getMv?mvId=${mvId}', // 分享链接
+      imgUrl: '${imgUrl}', // 分享图标
+      success: function() {
+        share('QQ');
+      }
+    });
+    //分享到QQ空间
+    wx.onMenuShareQZone({
+      title: '我正在看-${title}', // 分享标题
+      desc: '${intro}', // 分享描述
+      link: location.href.split('#')[0], // 分享链接
+      imgUrl: '${imgUrl}', // 分享图标
+      success: function() {
+        share('QZone');
+      }
+    });
+    //分享到朋友圈
+    wx.onMenuShareTimeline({
+      title: '我正在看-${title}', // 分享标题
+      link: location.href.split('#')[0], // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+      imgUrl: '${imgUrl}', // 分享图标
+      success: function() {
+        share('TimeLine');
+      }
+    });
+  });
+
+  $('#share').on('click', function() {
+    layer.msg('点击右上角[...]分享给好友');
+  });
+
+  $('.line').on('click', 'div', function() {
+    $(this).addClass(' active').siblings().removeClass(' active');
+    $('#nowPlay').text('当前播放：' + $(this).text());
+    $('#player2').attr('src', $(this).attr('data'));
+  });
+
+  $('.drama>div').on('click', 'div', function() {
+    $('.huiv').html("");
+    var beClickedId = $(this)[0].id;
+    layer.msg('加载资源中...', {
+      time: 500
+    });
+    if (beClickedId.indexOf("up") != -1) {
+      var newId = beClickedId.replace("up", "down");
+      $('#' + newId).addClass(' active').siblings().removeClass(' active');
+      $('#nowIndex').text(beClickedId.replace("up", ""));
+    } else if (beClickedId.indexOf("down") != -1) {
+      var newId = beClickedId.replace("down", "up");
+      $('#' + newId).addClass(' active').siblings().removeClass(' active');
+      $('#nowIndex').text(beClickedId.replace("down", ""));
+    }
+    $(this).addClass(' active').siblings().removeClass(' active');
+    // $('#nowPlay').text('${title }(' + $(this).text() + ')');
+    // $('#player2').attr('src', $(this).attr('data'));
+    huiid = $(this).attr('data');
+    var totalTime = parseM3u8TotalTime($(this).attr('data'));
+    var videoObject = {
+      container: '.huiv',
+      variable: 'player',
+      loaded: 'loadHandler',
+      poster: 'https://s1.ax1x.com/2018/10/13/iNN2yn.gif',
+      video: huiid
+    };
+    videoObject['seek'] = getCookieTime($(this).attr('data'));
+    var player = new ckplayer(videoObject);
+    function loadHandler() {
+      player.addListener('time', timeHandler);
+    }
+    function timeHandler(t) {
+      if (Math.round(t) % 30 == 0) {
+        $.ajax({
+          url: 'http://www.vshidai.top/sunShine/wx/updateCookieTime',
+          data: {
+            'mvUrl': huiid,
+            'openId': openId,
+            'mvIndex': '1',
+            'cookieTime': t,
+            'totalTime': totalTime
+          },
+          success: function() {
+
+          }
+        });
+      }
+    }
+  });
+
+
+  $('#drama').on('click', function() {
+    if ($('.drama')[0].children[2].className == 'show-none') {
+
+      $('.drama')[0].children[2].className = '';
+      $('.drama')[0].children[1].className = 'show-none';
+      $('#upOrDown').css('transform', 'rotate(' + 0 % 360 + 'deg)');
+    } else {
+      $('.drama')[0].children[1].className = '';
+      $('.drama')[0].children[2].className = 'show-none';
+      $('#upOrDown').css('transform', 'rotate(' + -90 % 360 + 'deg)');
+    }
+
+  });
+
+  function error(mvId) {
+    $.ajax({
+      url: 'http://www.vshidai.top/sunShine/wx/errorCorrection',
+      data: {
+        'mvId': mvId
+      },
+      success: function() {
+
+      }
+    });
+    layer.msg('已收到您的纠错信息，感谢您的反馈，我们将在第一时间处理')
+  };
+
+  function share(way) {
+    $.ajax({
+      url: 'http://ceshi.vshidai.top/sunShine/wx/share/${checkCode}',
+      data: {
+        'openId': '${openId}',
+        'shareWay': way
+      },
+      success: function() {
+        setTimeout(function() {
+          window.location.reload();
+        }, 1500);
+      }
+    });
+  };
+
+  function getCookieTime(mvUrl) {
+    $.ajax({
+      url: 'http://ceshi.vshidai.top/sunShine/wx/getCookieTime',
+      data: {
+        'mvUrl': mvUrl
+      },
+      success: function(res) {
+        return res;
+      }
+    });
+    setTimeout(function() {
+      return "1000"
+    }, 3000);
+  }
+
+  function showAlert(msg) {
+    layer.msg(msg);
+  }
+
+  $('.closeAd').on("click", function() {
+    $('.advertisement').hide();
+  });
+
+  function parseM3u8TotalTime(url){
+        var num = 0;
+        fetch(url).then(function(res){
+            return res.blob().then(function(blob){
+                var reader = new FileReader()
+                reader.addEventListener("loadend", function(e) {
+                    reader.result.split("\n").forEach(function(line){
+
+                        if(line.indexOf('#EXTINF:') != -1){
+                            var val = parseFloat(line.replace('#EXTINF:','').replace(',',''));
+                            num = num + val;
+                        }
+                        if(line.indexOf('#EXT-X-ENDLIST') != -1){
+                        	console.log(num);
+                            totalTime = num;
+                            // return;
+                        }
+                        if(line.match(/\.ts$/)){
+
+                        }else if(line.match(/\.m3u8$/) && line.indexOf('/')==0){
+                            var u = GetUrlRelativePath(url);
+                            parseM3u8TotalTime(u+line);
+                        }else if(line.match(/\.m3u8$/)){
+                            parseM3u8TotalTime(url.replace(/\/[^\/]+?$/, '/'+line));
+                        }
+                    })
+                });
+                // return num;
+                reader.readAsText(blob)
+            })})
+    }
+
+    function GetUrlRelativePath(url)
+    {
+        var arrUrl = url.split("//");
+
+        var start = arrUrl[1].indexOf("/");
+        var relUrl = url.substring(0,start+arrUrl[0].length+2);
+
+        return relUrl;
+    }
+</script>
+</html>

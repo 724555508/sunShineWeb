@@ -1,0 +1,1462 @@
+<!DOCTYPE html>
+<html lang="zh">
+	<head>
+		<meta charset="UTF-8" />
+		<link rel="shortcut icon" href="../../imgs/logo-l.png">
+		<!--title-icon-->
+		<link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="../../lib/datatables/css/jquery.dataTables.min.css" />
+		<link rel="stylesheet" href="../../lib/switch/honeySwitch.css">   <!--开关按钮插件css-->
+		<link rel="stylesheet" href="http://cache.amap.com/lbs/static/main1119.css"/>  <!--关于高德地图的css-->
+		<link rel="stylesheet" href="../../css/cssReset.css" />
+		<link rel="stylesheet" href="https://cache.amap.com/lbs/static/main1119.css" />
+		<!--自定义图标-->
+		<link rel="stylesheet" href="https://cache.amap.com/lbs/static/main.css?v=1.0?v=1.0" />
+		<!--城市选择-->
+		<link rel="stylesheet" href="../../css/framePages/wearUser.css"/>
+		<title>佩戴用户详情</title>
+		<style>
+			/*开关按钮样式*/
+			.common-row {width: 100%;height: 20px;margin:-20px 0 0 10px;}
+			.switch-on, .switch-off {margin-top: 9px;}
+			.switch-on .slider{left:23px;}
+			.slider{top:-1px;width:20px;height:20px;}
+			[class|=switch]{width: 45px;height:20px;}
+			.amap-toolbar{display:none;}
+		</style>
+	</head>
+
+	<body>
+		<div id='app' v-cloak>
+			<!--&lt;!&ndash;面包屑导航&ndash;&gt;-->
+			<!--<ul class="breadcrumb">-->
+				<!--<li><a href="doctorManage.html" class="active">用户管理</a></li>-->
+				<!--<li><a href="doctorManage.html" class="active">佩戴用户</a></li>-->
+				<!--<li><a href="javascript:;" class="inActive">用户详情</a></li>-->
+			<!--</ul>-->
+		<main>
+			<div class='part1'>
+				<div class='left'>
+					<div class='left_top'>
+						<div class='user'>
+							<img src="../../imgs/iframeImgs/wearUser/man@2x.png" alt="" v-if="gender == '男'"/>
+							<img src="../../imgs/iframeImgs/wearUser/women@2x.png" alt="" v-else=""/>
+						</div>
+						<div class='book'>
+							<div class='txt1'>
+								<p>{{username}}</p>
+								<img src="../../imgs/iframeImgs/wearUser/pro1.png" alt="" class='protect' v-if='isInsurance == 0'/>
+								<img src="../../imgs/iframeImgs/wearUser/pro2.png" alt="" class='protect' v-else='isInsurance == 1'/>
+								<img src="../../imgs/iframeImgs/wearUser/vip1.png" alt="" class='vip' v-if='isVip == 0'/>
+								<img src="../../imgs/iframeImgs/wearUser/vip2.png" alt="" class='vip' v-else='isVip == 1'/>
+								<div class="div1">{{deviceStatus}}</div>
+
+							</div>
+							<div class='txt2'>
+								<div>
+									<span class='span1'>{{gender}}</span>
+									<span class='span2'>{{age}}岁</span>
+									<span class='span2'>关注度</span>
+									<span v-if='attentionLevel == 0' class='span3'>
+									  <img src="../../imgs/iframeImgs/wearUser/Page 1 Copy 7@2x.png" alt="" />
+									  <img src="../../imgs/iframeImgs/wearUser/Page 1 Copy 7@2x.png" alt=""/>
+									  <img src="../../imgs/iframeImgs/wearUser/Page 1 Copy 7@2x.png" alt="" />
+									  <img src="../../imgs/iframeImgs/wearUser/Page 1 Copy 7@2x.png" alt="" />
+									  <img src="../../imgs/iframeImgs/wearUser/Page 1 Copy 7@2x.png" alt="" />
+									</span>
+									<span v-if='attentionLevel == 1' class='span3'>
+									  <img src="../../imgs/iframeImgs/wearUser/Page 1@2x.png" alt="" />
+									  <img src="../../imgs/iframeImgs/wearUser/Page 1 Copy 7@2x.png" alt="" />
+									  <img src="../../imgs/iframeImgs/wearUser/Page 1 Copy 7@2x.png" alt="" />
+									  <img src="../../imgs/iframeImgs/wearUser/Page 1 Copy 7@2x.png" alt="" />
+									  <img src="../../imgs/iframeImgs/wearUser/Page 1 Copy 7@2x.png" alt="" />
+									</span>
+									<span v-if='attentionLevel == 2' class='span3'>
+									  <img src="../../imgs/iframeImgs/wearUser/Page 1@2x.png" alt="" />
+									  <img src="../../imgs/iframeImgs/wearUser/Page 1@2x.png" alt="" />
+									  <img src="../../imgs/iframeImgs/wearUser/Page 1 Copy 7@2x.png" alt="" />
+									  <img src="../../imgs/iframeImgs/wearUser/Page 1 Copy 7@2x.png" alt="" />
+									  <img src="../../imgs/iframeImgs/wearUser/Page 1 Copy 7@2x.png" alt="" />
+									</span>
+									<span v-if='attentionLevel == 3' class='span3'>
+									  <img src="../../imgs/iframeImgs/wearUser/Page 1@2x.png" alt="" />
+									  <img src="../../imgs/iframeImgs/wearUser/Page 1@2x.png" alt="" />
+									  <img src="../../imgs/iframeImgs/wearUser/Page 1@2x.png" alt="" />
+									  <img src="../../imgs/iframeImgs/wearUser/Page 1 Copy 7@2x.png" alt="" />
+									  <img src="../../imgs/iframeImgs/wearUser/Page 1 Copy 7@2x.png" alt="" />
+									</span>
+									<span v-if='attentionLevel == 4' class='span3'>
+									  <img src="../../imgs/iframeImgs/wearUser/Page 1@2x.png" alt="" />
+									  <img src="../../imgs/iframeImgs/wearUser/Page 1@2x.png" alt="" />
+									  <img src="../../imgs/iframeImgs/wearUser/Page 1@2x.png" alt="" />
+									  <img src="../../imgs/iframeImgs/wearUser/Page 1@2x.png" alt="" />
+									  <img src="../../imgs/iframeImgs/wearUser/Page 1 Copy 7@2x.png" alt="" />
+									</span>
+									<span v-if='attentionLevel == 5' class='span3'>
+									  <img src="../../imgs/iframeImgs/wearUser/Page 1@2x.png" alt="" />
+									  <img src="../../imgs/iframeImgs/wearUser/Page 1@2x.png" alt="" />
+									  <img src="../../imgs/iframeImgs/wearUser/Page 1@2x.png" alt="" />
+									  <img src="../../imgs/iframeImgs/wearUser/Page 1@2x.png" alt="" />
+									   <img src="../../imgs/iframeImgs/wearUser/Page 1@2x.png" alt="" />
+									</span>
+									<!--<img src="../../imgs/iframeImgs/wearUser/star.png" alt="" />
+									<img src="../../imgs/iframeImgs/wearUser/star.png" alt="" />
+									<img src="../../imgs/iframeImgs/wearUser/star.png" alt="" />-->
+									<span class="atten" v-if="roleId !=0 && roleId !=1"></span>
+									<span class="atten" @click='attention' v-else>关注</span>
+								</div>
+							</div>
+							<div class="txt3">
+								<div class="deId Id">
+									<p>设备号:{{deviceId}}</p>
+								</div>
+								<div class='Id'>
+									<p>身份证号：{{idCard}}</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class='left_center'>
+						<div class='info1'>
+							<div><span>身高/体重 </span>&ensp;&ensp;{{height}}/{{weight}}</div>
+							<div><span>职业 </span> &ensp;&ensp;{{occupation}}</div>
+							<div><span>病史</span>&ensp;&ensp; {{medicalHistory}}</div>
+						</div>
+						<div class='info1 info2'>
+							<div style='width:30%;'><span>联系电话</span> {{phoneNum}}</div>
+							<div style='width:70%;'><span>居住地址</span> {{ currentAddress }}</div>
+						</div>
+					</div>
+					<div class='left_bot' v-show="localStorage.sign === '0' || localStorage.sign === '1'">
+						<div class='txt1'>
+							<p>备注</p>
+							<div @click='edit1'>编辑</div>
+						</div>
+						<!--<p class='txt2'>{{remark}}</p>-->
+						<div class="txt2">{{remark}}</div>
+						<!--<textarea name="" id="" class='txt2' onpropertychange= "this.style.posHeight=this.scrollHeight ">{{remark}}</textarea>-->
+					</div>
+				</div>
+				<div class='center'>
+					<div><span>救护车（次）</span>0</div>
+					<div class='count1'><span>报警（次）</span>{{alarmCount}}</div>
+					<div class='count1'><span>上次报警</span> {{lastAlarmTime}}</div>
+					<div class='count1 count2'>
+						<div><span>回访（次）</span>{{returnCount}}</div>
+						<button @click='return1'>回访</button>
+					</div>
+					<div class='count1'><span>上次回访</span>&nbsp;&nbsp;&nbsp;&nbsp;{{lastReturnTime}}</div>
+					<div class='count3' v-if="roleId == '1' || roleId == '0'">
+						<div class='set'>
+							<p>系数设置</p>
+							<input type="text"  v-model='ageSign'/>
+						</div>
+						<button @click='submit1'>确定</button>
+					</div>
+
+					<div class="workOrder" v-if="roleId == '1' || roleId == '0'" style="display:flex;justify-content:flex-end;align-items:center;">
+						<!--<div href="" @click="bpCorrect" class="workOrderList">血压校准></div>-->
+						<div>
+							<a href="" class="workOrderList" @click="workOrderList" >客服记录></a>
+							<button @click="addWorkOrder">添加记录</button>
+						</div>
+					</div>
+				</div>
+				<div class='right'>
+					<div class='account'>
+						<div class='phone'>
+							<p>主账户</p>
+							<div>{{id}}</div>
+						</div>
+						<div class='check' @click='bind'>查看全部绑定<img src="../../imgs/iframeImgs/wearUser/arrowright.png" alt="" /></div>
+					</div>
+					<div class='pro1'>
+						<div class='txt1'>
+							<p>昵称</p>
+							<div>{{username1}}</div>
+						</div>
+						<div class='txt1'>
+							<p>与佩戴人关系</p>
+							<div>{{nickName}}</div>
+						</div>
+						<div class='txt1'>
+							<p>紧急联系人</p>
+							<div>{{emergencyPeople}}</div>
+						</div>
+						<div class='txt1'>
+							<p>紧急电话</p>
+							<div>{{emergencyPhone}}</div>
+						</div>
+					</div>
+					<h2 style="margin-top:15px;">关注医生</h2>
+					<!--医生列表-->
+					<div class="doctorList">
+						<div v-for="(item,index) in attentionDoctors">{{item.name}}
+							<span>{{item.phone}}</span>
+							<a target="_blank" :href="'../doctor/doctorDetails.html?managerId=' + item.manageId">
+								<img src="../../imgs/iframeImgs/wearUser/arrowright.png" alt="" />
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class='part2'>
+				<div class='health_parse'>
+					<div class="title">
+						<h2>{{dateTime}}健康解析</h2>
+						<p class="button" @click="healthAnalytic">历史健康解析<img src="../../imgs/iframeImgs/wearUser/arrowright.png" alt="" /></p>
+					</div>
+					<div class='left'>
+						<div class="left_left">
+							<!--14种器官-->
+							<div class='organBox'>
+								<div class='div1'>
+									<!--膀胱-->
+									<div style='padding-right:4px;'><img :src="allTheInternalOrgans.bladder" alt="" /></div>
+									<!-- 肾-->
+									<div style='padding-left:4px;'><img :src="allTheInternalOrgans.kidney" alt="" /></div>
+
+								</div>
+								<div class='div2'>
+									<!-- 肝-->
+									<div><img :src="allTheInternalOrgans.liver" alt="" /></div>
+									<!-- 胃-->
+									<div style='display:flex;align-items:center;justify-content:center;margin:0 10px 0 32px;'>
+										<img :src="allTheInternalOrgans.stomach" alt="" style='width:30px;height:31px;'/>
+										<span style='margin-left:5px;'>胃</span>
+									</div>
+									<!--大肠-->
+									<div style='text-align:right;'><img :src="allTheInternalOrgans.largeIntestine" alt="" /></div>
+								</div>
+								<div class='div3'>
+									<!-- 胆-->
+									<div><img :src="allTheInternalOrgans.gallBladder" alt=""/></div>
+									<!-- 脾-->
+									<div style='display:flex;align-items:center;margin:-2px 0 0 14px;'>
+										<span style='margin-right:5px;'>脾</span>
+										<img :src="allTheInternalOrgans.spleen" alt="" style='width:30px;height:30px;'/>
+									</div>
+									<!-- 肺-->
+									<div style='text-align:right;'><img :src="allTheInternalOrgans.lung" alt="" /></div>
+								</div>
+								<div class='div4'>
+									<!--心-->
+									<div style='padding-right:4px;'><img :src="allTheInternalOrgans.heart" alt="" /></div>
+									<!--小肠-->
+									<div style='padding-left:4px;'><img :src="allTheInternalOrgans.smallIntestine" alt="" /></div>
+								</div>
+								<div class="div5">
+									<!--淋巴-->
+									<div><img :src="allTheInternalOrgans.lymph" alt="" /></div>
+									<!--心包-->
+									<div style='padding-right:4px;text-align:right;'><img :src="allTheInternalOrgans.pericardium" alt="" /></div>
+									<!--脊椎-->
+									<div style='padding-left:4px;'><img :src="allTheInternalOrgans.spine" alt="" /></div>
+									<!--生殖-->
+									<div style='text-align:right;'><img :src="allTheInternalOrgans.reproductive" alt="" /></div>
+								</div>
+							</div>
+							<!--身体状态显示-->
+							<div class="text">
+								<div class='top'>
+									<div class='img'>
+										<img src="../../imgs/iframeImgs/wearUser/healthIcon01.png" alt="">
+									</div>
+									<div class='body'>身体<span>{{healthFlag}}状态</span></div>
+								</div>
+								<div class='bot'>
+									<p>{{heartRateCurve}}</p>
+									<p>{{bloodPressureCurve}}</p>
+									<p>{{bloodOxygenCurve}}</p>
+									<div>{{comprehensiveDiagnosis}}</div>
+								</div>
+							</div>
+						</div>
+						<div class='left_right'>
+							<h3>诊断意见</h3>
+							<p>心率窦性心动过速，血压一级高血压，血压负荷值偏高，血氧正常。</p>
+							<h3>中医诊断</h3>
+							<p>
+								<span>证候分析：</span>
+								脾病失运，所以食则呕，胃脘痛，腹胀。若阴盛而上走阳明，故气滞而为嗳气;得后与气则快然如衰者，为脾气得以输转而气通，所以矢气或大便后腹胀和嗳气就得以衰减或暂时消除。
+							常见症状：腹胀、便溏、下痢、胃脘痛、嗳气、身重无力舌根强痛，下肢内侧肿胀等。
+							</p>
+						</div>
+					</div>
+				</div>
+
+			</div>
+			<div class='part3'>
+				<div class='sleep_state'>
+					<div class="box">
+                        <h2>{{dateTime}}睡眠状态</h2>
+                        <p @click="sleepStatus">查看</p>
+                    </div>
+
+					<div class='dad'>
+						<div class='sleep_left'>
+							<div class='info'>
+								<div class='hTime'>
+									<p>总睡眠</p>
+									<!--<div>{{sleepADWalkADExercise.sleepBean.totalTime}}</div>-->
+									<div><span class='span1'>{{ hour2 }}</span>时<span class='span1'>{{ min2 }}</span>分</div>
+								</div>
+								<div class='hTime'>
+									<p>深睡</p>
+									<div><span class='span1'>{{ hour3 }}</span>时<span class='span1'>{{ min3 }}</span>分</div>
+								</div>
+								<div class='hTime'>
+									<p>浅睡</p>
+									<div><span class='span1'>{{ hour4 }}</span>时<span class='span1'>{{ min4 }}</span>分</div>
+								</div>
+							</div>
+							<p class='analyse'>分析</p>
+							<p>{{sleepADWalkADExercise.sleepBean.conclusion}}</p>
+						</div>
+						<div class='sleep_right'>
+							<div class='top'>
+							    <div class="div1">
+									<div class='img'><img src="../../imgs/iframeImgs/wearUser/youyang.png" alt="" /></div>
+									<p >有氧运动</p>
+									<div class='time'><span class='span1'>{{ hour1 }}</span>时<span class='span1'>{{ min1 }}</span>分</div>
+								</div>
+                                <p class="button" @click="exercise">查看</p>
+							</div>
+							<div class='bot'>
+								<div class="div1">
+									<div class='img'><img src="../../imgs/iframeImgs/wearUser/buxing.png" alt="" /></div>
+									<p>步数统计</p>
+									<div class='time'><span>{{sleepADWalkADExercise.walkNum}}</span>步</div>
+								</div>
+                                <p class="button" @click="walkTotal">查看</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class='analysis_basis'>
+					<div class='top'>
+						<h2>{{dateTime}}分析依据</h2>
+						<div>{{date1}}</div>
+					</div>
+					<!--心率-->
+					<table class='table1'>
+						<tr>
+							<th>心率</th>
+							<th>血压</th>
+							<th>血氧</th>
+						</tr>
+						<tr>
+							<td>累计<span>&ensp;&ensp;{{heartRateStatisticsMap.count}}次</span></td>
+							<td>累计<span>&ensp;&ensp;{{bloodPressureStatisticsMap.count}}次</span></td>
+							<td>累计<span>&ensp;&ensp;{{bloodOxygenStatisticsMap.count}}次</span></td>
+						</tr>
+						<tr>
+							<td>时长<span>&ensp;&ensp;{{heartRateStatisticsMap.measureTime}}小时</span></td>
+							<td>时长<span>&ensp;&ensp;{{bloodPressureStatisticsMap.measureTime}}小时</span></td>
+							<td>时长<span>&ensp;&ensp;{{bloodOxygenStatisticsMap.measureTime}}小时</span></td>
+						</tr>
+						<tr>
+							<td>平均<span>&ensp;&ensp;{{heartRateStatisticsMap.avgValue}}</span></td>
+							<td>平均<span>&ensp;&ensp;{{bloodPressureStatisticsMap.avgValue}}</span></td>
+							<td>平均<span>&ensp;&ensp;{{bloodOxygenStatisticsMap.avgValue}}%</span></td>
+						</tr>
+						<tr>
+							<td>最高<span>&ensp;&ensp;{{heartRateStatisticsMap.maxValue}}</span></td>
+							<td>最高<span>&ensp;&ensp;{{bloodPressureStatisticsMap.maxValue}}</span></td>
+							<td>最高<span>&ensp;&ensp;{{bloodOxygenStatisticsMap.maxValue}}%</span></td>
+						</tr>
+						<tr>
+							<td>最低<span>&ensp;&ensp;{{heartRateStatisticsMap.minValue}}</span></td>
+							<td>最低<span>&ensp;&ensp;{{bloodPressureStatisticsMap.minValue}}</span></td>
+							<td>最低<span>&ensp;&ensp;{{bloodOxygenStatisticsMap.minValue}}%</span></td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<div class='part4'>
+				<div class='live'>
+					<div class='live_data'>
+						<div class='today'>
+							<h2>今日实时数据</h2>
+							<div @click='getHtml'>对比历史<img src="../../imgs/iframeImgs/wearUser/arrowright.png" alt="" /></div>
+						</div>
+						<div class='today_bot'>
+							<div class='bot1'>
+								<div>
+									<img src="../../imgs/iframeImgs/wearUser/dayHRStatus.png" alt="" /> 心率
+								</div>
+								<p>{{nearestHeartRate}}</p>
+								<span>{{nearestHeartRateTime}}测量</span>
+							</div>
+							<div class='bot1 bot2'>
+								<div>
+									<img src="../../imgs/iframeImgs/wearUser/dayBP.png" alt="" /> 血压
+								</div>
+								<p>{{nearestBloodPressure}}</p>
+								<span>{{nearestBloodPressureTime}}测量</span>
+							</div>
+							<div class='bot1 bot2'>
+								<div>
+									<img src="../../imgs/iframeImgs/wearUser/dayBO.png" alt="" /> 血氧
+								</div>
+								<p>{{nearestOxyhemoglobinSaturation}}</p>
+								<span>{{nearestOxyhemoglobinSaturatioTime}}测量</span>
+							</div>
+							<div class='bot1 bot2'>
+								<div>
+									<img src="../../imgs/doctorImgs/bloodSugar.png" alt="" /> 血氧
+								</div>
+								<p>{{nearestOxyhemoglobinSaturation}} <img src="../../imgs/doctorImgs/rise.png" alt="" style="width:20px;height:20px;"/></p>
+								<span>{{nearestOxyhemoglobinSaturatioTime}}测量</span>
+							</div>
+						</div>
+					</div>
+					<div class='live_sleep'>
+						<h2>实时运动睡眠</h2>
+						<div class='info'>
+							<div class='hTime'>
+								<p>总睡眠</p>
+								<div><span class='span1'>{{totalHour}}</span>时<span class='span1'>{{totalMin}}</span>分</div>
+								<!--<div><span>0</span>时<span>{{total}}</span>分</div>-->
+							</div>
+							<div class='hTime'>
+								<p>深睡</p>
+								<div><span class='span1'>{{deepHour}}</span>时<span class='span1'>{{deepMin}}</span>分</div>
+								<!--<div><span>0</span>时<span>{{deepTime}}</span>分</div>-->
+							</div>
+							<div class='hTime'>
+								<p>浅睡</p>
+								<div><span class='span1'>{{lightHour}}</span>时<span class='span1'>{{lightMin}}</span>分</div>
+								<!--<div><span>0</span>时<span>{{lightTime}}</span>分</div>-->
+							</div>
+						</div>
+						<div class='sports'>
+							<div class='top'>
+								<div class='img'><img src="../../imgs/iframeImgs/wearUser/youyang.png" alt="" /></div>
+								<p>有氧运动</p>
+								<div v-if='runningMonitoring.aerobicExercise.length == 7'><span class='span1'>{{runningHour}}</span>时<span class='span1'>{{runningMin}}</span>分</div>
+								<div v-else='runningMonitoring.aerobicExercise.length == 3'><span>0</span>时<span>{{runningTime}}</span>分</div>
+							</div>
+							<div class='bot'>
+								<div class='img'><img src="../../imgs/iframeImgs/wearUser/buxing.png" alt="" /></div>
+								<p>步数统计</p>
+								<div class='time'><span>{{runningMonitoring.numberOfWalk}}</span>步</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class='analysis'>
+					<div class='top'>
+						<h2>分析依据</h2>
+						<div>{{pastTime}} - {{currentTime}}</div>
+					</div>
+					<!--心率-->
+					<table class='table1'>
+						<tr>
+							<th>心率</th>
+							<th>血压</th>
+							<th>血氧</th>
+						</tr>
+						<tr>
+							<td>累计<span>&ensp;&ensp;{{cmsHBBDateStatistics.hrCount}}次</span></td>
+							<td>累计<span>&ensp;&ensp;{{cmsHBBDateStatistics.bpCount}}次</span></td>
+							<td>累计<span>&ensp;&ensp;{{cmsHBBDateStatistics.boCount}}次</span></td>
+						</tr>
+						<tr>
+							<td>时长<span>&ensp;&ensp;{{cmsHBBDateStatistics.hrTime}}小时</span></td>
+							<td>时长<span>&ensp;&ensp;{{cmsHBBDateStatistics.bpTime}}小时</span></td>
+							<td>时长<span>&ensp;&ensp;{{cmsHBBDateStatistics.boTime}}小时</span></td>
+						</tr>
+						<tr>
+							<td>平均<span>&ensp;&ensp;{{cmsHBBDateStatistics.hrAvg}}</span></td>
+							<td>平均<span>&ensp;&ensp;{{cmsHBBDateStatistics.bSpAvg}}/{{cmsHBBDateStatistics.bDpAvg}}</span></td>
+							<td>平均<span>&ensp;&ensp;{{cmsHBBDateStatistics.boAvg}}%</span></td>
+						</tr>
+						<tr>
+							<td>最高<span>&ensp;&ensp;{{cmsHBBDateStatistics.hrMax}}</span></td>
+							<td>最高<span>&ensp;&ensp;{{cmsHBBDateStatistics.bpMax}}</span></td>
+							<td>最高<span>&ensp;&ensp;{{cmsHBBDateStatistics.boMax}}%</span></td>
+						</tr>
+						<tr>
+							<td>最低<span>&ensp;&ensp;{{cmsHBBDateStatistics.hrMin}}</span></td>
+							<td>最低<span>&ensp;&ensp;{{cmsHBBDateStatistics.bpMin}}</span></td>
+							<td>最低<span>&ensp;&ensp;{{cmsHBBDateStatistics.boMin}}%</span></td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<div class='part5'>
+				<div class='history_health'>
+					<div class='data'>
+						<h2>历史健康数据</h2>
+						<div @click='comparativeHistory'>对比历史<img src="../../imgs/iframeImgs/wearUser/arrowright.png" alt="" /></div>
+					</div>
+					<div class='stat'>
+						<!--饼图-->
+						<div class='shan_chart' id="bloodPressCanvas">
+							
+						</div>
+						<div class='right' >
+							<!--<div class='status' v-for='item in healthDaysBeans'>
+						      <div><img src="../../imgs/iframeImgs/expIcon1.png" alt="" />{{item.name}}</div>
+							  <p>{{item.count}}天</p>
+							</div>-->
+							<!--<div class='status'>-->
+								<!--<div><img src="../../imgs/iframeImgs/expIcon1.png" alt="" />健康</div>-->
+								<!--<p>{{healthDaysBeans[0].count}}天</p>-->
+							<!--</div>-->
+							<!--<div class='status'>-->
+						      <!--<div><img src="../../imgs/iframeImgs/expIcon2.png" alt="" />亚健康</div>-->
+							  <!--<p>{{healthDaysBeans[1].count}}天</p>-->
+							<!--</div>-->
+							<!--<div class='status'>-->
+						      <!--<div><img src="../../imgs/iframeImgs/expIcon3.png" alt="" />疾病</div>-->
+							  <!--<p>{{healthDaysBeans[2].count}}天</p>-->
+							<!--</div>-->
+							<!--<div class='status'>-->
+						      <!--<div><img src="../../imgs/iframeImgs/expIcon4.png" alt="" />未佩戴</div>-->
+							  <!--<p>{{healthDaysBeans[3].count}}天</p>-->
+							<!--</div>-->
+							<div><span><img src="../../imgs/iframeImgs/expIcon1.png" alt="" />健康&emsp;&emsp;</span><span>{{healthDaysBeans.health}}天</span></div>
+							<div><span><img src="../../imgs/iframeImgs/expIcon2.png" alt="" />亚健康&emsp;</span><span>{{healthDaysBeans.subHealth}}天</span></div>
+							<div><span><img src="../../imgs/iframeImgs/expIcon3.png" alt="" />疾病&emsp;&emsp;</span><span>{{healthDaysBeans.illness}}天</span></div>
+							<div><span><img src="../../imgs/iframeImgs/expIcon4.png" alt="" />未佩戴&emsp;</span><span>{{healthDaysBeans.healthUnknown}}天</span></div>
+						</div>
+					</div>
+					
+				</div>
+				<div class='cancer_risk'>
+					<div class="box">
+						<h2>肿瘤风险提示（次）</h2>
+						<p class="button" @click="cancerCheck">查看</p>
+					</div>
+					<div>
+						<ul class='ul1'>
+							<li v-for='(item, index) in arr1'>{{ item.organName }}</li>
+						</ul>
+						<ul class='ul2' >
+							<li v-for='(item, index) in arr1'>{{ item.organCancerCount }}</li>
+						</ul>
+						<ul class='ul1'>
+							<li v-for='(item, index) in arr2'>{{ item.organName }}</li>
+						</ul>
+						<ul class='ul2'>
+							<li v-for='(item, index) in arr2'>{{ item.organCancerCount }}</li>
+						</ul>
+					</div>
+					<p class='analyse'>分析</p>
+					<p>{{organCancerAnalysis.organCancerAnalysisConclusion}}
+					</p>
+				</div>
+				<!--血糖数据-->
+				<!--<div class='disease'>-->
+				  <!--&lt;!&ndash;<div class='title'>&ndash;&gt;-->
+					  <!--&lt;!&ndash;<div style="display:flex;align-items:center;">&ndash;&gt;-->
+						  <!--&lt;!&ndash;<h2>今日血糖数据</h2>&ndash;&gt;-->
+						  <!--&lt;!&ndash;&lt;!&ndash;开关按钮&ndash;&gt;&ndash;&gt;-->
+						  <!--&lt;!&ndash;<div class="common-row">&ndash;&gt;-->
+							  <!--&lt;!&ndash;<div class="cell-right"><span class="switch-on" id="wifi"></span></div>&ndash;&gt;-->
+						  <!--&lt;!&ndash;</div>&ndash;&gt;-->
+					  <!--&lt;!&ndash;</div>&ndash;&gt;-->
+					  <!--&lt;!&ndash;<p @click='comparativeHistory'>对比历史<img src="../../imgs/iframeImgs/wearUser/arrowright.png" alt="" /></p>&ndash;&gt;-->
+				  <!--&lt;!&ndash;</div>&ndash;&gt;-->
+					<!--&lt;!&ndash;&lt;!&ndash;内容&ndash;&gt;&ndash;&gt;-->
+					<!--&lt;!&ndash;<div class='content'>&ndash;&gt;-->
+						<!--&lt;!&ndash;<div class='bot1'>&ndash;&gt;-->
+							<!--&lt;!&ndash;<div>&ndash;&gt;-->
+								 <!--&lt;!&ndash;上次&ndash;&gt;-->
+							<!--&lt;!&ndash;</div>&ndash;&gt;-->
+							<!--&lt;!&ndash;<p>{{nearestHeartRate}}</p>&ndash;&gt;-->
+							<!--&lt;!&ndash;<span>{{nearestHeartRateTime}}测量</span>&ndash;&gt;-->
+						<!--&lt;!&ndash;</div>&ndash;&gt;-->
+						<!--&lt;!&ndash;<div class='bot3 bot1 bot2'>&ndash;&gt;-->
+							<!--&lt;!&ndash;<div>&ndash;&gt;-->
+								<!--&lt;!&ndash;<img src="../../imgs/iframeImgs/bloodSuger.png" alt="" /> 最新&ndash;&gt;-->
+							<!--&lt;!&ndash;</div>&ndash;&gt;-->
+							<!--&lt;!&ndash;<p>{{nearestBloodPressure}}</p>&ndash;&gt;-->
+							<!--&lt;!&ndash;<span>{{nearestBloodPressureTime}}测量</span>&ndash;&gt;-->
+						<!--&lt;!&ndash;</div>&ndash;&gt;-->
+						<!--&lt;!&ndash;<div class='bot1 bot2'>&ndash;&gt;-->
+							<!--&lt;!&ndash;<div>&ndash;&gt;-->
+								 <!--&lt;!&ndash;昨日&ndash;&gt;-->
+							<!--&lt;!&ndash;</div>&ndash;&gt;-->
+							<!--&lt;!&ndash;<p>{{nearestOxyhemoglobinSaturation}}</p>&ndash;&gt;-->
+							<!--&lt;!&ndash;<span>{{nearestOxyhemoglobinSaturatioTime}}测量</span>&ndash;&gt;-->
+						<!--&lt;!&ndash;</div>&ndash;&gt;-->
+					<!--&lt;!&ndash;</div>&ndash;&gt;-->
+					<!--&lt;!&ndash;折线图&ndash;&gt;-->
+                  <!--&lt;!&ndash;<div class='line_chart' id='bloodOxygenCanvas' style='width:100%;'>-->
+                  	<!---->
+                  <!--</div>&ndash;&gt;-->
+				<!--</div>-->
+                <!--定位-->
+				<!--<div class='real_location' >-->
+                    <p style="font-size: 13px;color: #0096FF;cursor: pointer;position:absolute;z-index:300;right:35px;margin-top:20px;">附近医生></p>
+                    <div id="locationBox" class='real_location' ></div>
+				<!--</div>-->
+			</div>
+			<div class='part6'>
+              <div class='device'>
+              	<div class='title'>
+              	   <h2>护心仪</h2>
+              	   <div class='title1' @click='wearHistory'>
+              	   	  <span>佩戴历史</span>
+              	   	  <p>{{length}}</p>
+              	   </div>
+              	</div>
+              	<div class='center'>
+              		<div class='photo' v-if='deviceVersion == 1'><img src="../../imgs/iframeImgs/wearUser/tu_1.png" alt="" /></div>
+              		<div class='photo' v-else='deviceVersion == 2'><img src="../../imgs/iframeImgs/wearUser/tu_2.png" alt="" /></div>
+              		<div class='txt1'>
+              			<p>安顿护心仪{{deviceVersion}}代</p>
+              			<div><span>设备号</span>&ensp;&ensp;{{deviceId}}</div>
+              			<div><span>SIM卡</span>&ensp;&ensp;{{sIMPhoneNum}}</div>
+              		</div>
+              	</div>
+              	<div class='bot'>
+              	  <ul>
+              	  	<li @click='replace'>更换设备</li>
+              	  	<li @click='relieve'>解除绑定</li>
+              	  	<li @click='toDeviceDetail'>查看详情</li>
+              	  </ul>	
+              	</div>
+              </div>
+              <div class='serve'>
+              	<h2>服务期</h2>
+              	<p class='txt1'>{{serviceStartTime}} 至 {{serviceEndTime}}</p>
+              	<div class='type'>
+              		<div class='info'>
+              			<p>服务类型</p>
+              			<span>{{waySign}}</span>
+              		</div>
+              		<div class='info'>
+              			<p>已服务天数</p>
+              			<span>{{ serviceUseDay }}</span>
+              		</div>
+					<div class='info'>
+						<p>误报扣除</p>
+						<span>{{misDays}}</span>
+					</div>
+              		<div class='info'>
+              			<p>服务剩余天数</p>
+              			<span style='color:green;'>{{ serviceNoUseDay }}</span>
+              		</div>
+              	</div>
+				<div class="record">
+					<p class='txt2' @click="misInformation">扣除记录</p>
+					<p class='txt2' @click="revise" style="margin-left:20px;">设置服务期限</p>
+				</div>
+
+              </div>
+              <div class='protocol'>
+              	<div class='parentBox'>
+              		
+					<div class='childBox'>
+              			<h3>服务协议</h3>
+              			<p @click='servicePass'>{{isPass}}</p>
+					</div>
+              		<div class='childBox'>
+              			<h3>建议与投诉</h3>
+              			<p>{{theLowerRightNum.recordNum}}</p>
+              		</div>
+              		<div class='childBox'>
+              			<h3>健康报告</h3>
+              			<p>{{theLowerRightNum.HealthReportNum}}</p>
+              		</div>
+              	</div>
+              	<div class='parentBox parentBox2'>
+              		<div class='childBox' @click='skip'>
+              			<h3>SOS记录</h3>
+              			<p>{{theLowerRightNum.sosNum}}</p>
+              		</div>
+              		<div class='childBox'>
+              			<h3>求助记录</h3>
+              			<p></p>
+              		</div>
+              		<div class='childBox'>
+              			<h3>预警记录</h3>
+              			<p>{{theLowerRightNum.alarmNum}}</p>
+              		</div>
+              	</div>
+              	<div class='parentBox2 parentBox3'>
+              		<div class='childBox'>
+              			<h3>消费与订单</h3>
+              			<p></p>
+              		</div>
+              		<div class='childBox' style='margin-left:10px;'>
+              			<h3>客服进度</h3>
+              			<p></p>
+              		</div>
+					<div class='childBox' style='margin-left:10px;'>
+						<a @click="hrefToElec" class="active1">
+							<h3>电子档案</h3>
+							<p style="color:#0096FF;">3</p>
+						</a>
+					</div>
+              	</div>
+              </div>
+			</div>
+		</main>
+		<!--点击编辑 弹框-->
+			<div role="dialog" class="modal fade bs-example-modal-sm" id="edit">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<!--header-->
+						<div class="modal-header text-center">
+							<button type="button" class="close"  id="closeUpload" data-dismiss="modal">
+								<span>&times;</span>
+							</button>
+							<h4 class="h4 modal-title">编辑备注</h4>
+						</div>
+						<!--body-->
+						<div class="modal-body text-center">
+							
+								<textarea name="" rows="" cols="" id="remarkVal">
+									
+								</textarea>
+
+								<div class="row">
+									<!--<div class="col-sm-3"></div>-->
+									<!--<div class="col-sm-3 text-center"><button id="search" class="search" style='margin:0 10px;'>搜索</button><div>
+									<div class="col-sm-3 text-center"><button class="search all" style='margin:0 10px;'>搜索</button></div>-->
+									<div class="col-sm-4"><button class="btn btn-default btn-block" @click="closeModel">取消</button></div>
+									<div class="col-sm-4"><button class="btn btn-skyBlue btn-block" @click="saveRemake">保存</button></div>
+								</div>
+								<div class="row">
+							<div class="col-sm-12 text-center"></div>
+						</div>
+						
+						</div>
+					</div>
+				</div>
+			</div>
+		<!--点击关注弹框-->
+			<div role="dialog" class="modal fade bs-example-modal-sm" id="attention">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<!--header-->
+						<div class="modal-header text-center">
+							<button type="button" class="close" data-dismiss="modal">
+								<span>&times;</span>
+							</button>
+							<h4 class="h4 modal-title">关注程度</h4>
+						</div>
+						<!--body-->
+						<div class="modal-body text-center">
+						        <div class='star' id='star' v-if='attentionLevelNew == 0'>
+						        	<img src="../../imgs/iframeImgs/wearUser/Page 1 Copy 7@2x.png" alt="" class='img' @click="changeAttentionLevel(1)"/>
+						        	<img src="../../imgs/iframeImgs/wearUser/Page 1 Copy 7@2x.png" alt="" class='img' @click="changeAttentionLevel(2)"/>
+						        	<img src="../../imgs/iframeImgs/wearUser/Page 1 Copy 7@2x.png" alt="" class='img' @click="changeAttentionLevel(3)"/>
+						        	<img src="../../imgs/iframeImgs/wearUser/Page 1 Copy 7@2x.png" alt="" class='img' @click="changeAttentionLevel(4)"/>
+						        	<img src="../../imgs/iframeImgs/wearUser/Page 1 Copy 7@2x.png" alt="" class='img' @click="changeAttentionLevel(5)"/>
+						        </div>
+						         <div class='star' v-else-if='attentionLevelNew == 1'>
+						        	<img src="../../imgs/iframeImgs/wearUser/Page 1@2x.png" alt="" @click="changeAttentionLevel(1)"/>
+						        	<img src="../../imgs/iframeImgs/wearUser/Page 1 Copy 7@2x.png" alt="" @click="changeAttentionLevel(2)"/>
+						        	<img src="../../imgs/iframeImgs/wearUser/Page 1 Copy 7@2x.png" alt="" @click="changeAttentionLevel(3)"/>
+						        	<img src="../../imgs/iframeImgs/wearUser/Page 1 Copy 7@2x.png" alt="" @click="changeAttentionLevel(4)"/>
+						        	<img src="../../imgs/iframeImgs/wearUser/Page 1 Copy 7@2x.png" alt="" @click="changeAttentionLevel(5)"/>
+						        </div>
+						         <div class='star' v-else-if='attentionLevelNew == 2'>
+						        	<img src="../../imgs/iframeImgs/wearUser/Page 1@2x.png" alt=""  @click="changeAttentionLevel(1)"/>
+						        	<img src="../../imgs/iframeImgs/wearUser/Page 1@2x.png" alt=""  @click="changeAttentionLevel(2)"/>
+						        	<img src="../../imgs/iframeImgs/wearUser/Page 1 Copy 7@2x.png" alt=""  @click="changeAttentionLevel(3)"/>
+						        	<img src="../../imgs/iframeImgs/wearUser/Page 1 Copy 7@2x.png" alt=""  @click="changeAttentionLevel(4)"/>
+						        	<img src="../../imgs/iframeImgs/wearUser/Page 1 Copy 7@2x.png" alt=""  @click="changeAttentionLevel(5)"/>
+						        </div>
+						         <div class='star' v-else-if='attentionLevelNew == 3'>
+						        	<img src="../../imgs/iframeImgs/wearUser/Page 1@2x.png" alt="" @click="changeAttentionLevel(1)"/>
+						        	<img src="../../imgs/iframeImgs/wearUser/Page 1@2x.png" alt="" @click="changeAttentionLevel(2)"/>
+						        	<img src="../../imgs/iframeImgs/wearUser/Page 1@2x.png" alt="" @click="changeAttentionLevel(3)"/>
+						        	<img src="../../imgs/iframeImgs/wearUser/Page 1 Copy 7@2x.png" alt="" @click="changeAttentionLevel(4)"/>
+						        	<img src="../../imgs/iframeImgs/wearUser/Page 1 Copy 7@2x.png" alt="" @click="changeAttentionLevel(5)"/>
+						        </div>
+						         <div class='star' v-else-if='attentionLevelNew == 4'>
+						        	<img src="../../imgs/iframeImgs/wearUser/Page 1@2x.png" alt="" @click="changeAttentionLevel(1)"/>
+						        	<img src="../../imgs/iframeImgs/wearUser/Page 1@2x.png" alt="" @click="changeAttentionLevel(2)"/>
+						        	<img src="../../imgs/iframeImgs/wearUser/Page 1@2x.png" alt="" @click="changeAttentionLevel(3)"/>
+						        	<img src="../../imgs/iframeImgs/wearUser/Page 1@2x.png" alt="" @click="changeAttentionLevel(4)"/>
+						        	<img src="../../imgs/iframeImgs/wearUser/Page 1 Copy 7@2x.png" alt="" @click="changeAttentionLevel(5)"/>
+						        </div>
+						         <div class='star' v-else='attentionLevelNew == 5'>
+						        	<img src="../../imgs/iframeImgs/wearUser/Page 1@2x.png" alt="" @click="changeAttentionLevel(1)"/>
+						        	<img src="../../imgs/iframeImgs/wearUser/Page 1@2x.png" alt="" @click="changeAttentionLevel(2)"/>
+						        	<img src="../../imgs/iframeImgs/wearUser/Page 1@2x.png" alt="" @click="changeAttentionLevel(3)"/>
+						        	<img src="../../imgs/iframeImgs/wearUser/Page 1@2x.png" alt="" @click="changeAttentionLevel(4)"/>
+						        	<img src="../../imgs/iframeImgs/wearUser/Page 1@2x.png" alt="" @click="changeAttentionLevel(5)"/>
+						        </div>
+								<div class="row">
+									<div class="col-sm-4"><button class="btn btn-default btn-block" @click="closeModel">取消</button></div>
+									<div class="col-sm-4"><button class="btn btn-skyBlue btn-block" @click='saveSatr'>保存</button></div>
+								</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--点击佩戴历史-->
+			<div role="dialog" class="modal fade bs-example-modal-sm" id="wearHistory">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<!--header-->
+						<div class="modal-header text-center">
+							<button type="button" class="close"  data-dismiss="modal">
+								<span>&times;</span>
+							</button>
+							<h4 class="h4 modal-title">历史佩戴</h4>
+						</div>
+						<!--body-->
+						<div class="modal-body text-center">
+						  <ul class='ul1' v-for='(item,index) in historyWear'>
+						  	<li class='li1'>{{historyWear[index].id}}代</li>
+						  	<li class='li2'>设备号&ensp;&ensp;&ensp;&ensp;<span>{{historyWear[index].deviceId}}</span></li>
+						  	<li class='li3'>绑定时间&ensp;&ensp;<span>{{historyWear[index].bindingTime}}</span></li>
+						  	<li class='li4'>解绑时间&ensp;&ensp;<span>{{historyWear[index].removeBindingTime}}</span></li>
+						  </ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--点击更换设备-->
+			<div role="dialog" class="modal fade bs-example-modal-sm" id="replace">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<!--header-->
+						<div class="modal-header text-center">
+							<button type="button" class="close" data-dismiss="modal">
+								<span>&times;</span>
+							</button>
+							<h4 class="h4 modal-title">更换新设备</h4>
+						</div>
+						<!--body-->
+						<div class="modal-body text-center">
+						  <div class='div1'>
+						  	<div>输入设备号</div>
+						  	<input type="" name="" id="newDeviceId" value="" />
+						  </div>
+						  <div class='div1 div2'>
+						  	<div>输入校验码</div>
+						  	<input type="" name="" id="checkCode" value="" />
+						  </div>
+						</div>
+						<div class="row">
+						  <div class="col-sm-4"><button class="btn btn-default btn-block" @click="closeModel">取消</button></div>
+						  <div class="col-sm-4"><button class="btn btn-skyBlue btn-block" @click="changeDevice">确定</button></div>
+						</div>
+						<div class="row">
+							<div class="col-sm-12 text-center"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		    <!--点击确定解除弹框-->
+		    <div role="dialog" class="modal fade bs-example-modal-sm" id="relieve">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<!--header-->
+					<div class="modal-header text-center">
+						<button type="button" class="close"  data-dismiss="modal">
+							<span>&times;</span>
+						</button>
+						<h4 class="h4 modal-title">解除绑定</h4>
+					</div>
+					<!--body-->
+					<div class="modal-body text-center">
+					  <p>解除设备后用户将没有设备，服务停止。</p>
+					</div>
+					<div class="row">
+					  <div class="col-sm-4"><button class="btn btn-default btn-block" @click="closeModel">取消</button></div>
+					  <div class="col-sm-4"><button class="btn btn-skyBlue btn-block" @click="removeBinding">确定</button></div>
+					</div>
+					<div class="row">
+					  <div class="col-sm-12 text-center" id="uploadMsg1"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+			<!--点击确定修改弹框-->
+			<div role="dialog" class="modal fade bs-example-modal-sm" id="revise">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<!--header-->
+						<div class="modal-header text-center">
+							<button type="button" class="close" data-dismiss="modal">
+								<span>&times;</span>
+							</button>
+							<h4 class="h4 modal-title">修改</h4>
+						</div>
+						<!--body-->
+						<div class="modal-body text-center">
+						  <div class='div1'>
+						  	<div class='serve'>截止服务期限</div>
+						  	<input type="date" value='' id='serve1'/>
+						  	<div class='maxDeadline'>*<span>最大期限为年月日</span></div>
+						  </div>
+						</div>
+						<div class="row">
+							<div class="col-sm-4"><button class="btn btn-default btn-block" @click="closeModel">取消</button></div>
+						    <div class="col-sm-4"><button class="btn btn-skyBlue btn-block" @click='submit2'>确定</button></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--点击查看全部绑定-->
+			<div role="dialog" class="modal fade bs-example-modal-sm" id="bind">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<!--header-->
+						<div class="modal-header text-center">
+							<button type="button" class="close"  data-dismiss="modal">
+								<span>&times;</span>
+							</button>
+							<h4 class="h4 modal-title">查看全部绑定</h4>
+						</div>
+						<!--body-->
+						<div class="modal-body text-center">
+						  <ul class='ul1' v-for='(item,index) in binder'>
+						  	<li class='li2'>手机号&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<span>{{binder[index].id}}</span></li>
+						  	<li class='li3'>昵称&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<span>{{binder[index].username}}</span></li>
+						  	<li class='li4'>与佩戴人关系&ensp;&ensp;&ensp;<span>{{binder[index].nickName}}</span></li>
+						  </ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--点击服务协议里的文字出现弹框-->
+			<div role="dialog" class="modal fade bs-example-modal-sm" id="serviceTcp">
+				<div class="modal-dialog" >
+					<div class="modal-content">
+						<!--header-->
+						<div class="modal-header text-center">
+							<button type="button" class="close" data-dismiss="modal">
+								<span>&times;</span>
+							</button>
+							<h4 class="h4 modal-title">用户协议管理</h4>
+						</div>
+						<!--body-->
+						<div class="modal-body text-center">
+							<div class='div1'>
+								<img :src="serviceImgUrl" alt="" class="img1" id="img1">
+								<img src="../../imgs/iframeImgs/wearUser/rotate.png" alt="" class="rotate" @click="rotate">
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-4"><button class="btn btn-default btn-block" @click="pass(3)">未通过</button></div>
+							<div class="col-sm-4"><button class="btn btn-skyBlue btn-block" @click='pass(2)'>通过</button></div>
+						</div>
+					</div>
+				</div>
+			</div>
+            <!--步行运动-->
+            <div role="dialog" class="modal fade bs-example-modal-sm" id="walking">
+                <div class="modal-dialog" >
+                    <div class="modal-content">
+                        <!--header-->
+                        <div class="modal-header text-center">
+                            <button type="button" class="close" data-dismiss="modal">
+                                <span>&times;</span>
+                            </button>
+                            <h2 class="h4 modal-title">步行运动</h2>
+                        </div>
+                        <!--body-->
+                        <div class="modal-body text-center">
+                            <div class='div1'>
+                                <!--折线图容器-->
+                                <div class='walkChart' id="walkCanvas">
+
+                                </div>
+                                <p><span>*</span>步行统计区间为00:00至24:00之间的步行数量。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--睡眠状态-->
+			<div role="dialog" class="modal fade bs-example-modal-sm" id="sleepStatus">
+				<div class="modal-dialog" >
+					<div class="modal-content">
+						<!--header-->
+						<div class="modal-header text-center">
+							<button type="button" class="close" data-dismiss="modal">
+								<span>&times;</span>
+							</button>
+							<h2 class="h4 modal-title">睡眠状态</h2>
+						</div>
+						<!--body-->
+						<div class="modal-body text-center">
+							<div class='div1'>
+								<!--折线图容器-->
+								<div class='sleepChart' id="sleepChart">
+
+								</div>
+								<div class="bot">
+									<div class="div1">
+										<span>总睡眠</span>
+										<p>{{ hour2 }}<span class='span1'>时</span>{{ min2 }}<span class='span1'>分</span></p>
+									</div>
+									<div class="div1">
+										<span>深睡</span>
+										<p>{{ hour3 }}<span class='span1'>时</span>{{ min3 }}<span class='span1'>分</span></p>
+									</div>
+									<div class="div1">
+										<span>浅睡</span>
+										<p>{{ hour4 }}<span class='span1'>时</span>{{ min4 }}<span class='span1'>分</span></p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--有氧运动-->
+			<div role="dialog" class="modal fade bs-example-modal-sm" id="exercise">
+				<div class="modal-dialog" >
+					<div class="modal-content">
+						<!--header-->
+						<div class="modal-header text-center">
+							<button type="button" class="close" data-dismiss="modal">
+								<span>&times;</span>
+							</button>
+							<h2 class="h4 modal-title">有氧运动</h2>
+						</div>
+						<!--body-->
+						<div class="modal-body text-center">
+							<div class='div1'>
+								<!--折线图容器-->
+								<div class='runChart' id="runChart">
+
+								</div>
+								<div class="bot">
+									<div class="div1">
+										<span>有氧运动</span>
+										<p>0<span class='span1'>时</span>0<span class='span1'>分</span></p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--肿瘤风险-->
+			<div role="dialog" class="modal fade bs-example-modal-sm" id='cancerRisk'>
+				<div class="modal-dialog" >
+					<div class="modal-content">
+						<!--header-->
+						<div class="modal-header text-center">
+							<button type="button" class="close" data-dismiss="modal">
+								<span>&times;</span>
+							</button>
+							<h2 class="h4 modal-title">肿瘤风险</h2>
+						</div>
+						<!--body-->
+						<div class="modal-body text-center">
+							<div class='div1'>
+								<!--折线图容器-->
+								<div class='cancerChart' id="cancerChart">
+
+								</div>
+								<div class="bot">
+									<div class="div1">
+										<span>*</span>
+										<p>过往235天，肝部位风险提示汇总：未见明显异常12次，功能异常12次，数据不足12次。安顿提醒用户注意身体健康，
+											保持佩戴，建议继续观察或就医进行专科检查（无异常或无数据没有最后一句）。</p>
+									</div>
+									<!--12个器官文字-->
+									<div class="div2">
+										<div class="up">
+											<div>心</div>
+											<div>肝</div>
+											<div>脾</div>
+											<div>肺</div>
+											<div>肺</div>
+											<div>肺</div>
+										</div>
+										<div class="up down">
+											<div>小肠</div>
+											<div>膀胱</div>
+											<div>脊椎</div>
+											<div>淋巴</div>
+											<div>大肠</div>
+											<div>心包</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--点击回访出现弹框-->
+			<div role="dialog" class="modal fade bs-example-modal-sm" id="returnVisit">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<!--header-->
+						<div class="modal-header text-center">
+							<button type="button" class="close" data-dismiss="modal">
+								<span>&times;</span>
+							</button>
+							<h4 class="h4 modal-title">添加处理方案</h4>
+						</div>
+						<!--&lt;!&ndash;body&ndash;&gt;-->
+						<div class="modal-body text-center">
+							<div class='box'>
+								<!--处理进度-->
+								<div class="progress1">
+									<p>处理进度</p>
+									<div id="dispose">
+
+										<!--客服处理进度-->
+										<ul class="kfProgress">
+											<li v-for="(item,index) in disposeInfos">
+												<!--预警内容-->
+												<div class="sosContent">
+													<div class="div1">
+														<!--<h2 class="h2Title">111111111</h2>-->
+														<h2 class="h2Title" v-if="item.level === 0">预警</h2>
+														<h2 class="h2Title" v-else-if="item.level === 1">疾病</h2>
+														<h2 class="h2Title" v-else-if="item.level === 2">危险</h2>
+														<h2 class="h2Title" v-else style="background:#0096ff;">回访</h2>
+														<span >{{item.disposeTime}} </span>
+
+													</div>
+													<div class="div2">{{item.msg}}</div>
+												</div>
+												<!--客服处理进度-->
+												<div class="kf">
+													<div class="div1">
+														<img src="../../imgs/iframeImgs/kf.png" alt="">
+														<div>客服处理&ensp;&ensp;{{item.disposeId}}{{item.disposeTime}}</div>
+													</div>
+													<div class="div2">处理：{{item.disposeRemark}}</div>
+												</div>
+											</li>
+										</ul>
+									</div>
+								</div>
+								<!--添加处理方案-->
+								<div class='project1'>
+									<p>添加处理方案</p>
+									<textarea v-model="returnText" name="" id="" cols="30" rows="10" placeholder="#备注内容#，#提醒时间年月日时分#"></textarea>
+								</div>
+								<!--设置提醒时间-->
+								<!--<div class="time1">-->
+									<!--<div class='setTime'>-->
+										<!--&lt;!&ndash;<p>设置提醒时间</p>&ndash;&gt;-->
+										<!--&lt;!&ndash;<input type="datetime-local" class='form-control' value="2014-11-16T15:25"/>&ndash;&gt;-->
+										<!--&lt;!&ndash;<button class='yes'>确认</button>&ndash;&gt;-->
+									<!--</div>-->
+								<!--</div>-->
+								<!--提交处理-->
+								<div class='text-right finish'>
+									<button class='btn btn-skyBlue' @click='returnSubmit'>提交处理</button>   <!-- @click="submitFinish"-->
+								</div>
+							</div>
+						</div>
+						<!--<div class="row">-->
+							<!--<div class="col-sm-4"><button class="btn btn-default btn-block" @click="closeModel">取消</button></div>-->
+							<!--<div class="col-sm-4"><button class="btn btn-skyBlue btn-block" >确定</button></div>-->
+						<!--</div>-->
+					</div>
+				</div>
+			</div>
+			<!--点击误报出现弹框-->
+			<div role="dialog" class="modal fade bs-example-modal-sm" id="misInformationList">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<!--header-->
+						<div class="modal-header text-center">
+							<button type="button" class="close" data-dismiss="modal">
+								<span>&times;</span>
+							</button>
+							<h4 class="h4 modal-title">扣除记录</h4>
+						</div>
+						<!--&lt;!&ndash;body&ndash;&gt;-->
+						<div class="modal-body text-center">
+							<table data-toggle="table" class="table table-bordered text-center table-hover" id="misInformationTable">
+								<thead>
+								<tr  style="opacity: 0.8;background: rgba(0,150,255,0.10);">
+									<th>序号</th>
+									<th>报警时间</th>
+									<th>处理状态</th>
+									<th>处理人</th>
+									<th>处理时间</th>
+								</thead>
+								<tbody>
+								</tbody>
+							</table>
+						</div>
+						<!--<div class="row">-->
+							<!--<div class="col-sm-4"><button class="btn btn-default btn-block" @click="closeModel">取消</button></div>-->
+							<!--<div class="col-sm-4"><button class="btn btn-skyBlue btn-block" @click='returnSubmit'>确定</button></div>-->
+						<!--</div>-->
+					</div>
+				</div>
+			</div>
+			<!--点击添加工单进行弹框-->
+			<div role="dialog" class="modal fade bs-example-modal-sm" id="addWorkOrder">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<!--header-->
+						<div class="modal-header text-center">
+							<button type="button" class="close" data-dismiss="modal">
+								<span>&times;</span>
+							</button>
+							<h4 class="h4 modal-title">添加工单</h4>
+						</div>
+						<!--&lt;!&ndash;body&ndash;&gt;-->
+						<div class="modal-body text-center">
+							<!--part1-->
+							<div class="part1">
+								<div class="box">
+									<div class="top">
+										<div class="div1">
+											<span>通话类型</span>
+											<select name="" id="callType">
+												<option value="">通话类型</option>
+												<option value="1">主动呼出</option>
+												<option value="2">主动呼入</option>
+												<option value="3">其他</option>
+											</select>
+										</div>
+										<div class="div1">
+											<span>反馈类型</span>
+											<select name="" id="select" onchange="change(this.value)">
+												<option value="">反馈类型</option>
+												<option value="产品硬件">产品硬件</option>
+												<option value="APP软件">APP软件</option>
+												<option value="数据失准">数据失准</option>
+												<option value="用户回访">用户回访</option>
+												<option value="预警回访">预警回访</option>
+												<option value="合作问题">合作问题</option>
+												<option value="无效沟通">无效沟通</option>
+												<option value="定位问题">定位问题</option>
+												<option value="产品服务咨询">产品服务咨询</option>
+												<option value="投诉与建议">投诉与建议</option>
+												<option value="数据采集不到">数据采集不到</option>
+												<option value="故障设备报备">故障设备报备</option>
+												<option value="SOS">SOS</option>
+												<option value="其他问题">其他问题</option>
+											</select>
+										</div>
+										<div class="div1">
+											<span>反馈子类型</span>
+											<select name="" id="select2" >
+												<option value="">
+
+												</option>
+											</select>
+											<input type="text" style="display:none;" id="otherInput" value="" onchange="changeQuestion(this.value)">
+										</div>
+										<div class="div1">
+											<span>用户类型</span>
+											<select name="" id="userType">
+												<!--<option value="">用户类型</option>-->
+												<option value="佩戴用户" selected>佩戴用户</option>
+												<option value="APP用户">APP用户</option>
+												<option value="合伙人">合伙人</option>
+												<option value="意向合伙人">意向合伙人</option>
+												<option value="意向用户">意向用户</option>
+												<option value="其他">其他</option>
+											</select>
+										</div>
+
+									</div>
+
+
+									<div class="top bot">
+										<div class="div1">
+											<span>用户城市</span>
+											<input type="text" class="input1" id="city" >
+										</div>
+										<div class="div1">
+											<span>来电号码</span>
+											<input type="text" class="input1" id="phoneNum" maxlength="11" v-model="callId" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')">
+										</div>
+										<!--<div class="div1">-->
+										<!--<span>来电姓名</span>-->
+										<!--<input type="text" class="input1"  id="userName">-->
+										<!--</div>-->
+										<div class="div1">
+											<span>设备号</span>
+											<input type="text" class="input1" id="deviceId" maxlength="15" v-model="deviceId" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')">
+										</div>
+										<div class="div1">
+											<span>APP账号</span>
+											<input type="text" class="input1" id="appUserId" maxlength="11" v-model="appId" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')">
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="dad" style="display:none;">
+								<h2>该号码来访记录</h2>
+								<p id="count"></p>
+								<div id="numRecord"></div>
+							</div>
+							<!--part2-->
+							<div class="part2">
+								<div class="left" style="display:none;">
+									<h2>佩戴用户</h2>
+									<div class="info1">
+										<div class="div1">
+											<p id="username1"></p>
+											<span id="age"></span>
+										</div>
+										<div class="div2">
+											<p>服务期限</p>
+											<span id="serviceTime"></span>
+										</div>
+										<div class="button" id="seeInfo"></div>
+									</div>
+									<div class="info1">
+										<div class="div2 div3">
+											<p>病史</p>
+											<span id="MedicalHistory"></span>
+										</div>
+
+										<div class="div2">
+											<p>该账号来访记录</p>
+											<span id="count2"></span>
+										</div>
+
+									</div>
+								</div>
+								<div class="right" style="display:none;">
+									<h2>APP用户</h2>
+									<div class="info1">
+										<div class="div1">
+											<p id="username2"></p>
+											<span id="phoneBrand"></span>
+											<span id="appVersion"></span>
+										</div>
+										<div class="button" id="seeInfo2"></div>
+									</div>
+									<div class="info2">
+										<div class="div1">
+											<p>注册时间</p>
+											<span id="createTime"></span>
+										</div>
+										<div class="div1">
+											<p>设备数量</p>
+											<span id="count1"></span>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!--part3-->
+							<div class="part3">
+								<div class="left">
+									<h2>反馈详情</h2>
+									<div class="leftBox">
+										<textarea name="questionDetails" class="form-control" id="txt1"></textarea>
+									</div>
+								</div>
+								<div class="right">
+									<h2>处理结果</h2>
+									<div class="rightBox">
+										<textarea name="questionDetails" class="form-control" id="txt2"></textarea>
+									</div>
+								</div>
+							</div>
+							<!--part5-->
+							<div class="part4">
+								<div class="div1">
+									<p>是否需要反馈</p>
+									<div class="txt1">
+										<span>是</span>
+										<input type="radio" value="1" name="radio" onchange="changeRadioValue()">
+									</div>
+									<div class="txt1">
+										<span>否</span>
+										<input type="radio" value="2" name="radio" onchange="changeRadioValue()" checked>
+									</div>
+									<div class="txt2">
+										<span>*</span>
+										如果不能当场解决，需要再次反馈的，请选择反馈时间
+									</div>
+								</div>
+								<div class="div2" id="time1">
+									<p>设置反馈时间</p>
+									<input type="datetime-local" class="input2" id="nextDate">
+									<button>确认</button>
+								</div>
+								<div class="div3">
+									<button id="addWorkOrderSubmit">提交</button>
+								</div>
+							</div>
+						</div>
+						<!--<div class="row">-->
+						<!--<div class="col-sm-4"><button class="btn btn-default btn-block" @click="closeModel">取消</button></div>-->
+						<!--<div class="col-sm-4"><button class="btn btn-skyBlue btn-block" @click='returnSubmit'>确定</button></div>-->
+						<!--</div>-->
+					</div>
+				</div>
+			</div>
+			<!--点击血压校准进行弹框-->
+			<!--<div role="dialog" class="modal fade bs-example-modal-sm" id="bpCorrect1">-->
+				<!--<div class="modal-dialog">-->
+					<!--<div class="modal-content">-->
+						<!--&lt;!&ndash;header&ndash;&gt;-->
+						<!--<div class="modal-header text-center">-->
+							<!--<button type="button" class="close"  data-dismiss="modal">-->
+								<!--<span>&times;</span>-->
+							<!--</button>-->
+							<!--<h4 class="h4 modal-title">血压校准</h4>-->
+						<!--</div>-->
+						<!--&lt;!&ndash;body&ndash;&gt;-->
+						<!--<div class="modal-body text-center">-->
+							<!--<div class="box">-->
+									<!--<div class="dad">-->
+										<!--<div>收缩压&ensp;&ensp; <input></input> </div>-->
+										<!--<div>舒张压 &ensp;&ensp;<input></input> </div>-->
+										<!--<div>时间段&ensp;&ensp;-->
+											<!--<select name="" id="">-->
+												<!--<option value="">请选择时间段</option>-->
+											<!--</select>-->
+										<!--</div>-->
+										<!--<div style="display:flex;justify-content:flex-end;">-->
+											<!--<div class="title">提交</div>-->
+										<!--</div>-->
+									<!--</div>-->
+								<!--&lt;!&ndash;表格&ndash;&gt;-->
+								<!--<table id="bpCorrectTable" class=" text-center table table-bordered table-hover" cellspacing="0" width="100%">-->
+									<!--&lt;!&ndash;表头&ndash;&gt;-->
+									<!--<thead>-->
+									<!--<tr class="tr1">-->
+										<!--<th class="text-center">血压值</th>-->
+										<!--<th class="text-center">时间段</th>-->
+										<!--<th class="text-center">上传时间</th>-->
+									<!--</tr>-->
+									<!--</thead>-->
+									<!--<tbody>-->
+									<!--</tbody>-->
+								<!--</table>-->
+							<!--</div>-->
+							<!--&lt;!&ndash;<ul class='ul1' v-for='(item,index) in historyWear'>&ndash;&gt;-->
+								<!--&lt;!&ndash;<li class='li1'>{{historyWear[index].id}}代</li>&ndash;&gt;-->
+								<!--&lt;!&ndash;<li class='li2'>设备号&ensp;&ensp;&ensp;&ensp;<span>{{historyWear[index].deviceId}}</span></li>&ndash;&gt;-->
+								<!--&lt;!&ndash;<li class='li3'>绑定时间&ensp;&ensp;<span>{{historyWear[index].bindingTime}}</span></li>&ndash;&gt;-->
+								<!--&lt;!&ndash;<li class='li4'>解绑时间&ensp;&ensp;<span>{{historyWear[index].removeBindingTime}}</span></li>&ndash;&gt;-->
+							<!--&lt;!&ndash;</ul>&ndash;&gt;-->
+						<!--</div>-->
+					<!--</div>-->
+				<!--</div>-->
+			<!--</div>-->
+		</div>
+		<!--js-->
+		<script src="../../lib/jquery/jquery.min.js"></script>
+		<script src="../../lib/bootstrap/js/bootstrap.min.js"></script>
+		<script src="../../lib/datatables/js/jquery.dataTables.min.js"></script>
+		<script src="../../lib/layer/layer.js"></script>
+		<script src='../../lib/vue.min.js'></script>
+		<script src="../../lib/echarts/echarts.min.js"></script>
+		<script src="../../lib/switch/honeySwitch.js"></script>   <!--开关按钮js插件-->
+		<script src="https://cache.amap.com/lbs/static/es5.min.js"></script>
+		<!--默认地图-->
+		<script src="https://webapi.amap.com/maps?v=1.3&key=1573aeddb3c9e953a05da7e8a90c0c5b&plugin=AMap.Geocoder,AMap.DistrictSearch"></script>
+		<!--key引入，多个plugin用“,”分割-->
+		<script type="text/javascript" src="https://webapi.amap.com/demos/js/liteToolbar.js"></script>
+		<!-- UI组件库 1.0 -->
+		<script src="//webapi.amap.com/ui/1.0/main.js?v=1.0.11"></script>
+		<script src="../../js/common.js"></script>
+		<script src="../../js/framePages/wearUser.js"></script>
+	</body>
+</html>

@@ -1,0 +1,47 @@
+*{box-sizing: border-box;}
+body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ul, ol, li, pre, form, fieldset, legend, button, input, textarea, th, td { margin:0; padding:0; }
+body, button, input, select, textarea { font-size:13px; }
+h1, h2, h3, h4, h5, h6{ font-size:100%; }
+address, cite, dfn, em, var { font-style:normal; }
+code, kbd, pre, samp { font-family:couriernew, courier, monospace; }
+small{ font-size:12px; }
+ul, ol { list-style:none; }
+a { text-decoration:none; }
+a:hover { text-decoration:underline; }
+sup { vertical-align:text-top; }
+sub{ vertical-align:text-bottom; }
+legend { color:#000; }
+fieldset, img { border:0; }
+button, input, select, textarea { font-size:100%;}
+table { border-collapse:collapse; border-spacing:0;}
+.form-control{height: 21px;font-size: 13px;padding: 0 10px;}
+.table tr th{text-align: center;}
+.layui-layer{z-index: 9999;color: #0c0c0c;}
+
+
+
+.btn-skyBlue{background-color: #0096ff;border: none;border-radius: 2px;height: 32px;padding: 0 16px;color: #fff;line-height: 32px;font-size: 13px;}
+.btn-skyBlueSmall{background-color: #fff;border: 1px solid #0096ff;border-radius: 12px;height: 21px;padding: 0 10px;color: #0096ff;line-height: 21px;}
+.btn-skyBlue:hover{color: #fff;}
+.btn-border{background-color: #fff;color: #0096ff;border: 1px solid #0096ff;border-radius: 4px;}
+.btn-white{background-color: #fff;border-radius: 2px;height: 32px;padding: 0 16px;
+    font-size: 15px;color: #4A4A4A;letter-spacing: 0;text-align: center;line-height: 32px;border: 1px solid #DFDFDF;}
+
+
+/*.col-sm-1,.col-sm-2,.col-sm-3,.col-sm-4,.col-sm-5,.col-sm-6,.col-sm-7,.col-sm-8,.col-sm-9,.col-sm-10,.col-sm-11,.col-sm-12{padding: 0;}*/
+.table thead tr th{font-size: 14px;color: #8F9295;letter-spacing: 0;line-height: 14px;}
+.table{background-color: #fff;border: none;}
+table.dataTable thead th,table.dataTable thead td{border: none;border-bottom: 1px solid #F5F5F5;;}
+table.dataTable tbody th,table.dataTable tbody td{border: none;border-bottom: 1px solid #F5F5F5;vertical-align: middle;font-size: 13px;padding: 14px 10px;}
+table.dataTable tfoot th,table.dataTable tfoot td{border: none;border-bottom: 1px solid #F5F5F5;}
+
+table.dataTable.no-footer{border-bottom: 0;}
+table.dataTable td.dataTables_empty{height: 80px;background: #efefef;}
+
+.row{margin: 0;}
+.form-control{padding: 0 10px;background-image: linear-gradient(-180deg, #FDFDFF 0%, #F9FAFE 100%);
+    border: 1px solid #DCDCDC;border-radius: 2px;height: 32px;}
+.form-control::-webkit-inner-spin-button{display: none;}
+
+.tr1{opacity: 0.8;background: rgba(0,150,255,0.10);}
+

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="../../imgs/logo-l.png">    <!--title-icon-->
+    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../../lib/datatables/css/jquery.dataTables.min.css"/>
+    <link rel="stylesheet" href="../../css/cssReset.css"/>
+    <title>客服中心</title>
+    <style>
+        /*body{background-image: url("https://i.iandun.com:8085/group1/M00/01/E7/ezkhjFp6whaAIkinAAB1cSTpvOk120.jpg");background-size: 100% auto;}*/
+        body{background-color: #f0f5ff;width:100%;margin: 0 auto;}
+        .main{width: 97%;margin: 25px auto;background: #FFFFFF;box-shadow: 0 0 10px 0 rgba(0,0,0,0.02);border-radius: 8px;padding:20px 15px;height: calc(100vh - 50px);}
+        .main h2{font-size: 15px;color: #4A4A4A;margin-bottom:15px;}
+        .main>div{display: flex;display: -webkit-flex;}
+        .main>div>a{width:200px;height:102px;background-color: #fff;border-radius: 8px;border: 1px solid #D3D3D3;margin-right:30px;}
+        .main>div>a>div>div{text-align: center;}
+        .main a .div2>div:nth-child(1){font-size: 30px;color: #4A4A4A;line-height:65px;}
+        .main a .div2>div:nth-child(2){font-size: 14px;color: #0096FF;}
+        .main a .div1 div{text-align:center;line-height:102px;vertical-align:middle;}
+
+        .main .div1 div span{font-size:20px;color: #0096FF;}
+        /*.main a{font-size: 14px;color: #4A4A4A;}*/
+        /*.main a:hover{color: #0096FF;text-decoration:none;}*/
+        .main .div3{position:relative;}
+        .main .div3 p{position:absolute;top:15px;right:45px;height:16px;background: #EA4A4A;border: 1px solid #EA4A4A;padding: 0px 5px;
+            box-shadow: 0 0 10px 0 rgba(234,74,74,0.20);border-radius: 97px;font-size: 12px;color: #FFFFFF;text-align:center;}
+        a{font-size: 14px;color: #0096FF;}
+        a:link{text-decoration:none;color:#0096FF;}
+        a:visited{text-decoration:none;color:#0096FF;}
+        a:active{text-decoration:none;color:#0096FF;}
+        a:hover{text-decoration:none;color:#0096FF;}
+    </style>
+</head>
+<body>
+<main class="main">
+    <h2>客服中心</h2>
+    <div>
+        <!--添加记录-->
+        <a href="callCenter.html" target="_blank">
+            <div class="div1">
+                <div>
+                    <span>+</span>
+                    添加记录
+                </div>
+            </div>
+        </a>
+        <!--查看全部记录-->
+        <a href="custom_recordList.html">
+            <div class=" div2">
+                <div id="recordCount">0</div>
+                <div>
+                   查看全部客服记录
+                </div>
+            </div>
+        </a>
+        <!--app反馈-->
+        <a href="appTickling1.html">
+            <div class=" div2 div3">
+                <div id="NoRead">0</div>
+                <div>查看APP用户反馈</div>
+                <p>未处理</p>
+            </div>
+        </a>
+        <!--紧急消息下发-->
+        <a href="serousMessageManage.html">
+            <div class="div1">
+                <div>
+                    紧急消息下发
+                </div>
+            </div>
+        </a>
+        <!--系统消息下发-->
+        <a href="systemMessage.html">
+            <div class="div1">
+                <div>
+                    系统消息下发
+                </div>
+            </div>
+        </a>
+        <!--合伙人私信下发-->
+        <a href="parnterLetter.html">
+            <div class="div1">
+                <div>
+                    合伙人私信下发
+                </div>
+            </div>
+        </a>
+    </div>
+</main>
+<script src="../../lib/jquery/jquery.min.js"></script>
+<script src="../../js/common.js"></script>
+<script src="../../lib/layer/layer.js"></script>
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            type: "post",
+            url: global_path + "/cms/service/getCustomerData",
+            cache: false,  //禁用缓存
+            data: {
+                loginId:localStorage.loginId,
+                token:localStorage.token
+            },  //传入组装的参数
+            dataType: "json",
+            success: function (result) {
+                if(result.code == 200){
+                    $('#recordCount').text(result.data.recordCount);
+                    $('#NoRead').text(result.data.NoRead);
+                }else {
+                    layer.msg(result.msg,{
+                        icon:2,
+                        time:2000
+                    })
+                }
+            }
+        });
+    });
+
+</script>
+</body>
+</html>

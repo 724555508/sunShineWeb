@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../../css/cssReset.css"/>
+    <link rel="stylesheet" href="../../css/indexCommon.css"/>
+    <link rel="stylesheet" href="../../css/screenShow/s_index.css"/>
+    <link rel="shortcut icon" href="../../imgs/logo-l.png">    <!--title-icon-->
+    <title>心脑监测预警救护中心（安顿中心）</title>
+</head>
+<body>
+<div id="app" v-cloak>
+    <!--页头-->
+    <header class="header header1">
+        <!--logo-->
+        <div class="logoImg"><img src="../../imgs/newLogo.png" alt="andunLogo" width="70" /></div>
+        <!--title-->
+        <div class="andunName"><div>心脑监测预警救护中心（安顿中心）</div></div>
+        <!--userName-->
+        <div class="userName" id="userName">上午好!{{ name }}</div>
+        <!--exit-->
+        <!--<a class="exit" title="退出登录" id="logout">-->
+            <!--<img src="../../imgs/exit.png" alt="退出登录"/>-->
+        <!--</a>-->
+        <!--修改密码-->
+        <div class="changePwd" id="changePwd">修改密码</div>
+    </header>
+    <!--主体-->
+    <main class="main">
+        <!--导航-->
+        <div class="navList navList1">
+            <ul class="listBox">
+                <li class="navLi"><a class="liActive" href="javascript:;" id="indexMain">主页</a></li>
+                <li class="navLi"><a href="javascript:;">SOS管理</a></li>
+                <li class="navLi"><a href="javascript:;">用户管理</a></li>
+                <li class="navLi"><a href="javascript:;">设备管理</a></li>
+                <li class="navLi"><a href="javascript:;">CRM管理</a></li>
+                <li class="navLi"><a href="javascript:;">客服中心</a></li>
+                <li class="navLi"><a href="javascript:;">订单管理</a></li>
+                <li class="navLi"><a href="javascript:;">CMS管理</a></li>
+                <li class="navLi"><a href="javascript:;">系统配置</a></li>
+                <li class="navLi"><a href="javascript:;">文件管理</a></li>
+            </ul>
+        </div>
+        <!--内容-->
+        <div class="content">
+            <div>
+                <!--用户增长&&医疗救助-->
+                <aside class="aside">
+                    <!--用户增长-->
+                    <div><div id="chart1"></div></div>
+                    <!--医疗救助-->
+                    <div><div id="chart2"></div></div>
+                </aside>
+                <!--监控数据-->
+                <nav class="nav">监控数据</nav>
+                <div class="lists">
+                    <!-- &lt;!&ndash;预警中心&ndash;&gt;
+                     <div>
+                         <div class="iconBox">
+                             <a href="warningList.html" target="_blank">
+                                 &lt;!&ndash;<span class="span">0</span>&ndash;&gt;
+                                 <img src="../../imgs/iframeImgs/icon3001.png" alt="icon">
+                             </a>
+                         </div>
+                         <div class="iconTitle">预警中心</div>
+                     </div>-->
+                    <!--全国用户分布展示-->
+                    <a href="s_user_map1.html" target="_blank">
+                        <div>
+                            <div class="iconBox">
+                                <!--<span class="span">0</span>-->
+                                <img src="../../imgs/iframeImgs/icon3002.png" alt="icon">
+                            </div>
+                            <div class="iconTitle">用户分布展示</div>
+                        </div>
+                    </a>
+                    <!--风险用户监控-->
+                    <a href="s_user_risk_list.html" target="_blank">
+                        <div>
+                            <div class="iconBox">
+                                <!--<span class="span">0</span>-->
+                                <img src="../../imgs/iframeImgs/icon3003.png" alt="icon">
+                            </div>
+                            <div class="iconTitle">风险用户监控</div>
+                        </div>
+                    </a>
+                    <!--合伙人分布-->
+                    <a href="s_partner_map.html" target="_blank">
+                        <div>
+                            <div class="iconBox">
+                                <!--<span class="span">0</span>-->
+                                <img src="../../imgs/iframeImgs/icon3004.png" alt="icon">
+                            </div>
+                            <div class="iconTitle">合伙人分布</div>
+                        </div>
+                    </a>
+
+                    <!--用户实时分布-->
+                    <a href="s_user_map2.html" target="_blank">
+                        <div>
+                            <div class="iconBox">
+                                <!--<span class="span">0</span>-->
+                                <img src="../../imgs/iframeImgs/userPartIcon.png" alt="icon">
+                            </div>
+                            <div class="iconTitle">用户实时分布</div>
+                        </div>
+                    </a>
+                    <!--用户健康特征统计-->
+                    <a href="s_user_health_info.html" target="_blank">
+                        <div>
+                            <div class="iconBox">
+                                <!--<span class="span">0</span>-->
+                                <img src="../../imgs/iframeImgs/icon3006.png" alt="icon">
+                            </div>
+                            <div class="iconTitle">用户健康特征统计</div>
+                        </div>
+                    </a>
+                    <!--实时预警监控-->
+                    <a href="s_sosWarning_manage.html" target="_blank">
+                        <div>
+                            <div class="iconBox">
+                                <!--<span class="span">0</span>-->
+                                <img src="../../imgs/iframeImgs/icon3007.png" alt="icon">
+                            </div>
+                            <div class="iconTitle">实时预警监控</div>
+                        </div>
+                    </a>
+                    <!--SOS实时监控-->
+                    <a href="s_sos_help.html" target="_blank">
+                        <div>
+                            <div class="iconBox">
+                                <!--<span class="span">0</span>-->
+                                <img src="../../imgs/iframeImgs/icon3008.png" alt="icon">
+                            </div>
+                            <div class="iconTitle">SOS实时监控</div>
+                        </div>
+                    </a>
+                    <!--用户基础病统计-->
+                    <a href="s_history_statistics.html" target="_blank">
+                        <div>
+                            <div class="iconBox">
+                                <!--<span class="span">0</span>-->
+                                <img src="../../imgs/iframeImgs/icon3009.png" alt="icon">
+                            </div>
+                            <div class="iconTitle">用户基础病统计</div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+
+
+
+
+<!--js-->
+<script src="../../lib/jquery/jquery.min.js"></script>
+<script src="../../lib/vue.min.js"></script>
+<script src="../../lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../lib/echarts/echarts.min.js"></script>
+<script src="../../lib/layer/layer.js"></script>
+<script src="../../js/common.js"></script>
+<script src="../../js/screenShow/s_index3.js"></script>
+</body>
+</html>

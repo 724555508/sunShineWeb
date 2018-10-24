@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="../../imgs/logo-l.png">    <!--title-icon-->
+    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../../lib/datatables/css/jquery.dataTables.min.css"/>
+    <link rel="stylesheet" href="../../css/cssReset.css"/>
+    <title>设备详情</title>
+    <style>
+        .bigBox{width: 96%;margin: 20px auto;position: relative;font-size: 14px;}
+        .title{opacity: 0.5;font-size: 22px;color: #000;line-height: 40px;margin-top: 20px;}
+        .box1{padding: 10px 0;background-color: #eee;}
+        .line{display: flex;margin: 15px 0;}
+        .line1{display: flex;justify-content: flex-start;}
+        .line1>div:nth-child(1){width: 80%;}
+        .line>div{width: 25%;border-left: 3px solid #0096ff;padding-left: 10px;font-size: 14px;color: rgba(0,0,0,0.6);font-weight: bold;}
+        .line>div>span{color: #000;}
+        .part4>h1{margin: 0;}
+        .part4>a{font-size: 14px;color: #0096FF;line-height: 14px;text-decoration: none;display: inline-block;padding-top: 10px;}
+        /*waySign*/
+        #waySign{cursor: pointer;text-decoration: dashed;color: #31d1ff;}
+        #layer,#layer2{color: #000;}
+        #layer .row,#layer2 .row{margin: 20px 0;}
+    </style>
+</head>
+<body>
+<main class="bigBox">
+    <!--part1-->
+    <h1 class="title">设备详情</h1>
+    <hr>
+    <div class="box1">
+        <div class="line">
+            <div>设备型号：&#8195;<span id="bigFont"></span></div>
+            <div>电量：&#8195;<span id="electricQuantity"></span></div>
+            <div>工作状态：&#8195;<span id="workStatus"></span></div>
+            <div>使用状态：&#8195;<span id="useDusSign"></span></div>
+        </div>
+        <div class="line">
+            <div>上次工作时间：&#8195;<span id="nearestCommunicationTime"></span></div>
+            <div>设备ID：&#8195;<span id="deviceId"></span></div>
+            <div>校验码：&#8195;<span id="checkCode"></span></div>
+            <div>产地：&#8195;<span id="origin"></span></div>
+        </div>
+        <div class="line">
+            <div>生产日期：&#8195;<span id="productionDate"></span></div>
+            <div>入库日期：&#8195;<span id="createTime"></span></div>
+            <button type="button" class="btn btn-skyBlue text-right" id="active">激活</button>
+        </div>
+    </div>
+    <!--part2-->
+    <h1 class="title">设备归属</h1>
+    <hr>
+    <div class="box1">
+        <div class="line">
+            <div>所属市场：&#8195;<span id="market"></span></div>
+            <div>所属合伙人：&#8195;<span id="agentName"></span></div>
+            <div>联系电话：&#8195;<span id="agentPhone"></span></div>
+            <div>地址：&#8195;<span id="agentAddress"></span></div>
+        </div>
+        <div class="line">
+            <div>出库日期：&#8195;<span id="allocateTime"></span></div>
+            <div>激活日期：&#8195;<span id="activationTime"></span></div>
+        </div>
+    </div>
+    <!--part3-->
+    <h1 class="title">佩戴人</h1>
+    <hr>
+    <div class="box1">
+        <div class="line">
+            <div>佩戴人：&#8195;<span id="wearUserName"></span></div>
+            <div>主账户：&#8195;<span id="mainAccount"></span></div>
+            <div>服务形式：&#8195;<span id="waySign"></span></div>
+            <div>服务期：&#8195;<span id="serviceTime"></span></div>
+        </div>
+        <div class="line">
+            <div>续费次数：&#8195;<span id="renewalNum"></span></div>
+            <div>续费总额：&#8195;<span id="renewalAll"></span></div>
+            <div>监控总时：&#8195;<span id="monitoringTime"></span></div>
+            <div>校准状态：&#8195;<span id="calibrationState"></span></div>
+        </div>
+        <div class="line line1">
+            <div>关联账户：&#8195;<span id="accountLinking"></span>&#8195;&#8195;&#8195;&#8195;<a href="javascript:;" id="seeAll">查看</a></div>
+            <button class="btn btn-skyBlue text-right" id="check">手动校准</button>
+        </div>
+    </div>
+
+</main>
+
+
+
+
+
+<!--模态框-->
+<div role="dialog" class="modal fade bs-example-modal-sm" id="layer">
+    <div class="modal-dialog">
+        <div class="modal-content" style="max-width: 500px;min-width: 400px;">
+            <!--header-->
+            <div class="modal-header text-center">
+                <button type="button" class="close"  id="close" data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
+                <h3>切换服务形式</h3>
+            </div>
+            <!--body-->
+            <div class="modal-body text-center" id="changeStatus">
+                <div class="row">
+                    <div class="col-sm-4">选择形式：</div>
+                    <div class="col-sm-6">
+                        <select id="newWaySign" class="form-control">
+                            <option value="1">租赁</option>
+                            <option value="2">购买</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">服务开始时间：</div>
+                    <div class="col-sm-6">
+                        <input type="text" disabled="disabled" class="form-control" id="serviceStartTime">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">服务结束时间：</div>
+                    <div class="col-sm-6">
+                        <input type="date" class="form-control" id="serviceEndTime">
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-sm-12 text-center"><button class="btn btn-sm btn-primary" type="button" id="changeBtn">确定</button></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--模态框-->
+<div role="dialog" class="modal fade bs-example-modal-sm" id="layer2">
+    <div class="modal-dialog">
+        <div class="modal-content" style="max-width: 500px;min-width: 400px;">
+            <!--header-->
+            <div class="modal-header text-center">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
+                <h3>全部绑定用户</h3>
+            </div>
+            <!--body-->
+            <div class="modal-body text-center" id="allUsers">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div role="dialog" class="modal fade bs-example-modal-sm" id="layer3" style="margin-top: 200px;">
+    <div class="modal-dialog">
+        <div class="modal-content" style="max-width: 500px;min-width: 400px;">
+            <!--header-->
+            <div class="modal-header text-center">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
+                <b>手动校准</b>
+            </div>
+            <br>
+            <div style="text-align: center">
+                <div>
+                    <b>高压：</b>
+                    <input id="spStandard">
+                </div>
+                <br>
+                <div>
+                    <b>低压：</b>
+                    <input id="dpStandard">
+                </div>
+                <br>
+                <div>
+                    <button class="btn btn-skyBlue" id="deal">开始校准</button>
+                </div>
+            </div>
+            <br>
+        </div>
+    </div>
+</div>
+
+
+
+<!--js-->
+<script src="../../lib/jquery/jquery.min.js"></script>
+<script src="../../lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../lib/datatables/js/jquery.dataTables.min.js"></script>
+<script src="../../lib/layer/layer.js"></script>
+<script src="../../lib/echarts/echarts.min.js"></script>
+<script src="../../js/common.js"></script>
+<script src="../../js/framePages/deviceDetail.js"></script>
+</body>
+</html>

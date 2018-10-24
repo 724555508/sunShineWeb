@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="../../imgs/logo-l.png">    <!--title-icon-->
+    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../../lib/datatables/css/jquery.dataTables.min.css"/>
+    <link rel="stylesheet" href="../../css/cssReset.css"/>
+    <link rel="stylesheet" href="../../css/framePages/fileManage.css">
+    <title>文件管理</title>
+    <style>
+
+    </style>
+</head>
+<body>
+<main class="main" id="app" v-cloak>
+    <div class="headerTitle text-info">文件管理</div>
+    <br>
+    <!--上传文件-->
+    <div class="dis">
+        <!--上传文件-->
+        <form role="addTemperaturesForm" id="uploadFile" enctype="multipart/form-data" v-if="pid !== '' && pid !== 10000">
+            <input type="hidden" name="loginId" v-model="loginId"/>
+            <input type="hidden" name="token" v-model="token"/>
+            <input type="hidden" name="id" v-model="pid"/>
+            <!--accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel"-->
+            <input type="file" v-if="levelSign !== 2" multiple id="addTemperaturesFile" @change="selectFile" name="file" class="form-control inputFile">
+            <button class="btn btn-skyBlue btn-file" type="button" v-if="levelSign !== '2' && levelSign !== '5' ">
+                <!--<span class="glyphicon glyphicon-open" style="color: #fff;"></span>-->
+                <img src="../../imgs/iframeImgs/upload.png" width="15" alt="">
+                上传文件
+            </button>
+        </form>
+        <!--创建文件夹-->
+        <div>
+            <button type="button"
+                    v-if="fileSign === false && (levelSign !== '2' && levelSign !== '5')"
+                    class="btn btn-white" @click="buildFile">
+                <img src="../../imgs/iframeImgs/buildFile.png" width="15" alt="">
+                新建文件夹
+            </button>
+        </div>
+        <!--<div v-if="fileSign === true"><input type="text" class="form-control" placeholder="请输入文件夹名称" v-model="fileName"></div>-->
+        <!--<div v-if="fileSign === true"><button class="btn btn-skyBlue" @click="enterBuild">确定</button></div>-->
+        <!--<div v-if="fileSign === true"><button class="btn btn-skyBlue" @click="cancel">取消</button></div>-->
+
+        <!--编辑-->
+        <div>
+            <button class="btn btn-white" @click="editFile"  v-if="levelSign !== '2' && levelSign !== '5'">
+                <img src="../../imgs/iframeImgs/eitFile.png" alt="" width="15">
+                编辑
+            </button>
+        </div>
+        <!--批量下载-->
+        <div>
+            <button v-if="levelSign !== '2' && levelSign !== '5'"
+                class="btn btn-white"
+                @click="downloadMany">
+                <img src="../../imgs/iframeImgs/download.png" alt="" width="15">
+                下载
+            </button>
+        </div>
+        <!--批量删除-->
+        <div>
+            <button v-if="levelSign !== '2' && levelSign !== '5'"
+                class="btn btn-white"
+                @click="deleteMany"    v-if="pid !== '' && pid !== 10000">
+                <img src="../../imgs/iframeImgs/delete.png" width="15" alt="">
+                删除
+            </button>
+        </div>
+    </div>
+    <!--返回上一级-->
+    <div class="text-primary back" v-if="pid !== '' && pid !== 10000"
+         @click="back"><img src="../../imgs/iframeImgs/back.png" alt="" width="25">返回上一级</div>
+    <!--table-->
+    <br>
+    <section class="section">
+        <table data-toggle="table" class="table table-bordered text-center table-hover dataTable" id="fileTables">
+            <thead>
+            <tr class="tr1">
+                <th><input type="checkbox" class="checkall" id="checkall"/></th>
+                <!--<th>序号</th>-->
+                <th>文件名</th>
+                <th>类别</th>
+                <th>大小</th>
+                <th>创建人</th>
+                <th>下载次数</th>
+                <th>更新时间</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </section>
+    <!--进度条-->
+    <div class="modalBox">
+        <div class="progressbar" data-perc="88">
+            <div class="bar color4"><span></span></div>
+            <div class="label"><span></span></div>
+        </div>
+    </div>
+
+    <!--预览图片-->
+    <div class="bigImg" id="bigImg">
+        <div class="closeBigImg"><img src="../../imgs/iframeImgs/close.png" alt="" width="24"></div>
+        <div class="imgPoster">
+            <div class="imgBox">
+                <img :src="imgUrl" alt="" id="imgTest">
+            </div>
+            <div class="botImg">
+                <img src="../../imgs/iframeImgs/leftRotate.png" alt="" onclick="tranImg(-90)" value="左">
+                <img src="../../imgs/iframeImgs/rightRotate.png" alt="" onclick="tranImg(90)" value="右">
+                <img v-if="sign === '0' || sign === '1'" src="../../imgs/iframeImgs/delete%20(3).png" alt="" onclick="deleteImg()">
+                <img src="../../imgs/iframeImgs/down.png" alt="" onclick="downloadImg()">
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <!--点击新文件夹 弹框-->
+    <div role="dialog" class="modal fade bs-example-modal-sm" id="buildNewFile">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!--header-->
+                <div class="modal-header text-center">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                    <h4 class="h4 modal-title">添加新目录</h4>
+                </div>
+                <!--body-->
+                <div class="modal-body text-center">
+
+                    <input type="text" placeholder="命名文件夹" v-model="fileName">
+
+                    <div class="row">
+                        <div class="col-sm-4"><button class="btn btn-default btn-block" @click="closeModel">取消</button></div>
+                        <div class="col-sm-4"><button class="btn btn-skyBlue btn-block" @click="enterBuild">确定</button></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 text-center"></div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--点击编辑出现弹框-->
+    <div role="dialog" class="modal fade bs-example-modal-sm" id="editFile">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!--header-->
+                <div class="modal-header text-center">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                    <h4 class="h4 modal-title">编辑名称</h4>
+                </div>
+                <!--body-->
+                <div class="modal-body text-center">
+
+                    <input type="text" placeholder="文件或文件夹重命名" v-model="fileName">
+
+                    <div class="row">
+                        <div class="col-sm-4"><button class="btn btn-default btn-block" @click="closeModel">取消</button></div>
+                        <div class="col-sm-4"><button class="btn btn-skyBlue btn-block" @click="saveRename">确定</button></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 text-center"></div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!--点击每行编辑出现弹框-->
+    <div role="dialog" class="modal fade bs-example-modal-sm" id="editFile2">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!--header-->
+                <div class="modal-header text-center">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                    <h4 class="h4 modal-title">编辑名称</h4>
+                </div>
+                <!--body-->
+                <div class="modal-body text-center">
+
+                    <input type="text" placeholder="文件或文件夹重命名" v-model="fileName1">
+                    <input type="hidden" name="id" v-model="pid"/>
+
+                    <div class="row">
+                        <div class="col-sm-4"><button class="btn btn-default btn-block" @click="closeModel">取消</button></div>
+                        <div class="col-sm-4"><button class="btn btn-skyBlue btn-block" onclick="saveRename1()">确定</button></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 text-center"></div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--点击删除出现弹框-->
+    <div role="dialog" class="modal fade bs-example-modal-sm" id="deleteFile">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!--header-->
+                <div class="modal-header text-center">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                    <h4 class="h4 modal-title">删除文件</h4>
+                </div>
+                <!--body-->
+                <div class="modal-body text-center">
+
+                    <p>确定删除文件夹吗？</p>
+
+                    <div class="row">
+                        <div class="col-sm-4"><button class="btn btn-default btn-block" @click="closeModel">取消</button></div>
+                        <div class="col-sm-4"><button class="btn btn-skyBlue btn-block" @click="confirmDelete">确定</button></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 text-center"></div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!--js-->
+<script src="../../lib/jquery/jquery.min.js"></script>
+<script src="../../lib/vue.min.js"></script>
+<script src="../../lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../lib/datatables/js/jquery.dataTables.min.js"></script>
+<script src="../../lib/layer/layer.js"></script>
+<script type="text/javascript" src="https://cdn.goeasy.io/goeasy.js"></script><!--goEasy后台推送SOS预警-->
+<script src="../../js/common.js"></script>
+<script src="../../js/framePages/filesManage.js"></script>
+</body>
+</html>

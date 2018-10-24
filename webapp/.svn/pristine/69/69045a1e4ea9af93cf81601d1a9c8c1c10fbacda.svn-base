@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+         /*#editor{width:680px; z-index: 0;position: relative;}*/
+        /*.w-e-toolbar{max-width:660px;}*/
+        /*.w-e-text-container{max-width:660px;}*/
+        /*iframe{width:800px;height:500px;}*/
+    </style>
+</head>
+<body>
+<!--&lt;!&ndash;富文本编辑器&ndash;&gt;-->
+<!--<div id="editor">-->
+    <!--<p v-html="infoHtml"></p>-->
+    <!--&lt;!&ndash;<span>欢迎使用 <b>wangEditor</b> 富文本编辑器</span>&ndash;&gt;-->
+<!--</div>-->
+
+
+
+<!--<script src="../js/wangEditor.min.js"></script>    &lt;!&ndash;富文本编辑器js&ndash;&gt;-->
+<!--<script>-->
+
+    <!--var E = window.wangEditor;-->
+    <!--var editor = new E('#editor');-->
+    <!--// 自定义菜单配置-->
+    <!--editor.customConfig.menus = [-->
+<!--//        'head',  // 标题-->
+        <!--'bold',  // 粗体-->
+        <!--'fontSize',  // 字号-->
+        <!--'fontName',  // 字体-->
+        <!--'italic',  // 斜体-->
+        <!--'underline',  // 下划线-->
+        <!--'strikeThrough',  // 删除线-->
+        <!--'foreColor',  // 文字颜色-->
+        <!--'backColor',  // 背景颜色-->
+        <!--'link',  // 插入链接-->
+        <!--'list',  // 列表-->
+        <!--'justify',  // 对齐方式-->
+        <!--'quote',  // 引用-->
+        <!--'emoticon',  // 表情-->
+        <!--'image',  // 插入图片-->
+        <!--'table',  // 表格-->
+        <!--'video',  // 插入视频-->
+        <!--'code',  // 插入代码-->
+        <!--'undo',  // 撤销-->
+        <!--'redo'  // 重复-->
+    <!--]-->
+    <!--// 或者 var editor = new E( document.getElementById('editor') )-->
+    <!--editor.create();-->
+<!--</script>-->
+<!--<iframe src="http://youku163.zuida-bofang.com/share/69961657077e0093ed761aa01916c5ff" frameborder="0"></iframe>-->
+<iframe frameborder="0" width="640" height="498" src="https://v.qq.com/iframe/player.html?vid=w07693zxs2e&amp;tiny=0&amp;auto=0" allowfullscreen=""></iframe>
+</body>
+</html>

@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="../../imgs/logo-l.png">    <!--title-icon-->
+    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../../lib/datatables/css/jquery.dataTables.min.css"/>
+    <link rel="stylesheet" href="../../css/cssReset.css"/>
+    <link rel="stylesheet" href="https://cache.amap.com/lbs/static/main1119.css"/>   <!--自定义图标-->
+    <link rel="stylesheet" href="https://cache.amap.com/lbs/static/main.css?v=1.0?v=1.0"/><!--城市选择-->
+    <link rel="stylesheet" href="../../css/framePages/wearUserDetailsShow.css"/>
+    <title>佩戴用户详情</title>
+</head>
+<body>
+<!--main-->
+<main class="main">
+    <!--part1-->
+    <div class="title">佩戴用户详情</div>
+    <div class="part1">
+        <div class="box box1">
+            <div class="personMsg">
+                <div><img src="../../imgs/iframeImgs/u10.png" alt="" class="headImg" width="80"></div>
+                <div>
+                    <div>
+                        <span id="username" class="name">示例</span>
+                        <span><img id="isInsurance" src="../../imgs/iframeImgs/yes.png" title="已购买保险" alt=""></span>
+                        <span><img id="isVip" src="../../imgs/iframeImgs/vip.png" title="vip用户" alt=""></span>
+                        <span><button class="btn btn-skyBlue" id="isAttention">关注</button></span>
+                        <span><input type="number" class="btn bg-primary" min="0" max="100" id="ageNum"></span>
+                        <span><button class="btn btn-skyBlue" id="updateAge">确认</button></span>
+                        <span><button class="btn btn-skyBlue" id="isRecord">已回访</button></span>
+                        <span><button class="btn btn-skyBlue" id="voiceBtn"></button></span>
+                        <span class="moveImg"><img src="../../imgs/iframeImgs/titleIcon.gif" alt="" width="60"></span>
+                    </div>
+                    <div>
+                        <span id="gender">男</span>
+                        <span id="age">0岁</span>
+                        <span>
+                            关注度
+                            <img src="../../imgs/spuerScreenImgs/star.png" alt="">
+                            <img src="../../imgs/spuerScreenImgs/star.png" alt="">
+                            <img src="../../imgs/spuerScreenImgs/star.png" alt="">
+                        </span>
+                        <span>身份证号：<b id="idCard"></b></span>
+                        <span>设备号：<a target="_blank" id="deviceId">查看详情</a></span>
+                    </div>
+                </div>
+            </div>
+            <div class="personHistory">
+                <div>
+                    <span class="key">病史 <b class="value" id="medicalHistory"></b></span>
+                    <span class="key">上次报警 <b class="value" id="lastAlarmTime"></b></span>
+                    <span class="key">报警(次) <b class="value" id="alarmCount"></b></span>
+                </div>
+                <div>
+                    <span class="key">救护车(次) <b class="value">0次</b></span>
+                    <span class="key">联系电话 <b class="value" id="phoneNum"></b></span>
+                    <span class="key">职业 <b class="value" id="occupation"></b></span>
+                </div>
+                <div>
+                    <span class="key addressInfo">定位 <b class="value" id="addressInfo"></b></span>
+                </div>
+                <div>
+                    <span class="key addressInfo">备注 <b class="value" id="remark"></b></span>
+                    <span><button type="button" class="btn btn-skyBlue" style="height: 26px;" id="clickRemark">修改</button></span>
+                </div>
+            </div>
+        </div>
+        <div class="box box2">
+            <div>
+                <span class="key">主账号 <a class="value" id="id" style="font-weight: 800;" target="_blank"></a></span>
+                <a href="javascript:;" id="seeAll" style="font-weight: 800;">查看全部绑定</a>
+            </div>
+            <div>
+                <span class="key">昵称 <b class="value" id="username2"></b></span>
+                <span class="key">关系 <b class="value" id="nickName"></b></span>
+            </div>
+            <div>
+                <span class="key">紧急联系人 <b class="value" id="emergencyPeople"></b></span>
+                <span class="key">紧急电话 <b class="value" id="emergencyPhone"></b></span>
+            </div>
+        </div>
+    </div>
+    <!--part2-->
+    <div class="titles titles1">
+        <div class="title">24小时健康监控数据</div>
+        <div class="title">实时定位</div>
+        <div class="btn btn-skyBlue" style="margin: 20px 50px 10px;" id="updateLocation">更新定位</div>
+        <div class="btn btn-skyBlue" style="margin: 20px 50px 10px;" id="OpenLocation">开启定位</div>
+        <div class="title btn btn-skyBlue mapPointsBtn">轨迹展示</div>
+    </div>
+    <div class="part2">
+        <div class="box box3">
+            <div>
+                <!--1-->
+                <header class="header1">
+                    <div>
+                        <img src="../../imgs/iframeImgs/healthDetails/title1.png" alt="" width="40">
+                        <span id="tiredLevel"></span>
+                    </div>
+                    <div>
+                        <img src="../../imgs/iframeImgs/healthDetails/title2.png" alt="" width="40">
+                        <span id="sleepTime">0</span>
+                    </div>
+                    <div>
+                        <img src="../../imgs/iframeImgs/healthDetails/title3.png" alt="" width="40">
+                        <span id="walkCount">0</span>步
+                    </div>
+                </header>
+                <!--2-->
+                <section class="con1">
+                    <div>
+                        <h4>24小时心率</h4>
+                        <!--<div><span>测量</span> <b></b>次</div>-->
+                        <div><span>最高</span> <b id="hrTheHighest"></b>／m</div>
+                        <div><span>最低</span> <b id="hrminimum"></b>／m</div>
+                    </div>
+                    <div>
+                        <h4>24小时血压</h4>
+                        <!--<div><span>测量</span> <b></b>次</div>-->
+                        <div><span>最高</span> <b id="bpTheHighest"></b>mmhg</div>
+                        <div><span>最低</span> <b id="bpminimum"></b>mmhg</div>
+                    </div>
+                    <div>
+                        <h4>24小时血氧</h4>
+                        <!--<div><span>测量</span> <b></b>次</div>-->
+                        <div><span>最高</span> <b id="boTheHighest"></b>／m</div>
+                        <div><span>最低</span> <b id="bominimum"></b>／m</div>
+                    </div>
+                </section>
+                <!--3-->
+                <footer class="total">
+                    <div id="totalRateCurve"></div>
+                    <div id="comprehensiveDiagnosis"> 综合诊断：<b></b></div>
+                </footer>
+            </div>
+            <div>
+                <!--异常病症-->
+                <div class="headerTitle">
+                    <h2>异常病症</h2>
+                    <hr>
+                    <div class="illContent" id="illContent">
+                        暂无异常病症。
+                    </div>
+                </div>
+                <!--内脏器官-->
+                <div class="headerTitle">
+                    <h2>内脏器官</h2>
+                    <hr>
+                    <div class="containerImg">
+                        <div class="dot">
+                            <h3 class="illType" id="illType">未明确</h3>
+                            <!--<h4 class="illExp">轻微程度</h4>-->
+                        </div>
+                        <div class="boxImg"><img id="spine" title="脊柱" src="../../imgs/iframeImgs/healthDetails/unknown_bladder@2x.png" alt="" width="40"/></div>
+                        <div class="boxImg"><img id="bladder" title="膀胱" src="../../imgs/iframeImgs/healthDetails/unknown_vertebra@2x.png" alt="" width="40"/></div>
+                        <div class="boxImg"><img id="liver" title="肝" src="../../imgs/iframeImgs/healthDetails/unknown_kidney@2x.png" alt="" width="40"/></div>
+                        <div class="boxImg"><img id="kidney" title="肾" src="../../imgs/iframeImgs/healthDetails/unknown_lungs@2x.png" alt="" width="40"/></div>
+                        <div class="boxImg"><img id="lung" title="肺" src="../../imgs/iframeImgs/healthDetails/unknown_hepar@2x.png" alt="" width="40"/></div>
+                        <div class="boxImg"><img id="spleen" title="脾" src="../../imgs/iframeImgs/healthDetails/unknown_bladder@2x.png" alt="" width="40"/></div>
+                        <div class="boxImg"><img id="heart" title="心" src="../../imgs/iframeImgs/healthDetails/unknown_lymph@2x.png" alt="" width="40"/></div>
+                        <div class="boxImg"><img id="gallBladder" title="胆" src="../../imgs/iframeImgs/healthDetails/unknown_small_intestine@2x.png" alt="" width="40"/></div>
+                        <div class="boxImg"><img id="smallIntestine" title="小肠" src="../../imgs/iframeImgs/healthDetails/unknown_gallbladder@2x.png" alt="" width="40"/></div>
+                        <div class="boxImg"><img id="pericardium" title="心包" src="../../imgs/iframeImgs/healthDetails/unknown_heart_sac@2x.png" alt="" width="40"/></div>
+                        <div class="boxImg"><img id="lymph" title="淋巴" src="../../imgs/iframeImgs/healthDetails/unknown_heart@2x.png" alt="" width="40"/></div>
+                        <div class="boxImg"><img id="largeIntestine" title="大肠" src="../../imgs/iframeImgs/healthDetails/unknown_large_intestine@2x.png" alt="" width="40"/></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="box box4" id="nowMap">
+
+        </div>
+    </div>
+    <!--part3-->
+    <div class="titles titles2">
+        <div class="title">心率监控
+            <span id="goHrHistory"><img src="../../imgs/spuerScreenImgs/history.png" width="30px" height="30px;"></span>
+        </div>
+        <div class="title">血压监控
+            <span id="goBpHistory"><img src="../../imgs/spuerScreenImgs/history.png" width="30px" height="30px;"></span>
+        </div>
+        <div class="title">血氧监控
+            <span id="goBoHistory"><img src="../../imgs/spuerScreenImgs/history.png" width="30px" height="30px;"></span>
+        </div>
+    </div>
+    <div class="part3">
+        <!--心率-->
+        <div class="box">
+            <!--折线图-->
+            <div class="smImg"><div id="heartRateCanvas"></div></div>
+            <!--分析标题-->
+            <h3 class="smTitle smTitle1"><b>实时心率分析</b></h3>
+            <!--分析-->
+            <div class="smContent" id="heartRateContent"></div>
+        </div>
+        <!--血压-->
+        <div class="box">
+            <!--折线图-->
+            <div class="smImg"><div id="bloodPressCanvas"></div></div>
+            <!--分析标题-->
+            <h3 class="smTitle smTitle2"><b>实时血压分析</b></h3>
+            <!--分析-->
+            <div class="smContent" id="bloodPressContent"></div>
+        </div>
+        <!--血氧-->
+        <div class="box">
+            <!--折线图-->
+            <div class="smImg"><div id="bloodOxygenCanvas"></div></div>
+            <!--分析标题-->
+            <h3 class="smTitle smTitle3"><b>实时血氧分析</b></h3>
+            <!--分析-->
+            <div class="smContent" id="oxContent"></div>
+        </div>
+    </div>
+    <!--yanhk-->
+
+    <section class="section">
+        <!--护心仪信息-->
+        <div class="div1">
+            <div class="row">
+                <span class="key-yanhk">护心仪： <b class="value" id="deviceVersion"></b></span>
+                <span class="key-yanhk">服务类型： <b class="value" id="waySign"></b></span>
+                <span class="key-yanhk">电量： <b class="value" id="electricQuantity"></b></span>
+            </div>
+            <div class="row">
+                <span class="key-yanhk">服务期限：<b class="value" id="serviceStartTime">xxx</b><b class="value">~</b><b class="value" id="serviceEndTime">xxx</b></span>
+                <span class="key-yanhk">剩余服务期： <b class="value" id="serviceResidue"></b></span>
+            </div>
+            <div class="row">
+                <span class="key-yanhk">SIM卡： <b class="value" id="sIMPhoneNum">xxxxxxxx</b></span>
+
+            </div>
+            <div class="dis">
+                <div class="" id="toChangeDevice" style="color: rgb(233,44,129);">更换设备</div>
+                <div class="" id="removeBinding" style="color: rgb(233,44,129);">解除绑定</div>
+                <div class="" id="seeHistoryWear">历史佩戴</div>
+                <div class="" id="seeDetails"></div>
+            </div>
+
+        </div>
+        <!--保险 vip-->
+        <div class="div2">
+            <div class="row">
+                <div class="col-sm-5">保险服务：</div>
+                <div class="col-sm-5">暂无数据</div>
+            </div>
+            <div class="row">
+                <div class="col-sm-5">vip服务：</div>
+                <div class="col-sm-5">暂无数据</div>
+            </div>
+        </div>
+        <div class="div3">
+            <div class="row" id="services">
+                <span class="key-yanhk">服务协议：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <b>
+                    <a href="javascript:;" id="seeService" style="font-family : Georgia ;color: rgb(233,44,129);"></a>
+                </b>
+                </span>
+            </div>
+        </div>
+    </section>
+
+    <!--yanhk-->
+
+    <!--<div id="deal" style=" position: fixed;right: 80px;bottom: 100px;display: none">-->
+        <!--<button class="btn btn-skyBlue">添加处理</button>-->
+    <!--</div>-->
+</main>
+
+
+
+
+<!--模态框-->
+<div role="dialog" class="modal fade bs-example-modal-sm" id="layer">
+    <div class="modal-dialog">
+        <div class="modal-content" style="max-width: 500px;min-width: 400px;">
+            <!--header-->
+            <div class="modal-header text-center">
+                <button type="button" class="close"  id="close" data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
+                <h3 class="tex">全部绑定用户</h3>
+            </div>
+            <!--body-->
+            <div class="modal-body text-center" id="allUsers">
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 服务协议模态框 -->
+<div role="dialog" class="modal fade bs-example-modal-sm" id="service">
+    <div class="modal-dialog" >
+        <div class="modal-content" style="background-color: #020202">
+            <img id="service-img" width="600px;" height="900px;">
+            <div class="btn-div">
+                <button type="button" onclick="pass(3);">未通过</button>
+                <button type="button" onclick="pass(2);">通过</button>
+                <button type="button" id="runCircle">旋转</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+ <!--编辑备注模态框 -->
+<div role="dialog" class="modal fade bs-example-modal-sm" id="addRemark">
+    <div class="modal-dialog">
+        <div class="modal-content" style="max-width: 500px;min-width: 400px;color: #000;">
+            <!--header-->
+            <div class="modal-header text-center">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
+                <h3 class="tex">请填写备注</h3>
+            </div>
+            <!--body-->
+            <div class="textAreaTop">
+                <textarea name="" id="remarkVal" cols="10" rows="10" class="form-control"></textarea>
+            </div>
+            <div class="text-center">
+                <button class="btn btn-skyBlue text-center" id="makeRemarkSure">确定</button>
+            </div>
+            <br><br>
+        </div>
+    </div>
+</div>
+
+<!-- 更换设备模态框 -->
+<div role="dialog" class="modal fade bs-example-modal-sm" id="addDeal" style="margin-top: 260px;">
+    <div class="modal-dialog">
+        <div class="modal-content" style="width: 300px;">
+            <!--header-->
+            <div class="modal-header text-center">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
+                <h3 class="tex" style="color:  #020202">更换新设备</h3>
+            </div>
+            <!--body-->
+            <div class="modal-body text-center" style="color:  #020202">
+                <input type="text" class="form-control" id="newDeviceId" placeholder="请输入设备ID">
+                <br>
+                <input type="text" class="form-control" id="checkCode" placeholder="请输入校验码">
+                <br><br>
+                <button type="button" class="btn btn-skyBlue" id="changeDevice">确认</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--历史佩戴模态框-->
+<div role="dialog" class="modal fade bs-example-modal-sm" id="historyWear">
+    <div class="modal-dialog">
+        <div class="modal-content" style="min-width: 660px;">
+            <!--header-->
+            <div class="modal-header text-center">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
+                <h3 class="tex" style="color:  #020202">历史佩戴</h3>
+            </div>
+            <!--body-->
+            <div class="modal-body text-center" style="color:  #020202" id="allHistoryWear">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--地图轨迹展示-->
+<div id="mapPoints" class="mapPoints"></div>
+<!--js-->
+<script src="../../lib/jquery/jquery.min.js"></script>
+<script src="../../lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../lib/datatables/js/jquery.dataTables.min.js"></script>
+<script src="../../lib/layer/layer.js"></script>
+<script src="../../lib/echarts/echarts.min.js"></script>
+<script src="https://cache.amap.com/lbs/static/es5.min.js"></script><!--默认地图-->
+<script src="https://webapi.amap.com/maps?v=1.3&key=1573aeddb3c9e953a05da7e8a90c0c5b&plugin=AMap.Geocoder,AMap.DistrictSearch"></script><!--key引入，多个plugin用“,”分割-->
+<script type="text/javascript" src="https://webapi.amap.com/demos/js/liteToolbar.js"></script>
+<!-- UI组件库 1.0 -->
+<script src="//webapi.amap.com/ui/1.0/main.js?v=1.0.11"></script>
+<script src="../../js/common.js"></script>
+<script src="../../js/framePages/wearUserDetails.js"></script>
+</body>
+</html>

@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.0.0/css/swiper.min.css"/>
+    <title>小木屋</title>
+
+    <style>
+        html,body {margin: 0;}
+        [v-cloak] {display:none;}
+        .search {text-align: center;margin-top: 8px;}
+        .search>input {width: 85%;height:33px;border: none;border-radius: 3px;
+                padding-left: 35px;background-color: #f6f7f9;}
+        .search>img {position: absolute; top: 16px; left: 20px;}
+        .mvList {margin-top: 50px;font-size: 16px;}
+        .mvList>div {display: flex;border: 1px solid #a1a1a1;border-radius: 8px;padding: 5px;margin-top: 2px;}
+        .mvList>div>div:nth-child(2){margin-left: 10px;}
+        .mvList>div>div:nth-child(1)>img{border-radius: 3px;}
+        .header{position: fixed;top: 0;left: 0;right :0;bottom:calc(100% - 50px);margin: 0 auto;background: #fff;width: 100%;z-index: 1000;}
+        .noResources{display: none;margin-top: 50px;text-align: center;background-color: #ffffff;color: #999999;}
+        .load{display: none;margin-top: 18px;text-align: center;padding-bottom: 40px;}
+        .log{border-top: 1px solid #a1a1a1;display: none;width:90%;margin:50px auto 0 auto;}
+        .log>div:nth-child(1){display: flex;justify-content: space-between;padding: 6px;align-items: center;}
+        .log>div:nth-child(2){display: flex;flex-wrap: wrap;}
+        .log>div:nth-child(2)>div{padding: 4px 15px 4px 15px;margin: 2px 2px 3px 3px;background: #f6f7f9;border-radius: 3px;}
+        .closeBtn {position: fixed;top: 10px; left: 85%;width: 40px;color: #d66704;display: none;line-height:30px;align-items: center;z-index: 1000;}
+        .recommend{margin-top: 16px;}
+        .recommend>div:nth-child(2)>div{border-bottom: 1px solid #ececec;padding: 10px 0 10px 0;}
+        .recommend>div:nth-child(2)>div>span:nth-child(1){width:14px;height:14px;border-radius:2px;
+                background-color: #b7b7b7;display:inline-block;font-style: normal;font-size: 12px;line-height: 14px;text-align: center;
+                color: #fff;}
+        .recommend>div:nth-child(2)>div>span:nth-child(2){margin-left: 15px;}
+        .hot1{background-color: #e82816 !important;}
+        .hot2{background-color: #fb710b !important;}
+        .hot3{background-color: #ffb201 !important;}
+        .main{margin-top: 60px;padding-bottom:30px;}
+        .guess{margin-top: 20px;}
+        .guess>div:nth-child(1){font-weight: 600;padding: 18px;font-size: 16px;}
+        .tv{margin-top: 26px;}
+        .tv>div:nth-child(1){font-weight: 600;padding: 18px;font-size: 16px;}
+        .tv>div:nth-child(2)>div{text-align: center;}
+        .tv>div:nth-child(3){display: flex;flex-wrap: wrap;justify-content: center;}
+        .tv>div:nth-child(3)>div{width: 30%;padding: 5px;}
+        .tv>div:nth-child(3)>div>div{text-align: center;}
+        .tv>div:nth-child(3)>div>img{border-radius: 5px;}
+        .tv>div:nth-child(4){justify-content: space-around;display: flex;width: 90%;margin: 14px auto;border-top: 1px solid #e1e1e1;padding-top: 6px;font-size: 12px;}
+        .tv>div:nth-child(4)>div{height: 20px;line-height: 20px;display: flex;}
+        /*.variety>div:nth-child(3){display: flex;flex-wrap: wrap;justify-content: center;}*/
+        /*.variety>div:nth-child(3)>div{width: 45%;padding: 5px;}*/
+        /*.variety>div:nth-child(3)>div>div{text-align: center;}*/
+        /*.variety>div:nth-child(3)>div>img{border-radius: 5px;}*/
+        .movies{margin-top: 20px;display: none;height: 350px;overflow: scroll;}
+        /*.movies>div:nth-child(1){display: flex;justify-content:space-around;width: 30%;padding-bottom: 6px;}*/
+        /*.movies>div:nth-child(1)>div{padding-bottom: 3px;}*/
+        /*.movies>div:nth-child(1)>.active{border-bottom: 2px solid #0C0C0C;}*/
+        /*.movies>div:nth-child(2){display: flex;flex-wrap: wrap;justify-content: center;}*/
+        /*.movies>div:nth-child(2)>div{width: 30%;padding: 5px;}*/
+        /*.movies>div:nth-child(2)>div{text-align: center;}*/
+        /*.movies>div:nth-child(2)>div>img{border-radius: 5px;}*/
+        .toTop{position: fixed;right: 20px;bottom: 15px;display: none;}
+    </style>
+    <style>
+        html,body {
+            position: relative;
+            height: 100%;
+        }
+        body {
+            background: #eee;
+            font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+            font-size: 14px;
+            color:#000;
+            margin: 0;
+            padding: 0;
+        }
+        .swiper-container1 {width: 100%;height: 100%;}
+        .swiper-container1 .swiper-slide {text-align: center;background: #fff;height: 220px;}
+        .swiper-container1 .swiper-slide>img{width: 100%;height: 100%;}
+        .swiper-container2{width: 100%;height: 100%;}
+        .swiper-slide2 {text-align: center;height: 170px;width:100px;}
+        .swiper-slide2>img{width: 100%;height: 120px;}
+        .swiper-slide2>div:nth-child(3){font-size: 12px;color: #a1a1a1;}
+
+        .swiper-container3 {width: 100%;height: 100%;}
+        .swiper-slide3>img{width: 100%;height: 160px;}
+        .swiper-slide3>div:nth-child(3){font-size: 12px;color: #a1a1a1;}
+        .swiper-slide3 {text-align: center;height: 200px;width:150px;
+            opacity: .7;
+            transform: scale(0.8);
+            -webkit-transform: scale(0.8);
+            -moz-transform: scale(0.8);
+            -webkit-transition: transform 1.0s;
+            -moz-transition: transform 1.0s;}
+        .swiper-wrapper3 .swiper-slide-active {transform: scale(1);opacity: 1;z-index: 10;}
+        .swiper-wrapper3 .swiper-slide3.swiper-slide-prev {transform: scale(0.8);}
+        .swiper-wrapper3 .swiper-slide3.swiper-slide-next {transform: scale(0.8);}
+        .posterTit{color: #EEEEEE;position: absolute;top: 85%;left: 0;right: 0;background-color: rgba(0, 0, 0, 0.5);height: 35px;line-height: 35px;}
+        .swiper-container4{margin-top: 30px;height: 48px;width: 90%;border-bottom: 1px solid #e1e1e1;color: #a6a4b0;line-height: 48px;font-size: 16px;}
+        .swiper-container4 .active{font-size: 17px;color: #df541d;}
+        /*.swiper-container4 .active>strong{padding-bottom:3px;border-bottom: 2px solid #df541d;}*/
+        @media screen and (min-width: 320px) and (max-width: 374px){
+            .swiper-container4{font-size: 14px;}
+            .swiper-container4 .active{font-size: 15px;}
+        }
+        .swiper-slide{-webkit-tap-highlight-color: rgba(0,0,0,0);-webkit-tap-highlight-color:transparent;}
+        /*解决兼容IOS点击*/
+        *{-webkit-tap-highlight-color: rgba(0,0,0,0);-webkit-tap-highlight-color:transparent;}
+    </style>
+</head>
+<body>
+    <main id="main" v-cloak>
+
+        <div class="header">
+            <div class="search">
+                <input type="text" placeholder="请输入片名,主演或导演" v-model="searchInfo" onfocus="onfocusInput()">
+                <img src="https://video.vshidai.top/image/2018/10/10/searh.png" width="20px;" height="20px;">
+            </div>
+        </div>
+        <div class="closeBtn" @click="closeSearch">取消</div>
+        <!--资源列表-->
+        <div class="mvList" id="mvList">
+            <!--<div v-for="(movie , index) in mvs" :data-id = "movie.id" @click='toMovieInfo(movie.id)'>-->
+                <!--<div>-->
+                    <!--<img :src="movie.imgUrl" width="80px;" height="120px;">-->
+                <!--</div>-->
+                <!--<div>-->
+                    <!--<div style="margin-bottom: 5px;">{{ movie.videoname }}</div>-->
+                    <!--<div style="font-size: 14px;color: #b1952c;margin-bottom: 3px;">-->
+                        <!--<span>{{ movie.area }}</span>·-->
+                        <!--<span>{{ movie.language }}</span>·-->
+                        <!--<span>{{ movie.listName }}</span>-->
+                    <!--</div>-->
+                    <!--<div style="font-size: 14px;color: #a1a1a1;">{{ movie.actor }}</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        </div>
+        <!--搜索记录-->
+        <div class="log">
+            <div>
+                <div style="font-size: 13px;color: #b2b2b2;">历史搜索</div>
+                <img src="https://video.vshidai.top/image/2018/10/10/delete.png" @click="deleteLog" width="26px;" height="26px;">
+            </div>
+            <div style="color: #7f8082;">
+                <div v-for="(log , index) in searchlog" @click="clickLog(log)">{{ log }}</div>
+            </div>
+            <!--推荐-->
+            <div class="recommend">
+                <div>热搜</div>
+                <div>
+                    <div v-for="(item , index) in searchTop" @click="clickLog(item)">
+                        <span  :class="index == 0 ? 'hot1' : (index == 1 ? 'hot2' : (index == 2 ? 'hot3' : ''))">{{ index + 1 }}</span>
+                        <span>{{ item }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--无资源-->
+        <div class="noResources">
+            <img src="https://video.vshidai.top/image/2018/10/10/noRes2.png" width="100%;">
+            <div>
+                <div>搜索不到您要的结果，换个关键词试试哦~</div>
+                <div style="margin-top: 6px;">
+                    您也可以<span style="color: #0B78E3;" @click="submitMessage">点击此处</span>向我们提交留言，第一时间获取资源通知
+                </div>
+            </div>
+        </div>
+        <!--main-->
+        <div class="main">
+            <!-- Swiper轮播 -->
+            <div class="swiper-container swiper-container1">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide" v-for="(poster , index) in posters" @click="toMovieInfo(poster.id)">
+                        <img :src="poster.imgUrl">
+                        <div class="posterTit">{{ poster.title }}</div>
+                    </div>
+                </div>
+                <!-- 页码 -->
+                <div class="swiper-pagination"></div>
+                <!--左右按钮-->
+                <!--<div class="swiper-button-next"></div>-->
+                <!--<div class="swiper-button-prev"></div>-->
+            </div>
+
+            <!-- Swiper切换 -->
+            <div class="swiper-container swiper-container4">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide active" data-listId="0">
+                        <strong>精选</strong>
+                    </div>
+                    <div class="swiper-slide" data-listId="1">
+                        <strong>电影</strong>
+                    </div>
+                    <div class="swiper-slide" data-listId="2">
+                        <strong>剧集</strong>
+                    </div>
+                    <div class="swiper-slide" data-listId="4">
+                        <strong>综艺</strong>
+                    </div>
+                    <div class="swiper-slide" data-listId="3">
+                        <strong>动漫</strong>
+                    </div>
+                    <div class="swiper-slide" data-listId="19">
+                        <strong>美剧</strong>
+                    </div>
+                    <div class="swiper-slide" data-listId="13">
+                        <strong>伦理</strong>
+                    </div>
+                    <div class="swiper-slide" data-listId="12">
+                        <strong>写真</strong>
+                    </div>
+                </div>
+            </div>
+            <div class="guess" v-if="seeLog != '' && seeLog != []">
+                <div>猜你在追</div>
+                <div class="swiper-container swiper-container2">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide swiper-slide2" v-for="(see , index) in seeLog">
+                            <img :src="see.imgUrl">
+                            <div>{{ see.videoname.length > 5 ? see.videoname.substring(0,5)+'..' : see.videoname }}</div>
+                            <div>({{ see.intro }})</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--<div class="guess">-->
+                <!--<div><span>爱萝莉</span><span>的影院</span></div>-->
+                <!--<div class="swiper-container swiper-container3">-->
+                    <!--<div class="swiper-wrapper swiper-wrapper3">-->
+                        <!--<div class="swiper-slide swiper-slide3">-->
+                            <!--<img src="http://video.vshidai.top/image/2018/0821/567c61620ebe4930939aafe40784dcc3.jpg">-->
+                            <!--<div>老友记</div>-->
+                        <!--</div>-->
+                        <!--<div class="swiper-slide swiper-slide3">-->
+                            <!--<img src="http://video.vshidai.top/image/2018/0821/567c61620ebe4930939aafe40784dcc3.jpg">-->
+                            <!--<div>老友记</div>-->
+                        <!--</div>-->
+                        <!--<div class="swiper-slide swiper-slide3">-->
+                            <!--<img src="http://video.vshidai.top/image/2018/0821/567c61620ebe4930939aafe40784dcc3.jpg">-->
+                            <!--<div>老友记</div>-->
+                        <!--</div>-->
+                        <!--<div class="swiper-slide swiper-slide3">-->
+                            <!--<img src="http://video.vshidai.top/image/2018/0821/567c61620ebe4930939aafe40784dcc3.jpg">-->
+                            <!--<div>老友记</div>-->
+                        <!--</div>-->
+                        <!--<div class="swiper-slide swiper-slide3">-->
+                            <!--<img src="http://video.vshidai.top/image/2018/0821/567c61620ebe4930939aafe40784dcc3.jpg">-->
+                            <!--<div>老友记</div>-->
+                        <!--</div>-->
+                        <!--<div class="swiper-slide swiper-slide3">-->
+                            <!--<img src="http://video.vshidai.top/image/2018/0821/567c61620ebe4930939aafe40784dcc3.jpg">-->
+                            <!--<div>老友记</div>-->
+                        <!--</div>-->
+                        <!--<div class="swiper-slide swiper-slide3">-->
+                            <!--<img src="http://video.vshidai.top/image/2018/0821/567c61620ebe4930939aafe40784dcc3.jpg">-->
+                            <!--<div>老友记</div>-->
+                        <!--</div>-->
+                        <!--<div class="swiper-slide swiper-slide3">-->
+                            <!--<img src="http://video.vshidai.top/image/2018/0821/567c61620ebe4930939aafe40784dcc3.jpg">-->
+                            <!--<div>老友记</div>-->
+                        <!--</div>-->
+                        <!--<div class="swiper-slide swiper-slide3">-->
+                            <!--<img src="http://video.vshidai.top/image/2018/0821/567c61620ebe4930939aafe40784dcc3.jpg">-->
+                            <!--<div>老友记</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--电影大片-->
+            <div class="tv" v-if="indexMvs.indexMvs1 != '' && indexMvs.indexMvs1 != undefined">
+                <div>电影大片</div>
+                <div v-for="(indexMv,index) in indexMvs.indexMvs1" v-if="indexMv.ishot == true" @click="toMovieInfo(indexMv.id)">
+                    <img :src="indexMv.imgurl" width="100%;" height="100%;">
+                    <div>{{ indexMv.name }}</div>
+                </div>
+                <div>
+                    <div v-for="(indexMv,index) in indexMvs.indexMvs1" v-if="indexMv.ishot == false" @click="toMovieInfo(indexMv.id)">
+                        <img :src="indexMv.imgurl" width="100%;" height="150px;">
+                        <div>{{ indexMv.name }}</div>
+                    </div>
+                </div>
+                <div>
+                    <!--<div @click="moreMovie(1)">-->
+                        <!--<img src="https://video.vshidai.top/image/2018/10/13/more.png" width="20px" height="20px">-->
+                        <!--<span>更多精彩</span></div>-->
+                    <div @click="changeMovie(1)">
+                        <img src="https://video.vshidai.top/image/2018/10/13/change.png" width="20px" height="20px">
+                        <span>换一换</span>
+                    </div>
+                </div>
+            </div>
+            <!--同步剧场-->
+            <div class="tv" v-if="indexMvs.indexMvs2 != '' && indexMvs.indexMvs2 != undefined">
+                <div>同步剧场</div>
+                <div v-for="(indexMv,index) in indexMvs.indexMvs2" v-if="indexMv.ishot == true" @click="toMovieInfo(indexMv.id)">
+                    <img :src="indexMv.imgurl" width="100%;" height="100%;">
+                    <div>{{ indexMv.name }}</div>
+                </div>
+                <div>
+                    <div v-for="(indexMv,index) in indexMvs.indexMvs2" v-if="indexMv.ishot == false" @click="toMovieInfo(indexMv.id)">
+                        <img :src="indexMv.imgurl" width="100%;" height="150px;">
+                        <div>{{ indexMv.name }}</div>
+                    </div>
+                </div>
+            </div>
+            <!--热门综艺-->
+            <div class="tv variety" v-if="indexMvs.indexMvs3 != '' && indexMvs.indexMvs3 != undefined">
+                <div>热门综艺</div>
+                <div v-for="(indexMv,index) in indexMvs.indexMvs3" v-if="indexMv.ishot == true" @click="toMovieInfo(indexMv.id)">
+                    <img :src="indexMv.imgurl" width="100%;" height="100%;">
+                    <div>{{ indexMv.name }}</div>
+                </div>
+                <div>
+                    <div v-for="(indexMv,index) in indexMvs.indexMvs3" v-if="indexMv.ishot == false" @click="toMovieInfo(indexMv.id)">
+                        <img :src="indexMv.imgurl" width="100%;" height="150px;">
+                        <div>{{ indexMv.name }}</div>
+                    </div>
+                </div>
+            </div>
+            <!--动漫-->
+            <div class="tv" v-if="indexMvs.indexMvs4 != '' && indexMvs.indexMvs4 != undefined">
+                <div>动漫·二次元</div>
+                <div v-for="(indexMv,index) in indexMvs.indexMvs4" v-if="indexMv.ishot == true" @click="toMovieInfo(indexMv.id)">
+                    <img :src="indexMv.imgurl" width="100%;" height="100%;">
+                    <div>{{ indexMv.name }}</div>
+                </div>
+                <div>
+                    <div v-for="(indexMv,index) in indexMvs.indexMvs4" v-if="indexMv.ishot == false" @click="toMovieInfo(indexMv.id)">
+                        <img :src="indexMv.imgurl" width="100%;" height="150px;">
+                        <div>{{ indexMv.name }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="movies">
+                <!--<div>-->
+                    <!--<div class="active" @click="changeIsHotOrIsNew(1)">最热</div>-->
+                    <!--<div @click="changeIsHotOrIsNew(2)">最新</div>-->
+                <!--</div>-->
+                <!--<div>-->
+                    <!--<transition name="bounce" tag="div">-->
+
+                    <!--</transition>-->
+                <!--</div>-->
+                <iframe src="" style="width: 100%;height: 350px;border: none;overflow: scroll;">
+
+                </iframe>
+            </div>
+            <!--<div class="load">-->
+                <!--<div>-->
+                    <!--<img src="https://video.vshidai.top/image/2018/10/18/load.gif">-->
+                <!--</div>-->
+            <!--</div>-->
+            <div class="toTop" @click="toTop">
+                <img src="https://video.vshidai.top/image/2018/10/14/toTop.png" height="48px" width="48px">
+            </div>
+        </div>
+    </main>
+</body>
+<script src="https://video.vshidai.top/js-lib/jquery/jquery.min.js"></script>
+<script src="https://video.vshidai.top/js-lib/vue/vue.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.4.2/js/swiper.min.js"></script>
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.3.5/js/swiper.min.js"></script>-->
+
+<script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/template_js/0.7.1/template.min.js"></script>-->
+<!--<script src="https://video.vshidai.top/js-lib/template/template.js"></script>-->
+<script>
+    var cookie = {
+        set: function(name, value) {
+            var Days = 30;
+            var exp = new Date();
+            exp.setTime(exp.getTime() + Days * 24 * 60 * 60 * 1000);
+            document.cookie = name + '=' + escape(value) + ';expires=' + exp.toGMTString();
+        },
+        get: function(name) {
+            var arr, reg = new RegExp('(^| )' + name + '=([^;]*)(;|$)');
+            if(arr = document.cookie.match(reg)) {
+                return unescape(arr[2]);
+            } else {
+                return null;
+            }
+        },
+        del: function(name) {
+            var exp = new Date();
+            exp.setTime(exp.getTime() - 1);
+            var cval = this.get(name);
+            if(cval != null) {
+                document.cookie = name + '=' + cval + ';expires=' + exp.toGMTString();
+            }
+        }
+    };
+</script>
+
+<script>
+    var apiPath = "http://ceshi.vshidai.top/sunShine";
+    var app = new Vue({
+        el: '#main',
+        data: {
+            searchInfo:'',
+            searchlog:[],
+            searchTop:[],   //搜索排行榜
+            posters:{},   //海报轮播图
+            indexMvs:{},   //数据
+            allow:true,   //是否允许再次请求
+            isHotOrIsNew:1, //最新或者最热(1.为最热  2.为最新)
+            clickId:0,  //当前点击的菜单
+            seeLog:[]   //观看过
+        },
+        mounted: function() {
+            this.init();
+        },
+        methods:{
+            init:function(){
+                $('.load').show().css('margin-top','200px');
+                var that = this;
+                $.ajax({
+                    url: apiPath + "/wx/indexData",
+                    type: 'get',
+                    dataType:'json',
+                    success:function (result) {
+                        $('.load').hide().css('margin-top','18px');
+                        that.loadSwiper4();
+                        if (result.code == 200){
+                            that.posters = result.data.posters;
+                            that.indexMvs = result.data.indexMvs;
+                            that.seeLog = result.data.seeLog;
+                            $(window).scrollTop("50px");
+                            that.loadSwiper3();
+                            that.loadSwiper4();
+                            setTimeout(function () {
+                                that.loadSwiper();
+                                that.loadSwiper2();
+                             },100);
+                        }else{
+
+                        }
+                    }
+                })
+            },
+            loadSwiper:function(){
+                var swiper = new Swiper('.swiper-container1', {
+                    // autoplay: {
+                    //     delay: 2500,
+                    //     disableOnInteraction: false,
+                    // },
+                    autoplay:2500,
+                    autoplayDisableOnInteraction:false,   //用户操作swiper之后，是否禁止autoplay。默认为true：停止。
+                    loop:true,
+                    slidesPerView: 1,     //试图内显示数量
+                    initialSlide :0,            //起始显示
+                    spaceBetween: 0,           //间距
+                    direction : 'horizontal',     //方向   horizontal   vertical
+                    centeredSlides: true,
+                    speed:1500,
+                    // effect: 'fade',
+                    // navigation: {
+                    //     nextEl: '.swiper-button-next',
+                    //     prevEl: '.swiper-button-prev',
+                    // },
+                    on: {
+                        slideChangeTransitionStart: function () {
+                            // var index = this.activeIndex;   //获取当前index
+                            // that.showInfo(that.arr[index],index);   //每次滑动时重新请求一次ajax数据
+                        }
+
+                    }
+                });
+            },
+            loadSwiper2:function(){
+                var swiper2 = new Swiper('.swiper-container2', {
+                    slidesPerView: 3.5,     //试图内显示数量
+                    // initialSlide :0,            //起始显示
+                    spaceBetween: 20           //间距
+                });
+            },
+            loadSwiper3:function(){
+                var swiper2 = new Swiper('.swiper-container3', {
+                    // initialSlide :0,            //起始显示
+                    spaceBetween: 20,           //间距
+                    slidesPerView: 3,
+                    centeredSlides: true,
+                    on: {    //每次滑动swiper时重新加再次ajax
+                        slideChangeTransitionStart: function () {
+
+                        }
+
+                    }
+                });
+            },
+            loadSwiper4:function(){
+                var swiper = new Swiper('.swiper-container4', {
+                    autoplay:0,
+                    loop:false,
+                    slidesPerView: 6.5,     //试图内显示数量
+                    initialSlide :0,            //起始显示
+                    spaceBetween: 20,           //间距
+                    direction : 'horizontal',     //方向   horizontal   vertical
+                    centeredSlides: false,  //默认居左
+                    speed:500,
+                    on: {
+                        slideChangeTransitionStart: function () {
+
+                        }
+                    },
+                    onClick: function(swiper){
+                        $(swiper.clickedSlide).addClass(' active').siblings().removeClass(' active');
+                        var clickId = $(swiper.clickedSlide)[0].dataset.listid;
+                        if(clickId != 0){
+                            // $('.movies>div:nth-child(2)').html("");
+                            // $('.movies').hide();
+                            $('.guess').fadeOut(500);
+                            $('.tv').fadeOut(500);
+                            $('.movies').fadeIn(500);
+                            // app.clickId = clickId;
+                            // app.changeMenu();
+                            $('.movies>iframe').removeAttr('src').attr('src','appendMovie.html?lisiId='+clickId+'&startCount='+0+'&orderBy='+1);
+                        }else{
+                            $('.movies').fadeOut(500);
+                            $('.guess').fadeIn(500);
+                            $('.tv').fadeIn(500);
+                        }
+                    }
+                });
+            },
+            //删除搜索记录
+            deleteLog:function(){
+                $('.log>div:nth-child(1)').hide();
+                $('.log>div:nth-child(2)').hide();
+                this.searchlog = [];
+                cookie.del("searchlogs");
+            },
+            //点击某个搜索记录
+            clickLog:function(e){
+              this.searchInfo = e;
+              this.search();
+            },
+            //点击取消关闭搜索
+            closeSearch:function(){
+                $(window).scrollTop("50px");
+                $('.closeBtn').hide();
+                app.searchInfo = '';
+                $(".log").hide();
+                $(".mvList").hide();
+                $('.noResources').hide();
+                $(".main").show();
+                this.loadSwiper();
+            },
+            //保存搜索记录
+            saveSearchLog: function(){
+                var logs = cookie.get("searchlogs") == null ? "" : cookie.get("searchlogs");
+                if(logs.indexOf(app.searchInfo) != -1){
+                    return;
+                }
+                cookie.set("searchlogs","," + app.searchInfo + logs);
+            },
+            keyLight:function (id, key, bgColor) {
+                var oDiv = document.getElementById(id),
+                    sText = oDiv.innerHTML,
+                    bgColor = bgColor || "orange",
+                    sKey = "<span style='color: "+bgColor+";'>"+key+"</span>",
+                    num = -1,
+                    rStr = new RegExp(key, "g"),
+                    rHtml = new RegExp("\<.*?\>","ig"), //匹配html元素
+                    aHtml = sText.match(rHtml); //存放html元素的数组
+                sText = sText.replace(rHtml, '{~}');  //替换html标签
+                sText = sText.replace(rStr,sKey); //替换key
+                sText = sText.replace(/{~}/g,function(){  //恢复html标签
+                    num++;
+                    return aHtml[num];
+                });
+                oDiv.innerHTML = sText;
+            },
+            //搜索
+            search:function () {
+                if(app.searchInfo == ''){
+                    return;
+                }
+                this.saveSearchLog();
+                $("#mvList").html("");
+                $(".log").hide();
+                $(".mvList").show();
+                $('.noResources').hide();
+                $.ajax({
+                    url: apiPath + "/wx/search",
+                    type: 'get',
+                    dataType:'json',
+                    data:{
+                        "searchInfo":app.searchInfo
+                    },
+                    success:function (result) {
+                        if (result.code == 200){
+                            if (result.data.mvs.length == 0){
+                                $(".main").hide();
+                                $('.noResources').show();
+                            }else{
+                                for(var i = 0 ,k = result.data.mvs.length; i < k ; i++){
+                                    var movie = result.data.mvs[i];
+                                    var area = movie.area == null ? "" : (movie.area + '·');
+                                    var language = movie.language == null ? "" : (movie.language + '·');
+                                    var listName = movie.listName == null ? "" : movie.listName;
+                                    var html ="<div onclick="+'toMovieInfo(\"'+movie.id+'\")'+">" +
+                                        '<div>' +
+                                        '<img src="'+movie.imgUrl+'" width="80px;" height="120px;">' +
+                                        '</div>' +
+                                        '<div>' +
+                                        '<div style="margin-bottom: 5px;font-weight: 600;">'+movie.videoname+'</div>' +
+                                        '<div style="font-size: 14px;color: #a1a1a1;margin-bottom: 3px;">' +
+                                        '                                <span>'+area+'</span>' +
+                                        '                            <span>'+language+'</span>' +
+                                        '                            <span>'+listName+'</span>' +
+                                        '                            </div>' +
+                                        '<div style="font-size: 14px;color: #a1a1a1;">'+movie.actor+'</div>' +
+                                        '</div>' +
+                                        '</div>';
+                                    $("#mvList").append(html);
+                                }
+                                $(window).scrollTop("50px");
+                                app.keyLight('mvList',app.searchInfo,'#DF8539');
+                            }
+                        }else{
+                            $(".main").hide();
+                            $('.noResources').show();
+                        }
+                    }
+                })
+            },
+            getSearchTop:function () {
+                $.ajax({
+                    url: apiPath + "/wx/searchTop",
+                    type: 'get',
+                    dataType:'json',
+                    success:function (result) {
+                        if (result.code == 200){
+                            app.searchTop = result.data.searchTop;
+                        }else{
+
+                        }
+                    }
+                })
+            },
+            toMovieInfo:function (id) {
+                window.open("https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx864d2aaeeb0a6c8d&redirect_uri=http://"+
+                    "ceshi.vshidai.top/sunShine/wx/getMv?mvId=" + id +
+                    "&response_type=code&scope=snsapi_userinfo&state=STATE&connect_redirect=1#wechat_redirect");
+            },
+            //更多资源
+            moreMovie:function (e) {
+
+            },
+            //换一换
+            changeMovie:function (e) {
+
+            },
+            //更换菜单
+            changeMenu:function () {
+                if(!this.allow) return;
+                this.setIsHotOrIsNewClass(1);
+                this.appendMovies(0);
+            },
+            changeIsHotOrIsNew:function(e){
+                if(!this.allow) return;
+                $('.movies>div:nth-child(2)').html("");
+                this.setIsHotOrIsNewClass(e);
+                this.appendMovies(0);
+            },
+            //设置最新推荐选中样式及默认值
+            setIsHotOrIsNewClass:function(e){
+                app.isHotOrIsNew = e;
+                $('.movies>div>div:nth-child('+e+')').addClass(' active').siblings().removeClass(' active');
+            },
+            appendMovies:function (startCount) {
+                //从后台取出数据
+                this.allow = false;
+                $('.load').show();
+                $.ajax({
+                    url: apiPath + "/wx/appendMovieData",
+                    type: 'get',
+                    dataType:'json',
+                    data:{
+                        lisiId:app.clickId,
+                        startCount:startCount,
+                        orderBy:app.isHotOrIsNew
+                    },
+                    success:function (result) {
+                        app.allow = true;
+                        if (result.code == 200){
+                            $('.load').hide();
+                            $('.movies>div:nth-child(2)').append(template('tvList',result.data));
+                        }else{
+
+                        }
+                    }
+                })
+            },
+            //返回顶部
+            toTop:function () {
+                $('html,body').animate({
+                    scrollTop:'0px'
+                },1000);
+            },
+            //提交留言
+            submitMessage:function () {
+                $.ajax({
+                    url: apiPath + "/wx/submitMessage",
+                    type: 'post',
+                    dataType:'json',
+                    data:{
+                        openId:'o6vN21RlTzzNWKf6n-CH0-NWFARQ',
+                        searchInfo:app.searchInfo
+                    },
+                    success:function (result) {
+                    }
+                })
+                alert('留言成功');
+            }
+        },
+    });
+    //输入框移入事件
+    function onfocusInput(){
+        $(window).scrollTop("50px");
+        app.getSearchTop();
+        $('.closeBtn').show();
+        app.searchInfo = "";
+        if(cookie.get("searchlogs") == null){
+            app.searchlog = [];
+            $('.log>div:nth-child(1)').hide();
+            $('.log>div:nth-child(2)').hide();
+        }else{
+            app.searchlog = cookie.get("searchlogs").substring(1,cookie.get("searchlogs").length).split(",");
+            $('.log>div:nth-child(1)').show();
+            $('.log>div:nth-child(2)').show();
+        }
+        // var logs = cookie.get("searchlogs") == null ? "" : cookie.get("searchlogs").substring(1,cookie.get("searchlogs").length);
+        // app.searchlog = logs.split(",");
+        $(".log").show();
+        $(".main").hide();
+        $(".mvList").hide();
+        $('.noResources').hide();
+    };
+    //跳转
+    function toMovieInfo(id) {
+        app.toMovieInfo(id);
+    };
+    document.onkeydown=function(event){
+        var e = event || window.event || arguments.callee.caller.arguments[0];
+        //enter 键
+        if(e && e.keyCode==13){
+            app.search();
+        }
+    };
+
+
+    var EventUtil = {
+        addHandler: function (element, type, handler) {
+            if (element.addEventListener)
+                element.addEventListener(type, handler, false);
+            else if (element.attachEvent)
+                element.attachEvent("on" + type, handler);
+            else
+                element["on" + type] = handler;
+        },
+        removeHandler: function (element, type, handler) {
+            if(element.removeEventListener)
+                element.removeEventListener(type, handler, false);
+            else if(element.detachEvent)
+                element.detachEvent("on" + type, handler);
+            else
+                element["on" + type] = handler;
+        },
+        /**
+         * 监听触摸的方向
+         * @param target            要绑定监听的目标元素
+         * @param isPreventDefault  是否屏蔽掉触摸滑动的默认行为（例如页面的上下滚动，缩放等）
+         * @param upCallback        向上滑动的监听回调（若不关心，可以不传，或传false）
+         * @param rightCallback     向右滑动的监听回调（若不关心，可以不传，或传false）
+         * @param downCallback      向下滑动的监听回调（若不关心，可以不传，或传false）
+         * @param leftCallback      向左滑动的监听回调（若不关心，可以不传，或传false）
+         */
+        listenTouchDirection: function (target, isPreventDefault, upCallback, rightCallback, downCallback, leftCallback) {
+            this.addHandler(target, "touchstart", handleTouchEvent);
+            this.addHandler(target, "touchend", handleTouchEvent);
+            this.addHandler(target, "touchmove", handleTouchEvent);
+            var startX;
+            var startY;
+            function handleTouchEvent(event) {
+                switch (event.type){
+                    case "touchstart":
+                        startX = event.touches[0].pageX;
+                        startY = event.touches[0].pageY;
+                        break;
+                    case "touchend":
+                        var spanX = event.changedTouches[0].pageX - startX;
+                        var spanY = event.changedTouches[0].pageY - startY;
+
+                        if(Math.abs(spanX) > Math.abs(spanY)){      //认定为水平方向滑动
+                            if(spanX > 30){         //向右
+                                if(rightCallback)
+                                    rightCallback();
+                                console.log('向右'+spanX);
+                            } else if(spanX < -30){ //向左
+                                if(leftCallback)
+                                    leftCallback();
+                                console.log('向左'+spanX);
+                            }
+                        } else {                                    //认定为垂直方向滑动
+                            if(spanY > 30){         //向下
+                                if(downCallback)
+                                    downCallback();
+                                console.log('向下'+spanY);
+                            } else if (spanY < -30) {//向上
+                                if(upCallback)
+                                    upCallback();
+                                console.log('向上'+spanY);
+                            }
+                        }
+
+                        break;
+                    case "touchmove":
+                        //阻止默认行为
+                        if(isPreventDefault)
+                            event.preventDefault();
+                        break;
+                }
+            }
+        }
+    };
+    EventUtil.listenTouchDirection(document, true, false, false, downCallback, false);
+    function upCallback() {
+
+    }
+    function rightCallback() {
+
+    }
+    function downCallback() {
+        location.reload();
+    }
+    function leftCallback() {
+        console.log(11);
+    }
+</script>
+</html>

@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>simditor</title>
+<link rel="stylesheet" type="text/css" href="../../lib/editor/styles/simditor.css" />
+
+</head>
+
+<body>
+
+<textarea id="editor" placeholder="Balabala" autofocus></textarea>
+<button id="btn">点点点</button>
+<div id="div"></div>
+
+
+
+<!--js-->
+<script src="../../lib/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../lib/editor/scripts/module.min.js"></script>
+<script type="text/javascript" src="../../lib/editor/scripts/hotkeys.min.js"></script>
+<script type="text/javascript" src="../../lib/editor/scripts/uploader.min.js"></script>
+<script type="text/javascript" src="../../lib/editor/scripts/simditor.min.js"></script>
+<script>
+	var editor = new Simditor({
+  	textarea: $('#editor')
+  	//optional options
+});
+
+	$('#btn').on('click',function () {
+	    console.log($('.simditor-body').html());
+       $('#div').html($('.simditor-body').html());
+    })
+	
+</script>
+
+</body>
+</html>

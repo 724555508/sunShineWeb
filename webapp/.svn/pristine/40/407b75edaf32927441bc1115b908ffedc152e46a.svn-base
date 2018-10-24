@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="../../imgs/logo-l.png">    <!--title-icon-->
+    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../../lib/datatables/css/jquery.dataTables.min.css"/>
+    <link rel="stylesheet" href="../../css/cssReset.css"/>
+    <title>客服中心</title>
+    <style>
+        body{background-color: #f0f5ff;width:100%;margin: 0 auto;}
+        .main{width: 97%;margin: 25px auto;background: #FFFFFF;box-shadow: 0 0 10px 0 rgba(0,0,0,0.02);border-radius: 8px;padding:20px 15px;min-height: calc(100vh - 50px);}
+        .main>.a1{display: inline-block;width: 280px;line-height: 102px;height: 102px;text-align: center;
+            font-size: 14px;color: #4A4A4A;display: inline-block;transform: translate(0,-50%);background: #FFFFFF;
+            border: 1px solid #D3D3D3;border-radius: 8px;}
+        .main .div1 h2{font-size: 15px;color: #4A4A4A;}
+        .main .div1 .a1{display: inline-block;width: 140px;line-height:40px;height:40px;text-align: center;
+            font-size: 14px;color: #0096FF;background: #FFFFFF;margin:20px 30px 43px 0;
+            border: 1px solid #D3D3D3;border-radius: 4px;}
+        .main .div1 .a1:hover{color: #0096FF;text-decoration:none;}
+        .main .div1 .title{display:flex;justify-content:space-between;align-items:center;}
+        .main .div1 .title h2{font-family: PingFangSC-Semibold;font-size: 15px;color: #4A4A4A;}
+        .main .div1 .title .btn1{background: #0096FF;border-radius: 4px;font-family: PingFangSC-Medium;font-size: 16px;color: #FFFFFF;border:none;
+        padding:8px 29px;}
+        .main .div1 .table{margin-top:15px;}
+        /*弹框*/
+        .modal-content{box-shadow:none;border:1px solid RGBA(255,255,255,0);}
+        #createChannel .modal-header{border-bottom:0px;}
+        #createChannel .modal-dialog{width:350px !important;}
+        #createChannel .modal-body .box{width:280px;margin:0 auto;text-align:left;}
+        /*#createChannel .modal-body .box .txt1,#returnVisit .modal-body .time{font-size: 13px;color: #767676;}*/
+        #createChannel .modal-body .box h3{font-family: PingFangSC-Medium;font-size: 13px;color: #767676;}
+        #createChannel .modal-body .box .txt1{background: #F3F3F3;border-radius: 2px;width:280px;height:36px;border:none;padding-left:12px;margin:5px 0 10px 0;}
+        #createChannel .modal-body .box form{display:inline-block;width:300px;text-align:center;margin:5px 0 30px 0;}
+        #createChannel .row{display:flex;justify-content:center;margin-bottom:22px;}
+        #createChannel .modal-content{}
+        .modal-dialog {    /*水平垂直居中*/
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            z-index: 3;
+            margin:0 auto;
+            -webkit-transform: translate(-50%, -50%) !important;
+            -moz-transform: translate(-50%, -50%) !important;
+            -ms-transform: translate(-50%, -50%) !important;
+            -o-transform: translate(-50%, -50%) !important;
+            transform: translate(-50%, -50%) !important;
+        }
+        /*上传图片*/
+        .main form .info2 .div1{width:110px;height:110px;position:relative;}
+        .main form .info2 .img1{width:110px;height:110px;position:absolute;top:0;left:0;z-index:5;}
+        .main form .info2 .img2{width:110px;height:110px;position:absolute;top:0;left:0;z-index:10;}
+        .main form .info2 .fileImg{width:110px;height:110px;position:absolute;top:0;left:0;z-index:15;opacity:0;}
+
+        .changeDirection{display: flex;justify-content: center;}
+        .changeDirection>div{margin: 0 5px;cursor: pointer;}
+        .changeDirection>div>img{display: block;width: 15px;}
+        .check:link{font-family: PingFangSC-Regular;text-decoration:none;font-size: 14px;color: #0096FF;}
+        .check:visited{font-family: PingFangSC-Regular;text-decoration:none;font-size: 14px;color: #0096FF;}
+        .check:active{font-family: PingFangSC-Regular;text-decoration:none;font-size: 14px;color: #0096FF;}
+        .check:hover{font-family: PingFangSC-Regular;text-decoration:none;font-size: 14px;color: #0096FF;}
+</style>
+</head>
+<body>
+<main class="main" id="app">
+   <div class="div1">
+       <h2>APP内容管理</h2>
+       <a href="appInitPageList.html" class="a1">APP启动页管理</a>
+       <a href="userHelpList.html" class="a1">APP QA管理</a>
+       <a href="advertisement.html" class="a1">轮播图管理</a>
+   </div>
+    <!--<a href="voiceSendManage.html">语音下发管理</a>-->
+    <div class="div1">
+        <h2>护心仪语音下发管理</h2>
+        <a href="voiceSendManage.html" class="a1">语音下发管理</a>
+    </div>
+    <!--创建内容-->
+    <div class="div1">
+        <div class="title">
+            <h2>资讯频道管理</h2>
+            <button class="btn1" @click="addChannel">添加</button>
+        </div>
+        <!--<a href="contentList.html?type=1">心梗频道</a>-->
+        <!--<a href="contentList.html?type=2">脑梗频道</a>-->
+        <!--<a href="contentList.html?type=3">安顿服务使用说明</a>-->
+        <!--<a href="contentList.html?type=4">安顿故事</a>-->
+        <table data-toggle="table" class="table table-bordered text-center table-hover" id="ChannelTable">
+            <thead>
+            <tr  style="opacity: 0.8;background: rgba(0,150,255,0.10);">
+                <th>序号</th>
+                <th>频道名称</th>
+                <th>文章数量</th>
+                <th>显示数量</th>
+                <th>推荐数量</th>
+                <th>顺序</th>
+                <th>操作</th>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+
+
+    <!--点击添加频道弹框-->
+    <div role="dialog" class="modal fade bs-example-modal-sm" id="createChannel">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!--header-->
+                <div class="modal-header text-center">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                    <h4 class="h4 modal-title">新增频道</h4>
+                </div>
+                <!--body-->
+                <div class="modal-body text-center">
+                    <div class='box'>
+                        <div>
+                            <h3>频道名称</h3>
+                            <input type="text" placeholder="请输入频道名称" v-model="channelName" class="txt1">
+                        </div>
+                        <div>
+                            <h3>频道图片</h3>
+                            <form action="" id="uploadImg">
+                                <input type="hidden" name="pics" id="imgs">
+                                <input type="hidden" name="loginId" v-model="loginId"/>
+                                <input type="hidden" name="token" v-model="token"/>
+                                <div class="info2">
+                                    <div class="div1" id="imgShowBox">
+                                        <input type="file" class="fileImg" id="newImg" name="file" onchange="uploadimg()" accept="image/gif,image/jpeg,image/jpg,image/png,image/svg">
+                                        <img src="../../imgs/iframeImgs/bg.png" alt="" class="img1" id="bgImg">
+                                        <img src="../../imgs/iframeImgs/photo.png" alt="" class="img2">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div><button class="btn btn-default btn-block" @click='closeModel' style="width:92px;margin-left:12px;">取消</button></div>
+                    <div><button class="btn btn-skyBlue btn-block" @click="addSubmit" style="width:92px;margin-left:12px;">确定</button></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script src="../../lib/jquery/jquery.min.js"></script>
+<script src="../../lib/jquery.form.js"></script>
+<script src="../../lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../lib/datatables/js/jquery.dataTables.min.js"></script>
+<script src="../../lib/layer/layer.js"></script>
+<script src='../../lib/vue.min.js'></script>
+<script src="../../lib/echarts/echarts.min.js"></script>
+<script src="../../js/common.js"></script>
+<script src="../../lib/file_upload.js"></script>
+<script src="../../js/framePages/CMSManage.js"></script>
+</body>
+</html>

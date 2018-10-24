@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../../lib/datatables/css/jquery.dataTables.min.css"/>
+    <link rel="stylesheet" href="../../css/framePages/SosWarningList.css">
+    <link rel="stylesheet" href="../../css/cssReset.css"/>
+    <link rel="stylesheet" href="../../css/doctor/doctorDetails.css">
+    <!--title icon-->
+    <link rel="shortcut icon" href="../../imgs/logo-l.png">
+    <title>医生详情</title>
+</head>
+<body>
+<div class="app" id="app" v-cloak>
+    <!--面包屑导航-->
+    <ul class="breadcrumb">
+        <li><a href="doctorManage.html" class="active">医生管理</a></li>
+        <li><a href="javascript:;" class="inActive">审核通过医生详情</a></li>
+    </ul>
+    <main>
+        <!--左边-->
+        <div class="part1">
+            <!--医生基本信息-->
+            <div class="header">
+                <div class="left">
+                    <img :src="photo" alt="">
+                </div>
+                <div class="right">
+                    <div class="div1">
+                        <div style="display:flex;align-items:center;">
+                            <h2>{{userName}}</h2>
+                            <span>{{gender}}</span>
+                            <p>{{age}}岁</p>
+                        </div>
+                        <p class="noPass status" v-if="isPass === 0" @click="checkFail">未审核</p>
+                        <p class="pass status" v-else-if="isPass === 1">审核通过</p>
+                        <p class="pass status" v-else-if="isPass === 2" @click="checkFail">审核中</p>
+                        <p class="passFail status" v-else-if="isPass === 3"  @click="checkFail">审核失败</p>
+                    </div>
+                    <div class="div2">
+                        <div>{{departments}}{{positions}}</div>
+                        <div>{{hospitals}}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="userInfo">
+                <div class="div1"><span>联系电话</span>{{phoneNum}}</div>
+                <div class="div1"><span>身份证号</span>{{idCard}}</div>
+                <div class="div1"><span style="display:inline-block;margin-right:38px;">城市</span>{{city}}</div>
+                <div style="width:100%;">
+                    <span>职业经历</span>
+                    <p>{{career}}</p>
+                </div>
+                <div style="width:100%;">
+                    <span>专业擅长</span>
+                    <p>{{majors}}</p>
+                </div>
+            </div>
+            <!--执政照片-->
+            <div class="cards">
+                <div @click="cards1">
+                    <p>职业证</p>
+                    <div>
+                        <img :src="career_certificates" alt="">
+                    </div>
+                </div>
+                <div @click="cards2">
+                    <p>工作证</p>
+                    <div>
+                        <img :src="job_certificates" alt="">
+                    </div>
+                </div>
+                <div @click="cards3">
+                    <p>身份证</p>
+                    <div>
+                        <img :src="id_card_certificates" alt="">
+                    </div>
+                </div>
+            </div>
+            <!--管理用户数量-->
+            <div class="count">
+                <div class="title">
+                    <div><span>管理用户</span>{{totalUserCount}}位（+{{dailyNewCount}}）</div>
+                    <div><span>累计服务</span>{{serviceCount}}位</div>
+                </div>
+                <div class="disease">
+                    <div>
+                        <p>今日疾病</p>
+                        <div><span>{{todayIllnessCount}}</span>位</div>
+                    </div>
+                    <div>
+                        <p>今日预警</p>
+                        <div><span>{{todayAlarmCount}}</span>位</div>
+                    </div>
+                    <div>
+                        <p>今日查看</p>
+                        <div><span>{{todaySeeCount}}</span>位</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--右边-->
+        <div class="part2">
+            <h2>管理用户</h2>
+            <!--当审核未通过时在显示-->
+            <div style="display:none;" class="noData">
+                <!--表格-->
+                <table class="text-center table table-bordered table-hover noDataTable" cellspacing="0" width="100%">
+                    <!--表头-->
+                    <thead>
+                    <tr class="tr1" style="opacity: 0.8;background: rgba(0,150,255,0.10);color:rgba(74,74,74,0.6);">
+                        <th class="text-center">序号</th>
+                        <th class="text-center">姓名</th>
+                        <th class="text-center">城市</th>
+                        <th class="text-center">性别</th>
+                        <th class="text-center">年龄</th>
+                        <th class="text-center">状态</th>
+                        <th class="text-center">关注时间</th>
+                        <th class="text-center">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+                <div class="dw">
+                    <div>
+                        <img src="../../imgs/doctorImgs/noData.png" alt="">
+                        <p>暂无管理用户</p>
+                    </div>
+                </div>
+            </div>
+
+            <!--审核通过时显示表格-->
+            <table id="doctorDetailsTable" class="text-center table table-bordered table-hover" cellspacing="0" width="100%">
+                <!--表头-->
+                <thead>
+                <tr class="tr1" style="opacity: 0.8;background: rgba(0,150,255,0.10);color:rgba(74,74,74,0.6);">
+                    <th class="text-center">序号</th>
+                    <th class="text-center">姓名</th>
+                    <th class="text-center">城市</th>
+                    <th class="text-center">性别</th>
+                    <th class="text-center">年龄</th>
+                    <th class="text-center">状态</th>
+                    <th class="text-center">关注时间</th>
+                    <th class="text-center">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+
+    </main>
+
+    <!--点击查看预览内容弹框-->
+    <!--执业证-->
+    <div role="dialog" class="modal fade bs-example-modal-sm previewCards" id="previewCard1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!--header-->
+                <div class="modal-header text-center">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                    <h4 class="h4 modal-title">职业证</h4>
+                </div>
+                <!--&lt;!&ndash;body&ndash;&gt;-->
+                <div class="modal-body">
+                    <div class="info2">
+                        <img :src="career_certificates" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--工作證-->
+    <div role="dialog" class="modal fade bs-example-modal-sm previewCards" id="previewCard2">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!--header-->
+                <div class="modal-header text-center">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                    <h4 class="h4 modal-title">工作证</h4>
+                </div>
+                <!--&lt;!&ndash;body&ndash;&gt;-->
+                <div class="modal-body">
+                    <div class="info2">
+                        <img :src="job_certificates" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--身份证-->
+    <div role="dialog" class="modal fade bs-example-modal-sm previewCards" id="previewCard3">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!--header-->
+                <div class="modal-header text-center">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                    <h4 class="h4 modal-title">身份证</h4>
+                </div>
+                <!--&lt;!&ndash;body&ndash;&gt;-->
+                <div class="modal-body">
+                    <div class="info2">
+                        <img :src="id_card_certificates" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--认证审核弹框-->
+    <div role="dialog" class="modal fade bs-example-modal-sm" id="approveCheck">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!--header-->
+                <div class="modal-header text-center">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                    <h4 class="h4 modal-title">认证审核</h4>
+                </div>
+                <!--&lt;!&ndash;body&ndash;&gt;-->
+                <div class="modal-body">
+                    <div class="box">
+                       <div> <input type="radio" name="1" value="1" v-model="myVal"><span>认证通过</span></div>
+                       <div> <input type="radio" name="1" value="2" v-model="myVal"><span>认证信息失败</span></div>
+                       <div> <input type="radio" name="1" value="3" v-model="myVal"><span>执业证认证失败</span></div>
+                       <div> <input type="radio" name="1" value="4" v-model="myVal"><span>工作照认证失败</span></div>
+                       <div> <input type="radio" name="1" value="5" v-model="myVal"><span>工作照认证失败</span></div>
+                    </div>
+                    <div class="row">
+                        <div><button class="btn btn-default btn-block" @click='closeModel' style="width:92px;margin-left:12px;">取消</button></div>
+                        <div><button class="btn btn-skyBlue btn-block" @click='checkTermSubmit' style="width:92px;margin-left:12px;">确定</button></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!--js-->
+<script src="../../lib/jquery/jquery.min.js"></script>
+<script src="../../lib/vue.min.js"></script>
+<script src="../../lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../lib/datatables/js/jquery.dataTables.min.js"></script>
+<script src="../../lib/template.js"></script>
+<script src="../../lib/layer/layer.js"></script>
+<script src="../../js/common.js"></script>
+<script src="../../js/doctor/doctorDetails.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../../lib/datatables/css/jquery.dataTables.min.css"/>
+    <link rel="stylesheet" href="../../css/cssReset.css"/>
+    <link rel="stylesheet" href="../../css/framePages/SosWarningList.css"/>
+    <link rel="shortcut icon" href="../../imgs/logo-l.png">    <!--title-icon-->
+    <title>资讯列表</title>
+    <style>
+        body{background-color: #f2f2f1;width:100%;margin: 0 auto;font-family: PingFangSC-Regular;}
+        [v-cloak]{display:none;}
+        .main{width: 97%;margin: 0px auto;background: #FFFFFF;box-shadow: 0 0 10px 0 rgba(0,0,0,0.02);border-radius: 8px;padding:20px 15px;height: calc(100vh - 50px);}
+        .Statistics{color: #000;display: flex;display: -webkit-flex; justify-content:space-between;}
+        .Statistics>div{width: 30%;height: 80px;background-color: #f2faff;border-radius: 6px;border:none;}
+        .breadcrumb > li + li:before {color: #0c0c0c;content: ">";padding: 0 5px;}
+        .breadcrumb{margin-bottom:0px;padding:10px 0 10px 23px;}
+        /*点击进行跳转a标签的样式*/
+        .active:link{text-decoration:none;color: #0096FF;}
+        .active:visited{text-decoration:none;color: #0096FF;}
+        .active:active{text-decoration:none;color: #0096FF;}
+        .active:hover{text-decoration:none;color: #0096FF;}
+        /*不跳转的a标签样式*/
+        .inActive:link{text-decoration:none;color: #0c0c0c;}
+        .inActive:visited{text-decoration:none;color: #0c0c0c;}
+        .inActive:active{text-decoration:none;color: #0c0c0c;}
+        .inActive:hover{text-decoration:none;color: #0c0c0c;}
+        .btn1{text-align:right;margin-bottom:10px;}
+        .searchBox .select .input2{width:200px;}
+        .text-right .btn a{color:#fff;}
+        .text-right .btn a:hover{text-decoration:none;}
+        .changeDirection{display: flex;justify-content: center;}
+        .changeDirection>div{margin: 0 5px;cursor: pointer;}
+        .changeDirection>div>img{display: block;width: 15px;}
+        .main header{display:flex;align-items:center;}
+        .main header h2{font-family: PingFangSC-Semibold;font-size: 15px;color: #4A4A4A;}
+        .main header p{font-family: PingFangSC-Medium;font-size: 13px;color: #0096FF;cursor:pointer;}
+        /*弹框*/
+        /*编辑频道*/
+        .modal-content{box-shadow:none;border:1px solid RGBA(255,255,255,0);}
+        #editChannel .modal-header{border-bottom:0px;}
+        #editChannel .modal-dialog{width:350px !important;}
+        #editChannel .modal-body .box{width:280px;margin:0 auto;text-align:left;}
+        /*#editChannel .modal-body .box .txt1,#editChannel .modal-body .time{font-size: 13px;color: #767676;}*/
+        #editChannel .modal-body .box h3{font-family: PingFangSC-Medium;font-size: 13px;color: #767676;}
+        #editChannel .modal-body .box .txt1{background: #F3F3F3;border-radius: 2px;width:280px;height:36px;border:none;padding-left:12px;margin:5px 0 10px 0;}
+        #editChannel .modal-body .box form{display:inline-block;width:300px;text-align:center;margin:5px 0 30px 0;}
+        #editChannel .row{display:flex;justify-content:center;margin-bottom:22px;}
+
+        /*删除频道*/
+        #deleteChannel .modal-header{border-bottom:0px;}
+        #deleteChannel .modal-dialog{width:350px !important;}
+        #deleteChannel .modal-body p{width:280px;margin:0 auto;font-family: PingFangSC-Regular;font-size: 14px;color: #464646;padding:20px 0 30px 0;}
+        #deleteChannel .row{display:flex;justify-content:center;margin-bottom:22px;}
+        .modal-dialog {    /*水平垂直居中*/
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            z-index: 3;
+            margin:0 auto;
+            -webkit-transform: translate(-50%, -50%) !important;
+            -moz-transform: translate(-50%, -50%) !important;
+            -ms-transform: translate(-50%, -50%) !important;
+            -o-transform: translate(-50%, -50%) !important;
+            transform: translate(-50%, -50%) !important;
+        }
+        /*上传图片*/
+        .app form .info2 .div1{width:110px;height:110px;position:relative;}
+        .app form .info2 .img1{width:110px;height:110px;position:absolute;top:0;left:0;z-index:5;}
+        .app form .info2 .img2{width:110px;height:110px;position:absolute;top:0;left:0;z-index:10;}
+        .app form .info2 .fileImg{width:110px;height:110px;position:absolute;top:0;left:0;z-index:15;opacity:0;}
+        .searchBox .select .input2{width:100px;}
+        .check:link{font-family: PingFangSC-Regular;text-decoration:none;font-size: 14px;color: #0096FF;}
+        .check:visited{font-family: PingFangSC-Regular;text-decoration:none;font-size: 14px;color: #0096FF;}
+        .check:active{font-family: PingFangSC-Regular;text-decoration:none;font-size: 14px;color: #0096FF;}
+        .check:hover{font-family: PingFangSC-Regular;text-decoration:none;font-size: 14px;color: #0096FF;}
+        /*搜索框*/
+        .searchBox .select{margin-right:10px;}
+        .searchBox .search2{margin-right:10px;}
+    </style>
+</head>
+<body>
+<div class="app" id="app" v-cloak>
+    <!--面包屑导航-->
+    <ul class="breadcrumb">
+        <li><a href="CMSManage.html" class="active">资讯频道管理</a></li>
+        <li><a href="javascript:;" class="inActive">{{typeName}}</a></li>
+        <!--<li v-else-if="sendObj.type === '2'"><a href="javascript:;" class="inActive">脑梗频道</a></li>-->
+        <!--<li v-else-if="sendObj.type === '3'"><a href="javascript:;" class="inActive">安顿服务使用说明</a></li>-->
+        <!--<li v-else-if="sendObj.type === '4'"><a href="javascript:;" class="inActive">安顿故事</a></li>-->
+    </ul>
+    <div class="main" >
+        <!--头部-->
+       <header>
+           <h2>{{typeName}}</h2>
+           <p style="padding:0 12px 0 12px;" @click="editChannel"> 编辑</p>
+           <p @click="deleteChannel">删除</p>
+       </header>
+        <!--搜索条件-->
+        <div class="searchBox">
+            <div class='form'>
+                <div class='search2'>
+                    <img src="../../imgs/search@2x.png" alt="" class='icon1'/><input type="text" class="phone" v-model="inputText" placeholder="搜索"/>
+                </div>
+                <div class="select">
+                    <select id = "selectVal" class="input2">
+                        <option value ="" class="selected">全部</option>
+                        <option value="0">未推荐</option>
+                        <option value="1">已推荐</option>
+                    </select>
+                </div>
+                <button @click="search" class="search" style='margin-right:10px;'>搜索</button>
+                <button @click="reset" class="search">重置</button>
+            </div>
+            <div class="text-right">
+                <button class="btn btn-skyBlue" @click="hrefTo">创建内容</button>
+            </div>
+
+        </div>
+        <!--table  激活用户-->
+        <table data-toggle="table" class="table table-bordered text-center table-hover" id="contentTable">
+                <thead>
+                    <tr  style="opacity: 0.8;background: rgba(0,150,255,0.10);">
+                        <th>序号</th>
+                        <th>更新时间</th>
+                        <th>标题</th>
+                        <th>操作员</th>
+                        <th>状态</th>
+                        <th>阅读数</th>
+                        <th>点赞</th>
+                        <th>评论</th>
+                        <th>分享</th>
+                        <th>推荐</th>
+                        <th>顺序</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+    </div>
+
+
+    <!--点击编辑进行弹框-->
+    <div role="dialog" class="modal fade bs-example-modal-sm" id="editChannel">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!--header-->
+                <div class="modal-header text-center">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                    <h4 class="h4 modal-title">编辑频道</h4>
+                </div>
+                <!--body-->
+                <div class="modal-body text-center">
+                    <div class='box'>
+                        <div>
+                            <h3>频道名称</h3>
+                            <input type="text" placeholder="请输入频道名称" v-model="channelName" class="txt1">
+                        </div>
+                        <div>
+                            <h3>频道图片</h3>
+                            <form action="" id="uploadImg">
+                                <input type="hidden" name="pics" id="imgs">
+                                <input type="hidden" name="loginId" v-model="loginId"/>
+                                <input type="hidden" name="token" v-model="token"/>
+                                <div class="info2">
+                                    <div class="div1" id="imgShowBox">
+                                        <input type="file" class="fileImg" id="newImg" name="file" onchange="uploadimg()" accept="image/gif,image/jpeg,image/jpg,image/png,image/svg">
+                                        <img src="../../imgs/iframeImgs/bg.png" alt="" class="img1" id="bgImg">
+                                        <img src="../../imgs/iframeImgs/photo.png" alt="" class="img2">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div><button class="btn btn-default btn-block" @click='closeModel' style="width:92px;margin-left:12px;">取消</button></div>
+                    <div><button class="btn btn-skyBlue btn-block" @click="editSubmit" style="width:92px;margin-left:12px;">确定</button></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--点击删除弹框-->
+    <div role="dialog" class="modal fade bs-example-modal-sm" id="deleteChannel">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!--header-->
+                <div class="modal-header text-center">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                    <h4 class="h4 modal-title">删除频道</h4>
+                </div>
+                <!--body-->
+                <div class="modal-body text-center">
+                   <p>确定删除吗？</p>
+                </div>
+                <div class="row">
+                    <div><button class="btn btn-default btn-block" @click='closeModel' style="width:92px;margin-left:12px;">取消</button></div>
+                    <div><button class="btn btn-skyBlue btn-block" @click="deleteSubmit" style="width:92px;margin-left:12px;">确定</button></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="../../lib/jquery/jquery.min.js"></script>
+<script src="../../lib/jquery.form.js"></script>
+<script src="../../lib/vue.min.js"></script>
+<script src="../../lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../lib/datatables/js/jquery.dataTables.min.js"></script>
+<script src="../../lib/layer/layer.js"></script>
+<script src="../../lib/echarts/echarts.min.js"></script>
+<script src="../../js/common.js"></script>
+<script src="../../lib/file_upload.js"></script>
+<script src="../../js/framePages/contentList.js"></script>
+</body>
+</html>

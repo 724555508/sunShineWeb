@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../../css/cssReset.css"/>
+    <link rel="stylesheet" href="../../css/framePages/totalIndex.css"/>
+    <title>主页</title>
+</head>
+<body>
+<main class="main">
+   <section class="sec">
+       <!--用户增长&&医疗救助-->
+       <aside class="aside">
+           <!--用户增长-->
+           <div><div id="chart1"></div></div>
+           <!--医疗救助-->
+           <div><div id="chart2"></div></div>
+       </aside>
+       <!--用户救助提醒-->
+       <nav class="nav">用户救助提醒</nav>
+       <div class="lists" id="lists">
+           <!--医疗预警服务-->
+           <a href="warningList.html" target="_blank">
+               <div class="iconBox">
+                   <span class="span" id="NotDealAlarmCount">0</span>
+                   <img src="../../imgs/iframeImgs/icon01.png" alt="icon">
+               </div>
+               <div class="iconTitle">医疗预警服务</div>
+               <!--<div>-->
+                   <!--<div class="iconBox">-->
+                       <!--<span class="span" id="NotDealAlarmCount">0</span>-->
+                       <!--<img src="../../imgs/iframeImgs/icon1001.png" alt="icon">-->
+                   <!--</div>-->
+                   <!--<div class="iconTitle">医疗预警服务</div>-->
+               <!--</div>-->
+           </a>
+           <!--SOS呼叫-->
+           <a href="SosWarningList.html">
+               <div class="iconBox">
+                   <span class="span" id="NoDispose">0</span>
+                   <img src="../../imgs/iframeImgs/icon02.png" alt="icon">
+               </div>
+               <div class="iconTitle">SOS呼叫</div>
+           </a>
+           <!--服务协议审核-->
+           <a href="wearUserList.html?icon=1" target="_blank">
+               <div class="iconBox">
+                   <span class="span" id="NoCheck">0</span>
+                   <img src="../../imgs/iframeImgs/icon03.png" alt="icon">
+               </div>
+               <div class="iconTitle">服务协议审核</div>
+           </a>
+           <!--数据异常-->
+           <a href="dataAbortList.html?icon=1" target="_blank">
+               <div class="iconBox">
+                   <span class="span" id="dataAbort">0</span>
+                   <img src="../../imgs/iframeImgs/icon04.png" alt="icon">
+               </div>
+               <div class="iconTitle">数据异常</div>
+           </a>
+           <!--失联提醒-->
+           <a href="lostRemindList.html?icon=1" target="_blank">
+               <div class="iconBox">
+                   <span class="span" id="lostRemind">0</span>
+                   <img src="../../imgs/iframeImgs/icon05.png" alt="icon">
+               </div>
+               <div class="iconTitle">失联提醒</div>
+           </a>
+       </div>
+       <!--业务提醒-->
+       <nav class="nav">业务提醒</nav>
+       <div class="lists">
+           <!--新增订单-->
+           <a href="##">
+                   <div class="iconBox">
+                       <span class="span">0</span>
+                       <img src="../../imgs/iframeImgs/icon06.png" alt="icon">
+                   </div>
+                   <div class="iconTitle">新增订单</div>
+           </a>
+           <!--库存管理-->
+           <a href="repertoryManage.html" target="_blank">
+                   <div class="iconBox">
+                       <!--<span class="span">0</span>-->
+                       <img src="../../imgs/iframeImgs/icon07.png" alt="icon">
+                   </div>
+                   <div class="iconTitle">库存管理</div>
+           </a>
+           <!--充值订单-->
+           <a href="##">
+                   <div class="iconBox">
+                       <span class="span">0</span>
+                       <img src="../../imgs/iframeImgs/icon08.png" alt="icon">
+                   </div>
+                   <div class="iconTitle">充值订单</div>
+           </a>
+           <!--渠道提现申请-->
+           <a href="#">
+                   <div class="iconBox">
+                       <span class="span">0</span>
+                       <img src="../../imgs/iframeImgs/icon09.png" alt="icon">
+                   </div>
+                   <div class="iconTitle">渠道提现申请</div>
+           </a>
+           <!--启动页修改-->
+           <a href="updateAd.html">
+                   <div class="iconBox">
+                       <img src="../../imgs/iframeImgs/icon37.png" alt="icon">
+                   </div>
+                   <div class="iconTitle">启动页修改</div>
+           </a>
+           <!--app反馈-->
+           <a href="deviceActive.html">
+                   <div class="iconBox">
+                       <span class="span" id="NoRead">0</span>
+                       <img src="../../imgs/iframeImgs/icon11.png" alt="icon">
+                   </div>
+                   <div class="iconTitle">设备激活</div>
+           </a>
+       </div>
+       <!--监控数据-->
+       <nav class="nav">监控数据</nav>
+       <div class="lists">
+          <!-- &lt;!&ndash;预警中心&ndash;&gt;
+           <div>
+               <div class="iconBox">
+                   <a href="warningList.html" target="_blank">
+                       &lt;!&ndash;<span class="span">0</span>&ndash;&gt;
+                       <img src="../../imgs/iframeImgs/icon3001.png" alt="icon">
+                   </a>
+               </div>
+               <div class="iconTitle">预警中心</div>
+           </div>-->
+           <!--全国用户分布展示-->
+           <a href="../screenShow/s_user_map1.html" target="_blank">
+                   <div class="iconBox">
+                       <!--<span class="span">0</span>-->
+                       <img src="../../imgs/iframeImgs/icon12.png" alt="icon">
+                   </div>
+                   <div class="iconTitle">用户分布展示</div>
+           </a>
+           <!--风险用户监控-->
+           <a href="../screenShow/s_user_risk_list.html" target="_blank">
+                   <div class="iconBox">
+                       <!--<span class="span">0</span>-->
+                       <img src="../../imgs/iframeImgs/icon13.png" alt="icon">
+                   </div>
+                   <div class="iconTitle">风险用户监控</div>
+           </a>
+           <!--合伙人分布-->
+           <a href="../screenShow/s_partner_map.html" target="_blank">
+                   <div class="iconBox">
+                       <!--<span class="span">0</span>-->
+                       <img src="../../imgs/iframeImgs/icon14.png" alt="icon">
+                   </div>
+                   <div class="iconTitle">合伙人分布</div>
+           </a>
+
+           <!--用户实时分布-->
+           <a href="../screenShow/s_user_map2.html" target="_blank">
+               <div>
+                   <div class="iconBox">
+                       <!--<span class="span">0</span>-->
+                       <img src="../../imgs/iframeImgs/icon15.png" alt="icon">
+                   </div>
+                   <div class="iconTitle">用户实时分布</div>
+               </div>
+           </a>
+           <!--用户健康特征统计-->
+           <a href="../screenShow/s_user_health_info.html" target="_blank">
+               <div>
+                   <div class="iconBox">
+                       <!--<span class="span">0</span>-->
+                       <img src="../../imgs/iframeImgs/icon16.png" alt="icon">
+                   </div>
+                   <div class="iconTitle">用户健康特征统计</div>
+               </div>
+           </a>
+           <!--实时预警监控-->
+           <a href="../screenShow/s_sosWarning_manage.html" target="_blank">
+               <div>
+                   <div class="iconBox">
+                       <!--<span class="span">0</span>-->
+                       <img src="../../imgs/iframeImgs/icon17.png" alt="icon">
+                   </div>
+                   <div class="iconTitle">实时预警监控</div>
+               </div>
+           </a>
+
+       </div>
+       <div class="lists">
+           <!--SOS实时监控-->
+           <a href="../screenShow/s_sos_help.html" target="_blank">
+               <div>
+                   <div class="iconBox">
+                       <!--<span class="span">0</span>-->
+                       <img src="../../imgs/iframeImgs/icon18.png" alt="icon">
+                   </div>
+                   <div class="iconTitle">SOS实时监控</div>
+               </div>
+           </a>
+           <!--用户基础病统计-->
+           <a href="../screenShow/s_history_statistics.html" target="_blank">
+               <div>
+                   <div class="iconBox">
+                       <!--<span class="span">0</span>-->
+                       <img src="../../imgs/iframeImgs/icon19.png" alt="icon">
+                   </div>
+                   <div class="iconTitle">用户基础病统计</div>
+               </div>
+           </a>
+           <!--失联状态管理/数据异常用户监控-->
+           <a href="../screenShow/s_lostManageBpMonitor.html" target="_blank">
+               <div>
+                   <div class="iconBox">
+                       <!--<span class="span">0</span>-->
+                       <img src="../../imgs/iframeImgs/icon20.png" alt="icon">
+                   </div>
+                   <div class="iconTitle">佩戴异常监控</div>
+               </div>
+           </a>
+       </div>
+   </section>
+</main>
+
+
+
+<!--js-->
+<script src="../../lib/jquery/jquery.min.js"></script>
+<script src="../../lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../lib/layer/layer.js"></script>
+<script src="../../lib/echarts/echarts.min.js"></script>
+<script src="../../js/common.js"></script>
+<script src="../../js/framePages/totalIndex.js"></script>
+</body>
+</html>

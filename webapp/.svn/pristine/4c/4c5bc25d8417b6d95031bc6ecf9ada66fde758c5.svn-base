@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="../../imgs/logo-l.png">    <!--title-icon-->
+    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../../css/cssReset.css"/>
+    <title>APP启动页管理</title>
+    <style>
+        body{background-color: #f2f2f1;width: 97%;margin: 0 auto;padding:20px 0;}
+        .main{background: #FFFFFF;box-shadow: 0 0 10px 0 rgba(0,0,0,0.02);border-radius: 8px;padding:0 15px 20px 15px;}
+        /*body{width: 96%;margin: 0 auto;font-family: MicrosoftYaHei;}*/
+        .header{opacity: 0.5;font-size: 22px;color: #000;line-height: 52px;}
+        .now{margin: 20px auto;font-size: 16px;color: #000000;line-height: 16px;}
+        /*当前引导页图片*/
+        .nowImg>img{width: 300px;}
+        /*更换引导页box*/
+        #newImg{line-height: 32px;}
+        .uploadBox{display: none;}
+        .data>div{width: 20%;margin: 20px 0;}
+    </style>
+</head>
+<body>
+<div class="main">
+    <div class="header">APP引导页</div>
+    <hr>
+    <div class="data">
+        <div>
+            <input type="text" class="form-control" placeholder="轮播图备注" id="title">
+        </div>
+        <div>
+            <div style="margin: 10px auto;font-size: 16px;color: #000000;line-height: 16px;">开始投放时间</div>
+            <input type="datetime-local" name="nextReturnTime" class="form-control" id="nextDate">
+        </div>
+    </div>
+
+
+    <div class="now">当前引导页图片:</div>
+    <!--img-->
+    <div class="row">
+        <!--当前引导页-->
+        <div class="col-sm-6 nowImg">
+            <img src="" alt="" id="nowLinkPageImg"/>
+        </div>
+        <!--修改按钮-->
+        <div class="col-sm-6">
+            <button type="button" class="btn btn-skyBlue" id="changeImgBtn">选择文件</button>
+            <div class="row uploadBox">
+                <div class="col-sm-6">
+                    <input type="hidden" name="pics" id="imgs">
+                    <form id="uploadImg">
+                        <input type="hidden" name="loginId" id="loginId"/>
+                        <input type="hidden" name="token" id="token"/>
+                        <label for="newImg"><!---->
+                            <input type="file" id="newImg" name="file"  multiple="multiple" class="form-control" onchange="uploadimg()"
+                                   accept="image/gif,image/jpeg,image/jpg,image/png,image/svg"/>
+                        </label>
+                    </form>
+                    <div id="imgShowBox"></div>
+                </div>
+                <div class="col-sm-2"><button type="button" id="uploadButton" class="btn btn-skyBlue">保存</button></div>
+                <div class="col-sm-2"><button type="button" id="cancelChangeBtn" class="btn btn-skyBlue">取消修改</button></div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+<!--js-->
+<script src="../../lib/jquery/jquery.min.js"></script>
+<script src="../../lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../lib/layer/layer.js"></script>
+<script src="../../lib/echarts/echarts.min.js"></script>
+<script src="../../js/common.js"></script>
+<script src="../../lib/jquery.form.js"></script>
+<script src="../../lib/file_upload.js"></script>
+<script src="../../js/framePages/updateAd.js"></script>
+</body>
+</html>

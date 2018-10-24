@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="../../imgs/logo-l.png">    <!--title-icon-->
+    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../../lib/datatables/css/jquery.dataTables.min.css"/>
+    <link rel="stylesheet" href="../../css/framePages/SosWarningList.css"/>
+    <link rel="stylesheet" href="../../css/cssReset.css"/>
+    <link rel="stylesheet" href="../../css/framePages/parnterLetter.css">
+    <title>合伙人消息下发</title>
+    <style>
+    </style>
+</head>
+<body>
+<div id="app" v-cloak>
+    <!--面包屑导航-->
+    <ul class="breadcrumb">
+        <li><a href="customCenter.html" class="active">客服中心</a></li>
+        <li><a href="javascript:;" class="inActive">合伙人私信下发</a></li>
+    </ul>
+    <!--content-->
+    <div class="mesContent">
+        <!--录入设备号与下发内容-->
+        <div class="intoBox">
+            <!--设备号-->
+            <div>
+                <div class="selectUser">
+                    <div>选择合伙人</div>
+                    <select name="" id="selectVal" class="select" v-model="selectSign">
+                        <option value="">指定区域</option>
+                        <option value="1">一级合伙人</option>
+                        <option value="2">二级合伙人</option>
+                        <option value="3">全部合伙人</option>
+                    </select>
+                    <button class="btn btn-skyBlue btn1" @click="filterAreaTerm" id="shaixuan">筛选区域</button>
+                </div>
+
+                <div class="selectContent">
+                    <div class="div1" v-for="(item,index) in showArea" :id="index" @click="deleteMe(index)" v-show="inputLength !== 0">
+                        {{item}}
+                        <img src="../../imgs/iframeImgs/delete1.png" alt="">
+                    </div>
+                </div>
+                <h2>录入下发内容</h2>
+                <!--富文本编辑器-->
+                <div id="editor">
+                    <p></p>  <!--v-html="infoHtml"-->
+                    <!--<span>欢迎使用 <b>wangEditor</b> 富文本编辑器</span>-->
+                </div>
+            </div>
+        </div>
+        <!--确定下发-->
+        <div class="intoBtn">
+            <button class="btn btn-skyBlue" @click="enterInto()">确定下发</button>
+        </div>
+        <!--下发历史-->
+        <div class="intoHistory">下发历史</div>
+        <!--搜索栏-->
+        <div class="searchBox">
+            <div class='search2'>
+                <img src="../../imgs/search@2x.png" alt="" class='icon1'/><input type="text" v-model="input" class="phone" placeholder="手机号"/>
+            </div>
+            <button id="search" class="search" style='margin:0 10px;' @click="tables()">搜索</button>
+            <button id="all" class="search" @click="resetTerm()" >重置</button>
+        </div>
+        <!--下发历史table-->
+        <div class="tableHistory" >
+            <table data-toggle="table" class="table table-bordered text-center table-hover" id="intoHistory">
+                <thead>
+                <tr class="tr1">
+                    <th>序号</th>
+                    <th>下发时间</th>
+                    <th>城市</th>
+                    <th>性质</th>
+                    <th>公司名称</th>
+                    <th>负责人</th>
+                    <th>手机</th>
+                    <th>下发内容</th>
+                    <th>操作员</th>
+                    <th>查看时间</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!--确定下发弹框-->
+    <!--点击筛选条件进行弹框-->
+    <div role="dialog" class="modal fade bs-example-modal-sm" id="filterTerm">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!--header-->
+                <div class="modal-header text-center">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                    <h4 class="h4 modal-title">筛选区域</h4>
+                </div>
+                <!--body-->
+                <div class="modal-body">
+                    <div class='box'>
+                      <!--搜索框-->
+                       <div class="searchBox">
+                           <div class='search2'>
+                               <img src="../../imgs/search@2x.png" alt="" class='icon1'/><input type="text" class="phone" v-model="inputArea" placeholder="输入城市"/>
+                           </div>
+                           <button class="search" style='margin:0 10px;' @click="searchArea">搜索</button>
+                       </div>
+                        <!--城市多选框-->
+                        <ul>
+                            <li v-for="(item,index) in list">
+                                <input type="checkbox" name="area" ref="input" :id="item.areaId" :value="item.areaName" @click="inputClick(index,event)">
+                                <span :title="item.areaName"  v-if="item.areaName.length > 4 ">{{item.areaName.substring(0,3)}}...</span>
+                                <span  v-else>{{item.areaName}}</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-3"><button class="btn btn-default btn-block" @click='closeModel'>取消</button></div>
+                    <div class="col-sm-3"><button class="btn btn-skyBlue btn-block" @click="filterTermSubmit">确定</button></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
+
+</div>
+<!--js-->
+<script src="../../lib/jquery/jquery.min.js"></script>
+<script src="../../lib/vue.min.js"></script>
+<script src="../../lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../lib/datatables/js/jquery.dataTables.min.js"></script>
+<script src="../../lib/layer/layer.js"></script>
+<script src="../../js/wangEditor.min.js"></script>    <!--富文本编辑器js-->
+<script src="../../lib/pinyinUtil.js"></script>  <!--拼音搜索-->
+<script src="../../js/common.js"></script>
+<script src="../../js/framePages/parnterLetter.js"></script>
+<script>
+    var E = window.wangEditor;
+    var editor = new E('#editor');
+    // 自定义菜单配置
+    editor.customConfig.menus = [
+//        'head',  // 标题
+        'bold',  // 粗体
+        'fontSize',  // 字号
+        'fontName',  // 字体
+        'italic',  // 斜体
+        'underline',  // 下划线
+        'strikeThrough',  // 删除线
+        'foreColor',  // 文字颜色
+        'backColor',  // 背景颜色
+        'link',  // 插入链接
+        'list',  // 列表
+        'justify',  // 对齐方式
+        'quote',  // 引用
+        'emoticon',  // 表情
+        'image',  // 插入图片
+        'table',  // 表格
+        'video',  // 插入视频
+        'code',  // 插入代码
+        'undo',  // 撤销
+        'redo'  // 重复
+    ]
+    // 或者 var editor = new E( document.getElementById('editor') )
+    editor.create();
+</script>
+</body>
+</html>

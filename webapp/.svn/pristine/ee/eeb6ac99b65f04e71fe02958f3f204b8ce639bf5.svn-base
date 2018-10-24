@@ -1,0 +1,23 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>404</title>
+    <link rel="stylesheet" type="text/css" href="http://t.cn/RQELnmE">
+    <link rel="stylesheet" type="text/css" href="http://t.cn/RQELT7B">
+</head>
+<body>
+<div class="mop-error">
+    <div class="mop-error-img">
+        <img src="http://t.cn/RQELqxR" alt="">
+    </div>
+    <div class="mop-error-text mt15" style="text-align: center;">
+        <span style="font-size: 15px;font-weight: bold">您可以进行以下操作：</span>
+        <a href="https://app.iandun.com/iandunup/html/index.html" style="font-size: 15px;
+        font-family : Georgia ;color: rgb(233,44,129);font-weight: bolder;">返回首页</a>
+    </div>
+</div>
+</body>
+</html>

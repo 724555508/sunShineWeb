@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../../lib/datatables/css/jquery.dataTables.min.css"/>
+    <link rel="stylesheet" href="../../css/cssReset.css"/>
+    <link rel="shortcut icon" href="../../imgs/logo-l.png">
+    <link rel="stylesheet" href="../../css/framePages/SosWarningList.css">
+    <link rel="stylesheet" href="../../css/framePages/exchangeCodeManage.css">
+    <title>兑换码管理</title>
+
+</head>
+<body>
+<div class="app" id="app">
+    <!--面包屑导航-->
+    <ul class="breadcrumb">
+        <li><a href="../partner/orderFormManage.html" class="active">订单管理</a></li>
+        <li><a href="javascript:;" class="inActive">兑换码管理</a></li>
+    </ul>
+    <div class="main">
+
+        <!--搜索框-->
+        <div class="searchBox">
+            <div class="form">
+                <div class="search2">
+                    <img src="../../imgs/search@2x.png" alt="" class='icon1'/><input type="text" class="form-control phone" v-model="inputText" placeholder="账号/佩戴人/兑换码"/>
+                </div>
+                <div class="select">
+                    <select id = "selectVal" class="input2">
+                        <option value ="" class="selected">适用范围</option>
+                        <option value="1">血糖</option>
+                        <option value="2">肿瘤</option>
+                    </select>
+                </div>
+                <div class="select">
+                    <select id = "selectVal2" class="input2">
+                        <option value ="" class="selected">兑换状态</option>
+                        <option value="1">已使用</option>
+                        <option value="2">未使用</option>
+                    </select>
+                </div>
+                <button @click="search" class="search">搜索</button>
+                <button @click="getOut" class="search">导出</button>
+            </div>
+            <div class="title" @click="addexchangeCode">添加兑换码</div>
+            <!--<div><button id="getOut" class="export">导出excel</button></div>-->
+        </div>
+        <!--table  激活用户-->
+        <table data-toggle="table" class="table table-bordered text-center table-hover" id="exchangeCodeTable">
+            <thead>
+            <tr  style="opacity: 0.8;background: rgba(0,150,255,0.10);">
+                <th>序号</th>
+                <th>兑换码</th>
+                <th>生成时间</th>
+                <th>可使用时间段</th>
+                <th>适用范围</th>
+                <th>兑换状态</th>
+                <th>账号</th>
+                <th>佩戴人</th>
+                <th>兑换时间</th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        <!--弹框-->
+        <!--点击添加兑换码进行弹框-->
+        <div role="dialog" class="modal fade bs-example-modal-sm" id="addexchangeCode1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <!--header-->
+                    <div class="modal-header text-center">
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span>&times;</span>
+                        </button>
+                        <h4 class="h4 modal-title">添加兑换码</h4>
+                    </div>
+                    <!--body-->
+                    <div class="modal-body text-center">
+                        <div class='box'>
+                           <div>
+                               <div class="div1">设置兑换日期:</div>
+                               <div class='search1 div2'>
+                                   <input type="date" class='hTime' v-model="startTime"/>
+                                   <div class="hr"></div>
+                                   <input type="date" class='hTime' v-model='endTime'/>
+                               </div>
+                           </div>
+                            <div>
+                                <div class="div1">兑换码数量:</div>
+                                <input type="text" placeholder="请输入数量" class="num" v-model="num">
+                            </div>
+                            <div>
+                                <div class="div1">适用范围:</div>
+                                <div class="select">
+                                    <select id = "selectVal3" class="input2 div2">
+                                        <option value="1">血糖</option>
+                                        <!--<option value="2">肿瘤</option>-->
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div><button class="btn btn-default btn-block" @click='closeModel' style="width:92px;margin-left:12px;">取消</button></div>
+                        <div><button class="btn btn-skyBlue btn-block" @click="addSubmit" style="width:92px;margin-left:12px;">确定</button></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--js-->
+<script src="../../lib/jquery/jquery.min.js"></script>
+<script src="../../lib/bootstrap/js/bootstrap.min.js"></script>
+<script src='../../lib/vue.min.js'></script>
+<script src="../../lib/datatables/js/jquery.dataTables.min.js"></script>
+<script src="../../lib/template.js"></script>
+<script src="../../lib/layer/layer.js"></script>
+<script src="../../js/common.js"></script>
+<script src="../../js/framePages/exchangeCodeManage.js"></script>
+</body>
+</html>

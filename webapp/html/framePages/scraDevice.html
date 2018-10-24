@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../../lib/datatables/css/jquery.dataTables.min.css"/>
+    <link rel="stylesheet" href="../../css/cssReset.css"/>
+    <link rel="stylesheet" href="../../css/framePages/SosWarningList.css"/>
+    <link rel="shortcut icon" href="../../imgs/logo-l.png">
+    <title>报废设备</title>
+    <style>
+        body{background-color: #f2f2f1;width:100%;margin: 0 auto;}
+        .main{width: 97%;margin: 25px auto;background: #FFFFFF;box-shadow: 0 0 10px 0 rgba(0,0,0,0.02);border-radius: 8px;padding:20px 15px;height: calc(100vh - 50px);}
+        .Statistics{color: #000;display: flex;display: -webkit-flex; justify-content:space-between;}
+        .Statistics>div{width: 30%;height: 80px;background-color: #f2faff;border-radius: 6px;border:none;}
+        .breadcrumb > li + li:before {
+            color: #CCCCCC;
+            content: ">";
+            padding: 0 5px;
+        }
+        .breadcrumb{
+            background:#fff;
+            margin-bottom:0px;
+        }
+        .btn1{text-align:right;margin-bottom:10px;}
+        .searchBox .select .input2{width:200px;}
+    </style>
+</head>
+<body>
+<div class="main" id="app">
+    <!--&lt;!&ndash;面包屑导航&ndash;&gt;-->
+    <!--<ul class="breadcrumb">-->
+        <!--<li><a href="deviceManage.html">设备管理</a></li>-->
+        <!--<li><a href="javascript:;" class="active">报废设备</a></li>-->
+    <!--</ul>-->
+    <!--<div>批量交更</div>-->
+    <!--<div class="btn1"><button class="btn btn-border">批量交更</button></div>-->
+    <section class="Statistics">
+        <!--总数-->
+        <div title="总数">
+            <div id="isUse">总数</div>
+            <div>{{allNum}}</div>
+        </div>
+        <!--App -->
+        <div title='一代'>
+            <div id="noUse">一代</div>
+            <div>{{device_1_Num}}</div>
+        </div>
+        <div title='二代'>
+            <div id="noUse1">二代</div>
+            <div>{{device_2_Num}}</div>
+        </div>
+    </section>
+
+    <!--搜索条件-->
+    <div class="searchBox">
+        <div class='form'>
+            <div class='search2'>
+                <img src="../../imgs/search@2x.png" alt="" class='icon1'/><input type="text" class="phone" id="inputText" placeholder="设备号"/>
+            </div>
+            <div class="select">
+                <select id = "selectVal" class="input2">
+                    <option value="" class="selected">报废原因</option>
+                    <option value="1">翻新:设备号报废</option>
+                    <option value="2">物理:严重损坏</option>
+                    <option value="3">电池:电池损坏 </option>
+                    <option value="4">进水:设备报废</option>
+                    <option value="5">遗失:设备遗失</option>
+                    <option value="6">其他</option>
+                </select>
+            </div>
+            <button @click="search" class="search" style='margin:0 10px;'>搜索</button>
+            <button @click="all" class="search">全部</button>
+        </div>
+        <div>
+            <button class="export" @click="exportList">导出excel</button>
+        </div>
+
+    </div>
+    <!--table  激活用户-->
+    <div class="appBox">
+        <table data-toggle="table" class="table table-bordered text-center table-hover" id="binDingTable1">
+            <thead>
+            <tr  style="opacity: 0.8;background: rgba(0,150,255,0.10);">
+                <th>序号</th>
+                <th>型号</th>
+                <th>设备ID</th>
+                <th>市场</th>
+                <th>入库日期</th>
+                <th>激活日期</th>
+                <th>报废时间</th>
+                <th>报废原因</th>
+                <th>操作员</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+<script src="../../lib/jquery/jquery.min.js"></script>'
+<script src="../../js/vue.min.js"></script>
+<script src="../../lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../lib/datatables/js/jquery.dataTables.min.js"></script>
+<script src="../../lib/layer/layer.js"></script>
+<script src="../../lib/template.js"></script>
+<script src="../../js/common.js"></script>
+<script src="../../js/framePages/scraDevice.js"></script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="../../imgs/logo-l.png">    <!--title-icon-->
+    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../../lib/datatables/css/jquery.dataTables.min.css"/>
+    <link rel="stylesheet" href="../../css/cssReset.css"/>
+    <link rel="stylesheet" href="../../css/framePages/bindingManage.css"/>
+    <title>启动页管理</title>
+    <style>
+        .searchBox{padding:0;width:100%;display:flex;justify-content:space-between;align-items:center;}
+        .litimg{width: 50px;height: 50px;}
+        body{background-color: #f2f2f1;width: 97%;margin: 0 auto;padding:20px 0;}
+        .main{background: #FFFFFF;box-shadow: 0 0 10px 0 rgba(0,0,0,0.02);border-radius: 8px;padding:20px 15px;}
+        h2{opacity: 0.5;font-size: 22px;color: #000;}
+        .tr1{opacity: 0.8;background: rgba(0,150,255,0.10);}
+    </style>
+</head>
+<body>
+<div id="adv" v-cloak class="main">
+
+      <!--搜索条件-->
+      <div class="searchBox">
+          <h2>App启动页管理</h2>
+          <div><button  class="btn btn-skyBlue" @click="toAdd">添加</button></div>
+      </div>
+    <br>
+    <div class="appBox" >
+        <table data-toggle="table" class="table table-bordered text-center table-hover" id="InitPageTable">
+            <thead>
+            <tr class="tr1">
+                <th>序号</th>
+                <th>缩略图</th>
+                <th>开始投放时间</th>
+                <th>标题</th>
+                <th>操作员</th>
+                <th>状态</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<script src="../../lib/jquery/jquery.min.js"></script>
+<script src="../../lib/vue.min.js"></script>
+<script src="../../lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../lib/datatables/js/jquery.dataTables.min.js"></script>
+<script src="../../lib/layer/layer.js"></script>
+<script src="../../lib/echarts/echarts.min.js"></script>
+<script src="../../js/common.js"></script>
+<script src="../../js/framePages/appInitPageList.js"></script>
+</body>
+</html>

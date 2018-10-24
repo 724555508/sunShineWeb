@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="../../imgs/logo-l.png">    <!--title-icon-->
+    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../../lib/datatables/css/jquery.dataTables.min.css"/>
+    <link rel="stylesheet" href="../../css/cssReset.css"/>
+    <link rel="stylesheet" href="../../css/framePages/SosWarningList.css"/>
+    <link rel="stylesheet" href="../../css/framePages/crossRedionManage.css"/>
+    <title>窜货管理</title>
+    <style>
+        /*.searchBox .form .select{margin-left:5px;margin-top:5px;margin-right:34px;}*/
+        .searchBox .form .search2{margin-right:0px;}
+        .searchBox .form .search2 .phone{}
+        .searchBox .form .select{margin-left:5px;margin-top:4px;margin-right:10px;}
+        .searchBox .form .select .input2{border: 1px solid #767676;}
+    </style>
+</head>
+<body>
+<div class="dad" id="app" v-cloak>
+    <!--7个统计数据-->
+    <section class="Statistics">
+        <!--全部-->
+        <div title="累计窜货">
+            <div>
+                <img src="../../imgs/iframeImgs/totalCrossregion.png" alt="">
+            </div>
+            <div>
+                <div id="totalCrollregion" class="num">{{all}}</div>
+                <div class="txt">累计窜货</div>
+            </div>
+        </div>
+        <!--已出货-->
+        <div title="未处理窜货">
+            <div>
+                <img src="../../imgs/iframeImgs/noCrossregion.png" alt="">
+            </div>
+            <div>
+                <div id="noCrossregion" class="num">{{notDeal}}</div>
+                <div class="txt">未处理窜货累</div>
+            </div>
+        </div>
+        <!--申诉中-->
+        <div title="申诉中">
+            <div>
+                <img src="../../imgs/iframeImgs/complain.png" alt="">
+            </div>
+            <div>
+                <div id="complain" class="num">{{complaint}}</div>
+                <div class="txt">申诉中</div>
+            </div>
+        </div>
+    </section>
+    <!--窜货市场以及被窜货统计柱状图-->
+    <main class="main">
+        <!--窜货市场标题-->
+        <div class="title">
+            <h2>窜货市场统计</h2>
+            <button @click="crossRegionMap">窜货地图</button>
+        </div>
+        <!-- -窜货市场柱状图-->
+        <div class="barCanvas" id="crossRegionBar">
+
+        </div>
+
+        <!--被窜货市场标题-->
+        <div class="title">
+            <h2>被窜货市场统计</h2>
+            <button @click="crossRegionMap1">窜货地图</button>
+        </div>
+        <!-- 被窜货市场柱状图-->
+        <div class="barCanvas" id="byCrossRegionBar">
+
+        </div>
+        <!--搜索条件-->
+        <div class="searchBox">
+            <div class='form'>
+                <div class='search2'>
+                    <img src="../../imgs/search@2x.png" alt="" class='icon1'/><input type="text" class="phone" placeholder="设备号/所属市场" v-model="inputText"/>
+                </div>
+                <div class="select">
+                    <select id = "selectVal" class="input2">
+                        <option value ="" class="selected">全部</option>
+                        <option value="1">窜货市场</option>
+                        <option value="2">被窜货市场</option>
+                    </select>
+                </div>
+                <button @click="search" class="search" style='margin:0 10px;'>搜索</button>
+                <button @click="all1" class="search">全部</button>
+                <!--<button @click="reset" class="search">重置</button>-->
+            </div>
+            <div class="text-right">
+                <button @click="exportExcel">导出excel</button>
+            </div>
+
+        </div>
+        <!--dataTables-->
+        <table data-toggle="table" class="table table-bordered text-center table-hover" id="crossRegionTable">
+            <thead>
+            <tr  style="opacity: 0.8;background: rgba(0,150,255,0.10);">
+                <th>序号</th>
+                <th>型号</th>
+                <th>设备号</th>
+                <th>窜货市场</th>
+                <th>被窜市场</th>
+                <th>分析日期</th>
+                <th>佩戴人</th>
+                <th>状态</th>
+                <th>超出时间</th>
+                <th>操作</th>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </main>
+</div>
+
+<!--js-->
+<script src="../../lib/jquery/jquery.min.js"></script>
+<script src="../../lib/vue.min.js"></script>
+<script src="../../lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../lib/datatables/js/jquery.dataTables.min.js"></script>
+<script src="../../lib/layer/layer.js"></script>
+<script src="../../lib/echarts/echarts.min.js"></script>
+<script src="../../js/common.js"></script>
+<script src="../../js/framePages/crossRedionManage.js"></script>
+</body>
+</html>

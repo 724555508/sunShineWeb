@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../../lib/datatables/css/jquery.dataTables.min.css"/>
+    <link rel="stylesheet" href="../../css/cssReset.css"/>
+    <link rel="stylesheet" href="../../css/framePages/SosWarningList.css"/>
+    <link rel="shortcut icon" href="../../imgs/logo-l.png">    <!--title-icon-->
+    <title>设备激活</title>
+    <style>
+        body{background-color: #f2f2f1;width:100%;margin: 0 auto;}
+        .main{width: 97%;margin: 25px auto;background: #FFFFFF;box-shadow: 0 0 10px 0 rgba(0,0,0,0.02);border-radius: 8px;padding:20px 15px;height: calc(100vh - 50px);}
+        .Statistics{color: #000;display: flex;display: -webkit-flex; justify-content:space-between;}
+        .Statistics>div{width: 30%;height: 80px;background-color: #f2faff;border-radius: 6px;border:none;}
+    </style>
+</head>
+<body>
+<div class="main">
+
+    <section class="Statistics">
+        <!--总数-->
+        <div title="已激活">
+            <div id="isUse">0</div>
+            <div>已激活</div>
+        </div>
+        <!--App -->
+        <div title="待激活">
+            <div id="noUse">0</div>
+            <div>待激活</div>
+        </div>
+    </section>
+
+    <!--搜索条件-->
+    <div class="searchBox">
+        <div class='form'>
+            <div class='search2'>
+                <img src="../../imgs/search@2x.png" alt="" class='icon1'/><input type="text" class="phone" id="inputText" placeholder="设备号"/>
+            </div>
+            <button id="search" class="search" style='margin:0 10px;'>搜索</button>
+            <button id="all" class="search">全部</button>
+        </div>
+        <div>
+            <button class="export" id="getOut">导出excel</button>
+        </div>
+
+    </div>
+
+    <!--<div class="row searchBox form">-->
+    <!--<div class="col-sm-3 search2"><img src="../../imgs/search@2x.png" alt="" class='icon1'/><input type="text" class="form-control phone" id="inputText" placeholder="设备号"/></div>-->
+    <!--<div class="col-sm-1" ><button id="search" class="btn btn-skyBlue search">搜索</button></div>-->
+    <!--<div class="col-sm-1"><button id="all" class="btn btn-skyBlue search">全部</button></div>-->
+    <!--<div class="col-sm-1"><button id="getOut" class="btn btn-skyBlue export1">导出excel</button></div>-->
+    <!--</div>-->
+
+
+
+    <!--table  激活用户-->
+    <div class="appBox">
+        <table data-toggle="table" class="table table-bordered text-center table-hover" id="binDingTable">
+            <thead>
+            <tr>
+                <th>序号</th>
+                <th>型号</th>
+                <th>设备ID</th>
+                <th>原佩戴人</th>
+                <th>绑定日期</th>
+                <th>解绑日期</th>
+                <th>设备剩余期限</th>
+                <th>解绑次数</th>
+                <th>当前状态</th>
+                <th>解绑原因</th>
+                <th>操作人</th>
+                <th>查看</th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+<script src="../../lib/jquery/jquery.min.js"></script>
+<script src="../../lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../lib/datatables/js/jquery.dataTables.min.js"></script>
+<script src="../../lib/layer/layer.js"></script>
+<script src="../../js/common.js"></script>
+<script src="../../js/framePages/deviceActive.js"></script>
+</body>
+</html>

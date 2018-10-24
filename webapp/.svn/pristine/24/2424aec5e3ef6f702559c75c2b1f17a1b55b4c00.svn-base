@@ -1,0 +1,31 @@
+[v-cloak]{display: none;}
+#app{width: 100vw;height: 100vh;background: url("../../imgs/mapImages/screenBG.png") no-repeat;background-size: 100% 100%;display: flex;flex-direction: row;justify-content: space-around;align-items: center;}
+#app>div{width: 48.5%;height: 95%;}
+/*left*/
+.left{display: flex;flex-direction: column;justify-content: space-between;}
+.left>div{width: 100%;border-radius: 16px;background: rgba(31,31,31,0.6);}
+.left>div:nth-child(1){height: 59%;}
+.left>div:nth-child(2){height: 39%;}
+.left>div>div{width: 100%;height: 100%;}
+/*leftBottom*/
+.leftBottom>div{display: flex;justify-content: space-between;flex-direction: column;padding: 70px 20px;}
+.leftBottom>div>div{width: 100%;height: 46%;display: flex;align-items: center;}
+.leftBottom>div>div>div>img{width: 66px;display: block;}
+.sexBox>div>div:nth-child(2){padding: 0 15px 0 8px;color: #fff;font-size: 20px;}
+.colorBox{width: 100%;height: 100%;border-radius: 5px;overflow: hidden;}
+.colorBox>div{height: 100%;width: 57%;background: red;position: relative;border-radius: 8px;}
+.colorBox>div>div{position: absolute;top: 35%;right: 2px;color: #fff;font-size: 20px;}
+.sexBox>div>div:nth-child(1),.sexBox>div>div:nth-child(2){display: none;}
+#fill1{  width: 0%;
+    background: -webkit-linear-gradient(left, rgba(0,198,251,1), rgba(0,91,234,1));
+    background: -o-linear-gradient(left,rgba(0,198,251,1), rgba(0,91,234,1));
+    background: -moz-linear-gradient(left,rgba(0,198,251,1), rgba(0,91,234,1));
+    background: -ms-linear-gradient(left,rgba(0,198,251,1), rgba(0,91,234,1));}
+#fill2{width: 0%;
+    background: -webkit-linear-gradient(left, rgba(240,147,251,1), rgba(245,87,108,1));
+    background: -o-linear-gradient(left,rgba(240,147,251,1), rgba(245,87,108,1));
+    background: -moz-linear-gradient(left,rgba(240,147,251,1),rgba(245,87,108,1));
+    background: -ms-linear-gradient(left,rgba(240,147,251,1), rgba(245,87,108,1));}
+/*right*/
+.right{background: rgba(31,31,31,0.6);border-radius: 16px;}
+.genderImg{width: 100%;height: 100%;}

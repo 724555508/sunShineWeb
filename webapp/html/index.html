@@ -1,0 +1,130 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../lib/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../css/cssReset.css"/>
+    <link rel="stylesheet" href="../css/indexCommon.css"/>
+    <link rel="shortcut icon" href="../imgs/logo-l.png">    <!--title-icon-->
+    <title>主页-安顿后台管理系统</title>
+    <style>
+        body{min-width:1000px;margin:0 auto;}
+    </style>
+</head>
+<body>
+<!--页头-->
+<header class="header header1">
+    <!--logo-->
+    <div class="logoImg"><img src="../imgs/newLogo.png" alt="andunLogo" width="70" /></div>
+    <!--title-->
+    <div class="andunName"><div>后台管理系统</div></div>
+    <!--userName-->
+    <div class="userName" id="userName">请登录</div>
+    <!--合伙人消息-->
+   <div class="dadMessage" style="display:none;" id="dadMessage">
+       <div class="message">
+           <img src="../imgs/iframeImgs/message.png" alt="" style="width:20px;">
+           <span id="span"></span>
+       </div>
+   </div>
+    <!--exit-->
+    <a class="exit" title="退出登录" id="logout">
+        <img src="../imgs/exit.png" alt="退出登录"/>
+    </a>
+    <!--修改密码-->
+    <div class="changePwd" id="changePwd">修改密码</div>
+</header>
+<!--主体-->
+<main class="main">
+    <!--导航-->
+    <div class="navList navList1">
+        <ul class="listBox">
+           <!-- <li class="navLi" data="framePages/totalIndex.html"><a class="liActive" href="javascript:;" id="indexMain">主页</a></li>
+            <li class="navLi" data="partner/partnerIndex.html"><a class="liActive" href="javascript:;" id="indexCity">主页[C]</a></li>
+            <li class="navLi" data="framePages/warningList.html"><a href="javascript:;">预警救助中心</a></li>
+            <li class="navLi" data="partner/deviceManage.html"><a href="javascript:;">设备管理[C]</a></li>-->
+        </ul>
+    </div>
+    <!--内容-->
+    <div class="content">
+        <iframe width="100%" height="100%" id="contentFrame" src="">
+
+        </iframe>
+    </div>
+</main>
+
+<!--模态框--修改密码-->
+<div role="dialog" class="modal fade" id="layer-changePwd">
+    <div class="modal-dialog">
+        <div class="modal-content" style="max-width: 500px;min-width: 200px;">
+            <!--header-->
+            <div class="modal-header text-center">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
+                <h4 class="h4 modal-title">修改密码</h4>
+            </div>
+            <!--body-->
+            <div class="modal-body changePwdAlert">
+                <!--用户名-->
+                <div class="row">
+                    <div class="col-sm-3 text-right">用户名：</div>
+                    <div class="col-sm-3" id="userName2">请登录</div>
+                </div>
+                <!--新密码-->
+                <div class="row">
+                    <div class="col-sm-3 text-right">新密码：</div>
+                    <div class="col-sm-5">
+                        <input type="password" class="form-control" id="newPassWord1" placeholder="6~16位字母或数字"/>
+                    </div>
+                </div>
+                <!--确认新密码-->
+                <div class="row">
+                    <div class="col-sm-3 text-right">确认新密码：</div>
+                    <div class="col-sm-5">
+                        <input type="password" class="form-control" id="newPassWord2" placeholder="请确认新密码"/>
+                    </div>
+                </div>
+                <!--手机号-->
+                <div class="row">
+                    <div class="col-sm-3 text-right">手机号：</div>
+                    <div class="col-sm-5">
+                        <input type="text" class="form-control" id="phoneNum" disabled="disabled"/>
+                    </div>
+                    <div class="col-sm-3">
+                        <button class="btn btn-skyBlue" id="sendMsg">发送验证码</button>
+                    </div>
+                </div>
+                <!--验证码-->
+                <div class="row">
+                    <div class="col-sm-3 text-right">输入验证码：</div>
+                    <div class="col-sm-5">
+                        <input type="text" class="form-control" id="countCode" placeholder="请输入验证码"
+                               onkeyup="value=value.replace(/[^\d]/g,'') " ng-pattern="/[^a-zA-Z]/">
+                    </div>
+                </div>
+                <!--按钮组-->
+                <div class="row">
+                    <div class="col-sm-5"></div>
+                    <div class="col-sm-3"><button id="enterBtn" class="btn btn-skyBlue">确定</button></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--js-->
+<script src="../lib/jquery/jquery.min.js"></script>
+<script src="../lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="../lib/layer/layer.js"></script>
+<script src="../js/common.js"></script>
+<script>
+    if(localStorage.sign == 0 || localStorage.sign == 1){
+        document.write('<script type="text/javascript" src="https://cdn.goeasy.io/goeasy.js"><\/script>'+
+        '<script src="../js/goEasySos.js"><\/script>');
+    }
+</script>
+<script src="../js/indexCommon.js"></script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="../../imgs/logo-l.png">    <!--title-icon-->
+    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../../lib/datatables/css/jquery.dataTables.min.css"/>
+    <link rel="stylesheet" href="../../css/cssReset.css"/>
+    <link rel="stylesheet" href="../../css/framePages/bindingManage.css"/>
+    <title>vip用户列表</title>
+    <style>
+    	.searchBox .search2 .input2{background:#fff;}
+        .searchBox{padding:0 0 13px 0;}
+        .tr1{opacity: 0.8;background: rgba(0,150,255,0.10);}
+    </style>
+</head>
+<body>
+<!--搜索条件-->
+<div class="main dad">
+    <div class="searchBox">
+        <div class='form'>
+            <div class='search2'>
+                <img src="../../imgs/search@2x.png" alt="" class='icon1'/><input type="text" class="phone" id="inputText" placeholder="手机号/姓名/设备号"/>
+            </div>
+            <button id="search" class="search" style='margin:0 10px;'>搜索</button>
+            <button id="all" class="search">全部</button>
+        </div>
+
+    </div>
+    <!--<div class="row searchBox">-->
+    <!--&lt;!&ndash;<div class="col-sm-2"><input type="date" class="form-control" id="startTime"/></div>&ndash;&gt;-->
+    <!--&lt;!&ndash;<div class="hr"></div>&ndash;&gt;-->
+    <!--&lt;!&ndash;<div class="col-sm-2"><input type="date" class="form-control" id="endTime"/></div>&ndash;&gt;-->
+    <!--<div class="col-sm-3 search2"><img src="../../imgs/search@2x.png" alt="" class='icon1'/><input type="text" class="form-control input2" id="inputText" placeholder="手机号/姓名/设备号"/></div>-->
+    <!--<div class="col-sm-1"><button id="search" class="btn btn-skyBlue search">搜索</button></div>-->
+    <!--<div class="col-sm-1"><button id="all" class="btn btn-skyBlue search">全部</button></div>-->
+    <!--&lt;!&ndash;<div class="col-sm-1"><button id="getOut" class="btn btn-skyBlue">导出excel</button></div>&ndash;&gt;-->
+    <!--</div>-->
+
+    <!--table佩戴人-->
+    <div class="bindBox">
+        <table data-toggle="table" class="table table-bordered text-center table-hover" id="attentionTable">
+            <thead>
+            <tr class="tr1">
+                <th>序号</th>
+                <th>佩戴人</th>
+                <th>城市</th>
+                <th>性别</th>
+                <th>年龄</th>
+                <th>病史</th>
+                <th>备注</th>
+                <th>最近上传数据</th>
+                <th>健康状态</th>
+                <th>上次查看</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<!--js-->
+<script src="../../lib/jquery/jquery.min.js"></script>
+<script src="../../lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../lib/datatables/js/jquery.dataTables.min.js"></script>
+<script src="../../lib/layer/layer.js"></script>
+<script src="../../lib/echarts/echarts.min.js"></script>
+<script src="../../js/common.js"></script>
+<script src="../../js/framePages/vipUserList.js"></script>
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="../../imgs/logo-l.png">    <!--title-icon-->
+    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../../lib/datatables/css/jquery.dataTables.min.css"/>
+    <link rel="stylesheet" href="../../css/cssReset.css"/>
+    <link rel="stylesheet" href="../../css/framePages/bindingManage.css"/>
+    <title>轮播图管理</title>
+    <style>
+        .searchBox{padding:0 0 13px 0;display:flex;align-items:center;justify-content:space-between;}
+        h2{opacity: 0.5;font-size: 22px;color: #000;}
+        .tr1{opacity: 0.8;background: rgba(0,150,255,0.10);}
+    </style>
+</head>
+<body>
+
+<div id="adv" v-cloak class="dad">
+    <h2>轮播图管理</h2>
+<!--搜索条件-->
+    <div class="searchBox">
+        <div class='form'>
+            <div class="select">
+                <select name="" id="selectVal" class="input2">
+                    <option value="1" class="selected">安顿用户端</option>
+                    <option value="2">安顿医生端</option>
+                </select>
+            </div>
+            <button class="search" style='margin:0 10px;' @click="search">搜索</button>
+            <button class="search" @click="toAdd">全部</button>
+        </div>
+        <!--<div>-->
+            <!--<button class="export" id="getOut">导出excel</button>-->
+        <!--</div>-->
+
+    </div>
+<div class="row searchBox">
+    <!--<div class="col-sm-2">
+        <select id = "selectVal" class="form-control">
+            <option value="1" class="selected">安顿用户端</option>
+            <option value="2">安顿医生端</option>
+        </select>
+    </div>-->
+    <!--<div class="col-sm-1"><button  class="btn btn-skyBlue" @click="search">搜索</button></div>-->
+    <div class="col-sm-1 text-right"><button  class="btn btn-skyBlue" @click="toAdd">添加</button></div>
+</div>
+
+<div class="appBox" >
+    <table data-toggle="table" class="table table-bordered text-center table-hover" id="advTable">
+        <thead>
+        <tr class="tr1">
+            <th>序号</th>
+            <th>产品</th>
+            <th>模块</th>
+            <th>更新时间</th>
+            <th>说明</th>
+            <th>URL</th>
+            <th>操作员</th>
+            <th>状态</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+
+</div>
+
+
+
+
+
+<!--js-->
+<script src="../../lib/jquery/jquery.min.js"></script>
+<script src="../../lib/vue.min.js"></script>
+<script src="../../lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../lib/datatables/js/jquery.dataTables.min.js"></script>
+<script src="../../lib/layer/layer.js"></script>
+<script src="../../lib/echarts/echarts.min.js"></script>
+<script src="../../js/common.js"></script>
+<script src="../../js/framePages/advertisement.js"></script>
+</body>
+</html>

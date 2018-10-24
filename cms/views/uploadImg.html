@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../assets/css/layui.css">
+    <link rel="stylesheet" href="../assets/css/view.css"/>
+    <title></title>
+</head>
+<body>
+<body class="layui-view-body">
+<div class="layui-content">
+    <div class="layui-row">
+        <div class="layui-card">
+            <div class="layui-card-header">上传图片</div>
+            <form class="layui-form layui-card-body" action="javascript:add();">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">图片远程连接</label>
+                    <div class="layui-input-inline" style="width: 600px;color: #1296db">
+                        <input type="text" name="title" id="url" required lay-verify="required" placeholder="请输入图片链接" autocomplete="off" class="layui-input">
+                    </div>
+                    <div class="layui-form-mid layui-word-aux"></div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn layui-btn-blue" lay-submit lay-filter="formDemo">立即提交</button>
+                        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                    </div
+                </div>
+
+                <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label">结果</label>
+                    <div class="layui-input-block">
+                        <textarea name="desc" id="res" placeholder="提交之后的结果将在此处显示" class="layui-textarea" style="min-height: 340px;"></textarea>
+                    </div>
+                </div>
+                <div>
+                  <img src="" alt="" id="showImg">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script src="../assets/layui.all.js"></script>
+<script src="../common.js"></script>
+<script src="https://www.vshidai.top/lib/jquery/jquery.min.js"></script>
+<script>
+    var form = layui.form,layer = layui.layer;
+    function add() {
+        $.ajax({
+            url:ApiPath + '/wx/add?url='+$('#url').val(),
+            success:function (res) {
+                $('#res').text(res);
+                $('#showImg').
+            }
+        });
+    }
+</script>
+</body>
+</body>
+</html>

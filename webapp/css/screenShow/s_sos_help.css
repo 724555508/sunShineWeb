@@ -1,0 +1,31 @@
+[v-cloak]{display: none;}
+#main{width: 100vw;height: 100vh;background: url("../../imgs/mapImages/screenBG.png") no-repeat;}
+#app{background-size: 100% 100%;display: flex;justify-content: space-around;flex-direction: row;align-items: center;width: 100vw;height: 100vh;}
+#app>div{height: 95%;}
+#app>div:nth-child(1){width: 40%;background: rgba(31,31,31,0.8);border-radius: 8px;padding: 20px 20px;}
+#app>div:nth-child(2){width: 59%;display: flex;justify-content: space-between;flex-direction: column;align-items: center;}
+#app>div:nth-child(2)>div{width: 100%;border-radius: 8px;background: rgba(31,31,31,0.8);height: 49.5%;padding: 20px 20px;}
+/*left*/
+.left{overflow-y: hidden;}
+.left>.title{font-family: PingFangSC-Semibold;font-size: 30px;color: #fff;letter-spacing: 0;line-height: 30px;}
+.left>.count{display: flex;justify-content: space-around;width: 100%;margin: 50px 0;}
+.left>.count>div{width: 33.33%;text-align: center;border-right: 1px solid  #4A4A4A;}
+.left>.count>div:last-child{border: none;}
+.left>.count>div>div:nth-child(1){font-size: 24px;color: rgba(255,255,255,0.6);line-height: 30px;}
+.left>.count>div>div:nth-child(2){font-size: 48px;color: #0096FF;line-height: 60px;}
+.left>.userInfo{width: 100%;}
+.left>.userInfo>div:first-child{border-top: 1px solid #4a4a4a;}
+.left>.userInfo>div{width: 100%;display: flex;justify-content: space-between;flex-direction: row;align-items: center;border-bottom: 1px solid #4a4a4a;padding: 15px 0;}
+.left>.userInfo>div>div:nth-child(1){width: 70px;}
+.left>.userInfo>div>div:nth-child(2){width: calc(100% - 70px);display: flex;justify-content: space-between;align-items: center;padding: 0 10px;}
+.userMsg{}
+.userMsg>div:nth-child(1){line-height: 30px;}
+.userMsg>div:nth-child(1)>div:nth-child(1){font-size: 17px;color: #fff;}
+.userMsg>div:nth-child(1)>div:nth-child(1)>span:nth-child(2){font-size: 15px;padding: 0 10px;}
+.userMsg>div:nth-child(1)>div:nth-child(2)>span{font-family: PingFangSC-Regular;font-size: 13px;color: #fff;margin: 8px 8px 0 0;padding: 5px 13px;border-radius: 30px;cursor: pointer;
+    background-image: linear-gradient(-155deg, #FF5858 15%, #F09819 100%);}
+.userMsg>div:nth-child(1)>div:nth-child(2)>.noIllHistory{font-size: 13px;color: #fff;margin: 8px 8px 0 0;border-radius: 30px;cursor: pointer;background-image: linear-gradient(-155deg, #1a8f75 15%, #78c61a 100%);}
+.userMsg>div:nth-child(2){color: #9B9B9B;font-size: 14px;}
+/*right*/
+.right>div>div{width: 100%;height: 100%;}
+

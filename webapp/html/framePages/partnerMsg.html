@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<link rel="shortcut icon" href="../../imgs/logo-l.png">
+		<!--title-icon-->
+		<link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="../../lib/datatables/css/jquery.dataTables.min.css" />
+		<link rel="stylesheet" href="../../css/cssReset.css" />
+		<link rel="stylesheet" href="../../css/framePages/partnerMsg.css" />
+		<title>合伙人详情</title>
+		<style>
+			[v-cloak]{display: none;}  /*去掉vue渲染时{{}}的表达式*/
+			.row1>div,
+			.row2>div {
+				width: 25%;
+				border-left: 3px solid #0096ff;
+				padding-left: 10px;
+				font-size: 14px;
+				color: rgba(0, 0, 0, 0.6);
+				font-weight: bold;
+			}
+			
+			.row1>div>span,
+			.row2>div>span {
+				color: #000;
+			}
+			/*part3*/
+			/*统计数据*/
+			
+			
+			/*part4*/
+			
+			.part4 {
+				display: flex;
+				justify-content: space-between;
+			}
+			/*.part4>h1{margin: 0;}*/
+			
+			.part4>a {
+				font-size: 14px;
+				color: #0096FF;
+				line-height: 14px;
+				text-decoration: none;
+				display: inline-block;
+				padding-top: 10px;
+			}
+
+
+		</style>
+	</head>
+
+	<body>
+		<main class="bigBox main" id="adv" v-cloak>
+			<div class='part1'>
+				<div class='dad'>
+					<div class='number'>{{ bigNum }}</div>
+					<div class='left'>
+						<div class='div1'>
+							<h2>{{ companyname }}</h2>
+							<p class='p1' v-if="useSign == 0">冻结</p>
+							<p class='p2' v-if="useSign == 2">正常</p>
+						</div>
+						<div class='div2'>
+							<p>{{ username }}</p>
+							<span>{{ phoneNum }}</span>
+						</div>
+						<p class='bj'></p>
+						<div class='div2'>
+							<p>渠道数量 </p>
+							<span>{{ channel }}</span>
+						</div>
+						<div class='div2'>
+							<p>有效期 </p>
+							<span>{{bargainTime}}</span>
+						</div>
+					</div>
+				</div>
+				
+				
+				<div class='center'>
+					<h2>{{ agencyCity }}</h2>
+					<div class='div1'>
+						<div class='txt1'>
+							<p>保证金</p>
+							<span>0</span>
+						</div>
+						<div class='txt1 txt2'>
+							<p>分成收入</p>
+							<span>0</span>
+						</div>
+					</div>
+					<div class='div1'>
+						<div class='txt1'>
+							<p>销售件数</p>
+							<span>{{ sell }}</span>
+						</div>
+						<div class='txt1 txt2'>
+							<p>销售总额</p>
+							<span>0</span>
+						</div>
+					</div>
+					<div class='div1'>
+						<div class='txt1'>
+							<p>联系人</p>
+							<span>{{ linkName }}</span>
+						</div>
+						<div class='txt1 txt2'>
+							<p>联系电话</p>
+							<span>{{ linkPhoneNum }}</span>
+						</div>
+					</div>
+					<div class='div1'>
+						<div class='txt1'>
+							<p>合同编号</p>
+							<span>{{ grantNum }}</span>
+						</div>
+						<div class='txt1 txt2'>
+							<p></p>
+							<span></span>
+						</div>
+					</div>
+					
+				</div>
+				<div class='right'>
+					<button class='btn1' @click="edit">编辑</button>
+				</div>
+			</div>
+			<section class="part2">
+				<!--总数-->
+				<div title="全部设备">
+					<div id="all">{{ all }}</div>
+					<div>全部设备</div>
+				</div>
+				<!--库存设备 -->
+				<div title="库存设备">
+					<div id="repertory">{{ repertory }}</div>
+					<div>库存设备</div>
+				</div>
+				<!--已售设备-->
+				<div title="已售设备">
+					<div id="AllArea">{{ sell }}</div>
+					<div>已售设备</div>
+				</div>
+				<!--线上订单-->
+				<div title="线上订单">
+					<div id="disableNum">0</div>
+					<div>线上订单</div>
+				</div>
+			</section>
+            <div class='part3'>
+            	<h2>其他管理</h2>
+               <div class='add'>
+               	 <div class='location'>
+					 <a :href="partnerUrl">地址管理</a>
+                 </div>
+                 <button class='code'>二维码</button>
+               </div>
+            </div>
+
+			<!--登陆日志-->
+			<div class="logBox" >
+				<h2 class="h2">登录日志</h2>
+				<table data-toggle="table" class="table table-bordered text-center table-hover" id="logTable">
+					<thead>
+					<tr class='tr1'>
+						<th>序号</th>
+						<th>上线时间</th>
+						<th>登录地点</th>
+						<th>设备</th>
+						<!--<th>操作</th>-->
+					</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+			</div>
+
+
+			<!--点击编辑进行弹框-->
+			<div role="dialog" class="modal fade bs-example-modal-sm" id="editModel">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<!--header-->
+						<div class="modal-header text-center">
+							<button type="button" class="close" data-dismiss="modal">
+								<span>&times;</span>
+							</button>
+							<h4 class="h4 modal-title">修改账号资料</h4>
+						</div>
+						<!--&lt;!&ndash;body&ndash;&gt;-->
+						<div class="modal-body text-center">
+							<div class="buildBox">
+								<!--选择区域-->
+								<div class="row">
+									<div class="col-sm-4 text-left"><label for="selectArea">选择区域</label></div>
+									<div class="col-sm-8">
+										<div class="allArea" id="allArea">
+											<img src="../../imgs/iframeImgs/addArea.png" alt="" id="selectArea" class="dwImg">
+											<div class="areaItem" title="点击删除" :data="item.areaId" :id="item.areaId" v-for="(item,index) in areas" >{{item.areaName}}
+												<img src="../../imgs/iframeImgs/delete1.png" @click="deleteMe(index)">
+											</div>
+										</div>
+									</div>
+								</div>
+								<!--合伙人性质-->
+								<div class="row" >   <!--style="margin-left:-7px;"-->
+									<div class="col-sm-12" >
+										<div class="col-sm-4 text-left" x><label for="nature" style="margin-left:-16px;">合伙人性质</label></div>
+										<div class="col-sm-8" >
+											<select name="" id="nature"  style="margin-left:-5px;">
+												<option value="1">企业</option>
+												<option value="2">个人</option>
+											</select>
+										</div>
+
+									</div>
+								</div>
+								<!--企业名称-->
+								<div class="row">
+									<div class="col-sm-4 text-left"><label for="conName">企业名称</label></div>
+									<div class="col-sm-8"><input type="text" id="conName" v-model="companyname1"></div>
+								</div>
+								<!--负责人姓名-->
+								<div class="row">
+									<div class="col-sm-4 text-left"><label for="agentName">负责人姓名</label></div>
+									<div class="col-sm-8"><input type="text" class="form-control" id="agentName" placeholder="" v-model="agentName"></div>
+								</div>
+								<!--负责人电话-->
+								<div class="row">
+									<div class="col-sm-4 text-left"><label for="agentPhone" style="color:red">负责人手机号</label></div>
+									<div class="col-sm-8">
+										<input type="text" class="form-control" onkeyup="value=value.replace(/[^\d]/g,'');this.value=this.value.substr(0,11);"
+											   ng-pattern="/[^a-zA-Z]/" placeholder="(用作登录账号)" id="agentPhone" v-model="agentPhone">
+									</div>
+								</div>
+								<!--合同结束时间-->
+								<div class="row">
+									<div class="col-sm-4 text-left"><label for="endTime">合同结束时间</label></div>
+									<div class="col-sm-8"><input type="date" class="form-control" id="endTime" v-model="bargainEndTime"></div>
+								</div>
+								<!--联系人(选填)-->
+								<div class="row">
+									<div class="col-sm-4 text-left"><label for="linkName">联系人</label></div>
+									<div class="col-sm-8"><input type="text" class="form-control" id="linkName" placeholder="" v-model="linkUserName"></div>
+								</div>
+								<!--联系人电话(选填)-->
+								<div class="row">
+									<div class="col-sm-4 text-left"><label for="linkNamePhone">联系人电话</label></div>
+									<div class="col-sm-8">
+										<input type="text" class="form-control" onkeyup="value=value.replace(/[^\d]/g,'');this.value=this.value.substr(0,11);"
+											   ng-pattern="/[^a-zA-Z]/" placeholder="" id="linkNamePhone" v-model="linkPhone">
+									</div>
+								</div>
+								<!--确定添加-->
+								<div class="row lastRow">
+									<div class="col-sm-4"><button class="btn btn-default btn-block" @click="closeModel">取消</button></div>
+									<div class="col-sm-4"><button class="btn btn-skyBlue btn-block"  @click='editSubmit'>确定</button></div>
+								</div>
+							</div>
+
+						</div>
+						<!--<div class="row">-->
+						<!--<div class="col-sm-4"><button class="btn btn-default btn-block" @click="closeModel">取消</button></div>-->
+						<!--<div class="col-sm-4"><button class="btn btn-skyBlue btn-block" @click='returnSubmit'>确定</button></div>-->
+						<!--</div>-->
+					</div>
+				</div>
+			</div>
+			<!--点击选择区域-->
+			<div role="dialog" class="modal fade bs-example-modal-sm" id="layerArea">
+				<div class="modal-dialog">
+					<div class="modal-content" style="max-width: 800px;min-width: 600px;">
+						<!--header-->
+						<div class="modal-header text-center">
+							<button type="button" class="close" data-dismiss="modal">
+								<span>&times;</span>
+							</button>
+							<h3>选择区域</h3>
+						</div>
+						<!--body-->
+						<div class="modal-body text-center">
+							<!--代理区域-->
+							<div class="row">
+								<div class="col-sm-3 text-right"><label for="selectArea">区域等级:</label></div>
+								<div class="col-sm-6">
+									<select name="" id="selArea" class="form-control">
+										<option value="1" class="areaLevel">省</option>
+										<option value="2">市</option>
+										<option value="3">区/县</option>
+									</select>
+								</div>
+							</div>
+							<!--区域选择-->
+							<div class="row">
+								<div class="col-sm-3 text-right"><label for="selectSheng">区域选择:</label></div>
+								<div class="col-sm-3">
+									<select name="" id="selectSheng" class="form-control">
+
+									</select>
+								</div>
+								<div class="col-sm-3">
+									<select name="" id="selectShi" class="form-control" style="display: none">
+
+									</select>
+								</div>
+								<div class="col-sm-3">
+									<select name="" id="selectQuxian" class="form-control" style="display: none">
+
+									</select>
+								</div>
+							</div>
+							<hr>
+							<div class="row">
+								<div class="col-sm-12 text-center"><button class="btn btn-skyBlue" id="subArea">添加</button></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</main>
+
+		<!--省市区县选择模板-->
+		<script type="text/html" id="shengJs">
+			{{each data.result}}
+			<option value="{{$value.id}}" >{{$value.areaName}}</option>
+			{{/each}}
+		</script>
+		<script type="text/html" id="shiJs">
+			{{each data.result}}
+			<option value="{{$value.id}}">{{$value.areaName}}</option>
+			{{/each}}
+		</script>
+		<script type="text/html" id="quJs">
+			{{each data.result}}
+			<option value="{{$value.id}}">{{$value.areaName}}</option>
+			{{/each}}
+		</script>
+
+		<!--js-->
+		<script src="../../lib/jquery/jquery.min.js"></script>
+		<script src="../../lib/vue.min.js"></script>
+		<script src="../../lib/bootstrap/js/bootstrap.min.js"></script>
+		<script src="../../lib/datatables/js/jquery.dataTables.min.js"></script>
+		<script src="../../lib/layer/layer.js"></script>
+		<script src="../../lib/echarts/echarts.min.js"></script>
+		<script src="../../lib/template.js"></script>
+		<script src="../../js/common.js"></script>
+		<script src="../../js/framePages/partnerDetails.js"></script>
+	</body>
+
+</html>

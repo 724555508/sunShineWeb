@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="../../imgs/logo-l.png">    <!--title-icon-->
+    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../../css/cssReset.css"/>
+    <title>app用户详情</title>
+    <style>
+        .bigBox{width:1000px;margin: 20px auto;position: relative;font-size: 14px;}
+        .title{font-size: 15px;color: #464646;line-height: 40px;letter-spacing: 0;}
+        .box{padding: 20px 0;background: #F7FCFF;border-radius: 8px;}
+        .headImg{width: 70px;border-radius: 10px;}
+        .d1{display: flex;}
+        .msg>div{line-height: 35px;}
+        .msg>div span{margin: 0 10px;font-size: 13px;color: #000;letter-spacing: 0;line-height: 13px;}
+        .msg>div .username{font-size: 16px;color: #000;letter-spacing: 0;line-height: 16px;font-weight: 600;}
+        .myMsg{display: flex;margin: 21px 0;}
+        .myMsg>div{width: 30%;color: rgba(0,0,0,0.3);font-size: 14px;font-weight: bold;
+            border-left: 3px solid #0092ff;padding-left: 10px;}
+        .myMsg>div span{color: #000;}
+        .listBox{padding: 21px 0;display: flex;flex-wrap:wrap;}
+        .listBox a{display: inline-block;width: 91px;line-height: 38px;color: #fff;border: 1px solid #37B864;
+            border-radius: 4px;text-align: center;margin: 20px 8px;background-color: #37B864;}
+
+
+
+    </style>
+</head>
+<body>
+<main class="bigBox">
+    <!--part1-->
+    <h1 class="title">APP用户详情</h1>
+    <hr>
+    <div class="box">
+        <div class="d1">
+            <div><img src="../../imgs/iframeImgs/u20.png" alt="" id="headImg" class="headImg"></div>
+            <div class="msg">
+                <div>
+                    <span class="username" id="username"></span>
+                    <!--<span><img src="../../imgs/iframeImgs/yes.png" alt=""></span>-->
+                    <!--<span><img src="../../imgs/iframeImgs/vip.png" alt=""></span>-->
+                    <span id="sex"></span>
+                    <span id="Age"></span>
+                    <span id="address"></span>
+                </div>
+
+                <div >
+                    <span>联系电话: <span id="phoneNum"></span></span>
+                    <span>注册时间: <span id="createTime"></span></span>
+                    <span>最后一次登陆: <span id="lastLoginTime"></span></span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!--part2-->
+    <h1 class="title">管理的设备（佩戴人）</h1>
+    <hr>
+    <div class="listBox" id="listBox"></div>
+</main>
+
+
+
+
+
+
+
+<!--js-->
+<script src="../../lib/jquery/jquery.min.js"></script>
+<script src="../../lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../lib/layer/layer.js"></script>
+<script src="../../lib/echarts/echarts.min.js"></script>
+<script src="../../js/common.js"></script>
+<script src="../../js/framePages/appUserDetails.js"></script>
+</body>
+</html>

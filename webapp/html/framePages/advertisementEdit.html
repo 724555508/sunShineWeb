@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="../../imgs/logo-l.png">    <!--title-icon-->
+    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../../lib/datatables/css/jquery.dataTables.min.css"/>
+    <link rel="stylesheet" href="../../css/cssReset.css"/>
+    <link rel="stylesheet" type="text/css" href="../../lib/editor/styles/simditor.css" />
+    <title>编辑</title>
+    <style>
+        [v-cloak]{display: none;}
+        .main div{
+            width: 30%;
+            margin: 20px 30px;
+        }
+        .select{
+            display: inline-flex;
+        }
+        .textAreaDiv{
+            width: 50%;
+            margin: 20px 30px;
+        }
+        .myFileUpload
+        {
+            line-height: 32px;
+            opacity: 0;
+            z-index: 999;
+            cursor: pointer;
+            width: 84px;
+            position: absolute;
+            margin-top: -40px;
+            width: 84px;
+        }
+        .bottomBtn{
+            margin-left: 5%;
+        }
+        .bottomBtn button:first-child{
+            margin-right: 200px;
+        }
+    </style>
+</head>
+<body >
+    <div id="adv" v-cloak >
+    <div class="main" >
+        <div>
+            <input type="text" class="form-control important" placeholder="请输入标题备注"
+                   name="remark" v-model="title" />
+        </div>
+        <div>
+            <button class="btn btn-skyBlue">添加图片</button>
+            <form id="uploadImg">
+                <input type="hidden" name="loginId" id="loginId" v-model="loginId"/>
+                <input type="hidden" name="token" id="token" v-model="token"/>
+                <label for="newImg" ><!---->
+                    <input type="file" id="newImg" name="file" class="myFileUpload" multiple="multiple" @change="uploadimg"
+                           accept="image/gif,image/jpeg,image/jpg,image/png,image/svg"/>
+                </label>
+            </form>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <span>(封面图) 分辨率：***/***   最大不超过100k</span>
+        </div>
+        <div id="imgShowBox">
+            <input type="hidden" name="url" id="img" v-model="imgs"/>
+            <!-- 这里放预览图 -->
+        </div>
+        <div class="select">
+            <select id = "selectVal" class="form-control" v-model='selected'>
+                <option value="1" class="selected">安顿用户端</option>
+                <option value="2">安顿医生端</option>
+            </select>
+            <select id = "selectVal2" class="form-control" v-model='selected2'>
+                <option value="1" class="selected">服务模块</option>
+            </select>
+        </div>
+
+        <div>
+            <input type="text" class="form-control important" placeholder="设置跳转链接" name="linkUrl"
+             v-model="linkUrl">
+        </div>
+
+
+    </div>
+    <!--富文本编辑-->
+    <!--<div class="textAreaDiv">-->
+        <!--<textarea id="content" autofocus></textarea>-->
+    <!--</div>-->
+    <div class="bottomBtn">
+        <button class="btn btn-skyBlue" @click="shows">{{ showsValue }}</button>
+        <button class="btn btn-skyBlue" @click="submit">确定</button>
+        <button class="btn btn-skyBlue" @click="reset">重置</button>
+    </div>
+    </div>
+    <script src="../../lib/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="../../lib/editor/scripts/module.min.js"></script>
+    <script type="text/javascript" src="../../lib/editor/scripts/hotkeys.min.js"></script>
+    <script type="text/javascript" src="../../lib/editor/scripts/uploader.min.js"></script>
+    <script type="text/javascript" src="../../lib/editor/scripts/simditor.min.js"></script>
+    <script src="../../lib/vue.min.js"></script>
+    <script src="../../lib/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../../lib/layer/layer.js"></script>
+    <script src="../../js/common.js"></script>
+    <script src="../../lib/jquery.form.js"></script>
+    <script src="../../lib/file_upload.js"></script>
+    <script src="../../js/framePages/advertisementEdit.js"></script>
+</body>
+</html>

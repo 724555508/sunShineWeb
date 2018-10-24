@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../../lib/datatables/css/jquery.dataTables.min.css"/>
+    <link rel="stylesheet" href="../../css/cssReset.css"/>
+    <link rel="stylesheet" href="../../css/framePages/SosWarningList.css"/>
+    <link rel="shortcut icon" href="../../imgs/logo-l.png">    <!--title-icon-->
+    <title>库存管理</title>
+    <style>
+        body{background:#fff;}
+        .main{width:1200px;margin:0 auto;}
+        .modal-body .row{margin: 20px 0;}
+        /*统计数据*/
+        .Statistics{color: #000;display: flex;display: -webkit-flex; justify-content:space-between;}
+        .Statistics>div{width: 30%;height: 80px;background-color: #F2FAFF;border-radius: 6px;}
+        .Statistics>div>div{text-align: center;}
+        .Statistics>div>div:nth-child(1){font-size: 24px;line-height: 50px;color: #161616;}
+        .Statistics>div>div:nth-child(2){color: #8F9295;font-size: 12px;}
+        /*.searchBox .search2 .phone{background:#f2f2f1;}*/
+        .searchBox1{margin: 30px 0 25px;}
+
+        #repertoryTable_wrapper{margin-bottom: 20px;}
+        .modal-dialog {    /*水平垂直居中*/
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            z-index: 3;
+            margin:0 auto;
+            -webkit-transform: translate(-50%, -50%) !important;
+            -moz-transform: translate(-50%, -50%) !important;
+            -ms-transform: translate(-50%, -50%) !important;
+            -o-transform: translate(-50%, -50%) !important;
+            transform: translate(-50%, -50%) !important;
+        }
+        .modal-header{border-bottom:none;}
+
+        /*点击查看弹框*/
+        /*水平垂直居中*/
+        .modal-dialog {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            z-index: 3;
+            margin:0 auto;
+            -webkit-transform: translate(-50%, -50%) !important;
+            -moz-transform: translate(-50%, -50%) !important;
+            -ms-transform: translate(-50%, -50%) !important;
+            -o-transform: translate(-50%, -50%) !important;
+            transform: translate(-50%, -50%) !important;
+        }
+        .modal-header{border-bottom:none;}
+        #layer .modal-dialog{width:387px !important;}
+        #layer  .row{display:flex;justify-content:center;}
+        #layer  .box{width:300px;margin:0 auto;margin-bottom:40px;}
+        #layer  .box .donation1{font-family: PingFangSC-Medium;font-size: 13px;color: #767676;display:flex;align-items:center;}
+        #layer  .box .donation1>div{margin-left:10px;}
+        #layer  .box .donation1>div span{display:inline-block;margin-left:5px;}
+        #layer  .box .donation1 select{width:199px;margin-left:10px;}
+        .modal-dialog h3{font-size: 16px;color: #464646;}
+
+    </style>
+</head>
+<body>
+<div class="main">
+
+    <!--3个统计数据-->
+    <section class="Statistics">
+        <!--总数-->
+        <div title="总数">
+            <div id="repertory">0</div>
+            <div>总数</div>
+        </div>
+        <!--一代-->
+        <div title="一代">
+            <div id="version1">0</div>
+            <div>一代</div>
+        </div>
+        <!--二代-->
+        <div title="二代">
+            <div id="version2">0</div>
+            <div>二代</div>
+        </div>
+    </section>
+
+    <!--搜索条件-->
+    <div class="searchBox">
+        <div class='form'>
+            <div class='search2'>
+                <img src="../../imgs/search@2x.png" alt="" class='icon1'/><input type="text" class="phone" id="inputText" placeholder="设备号"/>
+            </div>
+            <button id="search" class="search" style='margin:0 10px;'>搜索</button>
+            <button id="all" class="search">全部</button>
+        </div>
+        <div>
+            <button class="export" id="getOut">导出excel</button>
+        </div>
+
+    </div>
+    <!--<div class="row searchBox form">-->
+    <!--<div class="col-sm-3 search2"><img src="../../imgs/search@2x.png" alt="" class='icon1'/><input type="text" class="form-control phone" id="inputText" placeholder="设备号"/></div>-->
+    <!--<div class="col-sm-1"><button id="search" class="btn btn-skyBlue search">搜索</button></div>-->
+    <!--<div class="col-sm-1"><button id="all" class="btn btn-skyBlue search">全部</button></div>-->
+    <!--<div class="col-sm-1"><button id="getOut" class="btn btn-skyBlue export1">导出excel</button></div>-->
+    <!--</div>-->
+
+    <!--库存-->
+    <table data-toggle="table" class="table table-bordered text-center table-hover" id="repertoryTable">
+        <thead>
+        <tr>
+            <th>序号</th>
+            <th>型号</th>
+            <th>设备号</th>
+            <!--<th>产地</th>-->
+            <!--<th>出厂日期</th>-->
+            <th>入库时间</th>
+            <!--<th>出货价</th>-->
+            <th>库管</th>
+            <th>操作员</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <div class="row">
+        <div class="col-sm-10"></div>
+        <div class="col-sm-1"><button class="btn btn-skyBlue" type="button" id="allAllot">全选</button></div>
+        <div class="col-sm-1"><button class="btn btn-skyBlue" type="button" id="allot">一键分配</button></div>
+    </div>
+
+
+    <!--模态框-->
+    <div role="dialog" class="modal fade bs-example-modal-sm" id="layer">
+        <div class="modal-dialog">
+            <div class="modal-content" style="max-width: 500px;min-width: 400px;">
+                <!--header-->
+                <div class="modal-header text-center">
+                    <button type="button" class="close"  id="close" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                    <h3>分配市场</h3>
+                </div>
+                <!--body-->
+                <div class="modal-body text-center">
+                    <div class="box">
+                        <div class="donation1">
+                            是否爱心捐赠
+                            <div><input type="radio" name="radio" value="1"><span>是</span></div>
+                            <div style="margin-left:20px;"><input type="radio" name="radio" value="0" checked><span>否</span></div>
+                        </div>
+                        <div class="donation1" style="margin:20px 0;">
+                            选择分配市场
+                            <select id="selectPartner" class="form-control">
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                            <div><button class="btn btn-default btn-block" id='closeModel' style="width:92px;margin-left:12px;">取消</button></div>
+                            <div><button type="button" class="btn btn-skyBlue" id="subBtn" style="width:92px;margin-left:12px;">确定</button></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--模板-->
+<script type="text/html" id="selectJs">
+    {{each data.list}}
+    <option value="{{$value.areaId}}/{{$value.id}}">{{$value.username}}({{$value.areaName}})</option>
+    {{/each}}
+</script>
+
+
+<!--js-->
+<script src="../../lib/jquery/jquery.min.js"></script>
+<script src="../../lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../lib/template.js"></script>
+<script src="../../lib/datatables/js/jquery.dataTables.min.js"></script>
+<script src="../../lib/layer/layer.js"></script>
+<script src="../../js/common.js"></script>
+<script src="../../js/framePages/repertoryManage.js"></script>
+</body>
+</html>

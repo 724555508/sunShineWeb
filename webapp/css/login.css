@@ -1,0 +1,57 @@
+body{width: 100vw;height: 100vh;margin: 0;padding: 0;min-width: 800px;min-height: 400px;position: relative;}
+.login{width: 100%;height: 100%;background: url("https://i.iandun.com:8085/group1/M00/01/2A/ezkhjFpMOa6AO9lzAA_JABiQI5s354.png");background-size: 100% auto;
+    background-repeat:no-repeat;background-position: 0 0px;position: relative;background-color: rgb(227, 214, 200);}
+/*body {
+    -webkit-perspective: 800px;
+    perspective: 800px;
+    height: 100vh;
+    margin: 0;
+    overflow: hidden;
+    font-family: 'Gudea', sans-serif;
+    background: #EA5C54;
+    background: url("../imgs/loginBG2.jpg");
+    background-size: 100% 100%;
+    !* Old browsers *!
+    !* FF3.6+ *!
+
+    !* W3C *!
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#EA5C54 ', endColorstr='#bb6dec',GradientType=1 );
+    !* IE6-9 fallback on horizontal gradient *!
+}*/
+body ::-webkit-input-placeholder {
+    color: #4E546D;
+}
+.loginBox{width: 380px;height: 321px;background-color: rgba(255,255,255,0.4);position: absolute;
+    border-radius: 12px;top: 220px;right: 100px;}
+
+.bgBox{position: absolute;z-index: 1;left: 23%;top: 31%;}
+/*header*/
+.header{padding: 30px;position: absolute;right: 40px;top: 100px;}
+/*loginBox*/
+/*.loginBox{width: 380px;height: 321px;background-color: rgba(255,255,255,0.9);position: absolute;
+    border-radius: 12px;top: 220px;right: 100px;}*/
+.logTitle{font-size: 20px;color: #000;line-height: 20px;text-align: center;margin: 31px 0 20.5px;font-weight: 600;}
+.inputBox{width: 300px;margin: 0 auto;position: relative;}
+.inputBox>input{width: 300px;height: 48px;background-color: transparent;border-radius: 2px;
+    border: 1px solid rgba(0,0,0,0.5);margin: 7.5px 0;padding-left: 46px;font-size: 14px;
+    font-weight: bold;color: rgba(0,0,0,0.6);}
+.icon{position: absolute;left: 10px;top: 18.5px;z-index:5;background-repeat: no-repeat;background-position: 0px 0px;
+    width: 26px; height: 26px;}
+.user{background-image: url(../imgs/user.png);}
+.pwd{background-image: url(../imgs/pwd.png);}
+.resetPwd{width: 300px;margin: 0 auto;position: relative;text-align: right;font-size: 12px;color: #4A90E2;
+    letter-spacing: -0.33px;}
+.resetPwd>a:link{color: #4A90E2;text-decoration: none;}
+.resetPwd>a:visited{color: #4A90E2;text-decoration: none;}
+.loginDiv{width: 300px;margin: 20px auto;text-align: center;font-size: 16px;color: #fff;
+    letter-spacing: 0;background: #4A90E2;border-radius: 4px;}
+.loginBtn{width: 300px;line-height: 42px;background-color: #4A90E2;border-radius: 4px;outline: none;border: none;}
+
+.copyright{position: fixed;width: 100%;left: 0;bottom: 20px;text-align: center;}
+.copyright>div:nth-child(1){line-height: 40px;}
+.copyright>div:nth-child(1)>a{font-family: MicrosoftYaHei;font-size: 14px;color: #271509;letter-spacing: 0;line-height: 14px;text-decoration: none;}
+.copyright>div:nth-child(1)>a:link{color: #271509;}
+.copyright>div:nth-child(1)>a:visited{color: #271509;}
+.copyright>div:nth-child(1)>a:active{color: #271509;}
+.copyright>div:nth-child(1)>a:hover{color: #271509;}
+.copyright>div:nth-child(2){opacity: 0.6;font-family: MicrosoftYaHei;font-size: 13px;color: #000000;letter-spacing: 0;line-height: 13px;}

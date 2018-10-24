@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="../../imgs/logo-l.png">    <!--title-icon-->
+    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../../lib/datatables/css/jquery.dataTables.min.css"/>
+    <link rel="stylesheet" href="../../css/cssReset.css"/>
+    <link rel="stylesheet" href="../../css/framePages/bindingManage.css"/>
+    <title>佩戴人管理</title>
+</head>
+<body>
+<div class='dad'>
+	<!--五个统计数据-->
+<section class="Statistics">
+    <!--总数-->
+    <div title="总数">
+        <div id="AllCount">0</div>
+        <div>总数</div>
+    </div>
+    <!--App -->
+    <div title="App">
+        <div id="AllApp">0</div>
+        <div>App</div>
+    </div>
+    <!--佩戴-->
+    <div title="佩戴">
+        <div id="AllWearUser">0</div>
+        <div>佩戴</div>
+    </div>
+    <!--app月活-->
+    <div title="App月活">
+        <div id="ActivedAppThisMonth">0</div>
+        <div>App月活</div>
+    </div>
+    <!--佩戴日活-->
+    <div title="佩戴日活">
+        <div id="ActivedWearUserThisDay">0</div>
+        <div>佩戴日活</div>
+    </div>
+</section>
+
+<!--搜索条件-->
+
+    <div class="searchBox">
+        <div class='form'>
+            <div class='search1'>
+                <input type="date" class='hTime' id="startTime" value='2018-03-36'/>
+                <div class="hr"></div>
+                <input type="date" class='hTime' id='endTime' value='2018-03-36'/>
+            </div>
+            <div class='search2'>
+                <img src="../../imgs/search@2x.png" alt="" class='icon1'/><input type="text" class="phone" id="inputText" placeholder="手机号/姓名/设备号"/>
+            </div>
+            <div class="select">
+                <select id = "selectVal" class="input2">
+                    <option value="" class="selected">全部用户</option>
+                    <option value="1">失联优先</option>
+                </select>
+            </div>
+            <div class="select">
+                <select id = "selectMedicalHistory" class="input2">
+                    <option value="" class="selected">全部病史</option>
+                    <option value="1">无病史</option>
+                    <option value="2">心梗</option>
+                    <option value="3">脑卒中</option>
+                    <option value="4">腔梗</option>
+                    <option value="5">糖尿病</option>
+                    <option value="6">冠心病</option>
+                    <option value="7">高血压</option>
+                </select>
+            </div>
+            <button id="search" class="search" style='margin:0 10px;'>搜索</button>
+            <button id="all" class="search">全部</button>
+        </div>
+        <div>
+            <button class="export" id="getOut">导出excel</button>
+        </div>
+
+    </div>
+<!--<div class="row searchBox">-->
+
+     	<!--<div class="col-sm-2" style="width: 150px;"><input type="date" class="form-control input1" id="startTime"/></div>-->
+        <!--<div class="hr"></div>-->
+    	<!--<div class="col-sm-2" style="width: 150px;"><input type="date" class="form-control input1" id="endTime"/></div>-->
+        <!--<div class="col-sm-3 search2"><img src="../../imgs/search@2x.png" alt="" class='icon1'/><input type="text" class="form-control input2" id="inputText" placeholder="手机号/姓名/设备号"/></div>-->
+    <!---->
+	   <!--&lt;!&ndash; <input type="text" class="phone" id="inputText" placeholder="手机号/姓名/设备号"/>&ndash;&gt;-->
+        <!--<div class="col-sm-2" style="width: 120px;">-->
+	        <!--<select id = "selectVal" class="form-control input2">-->
+	            <!--<option value="" class="selected">全部</option>-->
+	            <!--<option value="1">失联优先</option>-->
+	        <!--</select>-->
+       <!--</div>-->
+	    <!--<div class="col-sm-2" style="width: 120px;">-->
+	        <!--<select id = "selectMedicalHistory" class="form-control input2">-->
+	            <!--<option value="" class="selected">全部</option>-->
+	            <!--<option value="1">无病史</option>-->
+	            <!--<option value="2">心梗</option>-->
+	            <!--<option value="3">脑卒中</option>-->
+	            <!--<option value="4">腔梗</option>-->
+	            <!--<option value="5">糖尿病</option>-->
+	            <!--<option value="6">冠心病</option>-->
+	            <!--<option value="7">高血压</option>-->
+	        <!--</select>-->
+	    <!--</div>-->
+	    <!--<div class="col-sm-1"><button id="search" class="btn btn-skyBlue search">搜索</button></div>-->
+	    <!--<div class="col-sm-1"><button id="all" class="btn btn-skyBlue search">全部</button></div>-->
+	    <!--<div class="col-sm-1"><button id="getOut" class="btn btn-skyBlue export">导出excel</button></div>-->
+
+<!--</div>-->
+
+<!--table佩戴人-->
+<div class="bindBox">
+    <table data-toggle="table" class="table table-bordered text-center table-hover" id="bindTable">
+        <thead>
+        <tr style=' opacity: 0.8;background: rgba(0,150,255,0.10);'>
+            <th>序号</th>
+            <th>姓名</th>
+            <th>城市</th>
+            <th>性别</th>
+            <th>年龄</th>
+            <th>激活时间</th>
+            <th>协议</th>
+            <th id="attention">关注</th>
+            <th>状态</th>
+            <th>最近上传数据</th>
+            <th>类型</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+
+</div>
+
+<!--js-->
+<script src="../../lib/jquery/jquery.min.js"></script>
+<script src="../../lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../lib/datatables/js/jquery.dataTables.min.js"></script>
+<script src="../../lib/layer/layer.js"></script>
+<script src="../../lib/echarts/echarts.min.js"></script>
+<script src="../../js/common.js"></script>
+<script src="../../js/framePages/wearUserList.js"></script>
+</body>
+</html>

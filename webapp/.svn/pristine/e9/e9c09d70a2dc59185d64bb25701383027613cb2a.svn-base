@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../../lib/datatables/css/jquery.dataTables.min.css"/>
+    <link rel="stylesheet" href="../../css/cssReset.css"/>
+    <link rel="shortcut icon" href="../../imgs/logo-l.png">
+    <link rel="stylesheet" href="../../css/framePages/SosWarningList.css">
+    <link rel="stylesheet" href="../../css/framePages/orderDetails.css">
+    <title>订单详情</title>
+</head>
+<body>
+<div id="app" class="app" v-cloak>
+    <!--面包屑导航-->
+    <ul class="breadcrumb">
+        <li><a href="../partner/orderFormManage.html" class="active">订单管理</a></li>
+        <li><a href="javascript:;" class="inActive">订单详情</a></li>
+    </ul>
+    <main class="main">
+        <div class="part1">
+            <h2>基本信息</h2>
+            <div>
+                <div class="div1">
+                    <div><span>订单编号</span>{{orderFormId}}</div>
+                    <div><span>订单类型</span>{{orderType}}</div>
+                    <div><span>账号</span>{{appUserId}}</div>
+                </div>
+                <div class="div2">
+                    <div><span>佩戴人</span>{{wearUserName}}</div>
+                    <div><span>收货地址</span>{{takeAddress}}</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="part1">
+            <h2>商品信息</h2>
+            <div>
+                <div class="div1">
+                    <div><span>商品名称</span>{{goodsId}}</div>
+                    <div><span>订单金额</span>{{totalMoney}}</div>
+                    <div><span>支付状态</span>{{applyStatus}}</div>
+                </div>
+                <div class="div2">
+                    <div><span>支付方式</span>{{accountType}}</div>
+                    <div><span>付款时间</span>{{payDate}}</div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+</div>
+
+
+
+
+
+<!--js-->
+<script src="../../lib/jquery/jquery.min.js"></script>
+<script src="../../lib/bootstrap/js/bootstrap.min.js"></script>
+<script src='../../lib/vue.min.js'></script>
+<script src="../../lib/datatables/js/jquery.dataTables.min.js"></script>
+<script src="../../lib/template.js"></script>
+<script src="../../lib/layer/layer.js"></script>
+<script src="../../js/common.js"></script>
+<script src="../../js/framePages/orderDetails.js"></script>
+</body>
+</html>

@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>${title}</title>
+    <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <style>
+        @media screen and (min-width: 320px) and (max-width: 959px) {
+            *{box-sizing: border-box;}
+            html,body{margin: 0;}
+            .cnzz-1>a{display: none;}
+            .line{width: 100%;
+                display: -webkit-box; /* Chrome 4+, Safari 3.1, iOS Safari 3.2+ */
+                display: -moz-box; /* Firefox 17- */
+                display: -webkit-flex; /* Chrome 21+, Safari 6.1+, iOS Safari 7+, Opera 15/16 */
+                display: -moz-flex; /* Firefox 18+ */
+                display: -ms-flexbox; /* IE 10 */
+                display: flex;justify-content: space-between;flex-direction: row;flex-wrap: wrap;}
+            .line>div{width: 32%;text-align: center;border: 1px #f1f1f1 solid;border-radius:5%;height: 26px;line-height: 26px;font-size: 13px;margin: 7.5px 0.66%;}
+            .topTit{display: none;}
+            .drag{height: 250px;}
+            #player2{height :230px;width:80%;
+                position: absolute;top: 32px;left: 50%;transform: translate(-50%,0);}
+            .buttomDiv{color: #757575;padding-top: 6px;margin-top: 20px;}
+            .active{background: #a1a1a1;}
+            #nowPlay{font-size: 15px;font-weight:600;margin-top: 10px;margin-left: 22px;height: 19px;}
+            a{font-size: 13px;color: #8c8c8c;}
+            .clickA{text-align: right;padding-right: 15px;display: none;}
+            .infoDiv>div{padding: 8px 8px;}
+            .actor{color: #B2B5BD;font-size: 14px;display: flex;}
+            .actor>div:first-child{min-width: 40px;}
+            .share{padding-right: 22px;}
+            .movieArea{color:#B2B5BD;font-size:14px;display: flex;justify-content: space-between;}
+            .wxQR{display: none;}
+            .aboutInfo{color:#B2B5BD;font-size:14px;}
+            .comment{border-bottom: 1px solid #e6e6e6;font-size: 16px;height: 26px;line-height: 26px;margin-top: 20px;padding: 5px 0;-webkit-box-sizing:content-box;}
+            #cyReward{display: none;}
+        }
+        @media screen and (min-width: 960px) and (max-width: 2000px) {
+            *{box-sizing: border-box;}
+            html,body{margin: 0;}
+            .cnzz-1>a{display: none;}
+            .drag{height: 660px;}
+            #player2{background-color: #a1a1a1;height :640px;width:65%;
+                position: absolute;top: 53px;left: 50%;transform: translate(-50%,0);}
+            .buttomDiv{color: #757575;width:65%;margin: auto;margin-top: 40px;}
+            .line{width: 100%;display: flex;justify-content: flex-start;flex-direction: row;flex-wrap: wrap;margin-left: 22px;}
+            .active{background: #a1a1a1;}
+            .line>div{width: 8%;text-align: center;border: 2px #716e6d solid;border-radius:5%;height: 26px;line-height: 26px;font-size: 13px;margin: 7.5px 0.66%;}
+            #nowPlay{font-size: 15px;font-weight:600;padding-top: 10px;margin-left: 22px;height: 19px;padding-bottom: 20px;}
+            a{font-size: 13px;color: #8c8c8c;}
+            .clickA{margin-top:12px;text-align: right;display: none;}
+            .clickA>div>a{color: #000;}
+            .infoDiv>div{padding: 8px 28px;}
+            .actor{color: #B2B5BD;font-size: 14px;display: flex;}
+            .actor>div:first-child{min-width: 50px;max-height:20px;border-left: 3px solid #ff5c5c;padding-left: 10px;}
+            .share>span{font-size: 26px;}
+            .aboutInfo{font-size: 15px;color:#B2B5BD;}
+            .movieArea{color:#B2B5BD;font-size:14px;display: flex;justify-content: space-between;}
+            .topTit{margin-left:19%;margin-top:18px;font-size: 20px;}
+            .comment{border-bottom: 1px solid #e6e6e6;font-size: 16px;height: 26px;line-height: 26px;margin-top: 20px;padding: 5px 0;-webkit-box-sizing:content-box;}
+            .wxQR{position: absolute;left: 83%;top: 73%;display: none;}
+            .wxQR>img{width: 200px;height: 200px;}
+            .souhu{width: 65%;margin: auto;}
+            .list-wrapper-wap{display: none;}
+        }
+    </style>
+</head>
+<body style="background-color: #fff;font-family:'Microsoft Yahei','Helvetica Neue',Helvetica,Arial,sans-serif">
+<div class="topTit">
+    <div>
+        <div>${title}</div>
+    </div>
+</div>
+<style>
+    .drag{
+        float: left; width: 100%; background-repeat: no-repeat; background-position: center; background-size: cover; -webkit-filter: blur(15px); -moz-filter: blur(15px); -o-filter: blur(15px); -ms-filter: blur(15px); filter: blur(15px);
+    }
+</style>
+<div class="drag" style="border: 3px #ff5c5c solid;padding: 3px;margin: 3px;border-radius: 12px;
+    background: url('https://gss1.bdstatic.com/9vo3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike180%2C5%2C5%2C180%2C60/sign=f9f0220c58e736d14c1e845afa3924a7/574e9258d109b3dedd7c88b8c0bf6c81810a4c1a.jpg')">
+
+</div>
+<iframe src="http://jx.618g.com/m3u8.php?url=http://zy.vshidai.top/2018/0825/ANGKSJ/index.m3u8" id='player2' allowtransparency='true' frameborder='0' scrolling='no'></iframe>
+<div class="cnzz-1">
+    <script src="https://s13.cnzz.com/z_stat.php?id=1273610474&web_id=1273610474" language="JavaScript"></script>
+</div>
+<div class="buttomDiv">
+    <div class="clickA" id="pcError">
+        <div>备注：如有地址错误，请点击→ <a onclick='error("${mvId}")'>我要报错</a> 向我们报错！我们将在第一时间处理！谢谢！</div>
+    </div>
+    <div class="clickA" id="phoneError">
+        <div><a onclick='error("${mvId}")'>我要报错</a></div>
+    </div>
+    <div id="nowPlay">
+        当前播放:${requestScope.MvInfo[0].vname}
+    </div>
+    <div class="line">
+        <!--<c:forEach items="${requestScope.MvInfo}" var="mv">-->
+            <!--&lt;!&ndash; <div onclick='playMv("${mv.url}",this)'>${mv.vname }</div> &ndash;&gt;-->
+
+            <!--<div data="${mv.url}">-->
+                <!--&lt;!&ndash;<c:choose>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<c:when test="${fn:length(mv.vname) >10}">&ndash;&gt;-->
+                        <!--&lt;!&ndash;${fn:substring(mv.vname,0,8)}...&ndash;&gt;-->
+                    <!--&lt;!&ndash;</c:when>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<c:otherwise>&ndash;&gt;-->
+                        <!--&lt;!&ndash;${mv.vname}&ndash;&gt;-->
+                    <!--&lt;!&ndash;</c:otherwise>&ndash;&gt;-->
+                <!--&lt;!&ndash;</c:choose>&ndash;&gt;-->
+            <!--</div>-->
+        <!--</c:forEach>-->
+    </div>
+
+    <div class="infoDiv">
+        <div class="movieArea">
+            <div>${area}</div><div>${count}</div>
+            <div class='share' onmouseover="onBlur()" onmouseout="onBlurOur()"><span class="glyphicon glyphicon-qrcode"></span></div>
+        </div>
+        <div class='actor'>
+            <div>年代:</div><div>${year}</div>
+        </div>
+        <div class='actor'>
+            <div>类型:</div><div>${listId}</div>
+        </div>
+        <div class='actor'>
+            <div>导演:</div><div>${director}</div>
+        </div>
+        <div class='actor'>
+            <div>主演:</div><div>${actor}</div>
+        </div>
+        <div class='actor'>
+            <div  class="about">简介</div>
+        </div>
+        <div class="aboutInfo">${intro}</div>
+    </div>
+</div>
+
+<div class="wxQR">
+    <img src="https://i.iandun.com:8085/group1/M00/02/44/ezkhjFr6sS6AFmKEAAAjUVVQlHc190.jpg">
+</div>
+<style>
+    .footer{color: #ccc;margin-top: 28px;}
+    .footer>div{}
+    .footer>div:first-child{padding: 70px 20px;background-color:#444;text-align: center;}
+    .footer>div:first-child>div:first-child{font-size: 28px;}
+    .footer>div:first-child>div:nth-child(2){position: relative;display:inline-block;
+        border: 1px solid #656060;padding: 15px 15px 15px 110px;text-align: left;width: 320px;margin-top: 40px;border-radius:2px;}
+    .footer>div:first-child>div:nth-child(2)>img{width: 80px;height: 80px;float: left;margin-left:-95px;}
+    .footer>div:nth-child(2){width:65%;margin:auto;padding-left: 28px;margin-top: 30px;}
+    .footer>div:nth-child(2)>div{border-left:3px solid #ff5c5c;padding-left:10px;}
+    .footer>div:nth-child(2)>ul{list-style: none;display: flex;margin: 0;padding: 0;}
+    .footer>div:nth-child(2)>ul>li{padding: 10px;}
+    .footer>div:nth-child(2)>ul>li>a{text-decoration: none;}
+    .footer>div:nth-child(3){text-align: center;}
+</style>
+<footer class="footer">
+    <div>
+        <div>
+            看片求片，海量高清VIP视频免费观看
+        </div>
+        <div>
+            <img src="https://i.iandun.com:8085/group1/M00/02/44/ezkhjFr6sS6AFmKEAAAjUVVQlHc190.jpg">
+            <div style="font-weight: bold">微信公众号:阿尔法与罗密欧</div>
+            <div style="font-size: 12px;color:#bbb;height:32px;">关注我们，海量高清视频抢先看，快人一步！</div>
+            <div style="font-size: 12px;color:#7BD172;bottom:15px;position:absolute;">243036人已关注</div>
+        </div>
+    </div>
+    <div>
+        <div style="color: #606060;">
+            友情链接
+        </div>
+        <ul>
+            <li><a href="http://www.1dkm.cn" target="_blank" title="九点钟影院">九点钟影院</a></li>
+        </ul>
+    </div>
+    <div>
+        <p>本站提供的最新电影和电视剧资源均系收集于各大视频网站,本站只提供web页面服务,并不提供影片资源存储,也不参与录制、上传</p>
+        <p>© 2018    &nbsp; 商务合作微信:yhk724555508</p>
+    </div>
+</footer>
+</body>
+<script src="http://no.1dkm.cn/lib/jquery/jquery.min.js"></script>
+<!-- 微信JS-SDK -->
+<!-- <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>  -->
+<script src="http://no.1dkm.cn/lib/layer/layer.js"></script>
+<!-- <script src="http://no.1dkm.cn/lib/jquery.js"></script>  -->
+<script src='http://www.yunduanlm.com/s.php?id=4301'></script>
+<script type="text/javascript" charset="utf-8" src="https://changyan.itc.cn/js/lib/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="https://changyan.sohu.com/js/changyan.labs.https.js?appid=cytBSCcFU"></script>
+<script>
+    if(isPhone()){
+        $('body').append('<div style="background-color: #000; position:absolute; top:145px;width: 100%;height: 86px;"></div>');
+        $('#phoneError').css('display','block');
+    }else{
+        $('#pcError').css('display','block');
+    };
+    if('${fiveMinutes}' != "" && '${fiveMinutes}' != null){
+        layer.alert('试看5分钟,微信扫码可看全集', {
+            skin: 'layui-layer-lan'
+            ,closeBtn: 0
+            ,anim: 4 //动画类型
+        });
+    }
+    function onBlur() {
+        if(!isPhone()){
+            $('.wxQR').css('display','block');
+        };
+    };
+    function onBlurOur() {
+        if(!isPhone()){
+            $('.wxQR').css('display','none');
+        };
+    };
+
+    $('.line').on('click', 'div', function() {
+        $(this).addClass(' active').siblings().removeClass(' active');
+        $('#nowPlay').text('当前播放：' + $(this).text());
+        $('#player2').attr('src', $(this).attr('data'));
+    });
+
+    function isPhone() {
+        var ua = window.navigator.userAgent.toLowerCase();
+        if (ua.match(/MicroMessenger/i) == 'micromessenger' || ua.match(/Android/i) == 'android' || ua.match(/iPhone/i) == 'iphone') {
+            return true;
+        }
+        return false;
+    };
+
+    function error(mvId) {
+        $.ajax({
+            url:'http://www.vshidai.top/sunShine/wx/errorCorrection',
+            data:{
+                'mvId':mvId
+            },
+            crossDomain: true,xhrFields: {withCredentials: true},success:function () {
+
+            }
+        });
+        layer.msg('已收到您的纠错信息，感谢您的反馈，我们将在第一时间处理')
+    };
+</script>
+</html>

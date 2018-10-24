@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="../../imgs/logo-l.png">    <!--title-icon-->
+    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../../lib/datatables/css/jquery.dataTables.min.css"/>
+    <link rel="stylesheet" href="../../css/cssReset.css"/>
+    <link rel="stylesheet" href="../../css/framePages/crossRegionMap.css"/>
+
+    <title>窜货地图</title>
+    <style>
+
+    </style>
+</head>
+<body>
+<div id="app" class="dad" v-cloak>
+    <!--头部标题-->
+    <header>
+        <div><img src="../../imgs/newLogo.png" alt=""></div>
+        <h2>窜货市场分布图</h2>
+        <p class="nowTime"></p>
+    </header>
+    <div class="select">
+        <select name="" id="selectVal1" class="select1">
+            <option value="" selected>全部</option>
+        </select>
+        <select name="" id="selectVal2" class="select1 select2">
+            <option value="1">窜货市场</option>
+            <option value="2">被窜货市场</option>
+        </select>
+    </div>
+    <!--窜货地图-->
+    <div id="container" class="container">
+
+    </div>
+
+    <div class="dw">
+        <!--被其他市场窜货-->
+       <div class="">
+           <div class="div1">
+               <div style="background:#35CFC9;"></div>
+               <h2>被其他市场窜货</h2>
+           </div>
+           <div class='div2'>
+               <p>总数量 <span>{{beFleeGoodsMapSum}}</span></p>
+               <ul style="max-height:300px;overflow-y:auto;">
+                   <li>
+                       <span>市场</span>
+                       <span>窜货数量</span>
+                   </li>
+                   <li v-for="(val,key,index) in beFleeGoodsMap">
+                       <span>{{key}}</span>
+                       <span>{{beFleeGoodsMap[key]}}</span>
+                   </li>
+                   <!--<li>-->
+                       <!--<span>市场2</span>-->
+                       <!--<span>20000</span>-->
+                   <!--</li>-->
+               </ul>
+           </div>
+       </div>
+        <!--向他市场窜货数量-->
+        <div>
+            <div class="div1" style="margin-top:40px;">
+                <div></div>
+                <h2>向他市场窜货</h2>
+            </div>
+            <div class='div2'>
+                <p>总数量 <span>{{fleeGoodsMapSum}}</span></p>
+                <ul style="max-height:300px;overflow-y:auto;">
+                    <li>
+                        <span>市场</span>
+                        <span>窜货数量</span>
+                    </li>
+                    <li v-for="(val,key,index) in fleeGoodsMap">
+                        <span>{{key}}</span>
+                        <span>{{fleeGoodsMap[key]}}</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!--js-->
+<script src="../../lib/jquery/jquery.min.js"></script>
+<script src="../../lib/vue.min.js"></script>
+<script src="../../lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../lib/datatables/js/jquery.dataTables.min.js"></script>
+<script src="../../lib/layer/layer.js"></script>
+<script src="../../lib/echarts/echarts.min.js"></script>
+<script src="../../js/common.js"></script>
+<!--地图-->
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts-all-3.js"></script>
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=ZUONbpqGBsYGXNIYHicvbAbM"></script>
+<script src="../../js/framePages/crossRegionMap.js"></script>
+</body>
+</html>

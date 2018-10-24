@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="../../imgs/logo-l.png">    <!--title-icon-->
+    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../../lib/datatables/css/jquery.dataTables.min.css"/>
+    <link rel="stylesheet" href="../../css/framePages/SosWarningList.css"/>
+    <link rel="stylesheet" href="../../css/cssReset.css"/>
+    <title>紧急消息下发</title>
+    <style>
+        [v-cloak]{display: none;}
+        #app{background: #f3f3f3;width: 100%;min-height: 100vh;padding: 10px 20px;}
+        /*urlBack*/
+        .urlBack{font-family: PingFangSC-Regular;font-size: 14px;margin: 5px 0;}
+        .urlBack>a{color: #0096FF;}
+        /*mesContent*/
+        .mesContent{width: 100%;background: #fff;padding: 16px 14px;border-radius: 8px;}
+        .intoBox{display: flex;justify-content: space-between;}
+        .intoBox>div{width: 49%;}
+        .intoBox>div>div:nth-child(1){font-family: PingFangSC-Semi;font-size: 15px;color: #4A4A4A;line-height: 30px;font-weight: bold}
+        .intoBox>div>div:nth-child(2){margin: 10px 0;}
+        /*intoBtn*/
+        .intoBtn{margin: 10px 0;}
+        /*intoHistory*/
+        .intoHistory{font-family: PingFangSC-Semi;font-size: 15px;color: #4A4A4A;line-height: 30px;font-weight: bold}
+        /*searchBox*/
+        .searchBox{width: 100%;display: flex;justify-content: flex-start;margin: 10px 0;}
+        .searchBox>*{margin-right: 10px;}
+        .searchBox>input{width: 200px;}
+        textarea{resize:none;}
+        .div1{width: 200px;white-space: nowrap;text-overflow:ellipsis;overflow: hidden;margin:0 auto;}
+    </style>
+</head>
+<body>
+<div id="app" v-cloak>
+    <!--url-->
+    <div class="urlBack"><a href="customCenter.html">客服中心</a> <span>&gt;</span> 紧急消息下发</div>
+    <!--content-->
+    <div class="mesContent">
+        <!--录入设备号与下发内容-->
+        <div class="intoBox">
+            <!--设备号-->
+            <div>
+                <div>录入设备号</div>
+                <div><textarea cols="30" rows="10" placeholder="输入设备号并以回车分隔" class="form-control" v-model="deviceIds"></textarea></div>
+            </div>
+            <!--录入下发内容-->
+            <div>
+                <div>录入下发内容</div>
+                <div><textarea cols="30" rows="10" placeholder="输入下发内容...（100字以内）" class="form-control" v-model="sendInfo"></textarea></div>
+            </div>
+        </div>
+        <!--确定下发-->
+        <div class="intoBtn">
+            <button class="btn btn-skyBlue" @click="enterInto()">确定下发</button>
+        </div>
+        <!--下发历史-->
+        <div class="intoHistory">下发历史</div>
+        <!--搜索栏-->
+        <div class="searchBox">
+            <input type="text" class="form-control" placeholder="手机号/设备号" v-model="input"  style="background: #F3F3F3;border-radius: 4px;">
+            <button id="search" class="search" style='margin:0 10px;height:31px;' @click="tables()">搜索</button>
+            <button id="all" class="search" @click="resetTerm()" style="height:31px;">重置</button>
+        </div>
+        <!--下发历史table-->
+        <div class="tableHistory" >
+            <table data-toggle="table" class="table table-bordered text-center table-hover" id="intoHistory">
+                <thead>
+                <tr class="tr1">
+                    <th>序号</th>
+                    <th>下发时间</th>
+                    <th>设备号</th>
+                    <th>佩戴人</th>
+                    <th>APP账号</th>
+                    <th>下发内容</th>
+                    <th>操作员</th>
+                    <th>查看时间</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<!--js-->
+<script src="../../lib/jquery/jquery.min.js"></script>
+<script src="../../lib/vue.min.js"></script>
+<script src="../../lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../lib/datatables/js/jquery.dataTables.min.js"></script>
+<script src="../../lib/layer/layer.js"></script>
+<script src="../../js/common.js"></script>
+<script src="../../js/framePages/serousMessageManage.js"></script>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="../../imgs/logo-l.png">    <!--title-icon-->
+    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../../lib/datatables/css/jquery.dataTables.min.css"/>
+    <link rel="stylesheet" href="../../css/cssReset.css"/>
+    <title>权限管理</title>
+    <style>
+        [v-cloak]{display: none;}
+        body{background-color: #f2f2f1;width:100%;margin: 0 auto;}
+        #app{width: 97%;margin: 25px auto;background: #FFFFFF;box-shadow: 0 0 10px 0 rgba(0,0,0,0.02);border-radius: 8px;padding:20px 15px;height: calc(100vh - 50px);}
+        .widthCtrl{overflow: hidden;text-overflow:ellipsis;white-space: nowrap;text-align: center;width: 300px;margin: 0 auto;}
+        .title{color:#464646;font-size:15px;font-weight:500;}
+        .header{display:flex;justify-content:space-between;align-items:center;}
+        .tr1{opacity: 0.8;background: rgba(0,150,255,0.10);}
+    </style>
+</head>
+<body>
+<div id="app" v-cloak>
+    <!--title-->
+  <div class="header">
+      <div class="title text-primary">角色管理</div>
+      <div><button class="btn btn-skyBlue" @click="buildRole">新增</button></div>
+  </div>
+    <!--角色列表-->
+    <table data-toggle="table" class="table table-bordered text-center table-hover" id="roleTable">
+        <thead>
+        <tr class="tr1">
+            <th>序号</th>
+            <th>角色名</th>
+            <th>员工</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+
+
+    <!--新增   模态窗-->
+    <div class="modal fade bs-example-modal-sm" id="buildNew" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog  modal-sm" style="width:500px;" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" @click="handleCancel" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h1 class="modal-title" id="myModalLabel">新增角色</h1>
+                </div>
+                <div class="modal-body msgAddAlert">
+                    <div><input type="text" class="form-control" v-model="roleName" placeholder="角色名"></div>
+                </div>
+                <div class="modal-footer">
+                    <div>
+                        <button class="btn btn-skyBlue" @click="handleCancel">取消</button>
+                        <button class="btn btn-skyBlue" @click="buildEnter">确定</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+<!--js-->
+<script src="../../lib/jquery/jquery.min.js"></script>
+<script src="../../lib/vue.min.js"></script>
+<script src="../../lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../lib/datatables/js/jquery.dataTables.min.js"></script>
+<script src="../../lib/layer/layer.js"></script>
+<script src="../../js/common.js"></script>
+<script src="../../js/framePages/jurisdictionManage.js"></script>
+</body>
+</html>

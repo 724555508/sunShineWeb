@@ -1,0 +1,39 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>自动采集页面</title>
+</head>
+<body>
+
+<p><button type="Button" onclick="btn()">开始无限打开关闭</button></p>
+<script type="text/javascript">
+
+    var isOpen = false;
+    var myWin = null;
+    function Enter() {
+        run();
+        window.setTimeout(btn,5000*12*10);    //操作间隔，这里是5s
+    }
+    function run() {
+        if (isOpen) {
+            myWin.close();
+            isOpen = false;
+        } else {
+            myWin = openWindow();
+            isOpen = true;
+        }
+    }
+
+    function openWindow() {
+        //这里默认打开本页地址
+        return window.open('http://www.1dkm.cn/login/admin_reslib2.php?password=980828&action=day&rid=4&pg=0&url=https://api.iokzy.com/inc/ldg_seackm3u8s.php');
+    }
+
+    function btn() {
+        Enter();
+    }
+
+</script>
+
+</body>
+</html>

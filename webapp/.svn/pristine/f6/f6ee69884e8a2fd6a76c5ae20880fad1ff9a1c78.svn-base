@@ -1,0 +1,15 @@
+[v-cloak]{display: none;}
+body{width:100%;}
+#app{background:rgb(239,244,254);box-shadow: 0 1px 10px 0 rgba(59,61,62,0.10);width: 100%;min-height: 100vh;padding: 10px 20px;}
+.main{background: #FFFFFF;box-shadow: 0 0 10px 0 rgba(0,0,0,0.02);border-radius: 8px;padding:23px 15px;}
+.main .title{font-family: PingFangSC-Medium;font-size: 16px;color: #9B9B9B;display:flex;align-items:flex-end;}
+.main .title>div{margin-right:15px;}
+.main .table{margin-top:31px;}
+.check:link{font-family: PingFangSC-Regular;text-decoration:none;font-size: 14px;color: #0096FF;}
+.check:visited{font-family: PingFangSC-Regular;text-decoration:none;font-size: 14px;color: #0096FF;}
+.check:active{font-family: PingFangSC-Regular;text-decoration:none;font-size: 14px;color: #0096FF;}
+.check:hover{font-family: PingFangSC-Regular;text-decoration:none;font-size: 14px;color: #0096FF;}
+.red{color:red;font-family: PingFangSC-Regular;font-size: 14px;}
+.tr1{font-family: PingFangSC-Medium;font-size: 14px;color:rgba(74,74,74,0.6);}
+tr{font-family: PingFangSC-Regular;font-size: 14px;color: #4A4A4A;}
+.title .active{font-family: PingFangSC-Semibold;font-size: 20px;color: #4A4A4A;}

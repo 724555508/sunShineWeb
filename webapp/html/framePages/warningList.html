@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../../lib/datatables/css/jquery.dataTables.min.css"/>
+    <link rel="stylesheet" href="../../css/cssReset.css"/>
+    <link rel="stylesheet" href="../../css/framePages/SosWarningList.css"/>
+    <link rel="stylesheet" href="../../css/framePages/warningList.css"/>
+    <link rel="shortcut icon" href="../../imgs/logo-l.png">    <!--title-icon-->
+    <title>预警救助中心</title>
+    <style>
+        .form{width:100%;/*padding:18px 0 13px 0;*/display:flex;/*align-items:center;*//*justify-content:space-between;*/}
+         .form{display:flex;align-items:center;flex-wrap: wrap;line-height: 40px;}
+         .form .search1{display:flex;align-items:center;margin-right:0px;}
+        .form .search1 .hTime{width:70px;height:26px;background: #f3f3f3;border-radius: 4px;border:none;text-align:center;outline:none;}
+        .form .search1 .hTime1{width:160px;}
+        .form .hr{width:20px;border-top:2px solid #9B9B9B;margin:0 10px;}
+        .form .search2{position:relative;margin-left:10px;}
+        .form .search2 .icon1{position:absolute;width:16px;height:16px;top:13px;left:11px;}
+        .form .search2 .phone{width:200px;height:26px;background: #f3f3f3;border-radius: 4px;border:none;padding-left:30px;outline:none;}
+        /*.searchBox .search2{margin-left:0px;}*/
+        p{font-family: PingFangSC-Regular;font-size: 24px;color: #FFFFFF;}
+        /*.title1{display:flex;justify-content:space-between;}*/
+        .analysisy_bottom_bottom{width:100%;display:flex;justify-content:space-between;align-items:center;}
+        .analysisy_bottom_bottom>div{display:flex;width:33.3%;}
+        .analysisy_bottom_bottom>div img{width:30px;height:30px;}
+        .analysisy_bottom_bottom>div .right{margin-left:10px;}
+        .analysisy_bottom_bottom>div .right .div1{display:flex;}
+        .analysisy_bottom_bottom>div .right .div1 span{font-family: PingFangSC-Regular;font-size: 14px;color: #000000;}
+        .analysisy_bottom_bottom>div .right .div1 h2{font-family: PingFangSC-Medium;font-size: 18px;color: #000000;margin-left:25px;}
+        .analysisy_bottom_bottom>div .right .div2{font-family: PingFangSC-Regular;font-size: 12px;color: #838F93;}
+
+    </style>
+</head>
+<body>
+<div id="app" v-cloak>
+    <header class="header">
+        <!--标题-->
+        <div class="title1">
+            <img src="../../imgs/newLogo.png" alt="andunLogo" class="titleLogo"/>
+            <span>安顿心脑监测预警救护中心</span>
+            <div></div>
+        </div>
+    </header>
+<!--风险用户列表和详情 一个box处理，分为左右两部分-->
+<main class="main">
+    <!--left 待处理 dataTables列表-->
+
+    <div class="tableList">
+        <!--四个统计数据-->
+        <section class="Statistics">
+            <!--总佩戴人数-->
+            <div title="累计服务人次">
+                <div>{{ count }}</div>
+                <div>累计服务人次</div>
+            </div>
+            <!--累计救护服务-->
+            <div title="总预警人数">
+                <div>{{ allAlarmCount }}</div>
+                <div>总预警人数</div>
+            </div>
+            <!--待处理-->
+            <div title="今日待处理">
+                <div>{{ todayNotAlarmCount }}</div>
+                <div>今日待处理</div>
+            </div>
+            <!--今日处理-->
+            <div title="今日已处理">
+                <div>{{ todayIsDisposeCount }}</div>
+                <div>今日已处理</div>
+            </div>
+        </section>
+        <div class="data">
+        <div class="leftText">今日预警用户</div>
+        <div class="form searchBox">
+            <div class='search1' style="color:rgb(103,103,103);margin:0px;">
+                <input type="datetime-local" class='hTime hTime1' id="startTime" value='2018-03-36' v-model="startTime1"/>
+                <div class="hr"></div>
+                <input type="datetime-local" class='hTime hTime1' id='endTime' value='2018-03-36' v-model="endTime1"/>
+            </div>
+            <div class='search1'>
+                <input type='text' class='hTime' placeholder="请填写年龄" v-model="startAge"/>
+                <div class="hr"></div>
+                <input type="text" class='hTime'  value='' placeholder="请填写年龄" v-model="endAge"/>
+            </div>
+
+            <div class='search2'>
+                <img src="../../imgs/search@2x.png" alt="" class='icon1'/><input type="text" class="phone" id="inputText" v-model="input" placeholder="手机号/姓名/设备号"/>
+            </div>
+            <div class='search2' style="margin-left:0px;">
+                <input type="text" class="phone"  v-model="input2" placeholder="请输入报警次数" style="width:105px;padding:0 5px;"/>
+            </div>
+            <div class="select" style="color:rgb(103,103,103);">
+                <select id = "selectVal" class="input2">
+                    <option value ="" class="selected">选择预警类型</option>
+                    <option value="电解质异常">电解质异常</option>
+                    <option value="晨峰凸高">晨峰凸高</option>
+                    <option value="一级高血压">一级高血压</option>
+                </select>
+            </div>
+            <!--<button id="search" class="search" style='margin:0 10px;' @click="search">搜索</button>-->
+
+            <!--<div class="col-sm-6">-->
+                <!--<span class="glyphicon glyphicon-search inputIcon"></span>-->
+            <!--<input type="text" class="form-control inputText" placeholder="手机号/姓名/设备号" v-model="input">-->
+            <!--</div>-->
+            <div class="col-sm-2 text-right">
+            <button class="btn btn-skyBlue" @click="search">搜索</button>
+            </div>
+        </div>
+        <br>
+        <table class="table text-center" id="warningTable" style="overflow-y:hidden">
+            <thead>
+            <tr>
+                <th>序号</th>
+                <th>姓名</th>
+                <th>城市</th>
+                <th>性别</th>
+                <th>年龄</th>
+                <th>类型</th>
+                <th>次数</th>
+                <th>上次处理</th>
+                <th>描述</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+            <div class="tableList_bottom">
+                <div class="col-sm-3"><input type="date" class="form-control"  v-model="startTime"/></div>
+                <div class="col-sm-3"><input type="date" class="form-control"  v-model="endTime"/></div>
+                <div class="text-right"><button class="btn btn-skyBlue" @click="exportList">导出excel</button></div>
+            </div>
+        </div>
+    </div>
+    <!--right 列表相应操作点击出的用户救助详情处理-->
+    <div class="userMsg" id="userMsg">
+        <div class="rightTit">用户救助处理</div>
+        <div class="personMsg">
+            <div v-if="gender === '男'"><img src="../../imgs/iframeImgs/u10.png" width="46px;" height="46px;" class="headImg"></div>
+            <div v-if="gender === '女'"><img src="../../imgs/iframeImgs/u20.png" width="46px;" height="46px;" class="headImg"></div>
+            <div class="msgRight">
+                <div>
+                    <span class="username">{{ username }}</span>
+                    <span><img id="isInsurance" src="../../APP/imgs/healthDetails/pro2.png" title="已购买保险" alt="" ></span>
+                    <span><img id="isVip" src="../../APP/imgs/healthDetails/vip2.png" title="vip用户" alt=""></span>
+                    <span class="deviceStatus">{{ deviceStatus }}</span>
+                </div>
+                <div class="msgRightBottom">
+                    <span>{{ gender }}</span>
+                    <span>{{ age }}</span>
+                    <span>
+                        关注度
+                        <img src="../../imgs/spuerScreenImgs/star.png" alt="">
+                        <img src="../../imgs/spuerScreenImgs/star.png" alt="">
+                        <img src="../../imgs/spuerScreenImgs/star.png" alt="">
+                    </span>
+                </div>
+            </div>
+            <div class="seeInfo">
+                <a :href="wearUserInfoHref" target="_blank">查看详情 ></a>
+            </div>
+        </div>
+        <!--个人资料-->
+        <div class="personHistory">
+            <div>
+                <span class="key">病史<b class="value">{{ medicalHistory }}</b></span>
+                <span class="key">上次报警<b class="value">{{ lastAlarmTime }}</b></span>
+                <span class="key">报警(次)<b class="value">{{ alarmCount }}</b></span>
+                <span class="key">救护车(次)<b class="value">0</b></span>
+                <span class="key">回访(次)<b class="value">0</b></span>
+            </div>
+            <div>
+                <span class="key">设备电话<b class="value">{{ sIMPhoneNum }}</b></span>
+                <span class="key">联系电话<b class="value">{{ phoneNum }}</b></span>
+                <span class="key">定位<b class="value">{{ addressInfo }}</b></span>
+            </div>
+            <div>
+                <span class="key">紧急联系人<b class="value">{{ emergencyPeople }}</b></span>
+                <span class="key">联系电话<b class="value">{{ emergencyPhone }}</b></span>
+                <span class="key">主账号<b class="value">{{ primaryNumber }}</b></span>
+                <span></span>
+            </div>
+        </div>
+        <!-- 实时分析 -->
+        <div class="analysis">
+            <div  style="display:flex;justify-content:flex-end;">
+                <a :href="historyHealthAnalysis" target="_blank" style="color: #0096FF;text-decoration:none;font-size: 13px;">历史健康解析 ></a>
+            </div>
+            <div class="analysisy_top">
+                <div>
+                    <div class='organBox'>
+                        <div class='div1'>
+                            <!--膀胱-->
+                            <div style='padding-right:4px;'><img :src="allTheInternalOrgans.bladder" alt="" /></div>
+                            <!-- 肾-->
+                            <div style='padding-left:4px;'><img :src="allTheInternalOrgans.kidney" alt="" /></div>
+
+                        </div>
+                        <div class='div2'>
+                            <!-- 肝-->
+                            <div><img :src="allTheInternalOrgans.liver" alt="" /></div>
+                           <!-- 胃-->
+                            <div style='display:flex;align-items:center;justify-content:center;margin:0 10px 0 32px;'>
+                                <img :src="allTheInternalOrgans.stomach" alt="" style='width:30px;height:31px;'/>
+                                <span style='margin-left:5px;'>胃</span>
+                            </div>
+                            <!--大肠-->
+                            <div style='text-align:right;'><img :src="allTheInternalOrgans.largeIntestine" alt="" /></div>
+                        </div>
+                        <div class='div3'>
+                           <!-- 胆-->
+                            <div><img :src="allTheInternalOrgans.gallBladder" alt=""/></div>
+                           <!-- 脾-->
+                            <div style='display:flex;align-items:center;margin:-2px 0 0 14px;'>
+                                <span style='margin-right:5px;'>脾</span>
+                                <img :src="allTheInternalOrgans.spleen" alt="" style='width:30px;height:30px;'/>
+                            </div>
+                           <!-- 肺-->
+                            <div style='text-align:right;'><img :src="allTheInternalOrgans.lung" alt="" /></div>
+                        </div>
+                        <div class='div4'>
+                            <!--心-->
+                            <div style='padding-right:4px;'><img :src="allTheInternalOrgans.heart" alt="" /></div>
+                            <!--小肠-->
+                            <div style='padding-left:4px;'><img :src="allTheInternalOrgans.smallIntestine" alt="" /></div>
+                        </div>
+                        <div class="div5">
+                            <!--淋巴-->
+                            <div><img :src="allTheInternalOrgans.lymph" alt="" /></div>
+                            <!--心包-->
+                            <div style='padding-right:4px;text-align:right;'><img :src="allTheInternalOrgans.pericardium" alt="" /></div>
+                            <!--脊椎-->
+                            <div style='padding-left:4px;'><img :src="allTheInternalOrgans.spine" alt="" /></div>
+                            <!--生殖-->
+                            <div style='text-align:right;'><img :src="allTheInternalOrgans.reproductive" alt="" /></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="result">
+                    <div>{{ heartRateCurve }}</div>
+                    <div>{{ bloodPressureCurve }}</div>
+                    <div>{{ bloodOxygenCurve }}</div>
+                    <div>{{ comprehensiveDiagnosis }}</div>
+                </div>
+            </div>
+            <div class="analysisy_bottom">
+                <div>
+                    <div class="analysisy_bottom_tit">今日实时数据</div>
+                    <div class="seeInfo"><a :href="historyHref" target="_blank">查看趋势 ></a></div>
+                </div>
+                <div class="analysisy_bottom_bottom">
+                    <div>
+                        <img src="../../imgs/iframeImgs/xl.png" alt="">
+                        <div class="right">
+                            <div class="div1">
+                                <span>心率</span>
+                                <h2>{{nearestHeartRate}}</h2>
+                            </div>
+                            <div class="div2">{{nearestHeartRateTime}}</div>
+                        </div>
+                    </div>
+                    <div>
+                        <img src="../../imgs/iframeImgs/xy.png" alt="">
+                        <div class="right">
+                            <div class="div1">
+                                <span>血压</span>
+                                <h2>{{nearestBloodPressure}}</h2>
+                            </div>
+                            <div class="div2">{{nearestBloodPressureTime}}</div>
+                        </div>
+                    </div>
+                    <div>
+                        <img src="../../imgs/iframeImgs/xy%20(2).png" alt="">
+                        <div class="right">
+                            <div class="div1">
+                                <span>血氧</span>
+                                <h2>{{nearestOxyhemoglobinSaturation}}</h2>
+                            </div>
+                            <div class="div2">{{nearestOxyhemoglobinSaturatioTime}}</div>
+                        </div>
+                    </div>
+                    <!--<div>-->
+                        <!--<img src="../../imgs/iframeImgs/xt.png" alt="">-->
+                        <!--<div class="right">-->
+                            <!--<div class="div1">-->
+                                <!--<span>血糖</span>-->
+                                <!--<h2>{{nearestOxyhemoglobinSaturation}}</h2>-->
+                            <!--</div>-->
+                            <!--<div class="div2">{{nearestOxyhemoglobinSaturatioTime}}</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                </div>
+                <!--<div class="analysisy_bottom_bottom">-->
+                    <!--<div>-->
+                        <!--<span><img src="../../imgs/spuerScreenImgs/hr.png"></span>-->
+                        <!--<span class="noNamed">心率</span>-->
+                        <!--<span class="dateSize">{{ nearestHeartRate }}</span>-->
+                        <!--<span class="testtime"><span>{{ nearestHeartRateTime }}</span>测量</span>-->
+                    <!--</div>-->
+                    <!--<div>-->
+                        <!--<span><img src="../../imgs/spuerScreenImgs/bp.png"></span>-->
+                        <!--<span class="noNamed">血压</span>-->
+                        <!--<span class="dateSize">{{ nearestBloodPressure }}</span>-->
+                        <!--<span class="testtime"><span>{{ nearestBloodPressureTime }}</span>测量</span>-->
+                    <!--</div>-->
+                    <!--<div>-->
+                        <!--<span><img src="../../imgs/spuerScreenImgs/bo.png"></span>-->
+                        <!--<span class="noNamed">血氧</span>-->
+                        <!--<span class="dateSize">{{ nearestOxyhemoglobinSaturation }}</span>-->
+                        <!--<span class="testtime"><span>{{ nearestOxyhemoglobinSaturatioTime }}</span>测量</span>-->
+                    <!--</div>-->
+                <!--</div>-->
+            </div>
+        </div>
+        <!--处理进度-->
+        <div class="progress1">
+        	<p>处理进度</p>
+	        <div id="dispose">
+
+                <!--客服处理进度-->
+                <ul class="kfProgress">
+                    <li v-for="(item,index) in disposeInfos">
+                        <!--预警内容-->
+                        <div class="sosContent">
+                            <div class="div1">
+                                <h2></h2>
+                                <h2 class="h2Title" v-if="item.level === 0">预警</h2>
+                                <h2 class="h2Title" v-else-if="item.level === 1">疾病</h2>
+                                <h2 class="h2Title" v-else-if="item.level === 2">危险</h2>
+                                <h2 class="h2Title" v-else style="background:#0096ff;">回访</h2>
+                                <span>{{item.disposeTime}} </span>
+
+                            </div>
+                            <div class="div2">{{item.msg}}</div>
+                        </div>
+                        <!--客服处理进度-->
+                        <div class="kf">
+                            <div class="div1">
+                                <img src="../../imgs/iframeImgs/kf.png" alt="">
+                                <div>客服处理&ensp;&ensp;{{item.disposeId}}  &ensp;&ensp;{{item.disposeTime}}</div>
+                            </div>
+                            <div class="div2">处理：{{item.disposeRemark}}</div>
+                        </div>
+                    </li>
+                </ul>
+	       	  <!--<li><span>10月30日12时35分21秒</span>安顿系统给#佩戴人王小鱼#发送短信通知、系统通知、语音播报。</li>-->
+	       	  <!--<li><span>10月30日12时35分21秒</span>安顿系统给#佩戴人王小鱼#提供救护车服务</li>-->
+	       	  <!--<li><span>10月30日12时35分21秒</span>安顿系统给#佩戴人王小鱼#发送语音播报。</li>-->
+	        </div>
+        </div>
+        <!--添加处理方案-->
+        <div class='project1'>
+        	<p>添加处理方案</p>
+        	<textarea v-model="disposeInfo" name="" id="" cols="30" rows="10" placeholder="#备注内容#，#提醒时间年月日时分#"></textarea>
+        </div>
+        <!--设置提醒时间-->
+        <div class="time1">
+	       <div class='setTime'>
+		       <!--<p>设置提醒时间</p>-->
+		       <!--<input type="datetime-local" class='form-control' value="2014-11-16T15:25"/>-->
+		       <!--<button class='yes'>确认</button>-->
+	       </div>
+	       <div class='call'>
+	       	 <p>是否拨打电话</p>
+	       	 <div>
+	       	 	<button @click="CallPhone" class="btn1">佩戴人电话</button>
+	       	    <button @click="CallEmergencyPhone" class="btn1">紧急电话</button>
+	       	    <button @click="Call120" class="btn1">救护车</button>
+                 <button @click="voiceModel" class="btn1">下发语音</button>
+	       	 </div>
+	       </div>
+        </div>
+        <div class='text-right'>
+            <div class="workOrder" style="margin-right:5px;">
+                <a href="" class="workOrderList" @click="workOrderList">客服记录></a>
+                <button @click="addWorkOrder" class='btn btn-skyBlue finish'>添加记录</button>
+            </div>
+               <button class='btn btn-skyBlue finish' @click="instancyTips" style="margin-right:5px;">紧急消息下发</button>
+               <button class='btn btn-skyBlue finish' @click="phoneFeedBack" style="margin-right:5px;">来电反馈</button>
+               <button class='btn btn-skyBlue finish' @click="submitFinish">提交处理</button>
+        </div>
+       </div>
+       
+       
+     
+</main>
+
+    <!--下发语音弹框-->
+    <div role="dialog" class="modal fade bs-example-modal-sm" id="voice">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!--header-->
+                <div class="modal-header text-center">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                    <h4 class="h4 modal-title">选择语音</h4>
+                </div>
+                <!--body-->
+                <div class="modal-body text-center">
+                    <select name="" id="selectVoice" class='select'>
+                        <option value="" class="selected">请选择语音</option>
+                        <option value="1">监测到数据异常</option>
+                        <option value="2">系统监测到异常</option>
+                    </select>
+                    </select>
+                </div>
+                <div class="row">
+                    <div class="col-sm-3"><button class="btn btn-default btn-block" @click='closeModel'>取消</button></div>
+                    <div class="col-sm-3"><button class="btn btn-skyBlue btn-block" @click="handleSend">确定</button></div>
+                </div>
+            </div>
+        </div>
+</div>
+    <!--紧急提示弹框-->
+    <div role="dialog" class="modal fade bs-example-modal-sm" id="tips">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!--header-->
+                <div class="modal-header text-center">
+                    <button type="button" class="close"  id="closeUpload" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                    <h4 class="h4 modal-title">录入下发内容</h4>
+                </div>
+                <!--body-->
+                <div class="modal-body text-center">
+
+								<textarea name="" rows="" cols="" id="sendVal">
+
+								</textarea>
+
+                    <div class="row">
+                        <div class="col-sm-4" class="text-right"><button class="btn btn-skyBlue  btn-block" @click="saveSend">确定下发</button></div>
+                        <!--<div class="col-sm-3"></div>-->
+                        <!--<div class="col-sm-3 text-center"><button id="search" class="search" style='margin:0 10px;'>搜索</button><div>
+                        <div class="col-sm-3 text-center"><button class="search all" style='margin:0 10px;'>搜索</button></div>-->
+                        <!--<div class="col-sm-4"><button class="btn btn-default btn-block" @click="closeModel">取消</button></div>-->
+                        <!--<div class="col-sm-4"><button class="btn btn-skyBlue btn-block" @click="saveSend">保存</button></div>-->
+                    </div>
+                    <!--<div class="row">-->
+                        <!--<div class="col-sm-12 text-center"></div>-->
+                    <!--</div>-->
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--点击添加工单进行弹框-->
+    <div role="dialog" class="modal fade bs-example-modal-sm" id="addWorkOrder">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!--header-->
+                <div class="modal-header text-center">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                    <h4 class="h4 modal-title">添加工单</h4>
+                </div>
+                <!--&lt;!&ndash;body&ndash;&gt;-->
+                <div class="modal-body text-center">
+                    <!--part1-->
+                    <div class="part1">
+                        <div class="box">
+                            <div class="top">
+                                <div class="div1">
+                                    <span>通话类型</span>
+                                    <select name="" id="callType">
+                                        <option value="">通话类型</option>
+                                        <option value="1">主动呼出</option>
+                                        <option value="2">主动呼入</option>
+                                        <option value="3">其他</option>
+                                    </select>
+                                </div>
+                                <div class="div1">
+                                    <span>反馈类型</span>
+                                    <select name="" id="select" onchange="change(this.value)">
+                                        <option value="">反馈类型</option>
+                                        <option value="产品硬件">产品硬件</option>
+                                        <option value="APP软件">APP软件</option>
+                                        <option value="数据失准">数据失准</option>
+                                        <option value="用户回访">用户回访</option>
+                                        <option value="预警回访">预警回访</option>
+                                        <option value="合作问题">合作问题</option>
+                                        <option value="无效沟通">无效沟通</option>
+                                        <option value="定位问题">定位问题</option>
+                                        <option value="产品服务咨询">产品服务咨询</option>
+                                        <option value="投诉与建议">投诉与建议</option>
+                                        <option value="数据采集不到">数据采集不到</option>
+                                        <option value="故障设备报备">故障设备报备</option>
+                                        <option value="SOS">SOS</option>
+                                        <option value="其他问题">其他问题</option>
+                                    </select>
+                                </div>
+                                <div class="div1">
+                                    <span>反馈子类型</span>
+                                    <select name="" id="select2" >
+                                        <option value="">
+
+                                        </option>
+                                    </select>
+                                    <input type="text" style="display:none;" id="otherInput" value="" onchange="changeQuestion(this.value)">
+                                </div>
+                                <div class="div1">
+                                    <span>用户类型</span>
+                                    <select name="" id="userType">
+                                        <!--<option value="">用户类型</option>-->
+                                        <option value="佩戴用户" selected>佩戴用户</option>
+                                        <option value="APP用户">APP用户</option>
+                                        <option value="合伙人">合伙人</option>
+                                        <option value="意向合伙人">意向合伙人</option>
+                                        <option value="意向用户">意向用户</option>
+                                        <option value="其他">其他</option>
+                                    </select>
+                                </div>
+
+                            </div>
+
+
+                            <div class="top bot">
+                                <div class="div1">
+                                    <span>用户城市</span>
+                                    <input type="text" class="input1" id="city" >
+                                </div>
+                                <div class="div1">
+                                    <span>来电号码</span>
+                                    <input type="text" class="input1" id="phoneNum" v-model='callId' maxlength="11" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')">
+                                </div>
+                                <!--<div class="div1">-->
+                                <!--<span>来电姓名</span>-->
+                                <!--<input type="text" class="input1"  id="userName">-->
+                                <!--</div>-->
+                                <div class="div1">
+                                    <span>设备号</span>
+                                    <input type="text" class="input1" id="deviceId"  v-model='deviceId' maxlength="15" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')">
+                                </div>
+                                <div class="div1">
+                                    <span>APP账号</span>
+                                    <input type="text" class="input1" id="appUserId" maxlength="11" v-model='appId' onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dad" style="display:none;">
+                        <h2>该号码来访记录</h2>
+                        <p id="count"></p>
+                        <div id="numRecord"></div>
+                    </div>
+                    <!--part2-->
+                    <div class="part2">
+                        <div class="left" style="display:none;">
+                            <h2>佩戴用户</h2>
+                            <div class="info1">
+                                <div class="div1">
+                                    <p id="username1"></p>
+                                    <span id="age"></span>
+                                </div>
+                                <div class="div2">
+                                    <p>服务期限</p>
+                                    <span id="serviceTime"></span>
+                                </div>
+                                <div class="button" id="seeInfo"></div>
+                            </div>
+                            <div class="info1">
+                                <div class="div2 div3">
+                                    <p>病史</p>
+                                    <span id="MedicalHistory"></span>
+                                </div>
+
+                                <div class="div2">
+                                    <p>该账号来访记录</p>
+                                    <span id="count2"></span>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="right" style="display:none;">
+                            <h2>APP用户</h2>
+                            <div class="info1">
+                                <div class="div1">
+                                    <p id="username2"></p>
+                                    <span id="phoneBrand"></span>
+                                    <span id="appVersion"></span>
+                                </div>
+                                <div class="button" id="seeInfo2"></div>
+                            </div>
+                            <div class="info2">
+                                <div class="div1">
+                                    <p>注册时间</p>
+                                    <span id="createTime"></span>
+                                </div>
+                                <div class="div1">
+                                    <p>设备数量</p>
+                                    <span id="count1"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--part3-->
+                    <div class="part3">
+                        <div class="left">
+                            <h2>反馈详情</h2>
+                            <div class="leftBox">
+                                <textarea name="questionDetails" class="form-control" id="txt1"></textarea>
+                            </div>
+                        </div>
+                        <div class="right">
+                            <h2>处理结果</h2>
+                            <div class="rightBox">
+                                <textarea name="questionDetails" class="form-control" id="txt2"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <!--part5-->
+                    <div class="part4">
+                        <div class="div1">
+                            <p>是否需要反馈</p>
+                            <div class="txt1">
+                                <span>是</span>
+                                <input type="radio" value="1" name="radio" onchange="changeRadioValue()">
+                            </div>
+                            <div class="txt1">
+                                <span>否</span>
+                                <input type="radio" value="2" name="radio" onchange="changeRadioValue()" checked>
+                            </div>
+                            <div class="txt2">
+                                <span>*</span>
+                                如果不能当场解决，需要再次反馈的，请选择反馈时间
+                            </div>
+                        </div>
+                        <div class="div2" id="time1">
+                            <p>设置反馈时间</p>
+                            <input type="datetime-local" class="input2" id="nextDate">
+                            <button>确认</button>
+                        </div>
+                        <div class="div3">
+                            <button id="addWorkOrderSubmit">提交</button>
+                        </div>
+                    </div>
+                </div>
+                <!--<div class="row">-->
+                <!--<div class="col-sm-4"><button class="btn btn-default btn-block" @click="closeModel">取消</button></div>-->
+                <!--<div class="col-sm-4"><button class="btn btn-skyBlue btn-block" @click='returnSubmit'>确定</button></div>-->
+                <!--</div>-->
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<!--js-->
+<script src="../../lib/jquery/jquery.min.js"></script>
+<script src="../../lib/vue.min.js"></script>
+<script src="../../lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../lib/datatables/js/jquery.dataTables.min.js"></script>
+<script src="../../lib/layer/layer.js"></script>
+<script src="../../lib/echarts/echarts.min.js"></script>
+<script src="../../js/common.js"></script>
+<script src="../../js/framePages/warningList.js"></script>
+</body>
+</html>

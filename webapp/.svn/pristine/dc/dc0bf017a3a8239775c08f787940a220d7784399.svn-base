@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="../imgs/logo-l.png">    <!--title-icon-->
+    <link rel="stylesheet" href="../lib/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../css/cssReset.css"/>
+    <link rel="stylesheet" href="../css/login.css">
+    <title>登陆-安顿后台管理系统</title>
+</head>
+<body id="mydiv">
+<!--背景定位-->
+<!--<div class="bgBox"><img src="../imgs/loginBG-2.png" alt="bgImg"></div>-->
+<!--section-->
+<section class="login">
+    <!--header-->
+    <header class="header">
+        <img src="../imgs/loginLogo.png" alt="logo" width="">
+    </header>
+    <!--loginBox-->
+    <div class="loginBox">
+        <!--title-->
+        <h3 class="logTitle">安顿心脑监测预警救护系统</h3>
+        <!--用户名-->
+        <div class="inputBox">
+            <i class="icon user"></i>
+            <input type="text" placeholder="用户名" id="loginId">
+        </div>
+        <!--密码-->
+        <div class="inputBox">
+            <i class="icon pwd"></i>
+            <input type="password" placeholder="密码" id="pwd" onpaste="return false;">
+        </div>
+        <!--忘记密码-->
+        <div class="resetPwd">
+            <a href="resetPwd.html" title="忘记密码">忘记密码</a>
+        </div>
+        <!--登陆button-->
+        <div class="loginDiv">
+            <button class="loginBtn" id="loginBtn">登录</button>
+        </div>
+    </div>
+</section>
+
+<!--copyright-->
+<div class="copyright">
+    <div>
+        <a href="http://www.iandun.com" target="_blank">安顿官网</a>&emsp;|&emsp;<a target="_blank" href="http://www.xueyangkeji.com">关于雪扬 </a>
+    </div>
+    <div>
+        Copyright © 2015-2018 Xueyang Technology.All Rights Reserved.  雪扬科技 版权所有
+    </div>
+</div>
+
+
+<!--js-->
+<script src="../lib/jquery/jquery.min.js"></script>
+<script src="../lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="../lib/layer/layer.js"></script>
+<script src="../lib/Particleground.js"></script>
+<script src="../lib/canvas-particle.js"></script>
+<script src="../js/common.js"></script>
+<script src="../js/login.js"></script>
+</body>
+</html>

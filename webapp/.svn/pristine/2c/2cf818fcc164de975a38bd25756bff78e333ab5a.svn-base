@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+    <link rel="shortcut icon" href="../../imgs/logo-l.png">
+    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../../css/cssReset.css"/>
+    <link rel="stylesheet" href="../../css/framePages/userListMonitor.css"/>
+    <title>预警救护中心</title>
+</head>
+<body>
+<div id="app" v-cloak>
+    <!--userList-->
+    <div class="userListBox">
+        <!--banner-->
+        <header class="header">
+            <div class="logo">
+                <img src="../../imgs/newLogo.png" alt="andunLogo" width="" class="titleLogo"/>
+            </div>
+            <div class="title">
+                <div>安顿心脑监测预警救护中心({{ areaName }})</div>
+                <div>实时监控风险人群 {{ flag }} 人</div>
+            </div>
+            <div class="time">
+                <!--退出-->
+                <div>
+                    <a href="javascript:window.opener=null;window.open('','_self');window.close();" title="关闭">
+                        <img src="../../imgs/exit.png" alt=""/>
+                    </a>
+                </div>
+                <!--时间-->
+                <div>
+                    {{  }}
+                </div>
+            </div>
+        </header>
+        <!--用户列表-->
+        <div class="userPart">
+            <!--准星标记-->
+            <div class="markStar">
+                <img src="../../imgs/iframeImgs/o.png" alt="mark" width="421"/>
+            </div>
+            <div class="markStar" id="shan">
+                <img src="../../imgs/iframeImgs/shan.png" alt="" width="148"/>
+            </div>
+            <!--头像列表-->
+            <div v-for="(item, index) in list">
+                <div>
+                    <img src="../../imgs/iframeImgs/u11.png" alt="男" title="男" v-if="item.gender == 1">
+                    <img src="../../imgs/iframeImgs/u21.png" alt="女" title="女" v-else>
+                </div>
+                <div>
+                    {{ item.username }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--userMsg-->
+    <div class="userMsgBox">
+        <div class="userMsg">
+            <!--个人信息-->
+            <div class="myMsg">
+                <!--myMsg-left-->
+                <div class="myMsg-left">
+                    <div class="myMsg-left-line1">
+                        <!--头像-->
+                        <div>
+                            <img v-if="cmsWearUserInfo.gender == 1" src="../../imgs/iframeImgs/u10.png" alt="男" title="男" width="60">
+                            <img v-else src="../../imgs/iframeImgs/u20.png" alt="女" title="女" width="60">
+                        </div>
+                        <!--资料-->
+                        <div>
+                            <div>
+                                <span>{{ cmsWearUserInfo.username }}</span>
+                                <span>
+                                <img v-if="cmsWearUserInfo.isInsurance == 1" src="../../imgs/iframeImgs/pro2.png" alt="已投保"/>
+                                <img v-else src="../../imgs/iframeImgs/pro1.png" alt="未投保"/>
+                            </span>
+                                <span>
+                                <img v-if="cmsWearUserInfo.isVip == 1" src="../../imgs/iframeImgs/vip2.png" alt="vip"/>
+                                <img v-else src="../../imgs/iframeImgs/vip1.png" alt="非vip"/>
+                            </span>
+                                <span class="deviceStatus" id="deviceStatus">
+                                {{ cmsWearUserInfo.deviceStatus }}
+                            </span>
+                            </div>
+                            <div>
+                                <span v-if="cmsWearUserInfo.gender == 1">男</span>
+                                <span v-else>女</span>
+                                <span>{{ cmsWearUserInfo.age }}岁</span>
+                                <span>
+                                关注度
+                                 <img src="../../imgs/iframeImgs/star.png" alt=""/>
+                                 <img src="../../imgs/iframeImgs/star.png" alt=""/>
+                                 <img src="../../imgs/iframeImgs/star.png" alt=""/>
+                            </span>
+                                <span>身份证号:{{ cmsWearUserInfo.idCard }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="myMsg-left-line2">
+                        <div>病史<span>{{ cmsWearUserInfo.medicalHistory }}</span></div>
+                        <div>职业<span>{{ cmsWearUserInfo.occupation }}</span></div>
+                        <div>身高<span>{{ cmsWearUserInfo.stature }}</span></div>
+                        <div>体重<span>{{ cmsWearUserInfo.weight }}</span></div>
+                    </div>
+                    <div class="myMsg-left-line3">
+                        <div>联系电话<span>{{ cmsWearUserInfo.phoneNum }}</span></div>
+                        <div>居住地址<span>{{ cmsWearUserInfo.addressInfo }}</span></div>
+                    </div>
+                </div>
+                <!--myMsg-right-->
+                <div class="myMsg-right">
+                    <div>紧急联系人 <span>{{ cmsWearUserInfo.emergencyPeople }}</span></div>
+                    <div>紧急电话&emsp; <span>{{ cmsWearUserInfo.emergencyPhone }}</span></div>
+                    <div class="myMsg-right-flex">
+                        <div>报警(次) <span>{{ cmsWearUserInfo.alarmCount }}</span></div>
+                        <div>上次报警 <span>{{ cmsWearUserInfo.lastAlarmTime }}</span></div>
+                    </div>
+                    <div class="myMsg-right-flex">
+                        <div>回访(次) <span>0</span></div>
+                        <div>上次回访 <span></span></div>
+                    </div>
+                </div>
+            </div>
+            <!--数据统计-->
+            <div class="dataShow">
+                <!--今日实时数据-->
+                <div class="dataShow-left">
+                    <div>今日实时数据</div>
+                    <div class="dataShow-left-bottom">
+                        <!--心率-->
+                        <div>
+                            <div><img src="../../imgs/iframeImgs/hr.png" alt="" width="15"> 心率</div>
+                            <div>{{ actualData.nearestHeartRate }}</div>
+                            <div>{{ actualData.nearestHeartRateTime }}测量</div>
+                        </div>
+                        <!--血压-->
+                        <div>
+                            <div><img src="../../imgs/iframeImgs/bp.png" alt="" width="15"> 血压</div>
+                            <div>{{ actualData.nearestBloodPressure }}</div>
+                            <div>{{ actualData.nearestBloodPressureTime }}测量</div>
+                        </div>
+                        <!--血氧-->
+                        <div>
+                            <div><img src="../../imgs/iframeImgs/bo.png" alt="" width="15"> 血氧</div>
+                            <div>{{ actualData.nearestOxyhemoglobinSaturation }}</div>
+                            <div>{{ actualData.nearestOxyhemoglobinSaturatioTime }}测量</div>
+                        </div>
+                    </div>
+                </div>
+                <!--12器官-->
+                <div class="dataShow-center">
+                    <div class="containerImg">
+                        <div class="dot">
+                            <h3 class="illType">{{ healthFlag }}</h3>
+                        </div>
+                        <!--6-->
+                        <div class="boxImg" v-if="allTheInternalOrgans.spine == 1"><img title="脊柱" src="../../APP/imgs/healthDetails/icon05.png" alt="" width="40"/></div>
+                        <div class="boxImg" v-else-if="allTheInternalOrgans.spine == 2"><img title="脊柱" src="../../APP/imgs/healthDetails/icon17.png" alt="" width="40"/></div>
+                        <div class="boxImg" v-else-if="allTheInternalOrgans.spine == 3"><img title="脊柱" src="../../APP/imgs/healthDetails/icon29.png" alt="" width="40"/></div>
+                        <div class="boxImg" v-else><img title="脊柱" src="../../APP/imgs/healthDetails/icon41.png" alt="" width="40"/></div>
+                        <!--5-->
+                        <div class="boxImg" v-if="allTheInternalOrgans.bladder == 1"><img title="膀胱" src="../../APP/imgs/healthDetails/icon01.png" alt="" width="40"/></div>
+                        <div class="boxImg" v-else-if="allTheInternalOrgans.bladder == 2"><img title="膀胱" src="../../APP/imgs/healthDetails/icon13.png" alt="" width="40"/></div>
+                        <div class="boxImg" v-else-if="allTheInternalOrgans.bladder == 3"><img title="膀胱" src="../../APP/imgs/healthDetails/icon26.png" alt="" width="40"/></div>
+                        <div class="boxImg" v-else><img title="膀胱" src="../../APP/imgs/healthDetails/icon37.png" alt="" width="40"/></div>
+                        <!--4-->
+                        <div class="boxImg" v-if="allTheInternalOrgans.smallIntestine == 1"><img title="小肠" src="../../APP/imgs/healthDetails/icon11.png" alt="" width="40"/></div>
+                        <div class="boxImg" v-else-if="allTheInternalOrgans.smallIntestine == 2"><img title="小肠" src="../../APP/imgs/healthDetails/icon23.png" alt="" width="40"/></div>
+                        <div class="boxImg" v-else-if="allTheInternalOrgans.smallIntestine == 3"><img title="小肠" src="../../APP/imgs/healthDetails/icon35.png" alt="" width="40"/></div>
+                        <div class="boxImg" v-else><img title="小肠" src="../../APP/imgs/healthDetails/icon47.png" alt="" width="40"/></div>
+                        <!--3-->
+                        <div class="boxImg" v-if="allTheInternalOrgans.gallBladder == 1"><img title="胆" src="../../APP/imgs/healthDetails/icon10.png" alt="" width="40"/></div>
+                        <div class="boxImg" v-else-if="allTheInternalOrgans.gallBladder == 2"><img title="胆" src="../../APP/imgs/healthDetails/icon22.png" alt="" width="40"/></div>
+                        <div class="boxImg" v-else-if="allTheInternalOrgans.gallBladder == 3"><img title="胆" src="../../APP/imgs/healthDetails/icon34.png" alt="" width="40"/></div>
+                        <div class="boxImg" v-else><img title="胆" src="../../APP/imgs/healthDetails/icon46.png" alt="" width="40"/></div>
+                        <!--2-->
+                        <div class="boxImg" v-if="allTheInternalOrgans.kidney == 1"><img title="肾" src="../../APP/imgs/healthDetails/icon04.png" alt="" width="40"/></div>
+                        <div class="boxImg" v-else-if="allTheInternalOrgans.kidney == 2"><img title="肾" src="../../APP/imgs/healthDetails/icon16.png" alt="" width="40"/></div>
+                        <div class="boxImg" v-else-if="allTheInternalOrgans.kidney == 3"><img title="肾" src="../../APP/imgs/healthDetails/icon28.png" alt="" width="40"/></div>
+                        <div class="boxImg" v-else><img title="肾" src="../../APP/imgs/healthDetails/icon40.png" alt="" width="40"/></div>
+                        <!--1-->
+                        <div class="boxImg" v-if="allTheInternalOrgans.lung == 1"><img title="肺" src="../../APP/imgs/healthDetails/icon03.png" alt="" width="40"/></div>
+                        <div class="boxImg" v-else-if="allTheInternalOrgans.lung == 2"><img title="肺" src="../../APP/imgs/healthDetails/icon15.png" alt="" width="40"/></div>
+                        <div class="boxImg" v-else-if="allTheInternalOrgans.lung == 3"><img title="肺" src="../../APP/imgs/healthDetails/icon27.png" alt="" width="40"/></div>
+                        <div class="boxImg" v-else><img title="肺" src="../../APP/imgs/healthDetails/icon39.png" alt="" width="40"/></div>
+                        <!--12-->
+                        <div class="boxImg" v-if="allTheInternalOrgans.heart == 1"><img title="心" src="../../APP/imgs/healthDetails/icon08.png" alt="" width="40"/></div>
+                        <div class="boxImg" v-else-if="allTheInternalOrgans.heart == 2"><img title="心" src="../../APP/imgs/healthDetails/icon20.png" alt="" width="40"/></div>
+                        <div class="boxImg" v-else-if="allTheInternalOrgans.heart == 3"><img title="心" src="../../APP/imgs/healthDetails/icon32.png" alt="" width="40"/></div>
+                        <div class="boxImg" v-else><img title="心" src="../../APP/imgs/healthDetails/icon44.png" alt="" width="40"/></div>
+                        <!--11-->
+                        <div class="boxImg" v-if="allTheInternalOrgans.liver == 1"><img title="肝" src="../../APP/imgs/healthDetails/icon02.png" alt="" width="40"/></div>
+                        <div class="boxImg" v-else-if="allTheInternalOrgans.liver == 2"><img title="肝" src="../../APP/imgs/healthDetails/icon14.png" alt="" width="40"/></div>
+                        <div class="boxImg" v-else-if="allTheInternalOrgans.liver == 3"><img title="肝" src="../../APP/imgs/healthDetails/icon26.png" alt="" width="40"/></div>
+                        <div class="boxImg" v-else><img title="肝" src="../../APP/imgs/healthDetails/icon38.png" alt="" width="40"/></div>
+                        <!--10-->
+                        <div class="boxImg" v-if="allTheInternalOrgans.spleen == 1"><img title="脾" src="../../APP/imgs/healthDetails/icon06.png" alt="" width="40"/></div>
+                        <div class="boxImg" v-else-if="allTheInternalOrgans.spleen == 2"><img title="脾" src="../../APP/imgs/healthDetails/icon18.png" alt="" width="40"/></div>
+                        <div class="boxImg" v-else-if="allTheInternalOrgans.spleen == 3"><img title="脾" src="../../APP/imgs/healthDetails/icon30.png" alt="" width="40"/></div>
+                        <div class="boxImg" v-else><img title="脾" src="../../APP/imgs/healthDetails/icon42.png" alt="" width="40"/></div>
+                        <!--9-->
+                        <div class="boxImg" v-if="allTheInternalOrgans.pericardium == 1"><img title="心包" src="../../APP/imgs/healthDetails/icon09.png" alt="" width="40"/></div>
+                        <div class="boxImg" v-else-if="allTheInternalOrgans.pericardium == 2"><img title="心包" src="../../APP/imgs/healthDetails/icon21.png" alt="" width="40"/></div>
+                        <div class="boxImg" v-else-if="allTheInternalOrgans.pericardium == 3"><img title="心包" src="../../APP/imgs/healthDetails/icon33.png" alt="" width="40"/></div>
+                        <div class="boxImg" v-else><img title="心包" src="../../APP/imgs/healthDetails/icon45.png" alt="" width="40"/></div>
+                        <!--8-->
+                        <div class="boxImg" v-if="allTheInternalOrgans.largeIntestine == 1"><img title="大肠" src="../../APP/imgs/healthDetails/icon07.png" alt="" width="40"/></div>
+                        <div class="boxImg" v-else-if="allTheInternalOrgans.largeIntestine == 2"><img title="大肠" src="../../APP/imgs/healthDetails/icon19.png" alt="" width="40"/></div>
+                        <div class="boxImg" v-else-if="allTheInternalOrgans.largeIntestine == 3"><img title="大肠" src="../../APP/imgs/healthDetails/icon31.png" alt="" width="40"/></div>
+                        <div class="boxImg" v-else><img title="大肠" src="../../APP/imgs/healthDetails/icon43.png" alt="" width="40"/></div>
+                        <!--7-->
+                        <div class="boxImg" v-if="allTheInternalOrgans.lymph == 1"><img title="淋巴" src="../../APP/imgs/healthDetails/icon12.png" alt="" width="40"/></div>
+                        <div class="boxImg" v-else-if="allTheInternalOrgans.lymph == 2"><img title="淋巴" src="../../APP/imgs/healthDetails/icon24.png" alt="" width="40"/></div>
+                        <div class="boxImg" v-else-if="allTheInternalOrgans.lymph == 3"><img title="淋巴" src="../../APP/imgs/healthDetails/icon36.png" alt="" width="40"/></div>
+                        <div class="boxImg" v-else><img title="淋巴" src="../../APP/imgs/healthDetails/icon48.png" alt="" width="40"/></div>
+                    </div>
+                    <div><img src="../../imgs/iframeImgs/exp.png" alt="" width="55"></div>
+                </div>
+                <!--饼图统计-->
+                <div class="dataShow-bottom">
+                    <div class="pieImg" id="pieImg"></div>
+                    <div class="legend">
+                        <div><img src="../../imgs/iframeImgs/expIcon1.png" alt="健康"> 健康 <span>{{ healthDaysBeans.health }}天</span></div>
+                        <div><img src="../../imgs/iframeImgs/expIcon2.png" alt="亚健康"> 亚健康 <span>{{ healthDaysBeans.subHealth }}天</span></div>
+                        <div><img src="../../imgs/iframeImgs/expIcon3.png" alt="疾病"> 疾病 <span>{{ healthDaysBeans.ill }}天</span></div>
+                        <div><img src="../../imgs/iframeImgs/expIcon1.png" alt="未佩戴"> 未佩戴 <span>{{ healthDaysBeans.noData }}天</span></div>
+                    </div>
+                </div>
+            </div>
+            <!--折线图-->
+            <div class="lineBox">
+                <div>
+                    <div><span>心率监控</span><span>对比历史></span></div>
+                    <div id="hrImg"></div>
+                    <div>
+                        <div>实时心率分析</div>
+                        <div>{{ monitoringDetails.conclusion1 }}</div>
+                    </div>
+                </div>
+                <div>
+                    <div><span>血压监控</span><span>对比历史></span></div>
+                    <div id="bpImg"></div>
+                    <div>
+                        <div style="color: #F3AB59;">实时血压分析</div>
+                        <div>{{ monitoringDetails.conclusion2 }}</div>
+                    </div>
+                </div>
+                <div>
+                    <div><span>血氧监控</span><span>对比历史></span></div>
+                    <div id="boImg"></div>
+                    <div>
+                        <div style="color: #0096FF;">实时血氧分析</div>
+                        <div>{{ monitoringDetails.conclusion3 }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--js-->
+<script src="../../lib/jquery/jquery.min.js"></script>
+<script src="../../lib/vue.min.js"></script>
+<script src="../../lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../lib/echarts/echarts.min.js"></script>
+<script src="../../lib/layer/layer.js"></script>
+<script src="../../js/common.js"></script>
+<script src="../../js/framePages/showCommon.js"></script>
+<script src="../../js/screenShow/s_user_risk_list.js"></script>
+</body>
+</html>

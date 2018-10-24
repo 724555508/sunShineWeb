@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="../../imgs/logo-l.png">
+    <!--title-icon-->
+    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../../lib/datatables/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" href="../../css/cssReset.css" />
+    <link rel="stylesheet" href="https://cache.amap.com/lbs/static/main1119.css" />
+    <link rel="stylesheet" href="https://cache.amap.com/lbs/static/main.css?v=1.0?v=1.0" />
+    <!--城市选择-->
+    <link rel="stylesheet" href="../../css/framePages/historyHealthAnalysis.css" />
+    <title>历史健康解析</title>
+</head>
+<body>
+
+<div  id="app" class="main"  v-cloak>
+        <h2>历史健康解析</h2>
+        <div class="dad">
+            <!--left-->
+            <div class="left">
+                <input type="month" placeholder=""  id="date" @change="time">
+                <!--<input class="dateinput dateicon" id="date" type="text" placeholder="YYYY年MM月" @change="time" readonly>-->
+                <!--列表内容-->
+                <ul class="listBox">
+                    <li class="list"  ref="dataLi" @click="singleLi(index)"  :class="{active:index === isActive}" v-for="(item,index) in list">
+                        <span>{{item.str}}</span>      <!-- @click="changeClass(index)"-->
+                        <div class="states health" v-if="item.icon == '1'">健康</div>
+                        <div class="states subHealth" v-if="item.icon == '2'">亚健康</div>
+                        <div class="states resource" v-if="item.icon == '3'">疾病</div>
+                    </li>
+                </ul>
+            </div>
+            <!--right-->
+            <div class="right">
+               <!--<div v-show="list.length === 0"><img src="" alt=""></div>-->
+               <div>
+                   <!--part2-->
+                   <div class='part2'>
+                       <!--health_parse-->
+                       <div class='health_parse'>
+                           <!--title-->
+                           <div class="title">
+                               <h2>{{date}}健康解析</h2>
+                               <!--<p class="button" @click="healthAnalytic">查看历史健康解析</p>-->
+                           </div>
+                           <!--left-->
+                           <div class='left'>
+                               <div class="containerImg">
+                                   <div class="dot">
+                                       <h3 class="illType"  v-if='healthFlag == "未知"'>{{healthFlag}}</h3>
+                                       <h3 class="illType"  v-else-if='healthFlag == "健康"'>{{healthFlag}}</h3>
+                                       <h3 class="illType"  v-else-if='healthFlag == "亚健康"'>{{healthFlag}}</h3>
+                                       <h3 class="illType"  v-else='healthFlag == "疾病"'>{{healthFlag}}</h3>
+                                       <!--<h4 class="illExp">轻微程度</h4>-->
+                                   </div>
+                                   <!--6-->
+                                   <div class="boxImg" v-if="allTheInternalOrgans.spine == 1"><img title="" src="../../APP/imgs/healthDetails/icon05.png" alt="" width="40"/></div>
+                                   <div class="boxImg" v-else-if="allTheInternalOrgans.spine == 2"><img title="" src="../../APP/imgs/healthDetails/icon17.png" alt="" width="40"/></div>
+                                   <div class="boxImg" v-else-if="allTheInternalOrgans.spine == 3"><img title="" src="../../APP/imgs/healthDetails/icon29.png" alt="" width="40"/></div>
+                                   <div class="boxImg" v-else><img title="" src="../../APP/imgs/healthDetails/icon41.png" alt="" width="40"/></div>
+                                   <!--5-->
+                                   <div class="boxImg" v-if="allTheInternalOrgans.bladder == 1"><img title="" src="../../APP/imgs/healthDetails/icon01.png" alt="" width="40"/></div>
+                                   <div class="boxImg" v-else-if="allTheInternalOrgans.bladder == 2"><img title="" src="../../APP/imgs/healthDetails/icon13.png" alt="" width="40"/></div>
+                                   <div class="boxImg" v-else-if="allTheInternalOrgans.bladder == 3"><img title="" src="../../APP/imgs/healthDetails/icon25.png" alt="" width="40"/></div>
+                                   <div class="boxImg" v-else><img title="" src="../../APP/imgs/healthDetails/icon37.png" alt="" width="40"/></div>
+                                   <!--4-->
+                                   <div class="boxImg" v-if="allTheInternalOrgans.smallIntestine == 1"><img title="" src="../../APP/imgs/healthDetails/icon11.png" alt="" width="40"/></div>
+                                   <div class="boxImg" v-else-if="allTheInternalOrgans.smallIntestine == 2"><img title="" src="../../APP/imgs/healthDetails/icon23.png" alt="" width="40"/></div>
+                                   <div class="boxImg" v-else-if="allTheInternalOrgans.smallIntestine == 3"><img title="" src="../../APP/imgs/healthDetails/icon35.png" alt="" width="40"/></div>
+                                   <div class="boxImg" v-else><img title="" src="../../APP/imgs/healthDetails/icon47.png" alt="" width="40"/></div>
+                                   <!--3-->
+                                   <div class="boxImg" v-if="allTheInternalOrgans.gallBladder == 1"><img title="" src="../../APP/imgs/healthDetails/icon10.png" alt="" width="40"/></div>
+                                   <div class="boxImg" v-else-if="allTheInternalOrgans.gallBladder == 2"><img title="" src="../../APP/imgs/healthDetails/icon22.png" alt="" width="40"/></div>
+                                   <div class="boxImg" v-else-if="allTheInternalOrgans.gallBladder == 3"><img title="" src="../../APP/imgs/healthDetails/icon34.png" alt="" width="40"/></div>
+                                   <div class="boxImg" v-else><img title="" src="../../APP/imgs/healthDetails/icon46.png" alt="" width="40"/></div>
+                                   <!--2-->
+                                   <div class="boxImg" v-if="allTheInternalOrgans.kidney == 1"><img title="" src="../../APP/imgs/healthDetails/icon04.png" alt="" width="40"/></div>
+                                   <div class="boxImg" v-else-if="allTheInternalOrgans.kidney == 2"><img title="" src="../../APP/imgs/healthDetails/icon16.png" alt="" width="40"/></div>
+                                   <div class="boxImg" v-else-if="allTheInternalOrgans.kidney == 3"><img title="" src="../../APP/imgs/healthDetails/icon28.png" alt="" width="40"/></div>
+                                   <div class="boxImg" v-else><img title="" src="../../APP/imgs/healthDetails/icon40.png" alt="" width="40"/></div>
+                                   <!--1-->
+                                   <div class="boxImg" v-if="allTheInternalOrgans.lung == 1"><img title="" src="../../APP/imgs/healthDetails/icon03.png" alt="" width="40"/></div>
+                                   <div class="boxImg" v-else-if="allTheInternalOrgans.lung == 2"><img title="" src="../../APP/imgs/healthDetails/icon15.png" alt="" width="40"/></div>
+                                   <div class="boxImg" v-else-if="allTheInternalOrgans.lung == 3"><img title="" src="../../APP/imgs/healthDetails/icon27.png" alt="" width="40"/></div>
+                                   <div class="boxImg" v-else><img title="" src="../../APP/imgs/healthDetails/icon39.png" alt="" width="40"/></div>
+                                   <!--12-->
+                                   <div class="boxImg" v-if="allTheInternalOrgans.heart == 1"><img title="" src="../../APP/imgs/healthDetails/icon08.png" alt="" width="40"/></div>
+                                   <div class="boxImg" v-else-if="allTheInternalOrgans.heart == 2"><img title="" src="../../APP/imgs/healthDetails/icon20.png" alt="" width="40"/></div>
+                                   <div class="boxImg" v-else-if="allTheInternalOrgans.heart == 3"><img title="" src="../../APP/imgs/healthDetails/icon32.png" alt="" width="40"/></div>
+                                   <div class="boxImg" v-else><img title="" src="../../APP/imgs/healthDetails/icon44.png" alt="" width="40"/></div>
+                                   <!--11-->
+                                   <div class="boxImg" v-if="allTheInternalOrgans.liver == 1"><img title="" src="../../APP/imgs/healthDetails/icon02.png" alt="" width="40"/></div>
+                                   <div class="boxImg" v-else-if="allTheInternalOrgans.liver == 2"><img title="" src="../../APP/imgs/healthDetails/icon14.png" alt="" width="40"/></div>
+                                   <div class="boxImg" v-else-if="allTheInternalOrgans.liver == 3"><img title="" src="../../APP/imgs/healthDetails/icon26.png" alt="" width="40"/></div>
+                                   <div class="boxImg" v-else><img title="" src="../../APP/imgs/healthDetails/icon38.png" alt="" width="40"/></div>
+                                   <!--10-->
+                                   <div class="boxImg" v-if="allTheInternalOrgans.spleen == 1"><img title="Ƣ" src="../../APP/imgs/healthDetails/icon06.png" alt="" width="40"/></div>
+                                   <div class="boxImg" v-else-if="allTheInternalOrgans.spleen == 2"><img title="Ƣ" src="../../APP/imgs/healthDetails/icon18.png" alt="" width="40"/></div>
+                                   <div class="boxImg" v-else-if="allTheInternalOrgans.spleen == 3"><img title="Ƣ" src="../../APP/imgs/healthDetails/icon30.png" alt="" width="40"/></div>
+                                   <div class="boxImg" v-else><img title="Ƣ" src="../../APP/imgs/healthDetails/icon42.png" alt="" width="40"/></div>
+                                   <!--9-->
+                                   <div class="boxImg" v-if="allTheInternalOrgans.pericardium == 1"><img title="" src="../../APP/imgs/healthDetails/icon09.png" alt="" width="40"/></div>
+                                   <div class="boxImg" v-else-if="allTheInternalOrgans.pericardium == 2"><img title="" src="../../APP/imgs/healthDetails/icon21.png" alt="" width="40"/></div>
+                                   <div class="boxImg" v-else-if="allTheInternalOrgans.pericardium == 3"><img title="" src="../../APP/imgs/healthDetails/icon33.png" alt="" width="40"/></div>
+                                   <div class="boxImg" v-else><img title="" src="../../APP/imgs/healthDetails/icon45.png" alt="" width="40"/></div>
+                                   <!--8-->
+                                   <div class="boxImg" v-if="allTheInternalOrgans.largeIntestine == 1"><img title="" src="../../APP/imgs/healthDetails/icon07.png" alt="" width="40"/></div>
+                                   <div class="boxImg" v-else-if="allTheInternalOrgans.largeIntestine == 2"><img title="" src="../../APP/imgs/healthDetails/icon19.png" alt="" width="40"/></div>
+                                   <div class="boxImg" v-else-if="allTheInternalOrgans.largeIntestine == 3"><img title="" src="../../APP/imgs/healthDetails/icon31.png" alt="" width="40"/></div>
+                                   <div class="boxImg" v-else><img title="" src="../../APP/imgs/healthDetails/icon43.png" alt="" width="40"/></div>
+                                   <!--7-->
+                                   <div class="boxImg" v-if="allTheInternalOrgans.lymph == 1"><img title="" src="../../APP/imgs/healthDetails/icon12.png" alt="" width="40"/></div>
+                                   <div class="boxImg" v-else-if="allTheInternalOrgans.lymph == 2"><img title="" src="../../APP/imgs/healthDetails/icon24.png" alt="" width="40"/></div>
+                                   <div class="boxImg" v-else-if="allTheInternalOrgans.lymph == 3"><img title="" src="../../APP/imgs/healthDetails/icon36.png" alt="" width="40"/></div>
+                                   <div class="boxImg" v-else><img title="" src="../../APP/imgs/healthDetails/icon48.png" alt="" width="40"/></div>
+                               </div>
+                               <div class='left_right'>
+                                   <div class='top'>
+                                       <div class='img'>
+                                           <img v-if='healthFlag == "健康"' src="../../imgs/iframeImgs/wearUser/healthIcon1.png" alt="" />
+                                           <img v-else-if='healthFlag == "亚健康"' src="../../imgs/iframeImgs/wearUser/healthIcon2.png" alt="" />
+                                           <img v-else-if='healthFlag == "疾病"' src="../../imgs/iframeImgs/wearUser/healthIcon3.png" alt="" />
+                                           <img v-else='healthFlag == "未知"'  src="../../imgs/iframeImgs/wearUser/healthIcon04.png" alt="" />
+                                       </div>
+                                       <div class='body'>身体<span>{{healthFlag}}状态</span></div>
+                                   </div>
+                                   <div class='bot'>
+                                       <p>{{heartRateCurve}}</p>
+                                       <p>{{bloodPressureCurve}}</p>
+                                       <p>{{bloodOxygenCurve}}</p>
+                                       <div>{{comprehensiveDiagnosis}}</div>
+                                   </div>
+                               </div>
+                           </div>
+                       </div>
+                       <!--cancer_risk-->
+                       <div class='cancer_risk'>
+                           <div class="box">
+                               <h2>肿瘤风险提示（次）</h2>
+                               <p class="button" >查看</p>  <!-- @click="cancerCheck"-->
+                           </div>
+                           <div>
+                               <ul class='ul1'>
+                                   <li v-for='(item, index) in arr1'>{{ item.organName }}</li>
+                               </ul>
+                               <ul class='ul2' >
+                                   <li v-for='(item, index) in arr1'>{{ item.organCancerCount }}</li>
+                               </ul>
+                               <ul class='ul1'>
+                                   <li v-for='(item, index) in arr2'>{{ item.organName }}</li>
+                               </ul>
+                               <ul class='ul2'>
+                                   <li v-for='(item, index) in arr2'>{{ item.organCancerCount }}</li>
+                               </ul>
+                           </div>
+                           <p class='analyse'>分析</p>
+                           <p>{{organCancerAnalysis.organCancerAnalysisConclusion}}</p>
+                       </div>
+                   </div>
+                   <!--part3-->
+                   <div class='part3'>
+                       <div class='sleep_state'>
+                           <div class="box">
+                               <h2>{{date}}睡眠状态</h2>
+                               <p class="button"    @click="sleepStatus">查看</p>
+                           </div>
+
+                           <div class='dad'>
+                               <div class='sleep_left'>
+                                   <div class='info'>
+                                       <div class='hTime'>
+                                           <p>总睡眠</p>
+                                           <!--<div>{{sleepADWalkADExercise.sleepBean.totalTime}}</div>-->
+                                           <div><span class='span1'>{{ hour2 }}</span>时<span class='span1'>{{ min2 }}</span>分</div>
+                                       </div>
+                                       <div class='hTime'>
+                                           <p>深睡</p>
+                                           <div><span class='span1'>{{ hour3 }}</span>时<span class='span1'>{{ min3 }}</span>分</div>
+                                       </div>
+                                       <div class='hTime'>
+                                           <p>浅睡</p>
+                                           <div><span class='span1'>{{ hour4 }}</span>时<span class='span1'>{{ min4 }}</span>分</div>
+                                       </div>
+                                   </div>
+                                   <p class='analyse'>分析</p>
+                                   <p>{{sleepADWalkADExercise.sleepBean.conclusion}}</p>
+                               </div>
+                               <div class='sleep_right'>
+                                   <div class='top'>
+                                       <div class="div1">
+                                           <div class='img'><img src="../../imgs/iframeImgs/wearUser/youyang.png" alt="" /></div>
+                                           <p>有氧运动</p>
+                                           <div class='time'><span class='span1'>{{ hour1 }}</span>时<span class='span1'>{{ min1 }}</span>分</div>
+                                       </div>
+                                       <p class="button1">查看</p>     <!-- @click="exercise"-->
+                                   </div>
+                                   <div class='bot'>
+                                       <div class="div1">
+                                           <div class='img'><img src="../../imgs/iframeImgs/wearUser/buxing.png" alt="" /></div>
+                                           <p>步数统计</p>
+                                           <div class='time'><span>{{sleepADWalkADExercise.walkNum}}</span>步</div>
+                                       </div>
+                                       <p class="button1" @click="walkTotal">查看</p>
+                                   </div>
+                               </div>
+                           </div>
+                       </div>
+                       <div class='analysis_basis'>
+                           <div class='top'>
+                               <h2>{{dateTime}}分析依据</h2>
+                               <div>{{date1}}</div>
+                           </div>
+                           <!--心率-->
+                           <table class='table1'>
+                               <tr>
+                                   <th>心率</th>
+                                   <th>血压</th>
+                                   <th>血氧</th>
+                               </tr>
+                               <tr>
+                                   <td>累计<span>&ensp;&ensp;{{heartRateStatisticsMap.count}}次</span></td>
+                                   <td>累计<span>&ensp;&ensp;{{bloodPressureStatisticsMap.count}}次</span></td>
+                                   <td>累计<span>&ensp;&ensp;{{bloodOxygenStatisticsMap.count}}次</span></td>
+                               </tr>
+                               <tr>
+                                   <td>时长<span>&ensp;&ensp;{{heartRateStatisticsMap.measureTime}}小时</span></td>
+                                   <td>时长<span>&ensp;&ensp;{{bloodPressureStatisticsMap.measureTime}}小时</span></td>
+                                   <td>时长<span>&ensp;&ensp;{{bloodOxygenStatisticsMap.measureTime}}小时</span></td>
+                               </tr>
+                               <tr>
+                                   <td>平均<span>&ensp;&ensp;{{heartRateStatisticsMap.avgValue}}</span></td>
+                                   <td>平均<span>&ensp;&ensp;{{bloodPressureStatisticsMap.avgValue}}</span></td>
+                                   <td>平均<span>&ensp;&ensp;{{bloodOxygenStatisticsMap.avgValue}}%</span></td>
+                               </tr>
+                               <tr>
+                                   <td>最高<span>&ensp;&ensp;{{heartRateStatisticsMap.maxValue}}</span></td>
+                                   <td>最高<span>&ensp;&ensp;{{bloodPressureStatisticsMap.maxValue}}</span></td>
+                                   <td>最高<span>&ensp;&ensp;{{bloodOxygenStatisticsMap.maxValue}}%</span></td>
+                               </tr>
+                               <tr>
+                                   <td>最低<span>&ensp;&ensp;{{heartRateStatisticsMap.minValue}}</span></td>
+                                   <td>最低<span>&ensp;&ensp;{{bloodPressureStatisticsMap.minValue}}</span></td>
+                                   <td>最低<span>&ensp;&ensp;{{bloodOxygenStatisticsMap.minValue}}%</span></td>
+                               </tr>
+                           </table>
+                       </div>
+                   </div>
+               </div>
+            </div>
+        </div>
+
+        <!--睡眠状态-->
+        <div role="dialog" class="modal fade bs-example-modal-sm" id="sleepStatus">
+            <div class="modal-dialog" >
+                <div class="modal-content">
+                    <!--header-->
+                    <div class="modal-header text-center">
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span>&times;</span>
+                        </button>
+                        <h2 class="h4 modal-title">睡眠状态</h2>
+                    </div>
+                    <!--body-->
+                    <div class="modal-body text-center">
+                        <div class='div1'>
+                            <!--折线图容器-->
+                            <div class='sleepChart' id="sleepChart">
+
+                            </div>
+                            <div class="bot">
+                                <div class="div1">
+                                    <span>总睡眠</span>
+                                    <p>{{ hour2 }}<span class='span1'>时</span>{{ min2 }}<span class='span1'>分</span></p>
+                                </div>
+                                <div class="div1">
+                                    <span>深睡</span>
+                                    <p>{{ hour3 }}<span class='span1'>时</span>{{ min3 }}<span class='span1'>分</span></p>
+                                </div>
+                                <div class="div1">
+                                    <span>浅睡</span>
+                                    <p>{{ hour4 }}<span class='span1'>时</span>{{ min4 }}<span class='span1'>分</span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--肿瘤风险-->
+        <div role="dialog" class="modal fade bs-example-modal-sm" id='cancerRisk'>
+            <div class="modal-dialog" >
+                <div class="modal-content">
+                    <!--header-->
+                    <div class="modal-header text-center">
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span>&times;</span>
+                        </button>
+                        <h2 class="h4 modal-title">肿瘤风险</h2>
+                    </div>
+                    <!--body-->
+                    <div class="modal-body text-center">
+                        <div class='div1'>
+                            <!--折线图容器-->
+                            <div class='cancerChart' id="cancerChart">
+
+                            </div>
+                            <div class="bot">
+                                <div class="div1">
+                                    <span>*</span>
+                                    <p>过往235天，肝部位风险提示汇总：未见明显异常12次，功能异常12次，数据不足12次。安顿提醒用户注意身体健康，
+                                        保持佩戴，建议继续观察或就医进行专科检查（无异常或无数据没有最后一句）。</p>
+                                </div>
+                                <!--12个器官文字-->
+                                <div class="div2">
+                                    <div class="up">
+                                        <div>心</div>
+                                        <div>肝</div>
+                                        <div>脾</div>
+                                        <div>肺</div>
+                                        <div>肺</div>
+                                        <div>肺</div>
+                                    </div>
+                                    <div class="up down">
+                                        <div>小肠</div>
+                                        <div>膀胱</div>
+                                        <div>脊椎</div>
+                                        <div>淋巴</div>
+                                        <div>大肠</div>
+                                        <div>心包</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <!--步行运动-->
+    <div role="dialog" class="modal fade bs-example-modal-sm" id="walking">
+        <div class="modal-dialog" >
+            <div class="modal-content">
+                <!--header-->
+                <div class="modal-header text-center">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                    <h2 class="h4 modal-title">步行运动</h2>
+                </div>
+                <!--body-->
+                <div class="modal-body text-center">
+                    <div class='div1'>
+                        <!--折线图容器-->
+                        <div class='walkChart' id="walkCanvas">
+
+                        </div>
+                        <p><span>*</span>步行统计区间为00:00至24:00之间的步行数量。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+<script src="../../lib/jquery/jquery.min.js"></script>
+<script src='../../lib/vue.min.js'></script>
+<script src="../../lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../lib/datatables/js/jquery.dataTables.min.js"></script>
+<script src="../../lib/layer/layer.js"></script>
+
+<script src="../../lib/echarts/echarts.min.js"></script>
+<script src="../../lib/jedate/jedate.min.js"></script>
+<script src="../../js/common.js"></script>
+<script src="../../js/framePages/historyHealthAnalysis.js"></script>
+</body>
+</html>

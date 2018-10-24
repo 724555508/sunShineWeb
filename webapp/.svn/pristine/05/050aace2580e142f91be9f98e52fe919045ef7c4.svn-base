@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="../../imgs/logo-l.png">    <!--title-icon-->
+    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../../lib/datatables/css/jquery.dataTables.min.css"/>
+    <link rel="stylesheet" href="../../css/cssReset.css"/>
+    <title>查看记录</title>
+    <style>
+        body{width: 96%;margin: 20px auto;}
+        nav{margin: 10px 0;font-size: 16px;}
+        header{font-size: 18px;color: #4A4A4A;display:flex;align-items:center;margin-bottom:25px;}
+        /*content*/
+        .content{}
+        .line{display: flex;justify-content: space-between;line-height: 30px;}
+        /*adviceBox*/
+        /*.adviceBox{background-color: #f2f2f2;}*/
+        .footerReturn{display: flex;justify-content: space-between;margin: 10px 0;}
+        .footerReturn>div{width: 49%;}
+        #nextDate{display: none;}
+        .key-yanhk{border-left: 3px solid #4A90E2;padding-left: 10px;display: inline-block;font-size: 13px;
+            color: rgba(255,255,255,0.3); margin-left: 20px;}
+        .main .time{display:flex;align-items:center;}
+        .main .time .circle{width:12px;height:12px;background: #0096FF;border-radius:50%;margin-right:20px;}
+        .main .time h2,.main .time p{font-size: 15px;color: #4A4A4A;margin-right:10px;}
+        .main .box{display:flex;align-items:center;justify-content:space-between;width:100%;height:100%;}
+        .main .box .hr{width:2px;background:#F7F7F7;margin-left:5px;height:300px;}
+        .main .box .smallBox{cursor: pointer;background: #F2FAFF;border-radius: 8px;width:98.4%;padding:20px 15px;}
+        .main .box .smallBox .content .div1{display:flex;align-items:center;}
+        .content .div1 div{font-size: 15px;color: #4A4A4A;}
+        .content .div1 span{padding:0 30px 0 40px;}
+        .content .div2{display:flex;align-items:center;margin-top:11px;width:100%;}
+        .content .div2 .child{font-size: 13px;color: #767676;width:33%;}
+        .content .div2 .child span{font-size: 13px;color: #000000;margin-left:20px;}
+        .content .div2 .app{display:flex;align-items:center;}
+        .content .div3{padding-top:20px;font-size: 13px;color: #767676;}
+        .content .div3 h4{font-size: 15px;color: #4A4A4A;padding-bottom:11px;}
+        .content .div3 h4 span{border:1px solid #787878;padding:2px 4px;border-radius:7px;margin-left:10px;font-size:13px;}
+        .content .div4{padding-top:20px;}
+        .content .div4 h4{font-size:15px;color:#4a4a4a;padding-bottom:11px;}
+        .content .div4 div{font-size: 13px;color: #767676;display:flex;align-items:center;}
+        .content .div4 div span{padding:0 40px 0 15px;}
+        .content .div4 div>div span{font-size: 14px;color: #000000;}
+        .content button{background: #0096FF;box-shadow: 0 1px 5px 0 rgba(0,150,255,0.15);border-radius: 4px;font-size: 16px;
+            color: #FFFFFF;border:none;outline:none;width:120px;height:32px;line-height:32px;margin-top:15px;}
+
+    </style>
+</head>
+<body>
+<!--导航栏-->
+<nav><a href="customCenter.html">客服中心</a>-查看记录</nav>
+<!--头部-->
+<header>
+    <h2>来访手机号</h2>
+    <div style="margin-left:20px;">
+        <span id="phoneNum"></span>
+        <span id="userCity"></span>
+        <span id="username"></span>
+        <span id="userType"></span>
+    </div>
+</header>
+<!--main-->
+<div class="main" id="mainHtml">
+
+    <!--<div id="bigBox">
+        &lt;!&ndash;主体&ndash;&gt;
+        <div class="content">
+            &lt;!&ndash;第一行&ndash;&gt;
+            <div class="line line1">
+                <div>来访时间：<span>2017/12/31 12:22:65</span></div>
+                <div><span>主动呼出</span>&emsp;&emsp;反馈<span>血压测量不准心率不准充电爆炸问题</span></div>
+            </div>
+            &lt;!&ndash;第二行&ndash;&gt;
+            <div class="line line2">
+                <div>设备号：<span>901111111111111</span></div>
+                <div>狗仔队</div>
+                <div>25岁</div>
+                <div>病史：<span>心脏病冠心病一级高血压等等</span></div>
+                <div>服务期限：<span>2017/12/31&#45;&#45;1020/11/22</span></div>
+                <div><a href="" class="btn btn-skyBlueSmall">查看</a></div>
+            </div>
+            &lt;!&ndash;第三行&ndash;&gt;
+            <div class="line line3">
+                <div>APP：<span>1398988989      </span></div>
+                <div>狗仔队</div>
+                <div>设备：<span>0</span></div>
+                <div>注册时间：<span>2017/12/31 12:22:33</span></div>
+                <div><a href="" class="btn btn-skyBlueSmall">查看</a></div>
+            </div>
+            &lt;!&ndash;第四行 问题详情&ndash;&gt;
+            <div>
+                <h4><b>问题详情</b></h4>
+                <div>没什么问题就想聊聊没什么问题就想聊聊没什么问题就想聊聊没什么问题就想聊聊没什么问题就想聊聊没什么问题就想聊聊没什么问题就想聊聊</div>
+            </div>
+            &lt;!&ndash;第五行 问题详情&ndash;&gt;
+            <div class="line line5">
+                <div><b>处理意见</b></div>
+                <div><span>需要反馈</span>&emsp;&emsp;反馈时间：<span>2017/12/31 12:22:33</span></div>
+            </div>
+            &lt;!&ndash;第六行 问题详情&ndash;&gt;
+            <div>
+                <div>等下次我联系你再说等下次我联系你再说等下次我联系你再说等下次我联系你再说等下次我联系你再说</div>
+            </div>
+        </div>
+        &lt;!&ndash;处理意见&ndash;&gt;
+        <div class="adviceBox">
+            &lt;!&ndash;处理意见&ndash;&gt;
+            <div class="advice">
+                &lt;!&ndash;第1行 处理意见&ndash;&gt;
+                <div class="line">
+                    <div><b>x次处理意见</b></div>
+                    <div><span>需要反馈</span>&emsp;&emsp;处理时间：<span>2017/12/31 12:22:33</span></div>
+                </div>
+                &lt;!&ndash;第2行 处理意见&ndash;&gt;
+                <div>
+                    <div>完事儿了</div>
+                </div>
+            </div>
+        </div>
+    </div>-->
+</div>
+<br>
+<!--反馈-->
+<footer>
+    <div class="footerReturn">
+        <div>
+            <select name="isNeedReturn" class="form-control" id="isNeedReturn">
+                <option value="2">无需反馈</option>
+                <option value="1">需要反馈</option>
+            </select>
+        </div>
+        <div><input type="datetime-local" name="nextReturnTime" class="form-control" id="nextDate"></div>
+    </div>
+    <div><textarea id="textarea" cols="30" rows="7" class="form-control" placeholder="反馈内容"></textarea></div>
+    <br>
+    <div class="text-center"><button class="btn btn-skyBlue" id="subBtn">提交</button></div>
+</footer>
+
+<!--锚点-->
+<a name="bottom"></a>
+
+<!--模板-->
+<script type="text/html" id="mainJs">
+    {{each}}
+   <div id="info">
+       <div class="time">
+           <div class="circle"></div>
+           <h2>来访时间</h2>
+           <p>{{$value.key[0].time}}</p>
+       </div>
+       <div class="box">
+           <div class="hr"></div>
+           <div class="smallBox" id="{{$value.key[0].id}}">
+               <!--主体-->
+               <div class="content">
+                   <!--第一行-->
+                   <div class="div1">
+                       <div><b>设备号</b><span>{{$value.key[0].deviceId}}</span></div>
+                       <div><a href="wearUser.html?wearUserId={{$value.key[0].wearUserId}}" target="_blank" class="btn btn-skyBlueSmall">查看</a></div>
+                   </div>
+                   <!--<div class="line line1">-->
+                   <!--<div>来访时间：<span>{{$value.key[0].time}}</span></div>-->
+                   <!--<div><span>{{$value.key[0].phoneStatus}}</span>&emsp;&emsp;反馈<span>{{$value.key[0].questionType}}</span></div>-->
+                   <!--</div>-->
+                   <!--第二行-->
+                   <div class="div2">
+                       <div class="child">年龄 <span>{{$value.key[0].age}}岁</span></div>
+                       <div class="child">病史 <span>{{$value.key[0].medicalHistory}}</span></div>
+                       <div class="child">服务期限 <span>{{$value.key[0].serviceTime}}</span></div>
+                   </div>
+                   <!--<div class="line line2">-->
+                   <!--<div>设备号：<span>{{$value.key[0].deviceId}}</span></div>-->
+                   <!--<div>{{$value.key[0].wearUserName}}</div>-->
+                   <!--<div>{{$value.key[0].age}}岁</div>-->
+                   <!--<div>病史：<span>{{$value.key[0].medicalHistory}}</span></div>-->
+                   <!--<div>服务期限：<span>{{$value.key[0].serviceTime}}</span></div>-->
+                   <!--<div><a href="wearUser.html?wearUserId={{$value.key[0].wearUserId}}" target="_blank" class="btn btn-skyBlueSmall">查看</a></div>-->
+                   <!--</div>-->
+                   <!--第三行-->
+                   <div class="div2">
+                       <div class="app child">
+                           <div>APP<span>{{$value.key[0].appUserId}}</span><a style='margin-left:20px;' href="appUserDetails.html?appUserId={{$value.key[0].appUserId}}" target="_blank" class="btn btn-skyBlueSmall">查看</a></div>
+                           <!--<div style="margin-left:30px;">APP:{{$value.key[0].appUserId}}<a href="appUserDetails.html?appUserId={{$value.key[0].appUserId}}" target="_blank" class="btn btn-skyBlueSmall">查看</a></div>-->
+                       </div>
+                       <div class="child">设备 <span>{{$value.key[0].count}}</span></div>
+                       <div class="child">注册期限<span>{{$value.key[0].appCreateTime}}</span></div>
+
+                   </div>
+                   <!--<div class="line line3">-->
+                   <!--<div>APP：<span>{{$value.key[0].appUserId}}      </span></div>-->
+                   <!--<div>{{$value.key[0].appUserName}}</div>-->
+                   <!--<div>设备：<span>{{$value.key[0].count}}</span></div>-->
+                   <!--<div>注册时间：<span>{{$value.key[0].appCreateTime}}</span></div>-->
+                   <!--<div><a href="appUserDetails.html?appUserId={{$value.key[0].appUserId}}" target="_blank" class="btn btn-skyBlueSmall">查看</a></div>-->
+                   <!--</div>-->
+                   <!--第四行 问题详情-->
+                   <div class="div3">
+                       <h4><b>问题详情</b> <span>{{$value.key[0].questionType}}>{{$value.key[0].questionParentType}}</span></h4>
+                       <div>{{$value.key[0].questionDetails}}</div>
+                   </div>
+                   <!--处理意见-->
+                   <!--<div class="div4">
+                       <h2><b>第{{$index+1}}次处理意见</b></h2>
+                       <div>
+                           <p>{{$value.recordId}}</p>
+                           <span>{{$value.isNeedReturn}}</span>
+                           <div>处理时间 <span>{{$value.recordTime}}</span></div>
+                       </div>
+                   </div>-->
+                   <!--处理意见-->
+                   {{each $value.value}}
+                   <div class="div4">
+                       <h4><b>第{{$index+1}}次处理意见</b></h4>
+                       <div>{{$value.disposeInfo}}</div>
+                       <div>
+                           <p>{{$value.recordId}}</p>
+                           <span>{{$value.isNeedReturn}}</span>
+                           <div>处理时间：<span>{{$value.recordTime}}</span></div>
+                       </div>
+                       <!--&lt;!&ndash;处理意见&ndash;&gt;-->
+                       <!--<div class="advice">-->
+                           <!--&lt;!&ndash;第1行 处理意见&ndash;&gt;-->
+                           <!--<div class="line">-->
+                               <!--<div><b>第{{$index+1}}次处理意见</b>&emsp;&emsp;<b>{{$value.recordId}}</b></div>-->
+                               <!--<div><span>{{$value.isNeedReturn}}</span>&emsp;&emsp;处理时间：<span>{{$value.recordTime}}</span></div>-->
+                           <!--</div>-->
+                           <!--&lt;!&ndash;第2行 处理意见&ndash;&gt;-->
+                           <!--<div>-->
+                               <!--<div>{{$value.disposeInfo}}</div>-->
+                           <!--</div>-->
+                       <!--</div>-->
+                   </div>
+                   <!--<hr>-->
+                   {{/each}}
+                   <!--停止回访-->
+                   <!--<button>停止回访</button>-->
+               </div>
+
+
+
+           </div>
+       </div>
+   </div>
+    {{/each}}
+</script>
+
+<!--js-->
+<script src="../../lib/jquery/jquery.min.js"></script>
+<script src="../../lib/template.js"></script>
+<script src="../../lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../lib/layer/layer.js"></script>
+<script src="../../js/common.js"></script>
+<script src="../../js/framePages/custom_recordHistory.js"></script>
+</body>
+</html>

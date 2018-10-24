@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../../css/cssReset.css">
+    <link rel="stylesheet" type="text/css" href="../../lib/editor/styles/simditor.css" />
+    <title>新增用户帮助详情</title>
+    <style>
+        body{
+            margin-left: 21px;
+        }
+        .title{
+            margin-top: 21px;
+            height: 30px;font-size: 13px;padding: 0 10px;
+            border-color: rgb(0,150,255);
+        }
+        .inline{
+            display: inline;
+        }
+        .downDiv{
+            margin-top: 30px;
+        }
+        .sub{
+            margin-left: 300px;
+        }
+
+        .textAreaDiv{
+            margin-top: 30px;;
+        }
+        .myFileUpload
+        {
+            position: absolute;
+            top: 0;
+            left: 0;
+            line-height: 32px;
+            opacity: 0;
+            z-index: 999;
+            cursor: pointer;
+            width: 84px;
+        }
+        .flex{display: flex;}
+        .flex>div{line-height: 32px;}
+        .flex>div:first-child{position: relative;cursor: pointer;}
+    </style>
+</head>
+<body>
+    <div>
+        <input class='title'id='title' size="40" value="请输入标题，最多20个汉字"
+               onfocus='if(this.value=="请输入标题，最多20个汉字"){this.value="";}; '
+               onblur='if(this.value==""){this.value="请输入标题，最多20个汉字";};'/>
+    </div>
+    <br/>
+
+    <div class="flex">
+        <div>
+            <div class="btn btn-skyBlue">选择文件</div>
+            <form id="uploadUserHelpImg">
+                <input type="hidden" name="loginId" id="loginId"/>
+                <input type="hidden" name="token" id="token"/>
+                <label for="newImg" ><!---->
+                    <input type="file" id="newImg" name="file" class="myFileUpload" multiple="multiple" onchange="uploadimg()"
+                           accept="image/gif,image/jpeg,image/jpg,image/png,image/svg"/>
+                </label>
+            </form>
+        </div>
+       <div style="color: #A0A0A0;margin-left: 30px">
+           (点击选择文件上传图片后,会显示图片的路径)
+       </div>
+        <div style="margin-left: 30px;">
+            <input  type="hidden" name="pics" id="imgs" size="90px" style="border-color: #007aff">
+        </div>
+    </div>
+    <div class="textAreaDiv">
+        <textarea id="content" autofocus></textarea>
+    </div>
+
+    <div class="downDiv">
+        <select id="status" class="form-control inline" >
+            <option value ="1">隐藏</option>
+            <option value ="2">显示</option>
+        </select>
+        <div class="col-sm-2 inline sub" ><button type="button" id="uploadButton" class="btn btn-skyBlue">上传</button></div>
+        <div class="col-sm-2 inline" ><button type="button" id="cancelChangeBtn" class="btn btn-skyBlue">重置</button></div>
+    </div>
+
+
+
+    <!--js-->
+    <script src="../../lib/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="../../lib/editor/scripts/module.min.js"></script>
+    <script type="text/javascript" src="../../lib/editor/scripts/hotkeys.min.js"></script>
+    <script type="text/javascript" src="../../lib/editor/scripts/uploader.min.js"></script>
+    <script type="text/javascript" src="../../lib/editor/scripts/simditor.min.js"></script>
+    <script src="../../lib/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../../lib/layer/layer.js"></script>
+    <script src="../../js/common.js"></script>
+    <script src="../../js/framePages/addUserHelp.js"></script>
+    <script src="../../lib/jquery.form.js"></script>
+    <script src="../../lib/file_upload.js"></script>
+</body>
+</html>

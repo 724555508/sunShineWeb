@@ -1,0 +1,55 @@
+body{background-color: #f2f2f1;width: 97%;margin: 0 auto;padding:20px 0;}
+.dad{background: #FFFFFF;box-shadow: 0 0 10px 0 rgba(0,0,0,0.02);border-radius: 8px;padding:20px 15px;}
+/*统计数据*/
+.Statistics{color: #000;display: flex;display: -webkit-flex; justify-content:space-between;}
+.Statistics>div{width: 19%;height: 80px;background-color: #f2faff;border-radius: 6px;}
+.Statistics>div>div{text-align: center;}
+.Statistics>div>div:nth-child(1){font-size: 24px;line-height: 50px;color: #161616;}
+.Statistics>div>div:nth-child(2){color: #8F9295;font-size: 12px;}
+
+/*搜索*/
+.row{margin: 0;padding: 0;}
+.hr{width:20px;border-top:2px solid #9B9B9B;float:left;margin-top:12px;margin-left:5px;margin-right:5px;}
+.searchBox{width:100%;padding:18px 0 13px 0;display:flex;align-items:center;justify-content:space-between;}
+.searchBox .form{display:flex;align-items:center;flex-wrap:wrap;line-height:50px;}
+.searchBox .search1{display:flex;align-items:center;margin-right:20px;}
+.searchBox .search1 .hTime{width:125px;height:26px;background: #F3F3F3;border-radius: 4px;border:none;text-align:center;outline:none;}
+.hr{width:20px;border-top:2px solid #9B9B9B;margin:0 10px;}
+.searchBox .search2{position:relative;margin-right:30px;}
+.searchBox .search2 .icon1{position:absolute;width:16px;height:16px;top:17px;left:11px;}
+.searchBox .search2 .phone{width:180px;height:26px;background: #F3F3F3;border-radius: 4px;border:none;padding-left:30px;outline:none;}
+.searchBox .search{width:90px;height:26px;font-size: 14px;color: #0096FF;text-align: center;line-height: 14px;
+    background:#fff;border:1px solid #0096FF;border-radius: 4px;margin-right:20px;outline:none;}
+.searchBox .export{width:120px;height:32px;font-family: PingFangSC-Medium;font-size: 14px;color: #fff;
+    text-align: center;line-height: 14px;background:#0096FF;border:1px solid #0096FF;border-radius: 4px;outline:none;}
+.searchBox .select .input2{background: #F3F3F3;height:26px;border:none;width:137px;outline:none;border-radius: 4px;}
+.searchBox .select{margin-right:20px;}
+/*.searchBox{padding-bottom:20px;}*/
+/*.searchBox  div .input1{background:#F3F3F3;height:26px;border:none;border-radius: 4px;}*/
+/*.searchBox .input2{background:#F3F3F3;height:26px;border:none;border-radius: 4px;}*/
+/*.searchBox .search{width:90px;height:26px;font-size: 14px;color: #0096FF;text-align: center;line-height: 14px;*/
+/*background:#fff;border:1px solid #0096FF;border-radius: 4px;}*/
+/*.searchBox .export{width:120px;height:32px;font-family: PingFangSC-Medium;font-size: 14px;color: #fff;*/
+/*text-align: center;line-height: 14px;background:#0096FF;border:1px solid #0096FF;border-radius: 4px;}*/
+/*.searchBox .search2{position:relative;padding:0 30px;}*/
+/*.searchBox .search2 .icon1{position:absolute;width:16px;height:16px;top:6px;left:40px;}*/
+/*.searchBox .search2 .input2{width:290px;height:26px;background: #F3F3F3;border-radius: 4px;border:none;padding-left:30px;}*/
+/*标签切换*/
+.navChange{width: 100%;display: flex;padding: 20px 0;margin: 10px 0;color: #0c0c0c;}
+.navChange>div{cursor: pointer;font-size: 18px;margin-right: 20px;}
+.navChange>div:first-child{border-bottom: 3px solid #0096ff;}
+.navChange .appUserBtn{color: #000;background-color: #fff;}
+.table .tr1{opacity: 0.8;background: rgba(0,150,255,0.10);}
+
+/*table1*/
+
+
+/*table2*/
+.appBox{display: block;}
+
+
+/*佩戴用户modal*/
+/*app用户modal*/
+.modal{width: 100%;height: 100%;padding: 0;margin: 0;}
+.modal-dialog{padding: 0;margin: 0;width: 100%;height: 100%;}
+.modal-content{margin: 0;padding: 0;width: 100%;height: 100%;}

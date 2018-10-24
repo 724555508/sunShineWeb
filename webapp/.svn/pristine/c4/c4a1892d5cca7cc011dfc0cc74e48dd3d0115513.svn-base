@@ -1,0 +1,79 @@
+[v-cloak]{display: none;}
+#main{width: 100vw;min-height: 100vh;background: url("../../imgs/mapImages/bg.png") no-repeat;}
+header{display:flex;justify-content:center;padding:35px 0;}
+header div{width:41px;height:50px;}
+header div img{width:100%;}
+header h1{font-family: PingFangSC-Semibold;font-size: 40px;color: #FFFFFF;}
+.content{padding:0 25px 30px 25px;width:100%;display:flex;justify-content:space-between;height:100%;}
+.content .left{width:38%;/*min-height:100vh;*/overflow:hidden;}
+.content .right{width:61%;height:calc(100vh - 140px);}
+.content .left .total{display:flex; justify-content:space-around;background: rgba(255,255,255,0.06);border-radius: 12px;padding:20px 0;}
+.content .left .total .div1{width:33.3%;text-align:center;}
+.content .left .total .div2{border-left:1px solid #4a4a4a;}
+.content .left .total .div1 span{font-family: PingFangSC-Regular;font-size: 18px;color: #FFFFFF;}
+.content .left .total .div1 p{font-size: 44px;color: #0096FF;}
+.content .left .list{background: rgba(255,255,255,0.06);border-radius: 12px;margin:15px 0;padding:16px 20px;/*height: 680px;overflow: scroll;*/overflow: hidden;}
+.content .left .user{padding:18px;width:100%;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #4a4a4a;background: rgba(255,255,255,0.05);}
+.content .left .user .headImg{width:64px;height:64px;}
+.content .left .user .headImg>img{width:100%;}
+.content .left .user .info{width:calc(100% - 84px);display:flex;flex-direction:column;justify-content:space-between;  }
+.content .left .user .info .div1{display:flex;justify-content:space-between;align-items:center;line-height:42px;}
+.content .left .user .info .div1>div{display:flex;width:40%;align-items:center;}
+.content .left .user .info .div1>div h3{/*width:40%;*/font-size:25px;color: #FFFFFF;/*padding-right:20px;*/}
+.content .left .user .info .div1>div span{font-family: PingFangSC-Regular;font-size: 18px;color: #9B9B9B;padding:0 10px;  }
+.content .left .user .info .div1 p{font-family: PingFangSC-Regular;font-size: 18px;color: #9B9B9B;}
+.content .left .user .info .div2{display:flex;margin-top:10px;}
+.content .left .user .info .div2 .p1{margin-right:13px;/*width:90px;*/padding:3px 10px;text-align:center;background-image: linear-gradient(-155deg, #8799a4 15%, #999c91 100%);
+    border-radius: 130px;font-size: 18px;color: #FFFFFF;font-weight:300;}
+.content .left .user .info .div2 .p2{margin-right:13px;/*width:90px;*/padding:3px 10px;text-align:center;background-image: linear-gradient(-155deg, #1a8f75 15%, #78c61a 100%);
+    border-radius: 130px;font-size: 18px;color: #FFFFFF;font-weight:300;}
+.content .left .user .info .div2 .p3{margin-right:13px;/*width:90px;*/padding:3px 10px;text-align:center;background-image: linear-gradient(-155deg, #FF5858 15%, #F09819 100%);
+    border-radius: 130px;font-size: 18px;color: #FFFFFF;font-weight:300;}
+.content .right{padding:0 15px;background: rgba(255,255,255,0.06);border-radius: 12px;}
+.content .right .leftTop{display:flex;/*align-items:center;*/border-bottom: 1px solid #4a4a4a;padding:15px 0 10px 0;height:102px;}
+.content .right .headImg{margin-right:15px;}
+.content .right .leftTop .info{width:calc(100% - 100px);line-height:45px;}
+.content .right .leftTop .info .div1{display:flex;justify-content:space-between;align-items:center;width:100%;}
+.content .right .leftTop .info .div1 div{display:flex;align-items:center;}
+.content .right .leftTop .info .div1 div h3{font-size: 25px;color: #FFFFFF;}
+.content .right .div1 div .resource{margin-left: 13px;padding:3px 10px;line-height:25px;text-align: center;border-radius: 130px;font-size: 18px;color: #FFFFFF;font-weight: 300;}
+.content .right .div1 div .resource1{background-image: linear-gradient(-155deg, #8799a4 15%, #999c91 100%);}
+.content .right .div1 div .resource2{background-image: linear-gradient(-155deg, #1a8f75 15%, #78c61a 100%);}
+.content .right .div1 div .resource3{background-image: linear-gradient(-155deg, #FF5858 15%, #F09819 100%);}
+
+.content .right .leftTop .info .div1 .wear{margin-left: 13px;padding: 3px 10px;text-align: center;font-family: PingFangSC-Medium;font-size: 18px;
+color: #37B864;letter-spacing: 0;line-height: 21px;border: 2px solid #37B864;box-shadow: 0 0 10px 0 rgba(55,184,100,0.30);border-radius: 50px;}
+.content .right .leftTop .info .div1 .miss{margin-left: 13px;padding: 3px 10px;text-align: center;font-family: PingFangSC-Medium;font-size: 18px;
+    color: #b3b8a2;letter-spacing: 0;line-height: 21px;border: 2px solid #acb8b4;box-shadow: 0 0 10px 0 rgba(184, 183, 178, 0.3);border-radius: 50px;}
+.content .right .leftTop .info .div2{font-size:18px;font-family: PingFangSC-Regular;color: #FFFFFF;display:flex;}
+.content .right .leftTop .info .div2 div{margin-right:20px;}
+.content .right .leftTop .info .div2 div span{font-family: PingFangSC-Regular;font-size: 18px;color: #9B9B9B;display:inline-block;margin-right:7px;}
+/*实时数据*/
+.content .right .realData{padding:15px 15px 15px 0;border-bottom: 1px solid #4a4a4a;height:110px;}
+.content .right .realData h2{font-family: PingFangSC-Medium;font-size: 20px;color: #9B9B9B;padding:0px;margin:0px;}
+.content .right .realData .data{display:flex;justify-content:space-around;}
+.content .right .realData .data .measure{width:30%;display:flex;align-items:center;padding-top:15px;}
+.content .right .realData .data .measure .count{font-family: PingFangSC-Light;font-size: 30px;color: #FFFFFF;margin-left:10px;}
+.content .right .realData .data .measure .count .min{font-family: PingFangSC-Regular;font-size: 15px;color: #FFFFFF;}
+.content .right .realData .data .measure .count .time{opacity: 0.6; font-family: PingFangSC-Regular;font-size: 15px;color: #F3F3F3;}
+/*监测数据*/
+.content .right .monitor{padding:20px 0 0 0;display:flex;justify-content:space-between;height:calc(100vh - 470px);}
+.content .right .monitor>div{width:47%;}
+.content .right .monitor .heart{}
+.content .right .monitor .heart .title{display:flex;align-items:flex-end;height:30px;}
+.content .right .monitor .heart .title h2{font-family: PingFangSC-Medium;  font-size: 20px;color: #9B9B9B;}
+.content .right .monitor .heart .title div{display:flex;align-items:center;margin-left:10px;}
+.content .right .monitor .heart .title div p{font-family: PingFangSC-Regular;font-size: 15px;color: #FFFFFF;margin-right:7px;}
+.content .right .monitor .heart .lineCharts{width:100%;height:calc(100% - 200px);border:1px solid rgba(0,0,0,0.15);margin:15px 0;background: rgba(0,0,0,0.15);}
+.content .right .monitor .heart p{font-family: PingFangSC-Regular;font-size: 18px;color: #FFFFFF;max-height:100px;overflow-y:scroll;}
+#heartCharts,#bloodCharts{width: 100%;height: 100%;}
+/*隐藏滚动条，仍可以滚动*/
+::-webkit-scrollbar{
+    width:0px;
+}
+.content .right .analyze{display:flex;height:100px;}
+.content .right .analyze .div1{width:200px;height:100px;}
+.content .right .analyze .div1 img{width:100%;}
+.content .right .analyze .div2{width:calc(100vw - 15px - 30%);margin-left:15px;border: 1px solid rgba(255,255,255,0.5);border-radius: 12.5px;padding:10px 10px 15px 10px;max-height:90px;overflow:scroll;}
+.content .right .analyze .div2 h2{font-family: PingFangSC-Medium;font-size: 20px;color: #9B9B9B;}
+.content .right .analyze .div2 p{font-family: PingFangSC-Regular;font-size: 18px;color: #FFFFFF;padding-top:10px;}

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>高风险用户列表</title>
+    <link rel="shortcut icon" href="../../imgs/logo-l.png">
+    <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0">
+    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../../css/cssReset.css"/>
+    <link rel="stylesheet" href="../../css/framePages/userList.css"/>
+</head>
+<body id="body">
+<!--主页列表扫描展示-->
+<section class="main" id="main">
+    <!--头部-->
+    <header class="header">
+        <!--标题-->
+        <div class="title1">
+            <img src="../../imgs/newLogo.png" alt="andunLogo" width="" class="titleLogo"/>
+            <span>安顿心脑监测预警救护中心</span>
+            (<span class="addressName">北京</span>)
+        </div>
+        <div class="title2">
+            实时监控风险人群&#12288;<span id="totalCount">0</span>&#12288;人
+        </div>
+        <!--时间-->
+        <div id="nowTime"></div>
+        <!--全屏-->
+        <!--<div class="twoBtn full" id="full"><img src="imgs/fullScreen.png" alt=""/></div>-->
+        <!--退出-->
+        <div class="twoBtn exit">
+            <a href="javascript:window.opener=null;window.open('','_self');window.close();" title="关闭">
+                <img src="../../imgs/exit.png" alt=""/>
+            </a>
+        </div>
+        <!--左右按钮-->
+       <!-- <div class="lrButton left-btn"><img src="imgs/left_btn.png" alt="left_btn"/></div>
+        <div class="lrButton right-btn"><img src="imgs/right_btn.png" alt="right_btn"/></div>-->
+    </header>
+    <!--主题部分-->
+    <div class="userPart">
+        <!--准星标记-->
+        <div class="markStar" id="markStar">
+            <img src="../../imgs/iframeImgs/o.png" alt="mark" width="421"/>
+        </div>
+        <div class="markStar" id="shan">
+            <img src="../../imgs/iframeImgs/shan.png" alt="" width="148"/>
+        </div>
+        <!--列表-->
+        <div class="sinRow" id="line1"></div>
+        <div class="sinRow" id="line2"></div>
+        <div class="sinRow" id="line3"></div>
+        <div class="sinRow" id="line4"></div>
+        <div class="sinRow" id="line5"></div>
+        <div class="sinRow" id="line6"></div>
+    </div>
+</section>
+
+<!--用户详情信息弹窗-->
+<div class="userMsgModal">
+    <!--关闭-->
+    <div class="closeUserMsg"><img src="../../imgs/iframeImgs/close.png" alt="关闭" width="24"/></div>
+    <!--标题-->
+    <h2 class="userTitle">用户监控详情分析</h2>
+    <!--mainMsg-->
+    <div class="mainMsg">
+        <!--tips  暂时不做 无接口-->
+        <div class="tips">
+            <!--<div>解除警报人数 &nbsp;<span>0</span></div>
+            <div>今日危险警报人数 &nbsp;<span>0</span></div>-->
+        </div>
+        <!--headMsg-->
+        <div class="headMsg">
+            <div><img src="../../imgs/iframeImgs/u10.png" alt="" id="userHeadImg" width="60px" class="headImg"/></div>
+            <div class="lines">
+                <!--第一行-->
+                <div class="line1">
+                    <span class="healName" id="healName">示例</span>
+                    <span><img src="../../imgs/iframeImgs/yes.png" alt="" id="isPro"/></span>
+                    <span><img src="../../imgs/iframeImgs/vip.png" alt="" id="isVIP"/></span>
+                </div>
+                <!--第二行-->
+                <div class="line2">
+                    <span id="gender">男</span>
+                    <span id="age"> x岁</span>
+                    <span>关注度
+                        <img src="../../imgs/iframeImgs/star.png" alt=""/>
+                        <img src="../../imgs/iframeImgs/star.png" alt=""/>
+                        <img src="../../imgs/iframeImgs/star.png" alt=""/>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <!--div块 1-->
+        <div class="box-1">
+            <!--u-line1-->
+            <div class="u-line1">
+                <div>
+                    <span class="keyName">病史</span>
+                    <span class="valName">暂无</span>
+                </div>
+                <div>
+                    <span class="keyName">上次报警</span>
+                    <span class="valName" id="lastWarnTime">2017/10/30</span>
+                </div>
+                <div>
+                    <span class="keyName">报警(次)</span>
+                    <span class="valName" id="alarmCount">3</span>
+                </div>
+            </div>
+            <!--u-line2-->
+            <div class="u-line1">
+                <div class="healNum">
+                    <span class="keyName">设备电话</span>
+                    <span class="valName" id="phoneNum">184xxxx8888</span>
+                </div>
+                <div class="nowAdd">
+                    <span class="keyName">定位</span>
+                    <span class="valName" id="add">xx省xx市xx区xxx街道xxx小区21号楼</span>
+                </div>
+                <div class="nullSpace">
+
+                </div>
+            </div>
+            <!--hr-->
+            <hr class="hrLine"/>
+            <!--疾病风险-->
+            <div class="illList">
+                <div>疾病风险</div>
+                <div class="illNames" id="illNames">
+                    <span>高血压</span>
+                    <span>心肌梗死</span>
+                    <span>心率不齐</span>
+                    <span>脑血栓</span>
+                    <span>贫血</span>
+                    <span>脑卒中</span>
+                </div>
+            </div>
+            <!--hr-->
+            <hr class="hrLine"/>
+            <!--状态-->
+            <div class="healStatus">
+                状态： <span id="illStatus">8项指标突破阀值，80%可能性发病</span>
+            </div>
+        </div>
+        <!--div块 2-->
+        <div class="box-2">
+            <div class="heartRateImg">
+                <div id="heartRateLine"></div>
+            </div>
+            <div class="bloodPressImg">
+                <div id="bloodPressLine"></div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<!--js-->
+<script src="../../lib/jquery/jquery.min.js"></script>
+<script src="../../lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../lib/echarts/echarts.min.js"></script>
+<script src="../../lib/layer/layer.js"></script>
+<script src="../../js/common.js"></script>
+<script src="../../js/framePages/showCommon.js"></script>
+<script src="../../js/framePages/userListManage.js"></script>
+<script>
+</script>
+</body>
+</html>

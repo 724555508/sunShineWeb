@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="../../imgs/logo-l.png">    <!--title-icon-->
+    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../../lib/datatables/css/jquery.dataTables.min.css"/>
+    <link rel="stylesheet" href="../../css/cssReset.css" />
+    <link rel="stylesheet" href="../../css/framePages/createContent.css"/>
+    <title>创建内容</title>
+</head>
+<body>
+
+<div class="app" id="app" v-cloak>
+    <!--面包屑导航-->
+    <ul class="breadcrumb">
+        <li><a href="CMSManage.html"  class="active">内容管理</a></li>
+        <li><a :href="backUrl" class="active">{{typeName}}</a></li>
+        <!--<li v-if="type === '1'"><a href="contentList.html?type=1" class="active">心梗频道</a></li>-->
+        <!--<li v-else-if="type === '2'"><a href="contentList.html?type=2" class="active">脑梗频道</a></li>-->
+        <!--<li v-else-if="type === '3'"><a href="contentList.html?type=4" class="active">安顿服务使用说明</a></li>-->
+        <!--<li v-else-if="type === '4'"><a href="contentList.html?type=3" class="active">安顿故事</a></li>-->
+        <li><a href="javascript:;" class="inActive">创建</a></li>
+    </ul>
+    <div class="main" >
+        <div class="info1">
+            <p>标题</p>
+            <input type="text" placeholder="请输入标题，最多输入28个字" maxlength="28" id="title">
+        </div>
+        <form action="" id="uploadImg">
+            <input type="hidden" name="pics" id="imgs">
+            <input type="hidden" name="loginId" v-model="loginId"/>
+            <input type="hidden" name="token" v-model="token"/>
+            <div class="info2">
+                <p>添加封面图片</p>
+                <div class="div1" id="imgShowBox">
+                    <input type="file" class="fileImg" id="newImg" name="file" onchange="uploadimg()" accept="image/gif,image/jpeg,image/jpg,image/png,image/svg">
+                    <img src="../../imgs/iframeImgs/bg.png" alt="" class="img1" id="bgImg">
+                    <img src="../../imgs/iframeImgs/photo.png" alt="" class="img2">
+                </div>
+            </div>
+        </form>
+        <div class="info3">
+           <div class="text">
+               <p>添加标签</p>
+               <input type="text" v-model="text" @keyup.enter="showMe()" placeholder="请输入标签，并按回车确认">
+           </div>
+            <div class="addBox" id="addBox" style="display:none;">
+                <div class="div" v-for="(item, index) in arr" @click="deleteMe(index)">{{item}} <img src="../../imgs/iframeImgs/delete1.png" alt=""></div>
+            </div>
+        </div>
+        <div class="info4">
+            <p class="p1">正文内容
+                <!--富文本编辑器-->
+            <div id="editor">
+                <p v-html="infoHtml"></p>
+                <!--<span>欢迎使用 <b>wangEditor</b> 富文本编辑器</span>-->
+            </div>
+        </div>
+        <div class="info5">
+            <p></p>
+            <div>
+                <button class="btn" @click="preview">预览</button>
+                <button class="btn btn1" @click="saveHtml">保存</button>
+            </div>
+        </div>
+
+
+    </div>
+    <!--上传图片得url-->
+    <div class="getUrl" v-if="show === true">
+        <button class="btn btn-skyBlue btn-min" @click="closeGetUrl"><span class="glyphicon glyphicon-chevron-down"></span></button>
+        <form action="" id="uploadImg1">
+            <input type="hidden" name="loginId" v-model="loginId"/>
+            <input type="hidden" name="token" v-model="token"/>
+            <div class="info2">
+                <div class="div1" id="imgShowBox2">
+                    <input type="file" class="fileImg" id="newImg2" name="file" onchange="uploadimg2()" accept="image/gif,image/jpeg,image/jpg,image/png,image/svg">
+                    <img src="../../imgs/iframeImgs/bg.png" alt="" class="img1" id="bgImg2">
+                    <img src="../../imgs/iframeImgs/photo.png" alt="" class="img2">
+                </div>
+            </div>
+        </form>
+        <div class="text">
+            图片路径:
+            <span id="imgUrl"></span>
+        </div>
+        <div class="btnDiv"><button class="btnCopy" onclick="copy('imgUrl')">复制</button></div>
+    </div>
+    <!--打开getUrl-->
+    <div class="openGetUrl" v-else-if="show === false">
+        <button class="btn-skyBlue btn" @click="openGetUrl"><span class="glyphicon glyphicon-chevron-up"></span></button>
+    </div>
+
+    <!--点击查看预览内容弹框-->
+    <div role="dialog" class="modal fade bs-example-modal-sm" id="previewContent">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!--header-->
+                <div class="modal-header text-center">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                    <h4 class="h4 modal-title">预览内容</h4>
+                </div>
+                <!--&lt;!&ndash;body&ndash;&gt;-->
+                <div class="modal-body">
+                    <div class="info2">
+                        <p id="previewText"></p>
+                    </div>
+                </div>
+                <!--<div class="row">-->
+                    <!--<div class="col-sm-4"><button class="btn btn-default btn-block" @click="closeModel">取消</button></div>-->
+                    <!--<div class="col-sm-4"><button class="btn btn-skyBlue btn-block" @click='previewSubmit'>确定</button></div>-->
+                <!--</div>-->
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="../../lib/jquery/jquery.min.js"></script>
+<script src="../../lib/jquery.form.js"></script>
+<script src="../../lib/bootstrap/js/bootstrap.min.js"></script>
+<script src='../../js/vue.min.js'></script>
+<script src="../../lib/datatables/js/jquery.dataTables.min.js"></script>
+<script src="../../lib/layer/layer.js"></script>
+<script src="../../lib/echarts/echarts.min.js"></script>
+<script src="../../js/common.js"></script>
+<script src="../../js/wangEditor.min.js"></script>    <!--富文本编辑器js-->
+<script src="../../lib/file_upload.js"></script>
+<script src="../../js/framePages/createContent.js"></script>
+<script>
+
+    var E = window.wangEditor;
+    var editor = new E('#editor');
+    // 自定义菜单配置
+    editor.customConfig.menus = [
+//        'head',  // 标题
+        'bold',  // 粗体
+        'fontSize',  // 字号
+        'fontName',  // 字体
+        'italic',  // 斜体
+        'underline',  // 下划线
+        'strikeThrough',  // 删除线
+        'foreColor',  // 文字颜色
+        'backColor',  // 背景颜色
+        'link',  // 插入链接
+        'list',  // 列表
+        'justify',  // 对齐方式
+        'quote',  // 引用
+        'emoticon',  // 表情
+        'image',  // 插入图片
+        'table',  // 表格
+        'video',  // 插入视频
+        'code',  // 插入代码
+        'undo',  // 撤销
+        'redo'  // 重复
+    ]
+    // 或者 var editor = new E( document.getElementById('editor') )
+    editor.create();
+</script>
+</body>
+</html>

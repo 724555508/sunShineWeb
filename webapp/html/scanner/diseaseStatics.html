@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!--<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>-->
+    <link rel="shortcut icon" href="../../imgs/logo-l.png">
+    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../../lib/datatables/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" href="../../css/cssReset.css" />
+    <!--<link rel="stylesheet" href="../../css/framePages/wearUser.css"/>-->
+    <title>病史统计</title>
+    <style>
+        [v-cloak]{display: none;}
+        body{max-width:100%;font-family: PingFangSC-Semibold;}
+        #app{background: #f0f5ff;width: 100%;min-height: 100vh;padding: 10px 20px;}
+        /*面包屑导航*/
+        .breadcrumb > li + li:before {color: #0c0c0c;content: ">";padding: 0 5px;}
+        .breadcrumb{margin-bottom:0px;padding:10px 0 10px 0px;background:#f0f5ff;}
+        /*点击进行跳转a标签的样式*/
+        .active:link{text-decoration:none;color: #0096FF;}
+        .active:visited{text-decoration:none;color: #0096FF;}
+        .active:active{text-decoration:none;color: #0096FF;}
+        .active:hover{text-decoration:none;color: #0096FF;}
+        /*不跳转的a标签样式*/
+        .inActive:link{text-decoration:none;color: #4A4A4A;}
+        .inActive:visited{text-decoration:none;color: #4A4A4A;}
+        .inActive:active{text-decoration:none;color: #4A4A4A;}
+        .inActive:hover{text-decoration:none;color: #4A4A4A;}
+        main{background:#fff;box-shadow: 0 0 10px 0 rgba(0,0,0,0.02);border-radius: 8px;padding:26px 20px;width:100%;min-height:calc(100vh - 58px);}
+        main .header{display:flex;width:100%;justify-content:space-between;align-items:center;}
+        main .header h2{font-size: 16px;color: #4A4A4A;}
+        main .header button{background: #0096FF;box-shadow: 0 1px 5px 0 rgba(0,150,255,0.15);border-radius: 4px;font-size: 16px;color: #FFFFFF;border:none;
+        padding:8px 14px;}
+        main .staticsContent{margin-top:13px;width:100%;height:100%;}
+        main .staticsContent .left{background: rgba(0,150,255,0.10);opacity: 0.8;width:20%;position:fixed;min-height:calc(100vh - 161px);}
+        main .staticsContent .left>ul:first-child{font-size: 14px;width:100%;color: rgba(74,74,74,0.6);opacity: 0.8;border-bottom:1px solid #fff;height:34px;line-height:34px;}
+        main .staticsContent .left>ul{}
+        main .staticsContent .left>ul li{font-size: 14px;color: #4A4A4A;padding-left:16px;opacity: 0.8;border-bottom:1px solid #fff;height:34px;line-height:34px;}
+        main .staticsContent .right{width:calc(100% - 20%);min-height:calc(100vh - 161px);overflow:auto;margin-left:calc(20% + 16px);}
+        /*table表格*/
+        .table{width:100%;height:100%;}
+        .tr1{font-size: 14px;color:rgba(74,74,74,0.6);}
+        .table thead tr th{color:rgba(74,74,74,0.6);min-width:100px;}
+        .table .tr1 th{border-bottom:1px solid #fff;border-right:1px solid #fff;}
+        .table .tr1 th:first-child{border-left:1px solid #fff;}
+        .table .tr1 th:last-child{border-right:1px solid #fff;}
+        .table tr td{border-right:1px solid rgba(241,241,241,0.8);border-bottom:1px solid  rgba(241,241,241,0.8);}
+        .table td:first-child{border-left:1px solid #fff;}
+        .table td:last-child{border-right:1px solid #fff;}
+        .table tr {height:34px;}
+    </style>
+</head>
+<body>
+<div id="app">
+    <!--面包屑导航-->
+    <ul class="breadcrumb">
+        <li><a href="../framePages/userCenter.html" class="active">用户管理</a></li>
+        <li><a href="../framePages/wearUserList.html" class="active">佩戴用户详情</a></li>
+        <li><a href="../framePages/wearUser.html" class="active">房金祥电子档案</a></li>
+        <li><a href="javascript:;" class="inActive">尿常规统计</a></li>
+    </ul>
+    <main>
+        <div class="header">
+            <h2>尿常规统计</h2>
+            <button>全部</button>
+        </div>
+        <!--表格内容  分成两部分 一列纵列div  另一个是table-->
+        <div class="staticsContent">
+
+                 <!--左边一列-->
+                 <div class="left">
+                     <li>名称/正常</li>
+                     <ul v-for="(item,index) in projectNames">
+                         <li>{{ item }}</li>
+                         <!--<li>酸碱度/4.6~8.0</li>-->
+                         <!--<li>尿比重/1.015~1.025</li>-->
+                         <!--<li>尿胆原/<16</li>-->
+                         <!--<li>尿蛋白（阴性或仅有微量）</li>-->
+                         <!--<li>尿糖/阴性（-）</li>-->
+                         <!--<li>胆原素/阴性（-）</li>-->
+                         <!--<li>酮体/阴性（-）</li>-->
+                         <!--<li>尿红细胞/阴性（-）</li>-->
+                         <!--<li>尿液颜色/浅黄色至深黄色</li>-->
+                         <!--<li>隐血/阴性(-)</li>-->
+                         <!--<li>白细胞/0.00-9.00</li>-->
+                         <!--<li>白细胞团/0.00-9.00</li>-->
+                         <!--<li>未分类红细胞/0.00-5.00</li>-->
+                         <!--<li>未分类结晶/0.00-6.00</li>-->
+                         <!--<li>沾液丝/0.0-264.0</li>-->
+                         <!--<li>真菌/0.00-3.00</li>-->
+                         <!--<li>透明管型/0.00-2.00</li>-->
+                         <!--<li>葡萄糖/阴性（-）</li>-->
+                         <!--<li>酮体/阴性（-）</li>-->
+                         <!--<li>比重/1.005-1.030</li>-->
+                         <!--<li>潜血/阴性（-）</li>-->
+                         <!--<li>亚硝酸盐/阴性（-）</li>-->
+                     </ul>
+                 </div>
+                 <!--右边一列-->
+                <div class="right">
+                    <table data-toggle="table" class="table table-bordered text-center table-hover" id="intoHistory">
+                        <thead>
+                        <tr class="tr1" >
+                            <th v-for="(values,key,index) in results">{{ key }}</th>
+                            <td></td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <!--<tr>-->
+                            <!--<td v-for="(values,key,index) in results">{{ values }}</td>-->
+                            <!--<td>11111</td>-->
+                            <!--<td>11111</td>-->
+                            <!--<td>11111</td>-->
+                            <!--<td>11111</td>-->
+                            <!--<td>11111</td>-->
+                            <!--<td>11111</td>-->
+                            <!--<td>11111</td>-->
+                            <!--<td>11111</td>-->
+                            <!--<td>11111</td>-->
+                        <!--</tr>-->
+                        <ul >
+                            <li></li>
+                        </ul>
+                        </tbody>
+                    </table>
+                </div>
+        </div>
+    </main>
+
+</div>
+
+
+
+<!--js-->
+<script src="../../lib/jquery/jquery.min.js"></script>
+<script src="../../lib/vue.min.js"></script>
+<script src="../../lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../lib/datatables/js/jquery.dataTables.min.js"></script>
+<script src="../../lib/layer/layer.js"></script>
+<script src="../../js/common.js"></script>
+<script src="../../js/scanner/diseaseStatics.js"></script>
+</body>
+</html>

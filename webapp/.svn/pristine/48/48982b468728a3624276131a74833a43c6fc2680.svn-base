@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../../lib/datatables/css/jquery.dataTables.min.css"/>
+    <link rel="stylesheet" href="../../css/cssReset.css"/>
+    <link rel="stylesheet" href="../../css/framePages/SosWarningList.css"/>
+    <link rel="shortcut icon" href="../../imgs/logo-l.png">    <!--title-icon-->
+    <title>设备管理</title>
+    <style>
+        body {
+            width: 97%;
+            margin: 0 auto;
+        }
+
+        /*统计数据*/
+        .dad {
+            height: calc(100vh - 50px);
+        }
+
+        .Statistics {
+            color: #000;
+            display: flex;
+            display: -webkit-flex;
+            justify-content: space-between;
+        }
+
+        .Statistics > div {
+            width: 13%;
+            height: 80px;
+            background-color: #f2faff;
+            border-radius: 6px;
+        }
+
+        .Statistics > div > div {
+            text-align: center;
+        }
+
+        .Statistics > div > div:nth-child(1) {
+            font-size: 24px;
+            line-height: 50px;
+            color: #161616;
+        }
+
+        .Statistics > div > div:nth-child(2) {
+            color: #8F9295;
+            font-size: 12px;
+        }
+
+        .searchBox1 {
+            padding: 0 0 15px 0;
+        }
+
+        /*modal*/
+        #addTemperaturesForm .row {
+            margin: 20px 0;
+        }
+
+        #allActive .row {
+            margin: 20px 0;
+        }
+
+        #layer1 .form-control, #allActive .form-control {
+            height: 25px;
+        }
+
+        /*.searchBox{display:flex;justify-content:space-between;align-items:center;}*/
+        .searchBox1 {
+            display: flex;
+        }
+
+        .searchBox1 > div {
+            margin-right: 20px;
+        }
+
+        .searchBox1 .btn {
+            color: #fff;
+            background: #0096FF;
+            border: 1px solid #0096FF;
+            border-radius: 4px;
+            outline: none;
+        }
+
+        .searchBox1 .btn a {
+            color: #fff;
+        }
+
+        .searchBox1 .btn a:link {
+            text-decoration: none;
+            color: #fff;
+        }
+
+        .searchBox1 .btn a:visited {
+            text-decoration: none;
+            color: #fff;
+        }
+
+        .searchBox1 .btn a:active {
+            text-decoration: none;
+            color: #fff;
+        }
+
+        .searchBox1 .btn a:hover {
+            text-decoration: none;
+            color: #fff;
+        }
+
+        .searchBox .search2 .icon1 {
+            top: 6px;
+        }
+
+
+    </style>
+</head>
+<body>
+<div class='dad'>
+    <!--添加库存&市场配货*库存管理-->
+    <div class="row searchBox1">
+        <div>
+            <button class="btn btn-border" id="addBtn">添加库存</button>
+        </div>
+        <div>
+            <button class="btn btn-border" id="allActiveBtn">市场配货</button>
+        </div>
+        <div>
+            <button class="btn btn-border"><a href="repertoryManage.html" target="_blank">库存管理</a></button>
+        </div>
+        <div>
+            <button class="btn btn-border"><a href="deviceActive.html" target="_blank">激活设备</a></button>
+        </div>
+        <!--<div class="col-sm-1"><button class="btn btn-border"><a href="noUpdateDeviceList.html" target="_blank">设备版本</a></button></div>-->
+        <div>
+            <button class="btn btn-border"><a href="changeArea.html" target="_blank">归属地变更</a></button>
+        </div>
+        <div>
+            <button class="btn btn-border"><a href="scraDevice.html" target="_blank">报废设备</a></button>
+        </div>
+    </div>
+    <!--7个统计数据-->
+    <section class="Statistics">
+        <!--全部-->
+        <div title="全部">
+            <div id="allCounts">0</div>
+            <div>全部</div>
+        </div>
+        <!--已出货-->
+        <div title="已出货">
+            <div id="outOnLoanAll">0</div>
+            <div>已出货</div>
+        </div>
+        <!--本月出货-->
+        <div title="本周出货">
+            <div id="outOnLoanThisMonth">0</div>
+            <div>本月出货</div>
+        </div>
+        <!--本周出货-->
+        <div title="本周出货">
+            <div id="outOnLoanThisWeek">0</div>
+            <div>本周出货</div>
+        </div>
+        <!--本日出货-->
+        <div title="本日出货">
+            <div id="outOnLoanThisDay">0</div>
+            <div>本日出货</div>
+        </div>
+        <!--库存-->
+        <div title="库存">
+            <div id="repertory">0</div>
+            <div>库存</div>
+        </div>
+        <!--内部-->
+        <div title="内部">
+            <div id="internal">0</div>
+            <div>内部</div>
+        </div>
+    </section>
+    <!--搜索条件-->
+    <div class="searchBox">
+        <div class="form">
+            <div class="search2">
+                <img src="../../imgs/search@2x.png" alt="" class='icon1'/><input type="text" class="form-control phone"
+                                                                                 id="inputText" placeholder="设备号"/>
+            </div>
+            <div class="select">
+                <select id="selectVal" class="input2">
+                    <option value="" class="selected">全部设备</option>
+                    <option value="1">已租</option>
+                    <option value="2">已售</option>
+                </select>
+            </div>
+            <div class="select">
+                <select id="selectVal2" class="input2">
+                </select>
+            </div>
+            <button id="search" class="search">搜索</button>
+            <button id="all" class="search">全部</button>
+        </div>
+        <div>
+            <button id="getOut" class="export">导出excel</button>
+        </div>
+    </div>
+    <!--<div class="row searchBox form">-->
+    <!--<div class="col-sm-4 search2"><img src="../../imgs/search@2x.png" alt="" class='icon1'/><img src="../../imgs/search@2x.png" alt="" class='icon1'/><input type="text" class="form-control phone" id="inputText" placeholder="设备号"/></div>-->
+    <!--<div class="col-sm-2">-->
+    <!--<select id = "selectVal" class="form-control  input2">-->
+    <!--<option value ="" class="selected">全部</option>-->
+    <!--<option value="1">已租</option>-->
+    <!--<option value="2">已售</option>-->
+    <!--</select>-->
+    <!--</div>-->
+    <!--<div class="col-sm-2">-->
+    <!--<select id = "selectVal2" class="form-control  input2">-->
+
+    <!--</select>-->
+    <!--</div>-->
+    <!--<div class="col-sm-1"><button id="search" class="btn btn-skyBlue search">搜索</button></div>-->
+    <!--<div class="col-sm-1"><button id="all" class="btn btn-skyBlue search">全部</button></div>-->
+    <!--<div class="col-sm-1"><button id="getOut" class="btn btn-skyBlue export1">导出excel</button></div>-->
+    <!--</div>-->
+
+    <!--设备列表-->
+    <table data-toggle="table" class="table table-bordered text-center table-hover" id="SosTable">
+        <thead>
+        <tr class='tr1'>
+            <th>序号</th>
+            <th>型号</th>
+            <th>设备号</th>
+            <th>版本号</th>
+            <th>所属市场</th>
+            <th>出库时间</th>
+            <th>库管</th>
+            <th>操作员</th>
+            <th>状态</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+
+    <!--模态窗1-->
+    <div role="dialog" class="modal fade bs-example-modal-sm" id="layer1">
+        <div class="modal-dialog">
+            <div class="modal-content" style="max-width: 500px;min-width: 400px;">
+                <!--header-->
+                <div class="modal-header text-center">
+                    <button type="button" class="close" id="closeUpload" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                    <h4 class="h4 modal-title">添加库存</h4>
+                </div>
+                <!--body-->
+                <div class="modal-body text-center">
+                    <form role="addTemperaturesForm" id="addTemperaturesForm" enctype="multipart/form-data">
+                        <input type="hidden" name="loginId" id="loginId1"/>
+                        <input type="hidden" name="token" id="token1"/>
+                        <div class="row">
+                            <div class="col-sm-3 text-right">选择文件：</div>
+                            <div class="col-sm-6">
+                                <input type="file" id="addTemperaturesFile" name="file" multiple class="form-control"
+                                       accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel">
+                            </div>
+                        </div>
+                        <br/>
+                        <hr/>
+                        <div class="row">
+                            <div class="col-sm-3"></div>
+                            <div class="col-sm-3 text-center">
+                                <button type="button" id="uplBtn" class="btn btn-skyBlue">确定</button>
+                            </div>
+                            <div class="col-sm-3 text-center">
+                                <button type="reset" class="btn btn-skyBlue">重置</button>
+                            </div>
+                        </div>
+                        <br/>
+                        <hr/>
+                        <div class="row">
+                            <div class="col-sm-12 text-center" id="uploadMsg1"></div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--批量激活 模态窗-->
+    <div role="dialog" class="modal fade bs-example-modal-sm" id="allActive">
+        <div class="modal-dialog">
+            <div class="modal-content" style="max-width: 500px;min-width: 300px;">
+                <!--header-->
+                <div class="modal-header text-center">
+                    <button type="button" class="close" id="closeActive" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                    <h4 class="h4 modal-title">市场配货</h4>
+                </div>
+                <!--body-->
+                <div class="modal-body text-right">
+                    <form role="activeForm" id="activeForm" enctype="multipart/form-data">
+                        <input type="hidden" name="loginId" id="loginIdA"/>
+                        <input type="hidden" name="token" id="tokenA"/>
+                        <div class="row">
+                            <div class="col-sm-3 text-right">选择文件：</div>
+                            <div class="col-sm-6">
+                                <input type="file" id="activeFile" name="file" multiple class="form-control"
+                                       accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3 text-right">选择租或售：</div>
+                            <div class="col-sm-6">
+                                <select name="waySign" class="form-control">
+                                    <option value="1">租赁</option>
+                                    <option value="2">购买</option>
+                                </select>
+                            </div>
+                        </div>
+                        <br/>
+                        <hr/>
+                        <div class="row">
+                            <div class="col-sm-3"></div>
+                            <div class="col-sm-3 text-center">
+                                <button type="button" id="actBtn" class="btn btn-skyBlue">确定</button>
+                            </div>
+                            <div class="col-sm-3 text-center">
+                                <button type="reset" class="btn btn-skyBlue">重置</button>
+                            </div>
+                        </div>
+                        <br/>
+                        <hr/>
+                        <div class="row">
+                            <div class="col-sm-12 text-center" id="activeMsg"></div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!--模板-->
+<script type="text/html" id="selectJs">
+    <option value="" class="selected">全部地区</option>
+    {{each data.list}}
+    <option value="{{$value.areaId}}">{{$value.username}}({{$value.areaName}})</option>
+    {{/each}}
+</script>
+
+
+<!--js-->
+<script src="../../lib/jquery/jquery.min.js"></script>
+<script src="../../lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../lib/datatables/js/jquery.dataTables.min.js"></script>
+<script src="../../lib/layer/layer.js"></script>
+<script src="../../lib/template.js"></script>
+<script src="../../js/common.js"></script>
+<script src="../../js/framePages/deviceManage.js"></script>
+</body>
+</html>

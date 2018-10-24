@@ -1,0 +1,122 @@
+[v-cloak]{display: none;}
+body{width:100%;}
+#app{background: #f0f5ff;width: 100%;min-height: 100vh;padding: 10px 20px;}
+/*urlBack*/
+.urlBack{font-family: PingFangSC-Regular;font-size: 14px;margin: 5px 0;}
+.urlBack>a{color: #0096FF;}
+/*mesContent*/
+.mesContent{width: 100%;background: #fff;padding: 16px 14px;border-radius: 8px;}
+.intoBox{width:100%;}
+/*.intoBox>div{width: 49%;}!**!*/
+.intoBox>div>div:nth-child(1){font-family: PingFangSC-Semi;font-size: 15px;color: #4A4A4A;line-height: 30px;font-weight: bold}
+.intoBox .selectContent{display:flex;margin:10px 0 0px 85px;width:100%;flex-wrap:wrap;}
+.intoBox .selectContent .div1{margin-bottom:8px;position:relative;padding: 5px 20px 5px 5px;cursor:pointer;background: #f3f3f3;border-radius: 2px;font-size: 14px;color: #000000;margin-right:10px;}
+.intoBox .selectContent .div1 img{width:10px;height:10px;margin-left:8px;position:absolute;right:6px;top:11px;}
+.intoBox .textarea{margin-top:10px;}
+textarea{background: #FFFFFF;border: 1px solid #D3D3D3;border-radius: 8px;}
+.form-control{background-image:none;border: 1px solid #D3D3D3;border-radius: 8px;}
+/*intoBtn*/
+.intoBtn{margin: 10px 0;}
+.intoBtn .btn{font-family: PingFangSC-Medium;font-size: 16px;color: #FFFFFF;background: #0096FF;box-shadow: 0 1px 5px 0 rgba(0,150,255,0.15);
+    border-radius: 4px;padding:0px 28px;height:32px;line-height:32px;}
+/*intoHistory*/
+.intoHistory{font-family: PingFangSC-Semi;font-size: 15px;color: #4A4A4A;font-weight: bold;padding:20px 0 18px 0;}
+/*searchBox*/
+.searchBox{width: 100%;display: flex;justify-content: flex-start;margin: 10px 0;padding:0px;}
+.searchBox>*{margin-right: 10px;}
+.searchBox>input{width: 200px;}
+textarea{resize:none;}
+/*下拉框*/
+.selectUser{display:flex;align-items:center;}
+.selectUser .btn1{height:27px;line-height:27px;border: 1px solid #0096FF;border-radius: 4px;margin-left:10px;color:#fff;}
+.select{background: #F3F3F3;border-radius: 4px;border:none;margin-left:10px;padding:3px 0;font-family: PingFangSC-Regular;
+    font-size: 14px;color: #4A4A4A;border:none;}
+.select option{background: #F3F3F3;border-radius: 4px;font-family: PingFangSC-Regular;font-size: 14px;color: #4A4A4A;}
+/*.div1{width: 250px;white-space: nowrap;text-overflow:ellipsis;overflow: hidden;margin:0 auto;}*/
+/*弹框*/
+#errorPhone .modal-header{border-bottom:0px;}
+#errorPhone .modal-dialog{width:350px !important;}
+#errorPhone .modal-body .box{width:280px;margin:0 auto;text-align:left;}
+#errorPhone .modal-body ul{min-height:100px;}
+#errorPhone .modal-body .box div{margin-bottom:15px;}
+#errorPhone .row{display:flex;justify-content:center;margin-bottom:22px;}
+.modal-dialog {    /*水平垂直居中*/
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 3;
+    margin:0 auto;
+    -webkit-transform: translate(-50%, -50%) !important;
+    -moz-transform: translate(-50%, -50%) !important;
+    -ms-transform: translate(-50%, -50%) !important;
+    -o-transform: translate(-50%, -50%) !important;
+    transform: translate(-50%, -50%) !important;
+}
+/*弹框2*/
+#filterTerm .modal-header{border-bottom:0px;}
+#filterTerm .modal-dialog{width:467px !important;height:700px;}
+#filterTerm .modal-body .box{width:370px;margin:0 auto;text-align:left;}
+/*#filterTerm .modal-body{}*/
+#filterTerm .modal-body .box .searchBox{justify-content:space-between;margin-top:0px;}
+#filterTerm .modal-body .box .searchBox .search2 .phone{width:218px;}
+#filterTerm .modal-body .box .searchBox .search{width:60px;}
+#filterTerm .modal-body .box ul{margin-top:20px;width:100%;max-height:500px;overflow:auto;display:flex;flex-wrap:wrap;justify-content:space-between;}
+#filterTerm .modal-body .box ul li{width:31%;font-family: PingFangSC-Regular;font-size: 15px;color: #4A4A4A;margin-bottom:15px;white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;  }
+#filterTerm .modal-body .box ul li input{display:inline-block;}
+#filterTerm .modal-body .box ul li span{display:inline-block;margin-left:13px;}
+
+/*面包屑导航*/
+.breadcrumb > li + li:before {color: #0c0c0c;content: ">";padding: 0 5px;}
+.breadcrumb{margin-bottom:0px;padding:10px 0 10px 0px;background:#f0f5ff;}
+/*点击进行跳转a标签的样式*/
+.active:link{text-decoration:none;color: #0096FF;}
+.active:visited{text-decoration:none;color: #0096FF;}
+.active:active{text-decoration:none;color: #0096FF;}
+.active:hover{text-decoration:none;color: #0096FF;}
+/*不跳转的a标签样式*/
+.inActive:link{text-decoration:none;color: #4A4A4A;}
+.inActive:visited{text-decoration:none;color: #4A4A4A;}
+.inActive:active{text-decoration:none;color: #4A4A4A;}
+.inActive:hover{text-decoration:none;color: #4A4A4A;}
+
+
+/*改变plceholder的颜色*/
+::-webkit-input-placeholder { color: #9B9B9B;}
+
+#filterTerm .row{display:flex;justify-content:center;margin-bottom:22px;}
+input[type="radio"]{background-color: #0096FF ;}
+
+.txttera{height:100px;width:590px;padding:10px 15px;}
+.searchBox .search2 .icon1{top:5px;}
+/*.tableHistory{padding:0 15px;}*/
+table.dataTable{width:100%;}
+.intoBox>div h2{margin:20px 0 11px 0;font-family: PingFangSC-Semibold;font-size: 15px;color: #4A4A4A;}
+
+/*富文本编辑器*/
+.intoBox>div #editor{width:640px; z-index: 0;position: relative;}
+#editor .w-e-toolbar{max-width:640px;}
+#editor .w-e-text-container{max-width:640px;}
+/*改变多选框的样式  通过给多选框上覆盖北京图片来改变多选框的样式*/
+/*input[type=checkbox] {*/
+    /*position: relative;*/
+    /*width: 8px;*/
+/*}*/
+/*input[type=checkbox]::before{*/
+    /*content:'';*/
+    /*position: absolute;*/
+    /*top:-2px;*/
+    /*!*left:-1px;*!*/
+    /*width: 16px;*/
+    /*height: 16px;*/
+    /*background: url("../../imgs/iframeImgs/check.png") no-repeat;*/
+    /*background-size:100% 100%;*/
+/*}*/
+/*input[type=checkbox]:checked::before {*/
+    /*background: url("../../imgs/iframeImgs/checked.png") no-repeat;*/
+    /*background-size:100% 100%;*/
+    /*width: 16px;*/
+    /*height: 16px;*/
+    /*content: '';*/
+/*}*/

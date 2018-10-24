@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>设备管理</title>
+    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../../lib/datatables/css/jquery.dataTables.min.css"/>
+    <link rel="stylesheet" href="../../css/cssReset.css"/>
+    <link rel="shortcut icon" href="../../imgs/logo-l.png">    <!--title-icon-->
+    <style>
+        /*body{width: 96%;margin: 0 auto;}*/
+        body{background-color: #f2f2f1;width: 97%;margin: 0 auto;padding:20px 0;}
+        .main{background: #FFFFFF;height:100%;box-shadow: 0 0 10px 0 rgba(0,0,0,0.02);border-radius: 8px;padding:20px 15px;}
+        /*搜索栏部分*/
+        .row{margin: 0;}
+        /*table表格部分样式微调*/
+        /*.mainTable{background-color: rgba(255,255,255,0.3);padding: 10px;border-radius: 5px;}*/
+        table.dataTable.display tbody tr.odd,table.dataTable.display tbody tr.even{background-color: transparent;}
+        table.dataTable.display tbody td{border-top:none;}
+        /*统计数据*/
+        .Statistics{color: #000;display: flex;display: -webkit-flex; justify-content:space-between;}
+        .Statistics>div{width: 32%;cursor: pointer;height: 80px;background-color: #fff;border-radius: 6px;border: 1px solid #DBDCE3;}
+        .Statistics>div>div{text-align: center;}
+        .Statistics>div>div:nth-child(1){font-size: 24px;line-height: 50px;color: #161616;}
+        .Statistics>div>div:nth-child(2){color: #8F9295;font-size: 12px;}
+        .searchBox{padding: 20px 0;background-color: rgba(238,245,247,0.6);}
+        /*dataTables*/
+        #statusTable_wrapper{margin: 20px 0;}
+
+        /*Modal*/
+        #addTemperaturesForm .row{margin: 20px 0;}
+        #allActive .row{margin: 20px 0;}
+        #layer1 .form-control,#allActive .form-control{height: 25px;}
+        /*搜索框*/
+        .searchBox{padding:18px 0 13px 20px;display:flex;align-items:center;justify-content:space-between;}
+        .searchBox .form{display:flex;align-items:center;flex-wrap:wrap;line-height:50px;}
+        .searchBox .search2{position:relative;margin-right:30px;}
+        .searchBox .search2 .icon1{position:absolute;width:16px;height:16px;top:17px;left:11px;}
+        .searchBox .search2 .phone{width:180px;height:26px;background: #F3F3F3;border-radius: 4px;border:none;padding-left:30px;outline:none;}
+        .searchBox .search{width:90px;height:26px;font-size: 14px;color: #0096FF;text-align: center;line-height: 14px;
+            background:#fff;border:1px solid #0096FF;border-radius: 4px;margin-right:20px;outline:none;}
+        .searchBox .export{width:120px;height:32px;font-family: PingFangSC-Medium;font-size: 14px;color: #fff;
+            text-align: center;line-height: 14px;background:#0096FF;border:1px solid #0096FF;border-radius: 4px;outline:none;}
+    </style>
+
+</head>
+<body>
+
+<div class="main">
+    <!--!统计-->
+    <aside class="Statistics">
+        <!--总设备
+
+        <div title="总设备">
+            <div id="totalDevices">0</div>
+            <div>总设备</div>
+        </div>
+        -->
+        <!--库存
+        <!--
+        <div title="库存">
+            <div id="stock">0</div>
+            <div>库存</div>
+        </div>
+        -->
+        <!--已激活
+        <!--
+        <div title="已激活">
+            <div id="alreadyActive">0</div>
+            <div>已激活</div>
+        </div>
+        -->
+    </aside>
+    <!--搜索框-->
+
+    <div class="searchBox">
+        <div class='form'>
+            <div class='search2'>
+                <img src="../../imgs/search@2x.png" alt="" class='icon1'/><input type="text" class="phone" id="deviceId" placeholder="输入设备号"/>
+            </div>
+            <button id="searchBtn" class="search" style='margin:0 10px;'>搜索</button>
+            <button id="seeAll" class="search">全部</button>
+            <button class="export" id="allActiveBtn">市场配货</button>
+        </div>
+
+    </div>
+
+
+
+    <!--<div class="row searchBox">-->
+        <!--&lt;!&ndash;设备号&ndash;&gt;-->
+        <!--<div class="col-sm-3">-->
+            <!--<input type="text" class="form-control" id="deviceId" placeholder="输入设备号"/>-->
+        <!--</div>-->
+        <!--&lt;!&ndash;搜搜&ndash;&gt;-->
+        <!--<div class="col-sm-1">-->
+            <!--<button class="btn btn-skyBlue" id="searchBtn">搜索</button>-->
+        <!--</div>-->
+        <!--&lt;!&ndash;全部&ndash;&gt;-->
+        <!--<div class="col-sm-1">-->
+            <!--<button class="btn btn-skyBlue" id="seeAll">全部</button>-->
+        <!--</div>-->
+
+        <!--<div class="col-sm-1 text-right"><button class="btn btn-border" id="allActiveBtn">市场配货</button></div>-->
+    <!--</div>-->
+    <!--表格-->
+    <!--<div class="mainTable">-->
+    <table id="statusTable" class="display text-center table table-bordered table-hover" cellspacing="0" width="100%">
+        <!--表头-->
+        <thead>
+        <tr>
+            <th class="text-center">序号</th>
+            <th class="text-center">护心仪设备号</th>
+            <th class="text-center">租赁/销售</th>
+            <th class="text-center">合伙人</th>
+            <th class="text-center">区域</th>
+            <th class="text-center">服务开始时间</th>
+            <th class="text-center">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+    <!--</div>-->
+
+    <!--批量激活 模态窗-->
+    <div role="dialog" class="modal fade bs-example-modal-sm" id="allActive">
+        <div class="modal-dialog">
+            <div class="modal-content" style="max-width: 500px;min-width: 300px;">
+                <!--header-->
+                <div class="modal-header text-center">
+                    <button type="button" class="close" id="closeActive" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                    <h4 class="h4 modal-title" >市场配货</h4>
+                </div>
+                <!--body-->
+                <div class="modal-body text-right">
+                    <form role="activeForm" id="activeForm" enctype="multipart/form-data">
+                        <input type="hidden" name="loginId" id="loginIdA"/>
+                        <input type="hidden" name="token" id="tokenA"/>
+                        <div class="row">
+                            <div class="col-sm-3 text-right">选择文件：</div>
+                            <div class="col-sm-6">
+                                <input type="file" id="activeFile" name="file" multiple class="form-control" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel">
+                            </div>
+                        </div>
+                    <!--<div class="row">-->
+                        <!--<div class="col-sm-3 text-right">选择租或售：</div>-->
+                        <!--<div class="col-sm-6">-->
+                            <!--<select name="waySign" class="form-control">-->
+                                <!--<option value="1">租赁</option>-->
+                                <!--<option value="2">购买</option>-->
+                            <!--</select>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <div class="row">
+                        <a href="https://i.iandun.com:8085/group1/M00/02/45/ezkhjFr7ltCEQZEZAAAAAMKjdu006.xlsx">点击下载模板</a>
+                    </div>
+                    <br/>
+                    <hr/>
+                    <div class="row">
+                        <div class="col-sm-3"></div>
+                        <div class="col-sm-3 text-center"><button type="button" id="actBtn" class="btn btn-skyBlue">确定</button></div>
+                        <div class="col-sm-3 text-center"><button type="reset" class="btn btn-skyBlue">重置</button></div>
+                    </div>
+                    <br/>
+                    <hr/>
+                    <div class="row">
+                        <div class="col-sm-12 text-center" id="activeMsg"></div>
+                    </div>
+                </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!--js-->
+<script src="../../lib/jquery/jquery.min.js"></script>
+<script src="../../lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../lib/datatables/js/jquery.dataTables.min.js"></script>
+<script src="../../lib/layer/layer.js"></script>
+<script src="../../js/common.js"></script>
+<script src="../../js/partner/deviceManage.js"></script>
+</body>
+</html>

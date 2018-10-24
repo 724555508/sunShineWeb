@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <link rel="shortcut icon" href="../../imgs/logo-l.png">
+    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../../css/cssReset.css"/>
+    <link rel="stylesheet" href="../../css/screenShow/s_lostManageBpMonitor.css">
+    <title>失联状态管理/数据异常用户监控</title>
+</head>
+<body>
+<main id="main" class="main" v-cloak>
+   <div class="content">
+       <!--left-->
+       <div class="left">
+           <header>失联状态管理</header>
+           <!--总人数-->
+           <div class="total">
+               <div class="div1">
+                   <span>失联总人数</span>
+                   <p>{{allCount}}</p>
+               </div>
+               <div class="div1 div2">
+                   <span>处理人数</span>
+                   <p>{{dealCount}}</p>
+               </div>
+               <div class="div1 div2">
+                   <span>剩余人数</span>
+                   <p>{{notDealCount}}</p>
+               </div>
+           </div>
+           <!--失联用户列表-->
+           <ul class="list">
+               <li class="user" v-for="(item,index) in cmsOutUsers">
+                   <div class="headImg">
+                       <div v-if="item.gender === '1'"><img src="../../imgs/mapImages/man.png" alt=""></div>
+                       <div v-else-if="item.gender === '2'"><img src="../../imgs/mapImages/woman.png" alt=""></div>
+                   </div>
+                   <div class="info">
+                       <div class="div1">
+                           <div class="top">
+                               <h3>{{item.username}}**</h3>
+                               <span>{{item.age}}</span>
+                           </div>
+                           <p>全天   <span>{{item.out_count}}</span>   天</p>
+                       </div>
+                       <div class="div2">
+                           <p style="text-align:left;" v-if="item.icon === '1'">最后状态 <span style="color:#37B864;">健康</span></p>
+                           <p style="text-align:left;" v-else-if="item.icon === '2'">最后状态 <span style="color:#F5A623;">亚健康</span></p>
+                           <p style="text-align:left;" v-else-if="item.icon === '3'">最后状态 <span style="color:#FF5858;">疾病</span></p>
+                           <p style="text-align:left;" v-else>最后状态 <span>未知</span></p>
+                           <p v-if="item.lastDueTime !== ''">上次处理 <span>{{item.lastDueTime}}</span></p>
+                           <p v-else>上次处理 <span></span></p>
+                           <p style="border-right:none;">{{item.disposeName}} <span>{{item.dispose_raemrk}}</span></p>
+                           <!--<div class="contact">-->
+                               <!--<p>{{item.disposeName}}</p>-->
+                               <!--<span>{{item.dispose_raemrk}}</span>-->
+                           <!--</div>-->
+                       </div>
+                   </div>
+
+               </li>
+           </ul>
+       </div>
+
+       <!--right-->
+       <div class="right">
+           <header>数据异常用户监控</header>
+           <!--总人数-->
+           <div class="total">
+               <div class="div1">
+                   <span>心率较少人数</span>
+                   <p>{{hrCount}}</p>
+               </div>
+               <div class="div1 div2">
+                   <span>血压较少人数</span>
+                   <p>{{bpCount}}</p>
+               </div>
+               <div class="div1 div2">
+                   <span>血氧较少人数</span>
+                   <p>{{boCount}}</p>
+               </div>
+               <div class="div1 div2">
+                   <span>处理人数</span>
+                   <p>{{remind}}</p>
+               </div>
+               <div class="div1 div2">
+                   <span>剩余人数</span>
+                   <p>{{notRemind}}</p>
+               </div>
+           </div>
+           <!--数据异常用户监控-->
+           <ul class="list">
+               <li class="user" v-for="(item,index) in list">
+                   <div class="headImg">
+                       <div v-if="item.gender === '1'"><img src="../../imgs/mapImages/man.png" alt=""></div>
+                       <div v-else-if="item.gender === '2'"><img src="../../imgs/mapImages/woman.png" alt=""></div>
+                   </div>
+                   <div class="info">
+                       <div class="div1">
+                           <div class="top">
+                               <h3>{{item.userName.slice(0,1)}}**</h3>
+                               <span>{{item.age}}</span>
+                           </div>
+                           <div class="right1">
+                               <div class="icon" v-if="item.sign === '心率'"><img src="../../imgs/iframeImgs/hr.png" alt="" width="24">{{item.sign}} </div>
+                               <div class="icon" v-else-if="item.sign === '血压'"><img src="../../imgs/iframeImgs/bp.png" alt="" width="24">{{item.sign}} </div>
+                               <div class="icon" v-else-if="item.sign === '血氧'"><img src="../../imgs/iframeImgs/bo.png" alt="" width="24">{{item.sign}} </div>
+                               <div class="text"><span>{{(item.bpNum).replace(/,/g," / ")}}</span></div>
+                           </div>
+                       </div>
+                       <div class="div2">
+                           <p style="text-align:left;" v-if="item.icon === '1'">最后状态 <span style="color:#37B864;">健康</span></p>
+                           <p style="text-align:left;" v-else-if="item.icon === '2'">最后状态 <span style="color:#F5A623;">亚健康</span></p>
+                           <p style="text-align:left;" v-else-if="item.icon === '3'">最后状态 <span style="color:#FF5858;">疾病</span></p>
+                           <p>上次处理 <span>{{item.lastTime}}</span></p>
+                           <p style="border-right:none;">{{item.disposeName}} <span>{{item.disposeRemark}}</span></p>
+                       </div>
+                   </div>
+
+               </li>
+
+           </ul>
+       </div>
+   </div>
+</main>
+
+
+
+
+
+
+
+
+
+
+
+<script src="../../lib/vue.min.js"></script>
+<script src="../../lib/jquery/jquery.min.js"></script>
+<script src="../../lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../lib/echarts/echarts.min.js"></script>
+<script src="../../lib/layer/layer.js"></script>
+<script src="../../js/common.js"></script>
+<script src="../../js/screenShow/s_lostManageBpMonitor.js"></script>
+</body>
+</html>

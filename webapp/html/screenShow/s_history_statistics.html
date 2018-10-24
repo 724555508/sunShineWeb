@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <link rel="shortcut icon" href="../../imgs/logo-l.png">
+    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../../css/cssReset.css"/>
+    <link rel="stylesheet" href="https://cache.amap.com/lbs/static/main1119.css"/>   <!--自定义图标-->
+    <link rel="stylesheet" href="https://cache.amap.com/lbs/static/main.css?v=1.0?v=1.0"/><!--城市选择-->
+    <link rel="stylesheet" href="../../css/screenShow/s_history_statistics.css">
+    <title>严重病史用户统计</title>
+</head>
+<body>
+<div id="app" v-cloak>
+   <div class="main">
+       <div class="top">
+          <div class="head">
+              <div></div>
+              <h2>严重病史用户统计</h2>
+              <div></div>
+          </div>
+
+         <div class="canvas">
+             <!--柱状图容器-->
+                <div id="barEcharts" class="barEcharts"></div>
+             <!--饼图容器-->
+                 <div id="pieCanvas" class="pieCanvas"></div>
+         </div>
+       </div>
+       <div class="bot">
+
+          <div class="head">
+              <h2>新增服务用户统计</h2>
+              <div class="right">
+                  <div class="div1">
+                      <span class="span1"></span>
+                      <p>佩戴用户</p>
+                  </div>
+                  <div class="div1">
+                      <span class="span2"></span>
+                      <p>APP用户</p>
+                  </div>
+              </div>
+          </div>
+           <!--折线图-->
+           <div class="chart">
+               <div class="lineChart" id="lineChart1"></div>
+               <div class="lineChart" id="lineChart2"></div>
+               <div class="lineChart lineChart1" id="lineChart3"></div>
+           </div>
+       </div>
+   </div>
+
+</div>
+
+
+
+
+<script src="../../lib/vue.min.js"></script>
+<script src="../../lib/jquery/jquery.min.js"></script>
+<script src="../../lib/datatables/js/jquery.dataTables.min.js"></script>
+<script src="../../lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../lib/echarts/echarts.min.js"></script>
+<script src="../../lib/layer/layer.js"></script>
+<script src="../../js/common.js"></script>
+<script src="../../js/screenShow/s_history_statistics.js"></script>
+</body>
+</html>

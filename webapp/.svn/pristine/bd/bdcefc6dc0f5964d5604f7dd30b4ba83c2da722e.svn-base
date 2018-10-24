@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="shortcut icon" href="../../imgs/logo-l.png">
+    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../../css/cssReset.css" />
+    <link rel="stylesheet" href="../../css/scanner/diseaseList.css">
+    <link rel="stylesheet" href="../../lib/layui/css/layui.css"> <!--引入layuicss  时间轴-->
+    <style>
+        [v-cloak]{display: none;}
+    </style>
+</head>
+<body>
+<div id='app' v-cloak>
+    <!--面包屑导航-->
+    <ul class="breadcrumb">
+        <li><a href="../framePages/userCenter.html" class="active">用户管理</a></li>
+        <li><a href="../framePages/wearUserList.html" class="active">佩戴用户详情</a></li>
+        <li><a href="javascript:;" class="inActive">尿常规列表</a></li>
+    </ul>
+    <main>
+        <div>尿常规列表</div>
+
+        <ul class="layui-timeline "  style="margin-top:25px;">
+            <li class="layui-timeline-item" v-for="(val, key, index) in date">
+                <i class="layui-icon layui-timeline-axis" style="color: #0096FF;">&#xe63f;</i>
+                <div class="layui-timeline-content layui-text templateDiv">
+                    <h3 class="layui-timeline-title">{{key}}</h3>
+                    <div>
+                        <div v-for="(item,index) in val" @click="showInfo(item.split('#')[1]);">
+                            <img src="../../imgs/doctorImgs/dieaseList.png"/>
+                            <div>{{item.split('#')[0]}}</div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </main>
+
+    <!-- 影响报告VideoReportModel -->
+    <div role="dialog" class="modal fade bs-example-modal-sm" id="VideoReportModel">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!--header-->
+                <div class="modal-header text-center">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                    <h4 class="h4 modal-title">{{ VideoReportModel.hospital }}</h4>
+                </div>
+                <!--body-->
+                <div class="modal-body">
+                    <div class="modelKey">{{ VideoReportModel.checkCategory }}</div>
+                    <div>
+                        <span class="modelKey">超声号:</span>
+                        <span>{{ VideoReportModel.checkNum }}</span>
+                    </div>
+                    <div>
+                        <span class="modelKey">检查类型:</span>
+                        <span>{{ VideoReportModel.checkType }}</span>
+                    </div>
+                    <div>
+                        <span class="modelKey">检查设备:</span>
+                        <span>{{ VideoReportModel.checkDevice }}</span>
+                    </div>
+                    <hr>
+                    <div class="modelKey" style="margin-top: 15px;">
+                        超声所见：
+                    </div>
+                    <div>&emsp;&emsp;
+                        {{ VideoReportModel.checkInfo }}
+                    </div>
+                    <div class="modelKey" style="margin-top: 15px;">
+                        超声提示：
+                    </div>
+                    <div>&emsp;&emsp;
+                        {{ VideoReportModel.checkHints }}
+                    </div>
+                    <div style="margin-top: 20px;">
+                        <span class="modelKey">检查日期:</span>
+                        <span>{{ VideoReportModel.checkDate }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- LaboratorySheetModel -->
+    <div role="dialog" class="modal fade bs-example-modal-sm" id="LaboratorySheetModel">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!--header-->
+                <div class="modal-header text-center">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                    <h4 class="h4 modal-title">{{ LaboratorySheetModel.hospital }}</h4>
+                </div>
+                <!--body-->
+                <div class="modal-body">
+                    <div style="display: flex;justify-content: space-between;">
+                        <div>{{ LaboratorySheetModel.checkCategory }}</div>
+                        <div>
+                            <span class="modelKey">标本种类:</span>
+                            <span>{{ LaboratorySheetModel.specimenSpecies }}</span>
+                        </div>
+                    </div>
+                    <hr>
+                    <div>
+                        <ul style="font-weight: 600;font-size: 14px;">
+                            <li style="width: 120px;">项目名称</li>
+                            <li style="width: 30px;text-align: center;">结果</li>
+                            <li style="width: 50px;">单位</li>
+                            <li style="width: 80px;">参考区间</li>
+                        </ul>
+                    </div>
+                    <hr>
+                    <div>
+                        <ul v-for="(item,index) in LaboratorySheetModel.items">
+                            <li>{{ item.projectName }}</li>
+                            <li>{{ item.result}}</li>
+                            <li>{{ item.unit }}</li>
+                            <li>{{ item.referenceValue}}</li>
+                        </ul>
+                    </div>
+                    <hr>
+                    <div style="margin-top: 20px;">
+                        <span class="modelKey">采样日期:</span>
+                        <span>{{ LaboratorySheetModel.samplingDate }}</span>
+                    </div>
+                    <div style="margin-top: 8px;">
+                        <span class="modelKey">接收日期:</span>
+                        <span>{{ LaboratorySheetModel.receivingDate }}</span>
+                    </div>
+                    <div style="margin-top: 8px;">
+                        <span class="modelKey">报告日期:</span>
+                        <span>{{ LaboratorySheetModel.reportDate }}</span>
+                    </div>
+                    <div style="margin-top: 8px;">
+                        <span class="modelKey">备注:</span>
+                        <span>{{ LaboratorySheetModel.remark }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+<!--js-->
+<script src="../../lib/jquery/jquery.min.js"></script>
+<script src="../../lib/vue.min.js"></script>
+<script src="../../lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../lib/layer/layer.js"></script>
+<script src="../../js/common.js"></script>
+<script src="../../js/scanner/diseaseList.js"></script>
+</body>
+</html>

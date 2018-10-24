@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="../../imgs/logo-l.png">    <!--title-icon-->
+    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../../lib/datatables/css/jquery.dataTables.min.css"/>
+    <link rel="stylesheet" href="../../css/cssReset.css"/>
+    <title>添加记录-记录反馈</title>
+    <style>
+        body{width: 96%;margin: 20px auto;}
+        nav{margin: 10px 0;font-size: 16px;}
+        .row>*{margin: 0;padding: 0 10px 0 0;}
+        /*mainBody*/
+        .mainBody{width: 100%;}
+        .mainBody>div{width: 100%;}
+        .line{display: flex;width: 100%;justify-content: space-between;margin: 10px 0;}
+        .line>div{width: 33%;display: flex;}
+        .line1:after{content: '*';color: red;font-size: 22px;}
+        .line3>div:nth-child(2){width: 66%;line-height: 32px;}
+        .hideThis4{width: 66%;line-height: 32px;}
+        .line6>div{width: 49%;}
+        .line7>div{width: 49%;}
+        .lineBtn>div{width: 100%;text-align: center;}
+        .line .hideThis{display: none;}
+        #nextDate{display: none;}
+        .first{font-weight: bolder; color: red;}
+        .important{width: 90%;}
+        .auto{width: 191px;}
+    </style>
+</head>
+<body>
+<!--导航栏-->
+<nav><a href="customCenter.html">客服中心</a>-记录反馈</nav>
+<!--main-->
+<main class="mainBody">
+    <form id="recordForm">
+        <!--第一行-->
+        <div class="line">
+            <!--1-->
+            <div class="line1">
+                <select name="phoneStatus" class="form-control important">
+                    <option value="">通话类型</option>
+                    <option value="1">主动呼出</option>
+                    <option value="2">主动呼入</option>
+                    <option value="3">其他</option>
+                </select>
+            </div>
+            <!--2-->
+            <div class="line1">
+                <select name="questionParentType" class="form-control important auto" id="select" onchange="change(this.value)">
+                    <option value="">反馈类型</option>
+                    <option value="产品硬件">产品硬件</option>
+                    <option value="APP软件">APP软件</option>
+                    <option value="数据失准">数据失准</option>
+                    <option value="用户回访">用户回访</option>
+                    <option value="预警回访">预警回访</option>
+                    <option value="合作问题">合作问题</option>
+                    <option value="无效沟通">无效沟通</option>
+                    <option value="定位问题">定位问题</option>
+                    <option value="产品服务咨询">产品服务咨询</option>
+                    <option value="投诉与建议">投诉与建议</option>
+                    <option value="其他问题">其他问题</option>
+                </select>
+                &nbsp;&nbsp;
+                <select name="questionType" class="form-control important auto" id="select2">
+
+                </select>
+                <input class="form-control" style="display: none;width:189px;" id="otherInput" placeholder="请输入其他问题">
+            </div>
+            <!--3-->
+            <div class="line1">
+                <select name="userType" class="form-control important">
+                    <option value="">用户类型</option>
+                    <option value="佩戴用户">佩戴用户</option>
+                    <option value="APP用户">APP用户</option>
+                    <option value="合伙人">合伙人</option>
+                    <option value="意向合伙人">意向合伙人</option>
+                    <option value="意向用户">意向用户</option>
+                    <option value="其他">其他</option>
+                </select>
+            </div>
+        </div>
+        <!--第二行-->
+        <div class="line">
+            <div><input type="text" class="form-control important" placeholder="姓名" name="userName"></div>
+            <div><input type="text" class="form-control important" placeholder="用户城市" name="userCity"></div>
+            <div>
+                <!--<select name="" class="form-control">
+                    <option value="1">男</option>
+                    <option value="2">女</option>
+                </select>-->
+            </div>
+        </div>
+        <!--第三行-->
+        <div class="line line3">
+            <div class="line1"><input type="text" class="form-control important" id="phoneNum" name="phoneNum" placeholder="来电号码(必填)" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"></div>
+            <div class="hideThis hideThis1">该号码来访记录：<span id="count">0</span>&emsp;&emsp;</div>
+        </div>
+        <!--第4行-->
+        <div class="line line3">
+            <div><input type="text" class="form-control important" id="deviceId" name="deviceId" placeholder="设备号" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"></div>
+            <div class="hideThis hideThis2"><span id="username"></span>&emsp;<span id="age"></span>&emsp;病史：<span id="MedicalHistory"></span>&emsp;服务期：<span id="serviceTime"></span>&emsp;&emsp;</div>
+            <div class="hideThis hideThis4">该设备号来访记录：<span id="count-device">0</span>&emsp;&emsp;</div>
+        </div>
+        <!--第5行-->
+        <div class="line line3">
+            <div><input type="text" class="form-control important" id="appUserId" name="appUserId" placeholder="APP账号" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"></div>
+            <div class="hideThis hideThis3"><span id="username2"></span>&emsp;注册：<span id="createTime"></span>&emsp;<span id="phoneBrand"></span>&emsp;<span id="appVersion"></span>&emsp;设备：<span id="devices">0</span>&emsp;&emsp;</div>
+        </div>
+        <!--第六行-->
+        <div class="line line6">
+            <div>
+                <textarea name="questionDetails" cols="30" rows="10" class="form-control" placeholder="反馈详情"></textarea>
+            </div>
+            <div>
+                <textarea name="disposeInfo" cols="30" rows="10" class="form-control" placeholder="处理结果"></textarea>
+            </div>
+        </div>
+        <!--第七行-->
+        <div class="line line7">
+            <div class="line1">
+                <select name="isNeedReturn" class="form-control" id="isNeedReturn" style="width: 60%">
+                    <option value="2">无需反馈</option>
+                    <option value="1">需要反馈</option>
+                </select>
+            </div>
+            <div><input type="datetime-local" name="nextReturnTime" class="form-control" id="nextDate"></div>
+        </div>
+        <br><hr><br>
+        <!--提交按钮-->
+        <div class="line lineBtn">
+            <div><button type="button" class="btn btn-skyBlue" id="subBtn">提交</button></div>
+        </div>
+
+    </form>
+</main>
+
+
+
+
+<!--js-->
+<script src="../../lib/jquery/jquery.min.js"></script>
+<script src="../../lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../lib/layer/layer.js"></script>
+<script src="../../js/common.js"></script>
+<script src="../../js/framePages/custom_addRecord.js"></script>
+</body>
+</html>

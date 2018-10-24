@@ -1,0 +1,38 @@
+[v-cloak]{display:none;}
+body{background-color: #f0f5ff;width: 100%;margin: 0 auto;}
+.dad{width: 97%;margin: 0 auto;background: #f0f5ff;box-shadow: 0 0 10px 0 rgba(0,0,0,0.02);border-radius: 8px;padding:0;}
+.Statistics{color: #000;display: flex;display: -webkit-flex; justify-content:space-between;}
+.Statistics>div{width:30%;height:102px;background-color: #fff;border-radius: 6px;box-shadow: 0 1px 6px 0 rgba(59,61,62,0.03);display:flex;align-items:center;justify-content:space-around;}
+.Statistics>div>div:first-child img{width:50px;height:50px;}
+.Statistics>div>div:last-child .num{font-family: Roboto-Medium;font-size: 30px;color: #4A4A4A;}
+.Statistics>div>div:last-child .txt{font-family: PingFangSC-Medium;font-size: 14px;color: #767676;}
+.main{background: #FFFFFF;box-shadow: 0 1px 6px 0 rgba(59,61,62,0.03);border-radius: 6px;margin-top:15px;padding:20px;}
+.main .title{display:flex;justify-content:space-between;align-items:center;}
+.main .title h2{font-family: PingFangSC-Semibold;font-size: 20px;color: #4A4A4A;}
+.main .title button{border: 1px solid #0093FF;border-radius: 2px;font-family: PingFangSC-Medium;font-size: 15px;color: #0096FF;padding:6px 20px;background:#fff;}
+.barCanvas{width:100%;height:200px;margin:25px 0 30px 0;}
+.searchBox .form .phone{background: #FFFFFF;border: 1px solid #767676;border-radius: 2px;height:31px;/*margin-top:2px;*/}
+.searchBox .form .select .input2{height:31px;background:#fff;border: 1px solid #0093FF;border-radius: 2px;}
+.searchBox .form .search{height:31px;background:#fff;border-radius: 2px;}
+.searchBox .text-right button{border: 1px solid #0093FF;border-radius: 2px;font-family: PingFangSC-Medium;font-size: 15px;color: #0096FF;padding:6px 20px;background:#fff;}
+.check:link{font-family: PingFangSC-Regular;text-decoration:none;font-size: 14px;color: #0096FF;}
+.check:visited{font-family: PingFangSC-Regular;text-decoration:none;font-size: 14px;color: #0096FF;}
+.check:active{font-family: PingFangSC-Regular;text-decoration:none;font-size: 14px;color: #0096FF;}
+.check:hover{font-family: PingFangSC-Regular;text-decoration:none;font-size: 14px;color: #0096FF;}
+
+.Statistics{color: #000;display: flex;display: -webkit-flex; justify-content:space-between;margin-top:15px;}
+.Statistics>a{width: 15%;padding:27px 0;background:#fff;border-radius: 6px;box-shadow: 0 1px 6px 0 rgba(59,61,62,0.03);}
+.Statistics>a>div>div{text-align: center;}
+.Statistics>a>div>div:nth-child(1){font-family: Roboto-Medium;font-size: 30px;/*line-height:65px;*/color: #4A4A4A;}
+.Statistics>a>div>div:nth-child(2){font-family: PingFangSC-Medium;font-size: 14px;color: #767676;margin-top:11px;}
+.Statistics>a>div>div:nth-child(2):hover{color:#0096FF;}
+a:link{font-family: PingFangSC-Regular;text-decoration:none;font-size: 14px;color: #0096FF;}
+a:visited{font-family: PingFangSC-Regular;text-decoration:none;font-size: 14px;color: #0096FF;}
+a:active{font-family: PingFangSC-Regular;text-decoration:none;font-size: 14px;color: #0096FF;}
+a:hover{font-family: PingFangSC-Regular;text-decoration:none;font-size: 14px;color: #0096FF;}
+
+/*
+表格中状态*/
+.table thead tr th{color: #4A4A4A;font-family: PingFangSC-Medium;}
+.status{font-family: PingFangSC-Regular;font-size: 14px;color: #4A4A4A;display:flex;align-items:center;justify-content:center;}
+.status .radius{width:6px;height:6px;border-radius:50%;background: #FA541C;box-shadow: 0 0 4px 0 rgba(250,84,28,0.30);margin-right:6px;}

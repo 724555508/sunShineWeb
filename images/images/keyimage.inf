@@ -1,0 +1,17 @@
+[version]    
+signature="$CHINA$"   
+AdvancedINF=1.0   
+   
+[Add.Code]    
+keyimage.ocx=keyimage.ocx    
+msvcr71.dll=msvcr71.dll    
+mfc71.dll=mfc71.dll    
+msvcp71.dll=msvcp71.dll    
+   
+[keyimage.ocx]    
+file=thiscab    
+clsid={7E7E90AF-8E03-4583-B1C5-317529D6F61E}    
+FileVersion=1,0,0,0   
+RegisterServer=yes    
+   
+

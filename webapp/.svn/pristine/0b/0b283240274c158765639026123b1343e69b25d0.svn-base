@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="../../imgs/logo-l.png">    <!--title-icon-->
+    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../../lib/datatables/css/jquery.dataTables.min.css"/>
+    <link rel="stylesheet" href="../../css/cssReset.css"/>
+    <title>地址管理</title>
+    <style>
+        .aside{margin: 20px auto;}
+        .aside .row{margin: 20px auto;}
+        mark{font-size: 22px;}
+        #en1,#en2{display: none;}
+        .aside .row .cannot{background: #E4E9F2;border: 1px solid #DCDCDC;border-radius: 2px;outline: none;}
+        body{background-color: #f2f2f1;width: 97%;margin: 0 auto;padding:20px 0;}
+        .main{background: #FFFFFF;box-shadow: 0 0 10px 0 rgba(0,0,0,0.02);border-radius: 8px;padding:20px 15px;}
+        header ul{display:flex;align-items:center;}
+        header ul li{padding:0 10px 10px 0;color:#464646;font-size:15px;}
+        header ul li a{color:#0096FF;font-size:15px;}
+        a:hover{color:#0096FF;font-size:15px;text-decoration:none;}
+
+    </style>
+</head>
+<body>
+    <header>
+        <ul>
+            <li><a href="javascript:history.go(-1)">返回主页</a></li>
+            <li>  > </li>
+            <li>地址管理</li>
+        </ul>
+    </header>
+   <div class="main">
+       <!--发货地址-->
+       <aside class="aside send">
+           <div class="row">
+               <div class="col-sm-4 text-right"><mark><b>发货地址</b></mark></div>
+               <div class="col-sm-6">当接收网上购买订单时显示给用户的发货地址</div>
+               <div class="col-sm-1"><button class="btn btn-info" id="edit1">编辑</button></div>
+               <div class="col-sm-1"><button class="btn btn-primary" id="en1">保存</button></div>
+           </div>
+           <div class="row">
+               <div class="col-sm-4 text-right"><b>安顿官方授权发货公司：</b></div>
+               <div class="col-sm-6"><input type="text" class="form-control" id="sendCompanyname" ></div>
+           </div>
+           <div class="row">
+               <div class="col-sm-4 text-right"><b>发货公司联系人：</b></div>
+               <div class="col-sm-6"><input type="text" class="form-control" id="sendLinkName"></div>
+           </div>
+           <div class="row">
+               <div class="col-sm-4 text-right"><b>发货公司联系人电话：</b></div>
+               <div class="col-sm-6"><input type="text" class="form-control" id="sendLinkPhone"></div>
+           </div>
+           <div class="row" style="display: none;" id="allArea1">
+               <div class="col-sm-4 text-right"><b>发货仓库详细地址：</b></div>
+               <div class="col-sm-1"><select name="" id="selectSheng1" class="form-control"></select></div>
+               <div class="col-sm-1"><select name="" id="selectShi1" class="form-control"></select></div>
+               <div class="col-sm-1"><select name="" id="selectQuxian1" class="form-control"></select></div>
+               <div class="col-sm-3"><input type="text" class="form-control" id="sendAddressIn"></div>
+           </div>
+           <div class="row" style="display: block;" id="oneArea1">
+               <div class="col-sm-4 text-right"><b>发货仓库详细地址：</b></div>
+               <div class="col-sm-6"><input type="text" class="form-control" id="sendAddressInfo" ></div>
+           </div>
+       </aside>
+
+       <hr>
+       <!--收货地址-->
+       <aside class="aside take">
+           <div class="row">
+               <div class="col-sm-4 text-right"><mark><b>收货地址</b></mark></div>
+               <div class="col-sm-6">接收用户到期退货、质量退货的地址</div>
+               <div class="col-sm-1"><button class="btn btn-info" id="edit2">编辑</button></div>
+               <div class="col-sm-1"><button class="btn btn-primary" id="en2">保存</button></div>
+           </div>
+           <div class="row">
+               <div class="col-sm-4 text-right"><b>安顿官方授权发货公司：</b></div>
+               <div class="col-sm-6"><input type="text" class="form-control" id="takeCompanyname"></div>
+           </div>
+           <div class="row">
+               <div class="col-sm-4 text-right"><b>发货公司联系人：</b></div>
+               <div class="col-sm-6"><input type="text" class="form-control" id="takeLinkName"></div>
+           </div>
+           <div class="row">
+               <div class="col-sm-4 text-right"><b>发货公司联系人电话：</b></div>
+               <div class="col-sm-6"><input type="text" class="form-control" id="takeLinkPhone"></div>
+           </div>
+           <div class="row" style="display: none;" id="allArea2">
+               <div class="col-sm-4 text-right"><b>发货仓库详细地址：</b></div>
+               <div class="col-sm-1"><select name="" id="selectSheng" class="form-control"></select></div>
+               <div class="col-sm-1"><select name="" id="selectShi" class="form-control"></select></div>
+               <div class="col-sm-1"><select name="" id="selectQuxian" class="form-control"></select></div>
+               <div class="col-sm-3"><input type="text" class="form-control" id="takeAddressIn"></div>
+           </div>
+           <div class="row" id="oneArea2">
+               <div class="col-sm-4 text-right"><b>发货仓库详细地址：</b></div>
+               <div class="col-sm-6"><input type="text" class="form-control" id="takeAddressInfo"></div>
+           </div>
+       </aside>
+
+
+
+       <!--省市区县选择模板-->
+       <script type="text/html" id="shengJs">
+           {{each data.result}}
+           <option value="{{$value.id}}" >{{$value.areaName}}</option>
+           {{/each}}
+       </script>
+       <script type="text/html" id="shiJs">
+           {{each data.result}}
+           <option value="{{$value.id}}">{{$value.areaName}}</option>
+           {{/each}}
+       </script>
+       <script type="text/html" id="quJs">
+           {{each data.result}}
+           <option value="{{$value.id}}">{{$value.areaName}}</option>
+           {{/each}}
+       </script>
+   </div>
+
+<!--js-->
+<script src="../../lib/jquery/jquery.min.js"></script>
+<script src="../../lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../lib/template.js"></script>
+<script src="../../lib/layer/layer.js"></script>
+<script src="../../lib/echarts/echarts.min.js"></script>
+<script src="../../js/common.js"></script>
+<script src="../../js/partner/addressManage.js"></script>
+</body>
+</html>
